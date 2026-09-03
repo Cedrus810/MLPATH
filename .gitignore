@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+runs/
+
+
+# 18 MB MACE checkpoint; ships alongside the repo, not inside git history
+models/*.model
