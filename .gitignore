@@ -16,3 +16,10 @@ models/*.model
 .ruff_cache/
 benchmarks/**/__pycache__/
 .scratch/
+
+# Derived node bundles; rebuilt from scripts/p3_node_bundle/
+p3_node_bundle.tar.gz
+p3_step3_descent.tar.gz
+
+# External reference paper, not project source
+cs-2025-090935.pdf
