@@ -1,0 +1,20 @@
+atom order: 0C 1C 2O 3C 4C 5O 6C 7C 8C 9C 10C 11C 12H 13H 14H 15H 16H 17H 18H 19H 20H 21H
+
+A relaxed: E=-14636.769942 eV  fmax=1.73e-03
+  donor O5 - H16, acceptor O2
+  r(O-O) = 4.293 A   r(O_acceptor...H) = 4.804 A   (chelate closed if < ~1.8)
+
+B relaxed: E=-14636.898149 eV  fmax=1.56e-03
+
+[A] E_eV=-14636.76994205335  fmax=0.0017307194754187516  key=909db28462d72d1b  graph_hash=019cb0438e57c86c  fragments=['C10H10O2']  stereo_unresolved=None  n_locked_parity=1  n_minus=0  lam6=[-0.0, -0.0, -0.0, 0.0, 0.0, 0.0]  floor_residual=3.897489193714384e-16  n_edges=22
+
+[B] E_eV=-14636.898148631624  fmax=0.0015576271875652192  key=b1a4338a45f1d300  graph_hash=e9d5ad68aa04d88e  fragments=['C10H10O2']  stereo_unresolved=None  n_locked_parity=1  n_minus=0  lam6=[-0.0, -0.0, -0.0, 0.0, 0.0, 0.0]  floor_residual=5.415871066684328e-16  n_edges=22
+
+classify_transition(A,B) = reaction
+event_key forward = 6e1ee45ce5a39fd8  broken=[[5, 16]] formed=[[2, 16]]
+event_key reverse = 6e1ee45ce5a39fd8  broken=[[2, 16]] formed=[[5, 16]]
+direction quotiented (keys equal) = True
+keys differ = True   graph_hash differ = True
+dE(B-A) = -128.207 meV
+
+wrote runs/p3_ordering_check.json and the two extxyz endpoints

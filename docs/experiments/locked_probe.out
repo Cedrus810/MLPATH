@@ -1,0 +1,18 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+=== c0000_m0000.extxyz ===
+torsion                bond         length  0.93 limit   k (eV/rad^2)     tier
+(0, 1, 2, 7)           C1-C2        1.4430      1.4136          2.129     soft
+(7, 2, 3, 4)           C2-C3        1.3545      1.4136          4.566     soft  <- below limit
+(2, 3, 4, 5)           C3-O2        1.3208      1.3206          2.441     soft
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+=== c0001_m0000.extxyz ===
+torsion                bond         length  0.93 limit   k (eV/rad^2)     tier
+(0, 1, 2, 7)           C1-C2        1.4426      1.4136          2.145     soft
+(7, 2, 3, 4)           C2-C3        1.3548      1.4136          4.591     soft  <- below limit
+(2, 3, 4, 5)           C3-O2        1.3205      1.3206          2.469     soft  <- below limit

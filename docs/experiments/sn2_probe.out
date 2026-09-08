@@ -1,0 +1,25 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+relaxed CH3Cl: r(C-Cl) = 1.7816 A
+reference (ion at 20 A, charge -1): -26132.363734 eV
+
+ion-dipole complex, fully relaxed at charge -1
+   r(C-Cl bonded)   = 1.8174 A
+   r(C...Cl- )      = 3.1355 A
+   E - reference    = -9.57 kcal/mol   (literature about -10.5, not verified here)
+   confirm_minimum  = True  order=0
+
+D3h symmetric structure, r_CH relaxed at each r_CCl, top along r_CCl
+   r(C-Cl) x2       = 2.700 A     r(C-H) = 1.070 A
+   E - reference    = +26.99 kcal/mol   (literature about +3.0, not verified here)
+   E - complex      = +36.56 kcal/mol
+   Hessian (analytic): 2 negative eigenvalue(s)
+   imaginary wavenumbers: [-346.7, -142.9] cm^-1
+
+wrote runs/sn2_probe.json

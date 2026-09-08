@@ -1,0 +1,57 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+minimum: fmax = 7.259e-05 eV/A   E = -4221.603394313 eV
+model submodules: ['PolynomialCutoff']
+
+=== D1: trivial-mode error floor (eV/(A^2 amu)) ===
+Rayleigh quotients on the 6 exact-zero modes: [-2.515978e-05 -4.519255e-06 -4.353607e-06 -1.434593e-17  3.539480e-18  6.132313e-16]
+unprojected spectrum, 8 smallest |.|: [-1.445142e-15 -1.504810e-15  5.926479e-15 -3.714679e-06 -4.353642e-06 -2.596655e-05  2.164248e-01  2.923659e-01]
+projected physical spectrum, 6 lowest: [-8.886165e-15 -4.964174e-15 -1.477328e-16  1.322696e-15  2.965641e-15  3.459073e-15]
+|trivial|max = 2.516e-05   vs lowest physical |lambda| = 2.164e-01   vs eigenvalue_tol = 1e-3
+
+=== D2: kappa_a(v) in eV/(A^2 amu), mass-weighted amplitude a in A*sqrt(amu) ===
+
+  mode=lowest      lambda(analytic) = -0.000016
+    a            1e-04      3e-04      1e-03      3e-03      1e-02      2e-02      5e-02      1e-01      2e-01      3e-01
+    kap_F     -0.00002   -0.00002   -0.00002   -0.00001    0.00000    0.00006    0.00045    0.00186    0.00746    0.01673
+    kap_E      0.00000    0.00000   -0.00001   -0.00001   -0.00001    0.00002    0.00022    0.00092    0.00372    0.00838
+    dev_F%       0.012      0.107      1.186     10.671    118.562    474.237   2963.450  11846.199  47263.463 105890.113
+
+  mode=2nd lowest  lambda(analytic) = -0.000003
+    a            1e-04      3e-04      1e-03      3e-03      1e-02      2e-02      5e-02      1e-01      2e-01      3e-01
+    kap_F     -0.00000   -0.00000   -0.00000   -0.00000   -0.00000    0.00000    0.00004    0.00016    0.00065    0.00147
+    kap_E      0.00000    0.00000   -0.00000   -0.00000   -0.00000   -0.00000    0.00002    0.00008    0.00032    0.00073
+    dev_F%       0.005      0.043      0.477      4.296     47.735    190.937   1193.295   4772.306  19075.240  42866.924
+
+  mode=mid         lambda(analytic) = +5.096320
+    a            1e-04      3e-04      1e-03      3e-03      1e-02      2e-02      5e-02      1e-01      2e-01      3e-01
+    kap_F      5.09632    5.09632    5.09632    5.09633    5.09648    5.09696    5.10032    5.11224    5.15868    5.23181
+    kap_E      5.09644    5.09632    5.09632    5.09633    5.09640    5.09664    5.09832    5.10430    5.12779    5.16551
+    dev_F%       0.000      0.000      0.000      0.000      0.003      0.013      0.079      0.312      1.224      2.659
+
+  mode=stiffest    lambda(analytic) = +55.618490
+    a            1e-04      3e-04      1e-03      3e-03      1e-02      2e-02      5e-02      1e-01      2e-01      3e-01
+    kap_F     55.61849   55.61852   55.61883   55.62154   55.65291   55.76277   56.69147   59.79093   62.58621   48.31576
+    kap_E     55.61851   55.61851   55.61866   55.62001   55.63560   55.68919   56.12804   57.78268   61.58181   57.47689
+    dev_F%       0.000      0.000      0.001      0.005      0.062      0.259      1.929      7.502     12.528    -13.130
+
+=== D3: how fast does H change? ||H(R+d w)v - H(R)v|| / d ===
+  ||Hv|| = 0.0000 eV/A^2
+   delta (A)   ||dHv||/delta   rel. per A
+       1e-05          6.1374  126220.5627
+       1e-04          6.1376  126225.1524
+       1e-03          6.1398  126271.3292
+       1e-02          6.1636  126761.1626
+       1e-01          6.5403  134508.1385
+
+=== D4: float32 vs float64 spectra ===
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float32 does not match model dtype float64, converting models to float32.
+  float32 fmax at the float64 minimum: 7.133e-05 eV/A
+  float64 6 lowest: [-8.886165e-15 -4.964174e-15 -1.477328e-16  1.322696e-15  2.965641e-15  3.459073e-15]
+  float32 6 lowest: [-6.058225e-15 -3.316988e-15 -1.297590e-15 -1.184262e-15 -5.914963e-16  4.195533e-15]
+  max |dlambda| over full spectrum: 1.946e-05
+  float32 |trivial|max = 2.439e-05  (float64: 2.516e-05)

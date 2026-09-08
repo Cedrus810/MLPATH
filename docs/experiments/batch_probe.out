@@ -1,0 +1,14 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+single point, 12 atoms        47.38 ms
+ batch   total ms   ms/config   speedup
+     1      27.99      27.995      1.7x
+     4     100.44      25.109      1.9x
+     8     155.71      19.464      2.4x
+    16     212.78      13.299      3.6x
+    32     411.85      12.870      3.7x
+    64     815.00      12.734      3.7x
+
+peak CUDA mem 2454 MiB / 11264 MiB

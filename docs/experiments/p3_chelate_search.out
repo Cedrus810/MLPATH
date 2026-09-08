@@ -1,0 +1,89 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+canonical SMILES CC(=O)/C=C(\O)c1ccccc1   atom order CCOCCOCCCCCCHHHHHHHHHH   oxygens [2, 5]
+MMFF conformers 300  closed(r_OO<3.0) 151  r_OO min 2.615 max 4.223
+
+=== A (chelated phenyl-side enol) ===
+  tag                A_chelated_enol
+  E_eV               -14637.362424334986
+  fmax               0.0013529457904263714
+  r_OO               2.5193268912721125
+  n_OH               1
+  n_edges            22
+  key                8710064d12ce6a5a
+  graph_hash         019cb0438e57c86c
+  fragments          ['C10H10O2']
+  stereo_unresolved  None
+  n_locked_parity    1
+  donor              5
+  acceptor           2
+  h_shared           16
+  r_acceptorH        1.6027349672702813
+  n_minus            1
+  lam6               [-0.003183, -0.0, -0.0, -0.0, 0.0, 0.0]
+  floor_residual     2.764067499497475e-16
+  curvature_source   analytic
+  chelate survived MACE relaxation: True  (MMFF 2.615 -> MACE 2.519 A)
+
+=== B (methyl-side enol, proton moved across the chelate) ===
+  tag                B_chelated_enol
+  E_eV               -14637.378272219228
+  fmax               0.0016621639751690717
+  r_OO               2.5192118558119274
+  n_OH               1
+  n_edges            22
+  key                b1a4338a45f1d300
+  graph_hash         e9d5ad68aa04d88e
+  fragments          ['C10H10O2']
+  stereo_unresolved  None
+  n_locked_parity    1
+  donor              2
+  acceptor           5
+  h_shared           16
+  r_acceptorH        1.6124471796178759
+  n_minus            0
+  lam6               [-0.0, -0.0, -0.0, 0.0, 0.0, 0.0]
+  floor_residual     4.2029598551881743e-16
+  curvature_source   analytic
+
+classify_transition(A,B)   reaction
+event forward              6e1ee45ce5a39fd8  broken=[[5, 16]] formed=[[2, 16]]
+event reverse              6e1ee45ce5a39fd8  broken=[[2, 16]] formed=[[5, 16]]
+direction quotiented       True
+keys differ                True
+graph_hash differ          True
+fragments equal            True
+dE(B-A)                    -15.848 meV
+
+=== conformer landscape (MACE-relaxed, A's key) ===
+  conf8    r_OO 2.615->2.519  E -14637.362424  key 8710064d12ce6a5a  nOH 1
+  conf192  r_OO 2.616->2.521  E -14637.362591  key 8710064d12ce6a5a  nOH 1
+  conf103  r_OO 2.616->2.521  E -14637.362592  key 8710064d12ce6a5a  nOH 1
+  conf83   r_OO 2.616->2.521  E -14637.362591  key 8710064d12ce6a5a  nOH 1
+  conf146  r_OO 2.616->2.521  E -14637.362591  key 8710064d12ce6a5a  nOH 1
+  conf199  r_OO 2.616->2.521  E -14637.362591  key 8710064d12ce6a5a  nOH 1
+  conf187  r_OO 2.616->2.521  E -14637.362592  key 8710064d12ce6a5a  nOH 1
+  conf51   r_OO 2.616->2.521  E -14637.362592  key 8710064d12ce6a5a  nOH 1
+  conf165  r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf33   r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf172  r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf257  r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf266  r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf96   r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf22   r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf236  r_OO 2.617->2.524  E -14637.363922  key 8710064d12ce6a5a  nOH 1
+  conf282  r_OO 4.223->4.203  E -14636.820371  key 8710064d12ce6a5a  nOH 1
+  conf149  r_OO 4.223->4.203  E -14636.820371  key 8710064d12ce6a5a  nOH 1
+  18 relaxed  distinct energies (0.1 meV) 4  distinct keys 1
+  E span 543.6 meV   lowest -14637.363922 eV
+  A is the lowest of the sample: False
+
+wrote runs/p3_chelate_search.json and the two chelated endpoints

@@ -1,0 +1,3 @@
+! ExtOpt OptTS
+%method ProgExt "/home/ruigengji/MLPATH/scripts/mace_engrad.sh" end
+* xyzfile 0 1 g.xyz

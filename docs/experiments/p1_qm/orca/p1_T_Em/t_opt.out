@@ -1,0 +1,2945 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ,####,    ,#,          
+            ##       ##  ##   ,#'  ##            #'  '#       #'       ,# #          
+            ##       ##  #######   ##           ,######,      #####,      #          
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,     #,   #      #          
+             '#######'   ##     ##  '#######'  #'      '#     '####' #    #          
+
+
+
+                #########################################################
+                #                        -***-                          #
+                #          Department of theory and spectroscopy        #
+                #                                                       #
+                #                      Frank Neese                      #
+                #                                                       #
+                #     Directorship, Architecture, Infrastructure        #
+                #                    SHARK, DRIVERS                     #
+                #        Core code/Algorithms in most modules           #
+                #                                                       #
+                #        Max Planck Institute fuer Kohlenforschung      #
+                #                Kaiser Wilhelm Platz 1                 #
+                #                 D-45470 Muelheim/Ruhr                 #
+                #                      Germany                          #
+                #                                                       #
+                #                  All rights reserved                  #
+                #                        -***-                          #
+                #########################################################
+
+
+                         Program Version 6.1.1  -  RELEASE   -
+                                (GIT: $487d211c$)
+                          ($2025-11-21 10:33:24 +0100$)
+
+
+ With contributions from (in alphabetic order):
+[Max-Planck-Institut fuer Kohlenforschung]                               
+  Daniel Aravena         : Magnetic Suceptibility                        
+  Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+  Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum      
+  Ute Becker             : All parallelization in ORCA, NUMFREQ, NUMCALC 
+  Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD           
+  Dmytro Bykov           : pre 5.0 version of the SCF Hessian            
+  Marcos Casanova-Páez   : Triplet and SCS-CIS(D). UHF-(DLPNO)-IP/EA/STEOM-CCSD. UHF-CVS-IP/STEOM-CCSD   
+  Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE 
+  Pauline Colinet        : FMM embedding                                 
+  Dipayan Datta          : RHF DLPNO-CCSD density                        
+  Achintya Kumar Dutta   : EOM-CC, STEOM-CC                              
+  Nicolas Foglia         : Exact transition moments, OPA infrastructure, MCD improvements    
+  Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI      
+  Miquel Garcia-Rates    : C-PCM and meta-GGA Hessian, CCSD/C-PCM, Gaussian charge scheme 
+  Tiago L. C. Gouveia    : GS-ROHF, GS-ROCIS                             
+  Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization        
+  Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods 
+  Ingolf Harden          : AUTO-CI MPn and infrastructure                
+  Benjamin Helmich-Paris : MC-RPA, TRAH-(SCF,CASSCF), AVAS, COSX integrals, SCF dyn. polar., MC-PDFT, srDFT 
+  Lee Huntington         : MR-EOM, pCC                                   
+  Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM     
+  Riya Kayal             : Wick's Theorem for AUTO-CI, AUTO-CI UHF-CCSDT 
+  Emily Kempfer          : AUTO-CI RHF CISDT and CCSDT, approximate NEVPT4
+  Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K, improved NEVPT2 
+  Axel Koslowski         : Symmetry handling                             
+  Simone Kossmann        : meta-GGA functionals, TD-DFT gradient, OOMP2, (MP2 Hessian; deprecated post 5.0) 
+  Lucas Lang             : DCDCAS, Hyperfine gauge corrections, ICE-SOC+SSC
+  Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC        
+  Spencer Leger          : CASSCF response                               
+  Dagmar Lenk            : GEPOL surface, SMD, ORCA-2-JSON               
+  Dimitrios Liakos       : Extrapolation schemes; Compound Job, Property file
+  Dimitrios Manganas     : Further ROCIS development; embedding schemes. LFT, Crystal Embedding 
+  Dimitrios Pantazis     : SARC Basis sets                               
+  Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients 
+  Taras Petrenko         : pre 6.0 DFT Hessian and TD-DFT gradient,  ECA, NRVS 
+  Petra Pikulova         : Analytic Raman intensities                    
+  Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient                 
+  Shashank Vittal Rao    : ES-AILFT, MagRelax                            
+  Christoph Reimann      : Effective Core Potentials                     
+  Marius Retegan         : Local ZFS, SOC                                
+  Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples 
+  Michael Roemelt        : Original ROCIS implementation, recursive CI coupling coefficients
+  Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density      
+  Barbara Sandhoefer     : DKH picture change effects                    
+  Yorick L. A. Schmerwitz: GMF and freeze-and-release deltaSCF, NEB S-IDPP initial path                    
+  Kantharuban Sivalingam : CASSCF convergence/infrastructure, NEVPT2, NEVPT3, NEVPT4(SD), FIC-MRCI and CEPA variants
+  Bernardo de Souza      : ESD, SOC TD-DFT                               
+  Georgi L. Stoychev     : AutoAux, RI-MP2 NMR, DLPNO-MP2 response, X2C  
+  Van Anh Tran           : RI-MP2 g-tensors                              
+  Willem Van den Heuvel  : Paramagnetic NMR                              
+  Zikuan Wang            : NOTCH, Electric field optimization            
+  Frank Wennmohs         : Technical directorship and infrastructure     
+  Hang Xu                : AUTO-CI-Response properties                   
+                                                                         
+[FACCTs GmbH]                                                            
+  Markus Bursch, Nicolas Foglia, Miquel Garcia-Rates, Ingolf Harden, Hagen Neugebauer, Anastasios Papadopoulos, 
+  Christoph Riplinger, Bernardo de Souza, Georgi L. Stoychev                                                    
+                                                                 
+  APM, various basis sets, CI-OPT, improved COSX, DLPNO-Multilevel,           
+  DOCKER, DRACO, updates on ESD, Fragmentator, GOAT, IRC, LR-CPCM, L-BFGS, MBIS, meta-GGA TD-DFT gradient, ML-optimized integration grids, 
+  MM, NACMEs, nearIR, NEB, NEB-TS, NL-DFT gradient (VV10), 2- and 3-layer-ONIOM, interface openCOSMO-RS, QMMM,   
+  Crystal-QMMM, RESP, rigid body optimization, SF, symmetry and pop. for TD-DFT, various functionals, SOLVATOR                                   
+                                                                         
+[Other institutions]                                                     
+  V. Asgeirsson          : NEB                                           
+  Christoph Bannwarth    : sTDA-DFT, sTD-DFT, PBEh-3c, B97-3c, D3        
+  Giovanni Bistoni       : ETS/NOCV, ADLD/ADEX, COVALED                  
+  Martin Brehm           : Molecular dynamics                            
+  Ronald Cardenas        : ETS/NOCV                                      
+  Martina Colucci        : COVALED                                       
+  Sebastian Ehlert       : rSCAN, r2SCAN, r2SCAN-3c, D4, dhf basis sets  
+  Marvin Friede          : D4 for Fr, Ra, Ac-Lr                          
+  Lars Goerigk           : TD-DFT with DH, B97 family of functionals     
+  Stefan Grimme          : VdW corrections, initial TS optimization, DFT functionals, gCP, sTDA/sTD-DF 
+  Waldemar Hujo          : DFT-NL                                        
+  H. Jonsson             : NEB                                           
+  Holger Kruse           : gCP                                           
+  Marcel Mueller         : wB97X-3c, vDZP basis set                      
+  Hagen Neugebauer       : wr2SCAN, Native XTB                           
+  Gianluca Regni         : ADLD/ADEX                                     
+  Tobias Risthaus        : pre 6.0 range-separated hybrid DFT and stability analysis
+  Lukas Wittmann         : regularized MP2, r2SCAN double-hybrids, wr2SCAN        
+                                                                         
+We gratefully acknowledge several colleagues who have allowed us to      
+interface, adapt or use parts of their codes:                            
+  Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods 
+  Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG                   
+  Ulf Ekstrom                                   : XCFun DFT Library      
+  Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+  Frank Weinhold                                : gennbo (NPA and NBO analysis)           
+  Simon Mueller                                 : openCOSMO-RS                            
+  Christopher J. Cramer and Donald G. Truhlar   : smd solvation model                     
+  S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library                           
+  Liviu Ungur et al                             : ANISO software                          
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 7.0.0
+ For citations please refer to: https://libxc.gitlab.io
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX SINGLE_THREADED
+        Core in use  :  SkylakeX
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+  ***********************************
+  * Starting time: Fri Sep  4 20:38:07 2026
+  * Host name:     kasuga02
+  * Process ID:    75330
+  * Working dir.:  /tmp/p1_T_Em
+  ***********************************
+
+
+
+***************************************
+The coordinates will be read from file: g.xyz
+***************************************
+
+
+================================================================================
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: Geometry Optimization
+  ===> : Switching off AutoStart
+         For restart on a previous wavefunction, please use MOREAD
+
+Using external energy/gradient program given in input:
+  "/home/ruigengji/MLPATH/scripts/mace_engrad.sh"
+
+
+WARNING: four-center integrals in TRAH must be done with SHARK!
+  ===> : Turning Shark on
+
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = t_opt.inp
+|  1> ! ExtOpt Opt
+|  2> %method ProgExt "/home/ruigengji/MLPATH/scripts/mace_engrad.sh" end
+|  3> * xyzfile 0 1 g.xyz
+|  4> 
+|  5>                          ****END OF INPUT****
+================================================================================
+
+                       *****************************
+                       * Geometry Optimization Run *
+                       *****************************
+
+Geometry optimization settings:
+Update method            Update   .... BFGS
+Choice of coordinates    CoordSys .... (2022) Redundant Internals
+Initial Hessian          InHess   .... Almloef's Model
+Max. no of cycles        MaxIter  .... 50
+
+Convergence Tolerances:
+Energy Change            TolE     ....  5.0000e-06 Eh
+Max. Gradient            TolMAXG  ....  3.0000e-04 Eh/bohr
+RMS Gradient             TolRMSG  ....  1.0000e-04 Eh/bohr
+Max. Displacement        TolMAXD  ....  4.0000e-03 bohr
+RMS Displacement         TolRMSD  ....  2.0000e-03 bohr
+Strict Convergence                .... False
+
+------------------------------------------------------------------------------
+                        ORCA OPTIMIZATION COORDINATE SETUP
+------------------------------------------------------------------------------
+
+The optimization will be done in redundant internal coordinates (2022)
+Making redundant internal coordinates   ...  (2022 redundants) done
+Evaluating the initial hessian          ...  (Almloef) done
+Evaluating the coordinates              ...  done
+Calculating the B-matrix                .... done
+Calculating the G-matrix                .... done
+The number of degrees of freedom        ....   35
+
+    -----------------------------------------------------------------
+                    Redundant Internal Coordinates
+
+
+    -----------------------------------------------------------------
+         Definition                    Initial Value    Approx d2E/dq
+    -----------------------------------------------------------------
+      1. B(C   1,O   0)                  1.2402         0.970362   
+      2. B(C   2,C   1)                  1.4303         0.538789   
+      3. B(C   3,C   2)                  1.4217         0.556064   
+      4. B(O   4,C   3)                  1.2400         0.970793   
+      5. B(H   5,O   4)                  1.2650         0.169605   
+      6. B(H   5,O   0)                  1.2650         0.169605   
+      7. B(H   6,C   1)                  1.1014         0.345378   
+      8. B(H   7,C   2)                  1.0800         0.373575   
+      9. B(H   8,C   3)                  1.0929         0.356242   
+     10. A(C   1,O   0,H   5)          100.4747         0.330434   
+     11. A(O   0,C   1,C   2)          121.6130         0.455898   
+     12. A(C   2,C   1,H   6)          116.9196         0.342251   
+     13. A(O   0,C   1,H   6)          121.4673         0.375942   
+     14. A(C   3,C   2,H   7)          120.8946         0.348637   
+     15. A(C   1,C   2,H   7)          120.6890         0.346789   
+     16. A(C   1,C   2,C   3)          118.4164         0.415140   
+     17. A(O   4,C   3,H   8)          122.2102         0.377990   
+     18. A(C   2,C   3,O   4)          121.3567         0.458565   
+     19. A(C   2,C   3,H   8)          116.4331         0.345860   
+     20. A(C   3,O   4,H   5)          100.9367         0.330458   
+     21. A(O   0,H   5,O   4)          157.2025         0.229219   
+     22. D(H   6,C   1,O   0,H   5)    180.0000         0.076434   
+     23. D(C   2,C   1,O   0,H   5)      0.0000         0.076434   
+     24. D(C   3,C   2,C   1,H   6)    180.0000         0.019833   
+     25. D(H   7,C   2,C   1,O   0)    180.0000         0.019833   
+     26. D(C   3,C   2,C   1,O   0)      0.0000         0.019833   
+     27. D(H   7,C   2,C   1,H   6)      0.0000         0.019833   
+     28. D(O   4,C   3,C   2,C   1)      0.0000         0.021169   
+     29. D(H   8,C   3,C   2,H   7)      0.0000         0.021169   
+     30. D(H   8,C   3,C   2,C   1)    180.0000         0.021169   
+     31. D(O   4,C   3,C   2,H   7)    180.0000         0.021169   
+     32. D(H   5,O   4,C   3,H   8)    180.0000         0.076512   
+     33. D(H   5,O   4,C   3,C   2)      0.0000         0.076512   
+     34. D(O   0,H   5,O   4,C   3)      0.0000         0.020963   
+     35. D(O   4,H   5,O   0,C   1)      0.0000         0.020963   
+    -----------------------------------------------------------------
+
+Number of atoms                         .... 9
+Number of degrees of freedom            .... 35
+
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   1            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.240000    1.170000    0.000000
+  C     -1.220000   -0.070000    0.000000
+  C      0.010000   -0.800000    0.000000
+  C      1.230000   -0.070000    0.000000
+  O      1.240000    1.170000    0.000000
+  H      0.000000    1.420000    0.000000
+  H     -2.150000   -0.660000    0.000000
+  H      0.010000   -1.880000    0.000000
+  H      2.150000   -0.660000    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.343260    2.210980    0.000000
+   1 C     6.0000    0    12.011   -2.305466   -0.132281    0.000000
+   2 C     6.0000    0    12.011    0.018897   -1.511781    0.000000
+   3 C     6.0000    0    12.011    2.324363   -0.132281    0.000000
+   4 O     8.0000    0    15.999    2.343260    2.210980    0.000000
+   5 H     1.0000    0     1.008    0.000000    2.683411    0.000000
+   6 H     1.0000    0     1.008   -4.062911   -1.247219    0.000000
+   7 H     1.0000    0     1.008    0.018897   -3.552685    0.000000
+   8 H     1.0000    0     1.008    4.062911   -1.247219    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.240161279834     0.00000000     0.00000000
+ C      2   1   0     1.430314650698   121.61300409     0.00000000
+ C      3   2   1     1.421724305201   118.41639903     0.00000000
+ O      4   3   2     1.240040321925   121.35669496     0.00000000
+ H      1   2   3     1.264950591920   100.47471772     0.00000000
+ H      2   1   3     1.101362792181   121.46734785   180.00000085
+ H      3   2   1     1.080000000000   120.68895874   180.00000085
+ H      4   3   2     1.092931836850   116.43312848   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.343565180780     0.00000000     0.00000000
+ C      2   1   0     2.702902975154   121.61300409     0.00000000
+ C      3   2   1     2.686669574770   118.41639903     0.00000000
+ O      4   3   2     2.343336603458   121.35669496     0.00000000
+ H      1   2   3     2.390410191671   100.47471772     0.00000000
+ H      2   1   3     2.081274051312   121.46734785   180.00000085
+ H      3   2   1     2.040904224635   120.68895874   180.00000085
+ H      4   3   2     2.065341854690   116.43312848   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   ... 
+
+
+External program completed successfully in 26.270 sec
+
+-------------------------------------------------   --------------------
+FINAL SINGLE POINT ENERGY (From external program)      -267.308752265500
+-------------------------------------------------   --------------------
+
+
+------------------
+CARTESIAN GRADIENT
+------------------
+
+   1   O   :   -0.026174509   -0.031473404   -0.000000000
+   2   C   :   -0.028753899    0.042433451   -0.000000000
+   3   C   :    0.004290633   -0.000130155   -0.000000000
+   4   C   :    0.031959245    0.040027374   -0.000000000
+   5   O   :    0.025242690   -0.034422598   -0.000000000
+   6   H   :   -0.001094513   -0.005048349   -0.000000000
+   7   H   :   -0.000089041   -0.006354032   -0.000000000
+   8   H   :    0.000070482   -0.000268389   -0.000000000
+   9   H   :   -0.005451088   -0.004763898   -0.000000000
+
+Difference to translation invariance:
+           :    0.0000000000    0.0000000000    0.0000000000
+
+Difference to rotation invariance:
+           :    0.0000000000    0.0000000000   -0.0000000000
+
+Norm of the Cartesian gradient     ...    0.0942694822
+RMS gradient                       ...    0.0181421703
+MAX gradient                       ...    0.0424334513
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.308752266 Eh
+Current gradient norm                   ....     0.094269482 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.300
+Evaluating the initial hessian          ....  (Almloef) done
+Projecting the Hessian                  .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.974641114
+Lowest eigenvalues of augmented Hessian:
+ -0.015282166  0.020498208  0.020853050  0.031167400  0.038027852
+Length of the computed step             ....  0.229596067
+The final length of the internal step   ....  0.229596067
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0388088186
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0514212279 RMS(Int)=    1.8399384471
+done
+Storing new coordinates                 .... done
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          RMS gradient        0.0132399326            0.0001000000      NO
+          MAX gradient        0.0363592857            0.0003000000      NO
+          RMS step            0.0388088186            0.0020000000      NO
+          MAX step            0.1372872857            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0726      Max(Angles)    3.63
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2402 -0.034685  0.0185    1.2587   
+     2. B(C   2,C   1)                1.4303  0.022378 -0.0253    1.4051   
+     3. B(C   3,C   2)                1.4217  0.017310 -0.0196    1.4021   
+     4. B(O   4,C   3)                1.2400 -0.036359  0.0196    1.2596   
+     5. B(H   5,O   4)                1.2650  0.029965 -0.0726    1.1923   
+     6. B(H   5,O   0)                1.2650  0.028643 -0.0690    1.1959   
+     7. B(H   6,C   1)                1.1014  0.003479 -0.0051    1.0963   
+     8. B(H   7,C   2)                1.0800  0.000268 -0.0004    1.0796   
+     9. B(H   8,C   3)                1.0929 -0.002017  0.0029    1.0958   
+    10. A(C   1,O   0,H   5)          100.47 -0.008832    2.20    102.67   
+    11. A(O   0,C   1,C   2)          121.61 -0.007077    0.34    121.95   
+    12. A(C   2,C   1,H   6)          116.92 -0.001995    0.67    117.59   
+    13. A(O   0,C   1,H   6)          121.47  0.009072   -1.01    120.46   
+    14. A(C   3,C   2,H   7)          120.89 -0.008849    1.82    122.72   
+    15. A(C   1,C   2,H   7)          120.69 -0.008706    1.81    122.50   
+    16. A(C   1,C   2,C   3)          118.42  0.017555   -3.63    114.78   
+    17. A(O   4,C   3,H   8)          122.21  0.011144   -1.33    120.88   
+    18. A(C   2,C   3,O   4)          121.36 -0.007929    0.51    121.86   
+    19. A(C   2,C   3,H   8)          116.43 -0.003216    0.83    117.26   
+    20. A(C   3,O   4,H   5)          100.94 -0.006386    1.91    102.85   
+    21. A(O   0,H   5,O   4)          157.20  0.012669   -1.33    155.87   
+    22. D(H   6,C   1,O   0,H   5)    180.00  0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)      0.00  0.000000    0.00      0.00   
+    24. D(C   3,C   2,C   1,H   6)    180.00 -0.000000    0.00    180.00   
+    25. D(H   7,C   2,C   1,O   0)    180.00 -0.000000   -0.00    180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00 -0.000000   -0.00     -0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000   -0.00     -0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000   -0.00     -0.00   
+    30. D(H   8,C   3,C   2,C   1)    180.00 -0.000000   -0.00    180.00   
+    31. D(O   4,C   3,C   2,H   7)    180.00  0.000000    0.00    180.00   
+    32. D(H   5,O   4,C   3,H   8)    180.00  0.000000   -0.00    180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00 -0.000000   -0.00     -0.00   
+    34. D(O   0,H   5,O   4,C   3)      0.00 -0.000000    0.00      0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00 -0.000000   -0.00     -0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 3.059 %)
+Internal coordinates            :      0.000 s ( 2.527 %)
+B/P matrices and projection     :      0.000 s (28.324 %)
+Hessian update/contruction      :      0.000 s ( 9.574 %)
+Making the step                 :      0.000 s (26.197 %)
+Converting the step to Cartesian:      0.000 s ( 4.654 %)
+Storing new data                :      0.000 s ( 3.059 %)
+Checking convergence            :      0.000 s ( 3.590 %)
+Final printing                  :      0.000 s (19.016 %)
+Total time                      :      0.001 s
+
+Time for energy+gradient        :     26.272 s
+Time for complete geometry iter :     26.293 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   2            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.167105    1.177323    0.000000
+  C     -1.178643   -0.081302   -0.000000
+  C      0.006541   -0.836145   -0.000000
+  C      1.186407   -0.078547   -0.000000
+  O      1.168093    1.180919    0.000000
+  H      0.001959    1.428836   -0.000000
+  H     -2.128742   -0.628196    0.000000
+  H      0.006470   -1.915780   -0.000000
+  H      2.135021   -0.627109    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.205509    2.224819    0.000000
+   1 C     6.0000    0    12.011   -2.227313   -0.153639   -0.000000
+   2 C     6.0000    0    12.011    0.012360   -1.580085   -0.000000
+   3 C     6.0000    0    12.011    2.241985   -0.148432   -0.000000
+   4 O     8.0000    0    15.999    2.207376    2.231614    0.000000
+   5 H     1.0000    0     1.008    0.003702    2.700108   -0.000000
+   6 H     1.0000    0     1.008   -4.022740   -1.187119    0.000000
+   7 H     1.0000    0     1.008    0.012227   -3.620299   -0.000000
+   8 H     1.0000    0     1.008    4.034604   -1.185064    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.258678368238     0.00000000     0.00000000
+ C      2   1   0     1.405150591301   121.96779719     0.00000000
+ C      3   2   1     1.402155471237   114.80225141     0.00000000
+ O      4   3   2     1.259599353312   121.87161907     0.00000000
+ H      5   4   3     1.192195936025   102.83529671     0.00000000
+ H      2   1   3     1.096258182217   120.45074081   180.00000000
+ H      3   2   1     1.079634762269   122.48930545   180.00000000
+ H      4   3   2     1.095804548040   117.25544483   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.378557406661     0.00000000     0.00000000
+ C      2   1   0     2.655349794476   121.96779719     0.00000000
+ C      3   2   1     2.649689837817   114.80225141     0.00000000
+ O      4   3   2     2.380297816223   121.87161907     0.00000000
+ H      5   4   3     2.252923817060   102.83529671     0.00000000
+ H      2   1   3     2.071627736461   120.45074081   180.00000000
+ H      3   2   1     2.040214025349   122.48930545   180.00000000
+ H      4   3   2     2.070770492101   117.25544483   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 18.700 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.318058042 Eh
+Current gradient norm                   ....     0.043808665 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.300
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.998208605
+Lowest eigenvalues of augmented Hessian:
+ -0.001361063  0.020498208  0.020853050  0.031167400  0.038027852
+Length of the computed step             ....  0.059936964
+The final length of the internal step   ....  0.059936964
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0101311960
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0113817914 RMS(Int)=    1.8395561680
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000682976
+Previously predicted energy change      ....    -0.008043878
+Actually observed energy change         ....    -0.009305776
+Ratio of predicted to observed change   ....     1.156876879
+New trust radius                        ....     0.450000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0093057764            0.0000050000      NO
+          RMS gradient        0.0043606927            0.0001000000      NO
+          MAX gradient        0.0148248406            0.0003000000      NO
+          RMS step            0.0101311960            0.0020000000      NO
+          MAX step            0.0266137927            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0107      Max(Angles)    1.52
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2587 -0.014547  0.0104    1.2691   
+     2. B(C   2,C   1)                1.4052  0.004077 -0.0065    1.3987   
+     3. B(C   3,C   2)                1.4022  0.002710 -0.0044    1.3978   
+     4. B(O   4,C   3)                1.2596 -0.014825  0.0107    1.2703   
+     5. B(H   5,O   4)                1.1922  0.001296 -0.0087    1.1835   
+     6. B(H   5,O   0)                1.1958 -0.000717 -0.0014    1.1944   
+     7. B(H   6,C   1)                1.0963  0.002515 -0.0047    1.0915   
+     8. B(H   7,C   2)                1.0796  0.001178 -0.0019    1.0777   
+     9. B(H   8,C   3)                1.0958  0.002278 -0.0037    1.0921   
+    10. A(C   1,O   0,H   5)          102.67  0.000587    0.06    102.73   
+    11. A(O   0,C   1,C   2)          121.97 -0.001342    0.20    122.16   
+    12. A(C   2,C   1,H   6)          117.58 -0.005647    1.11    118.69   
+    13. A(O   0,C   1,H   6)          120.45  0.006989   -1.30    119.15   
+    14. A(C   3,C   2,H   7)          122.71 -0.000133    0.15    122.85   
+    15. A(C   1,C   2,H   7)          122.49 -0.000426    0.20    122.69   
+    16. A(C   1,C   2,C   3)          114.80  0.000559   -0.35    114.46   
+    17. A(O   4,C   3,H   8)          120.87  0.008118   -1.52    119.35   
+    18. A(C   2,C   3,O   4)          121.87 -0.001729    0.29    122.16   
+    19. A(C   2,C   3,H   8)          117.26 -0.006388    1.23    118.49   
+    20. A(C   3,O   4,H   5)          102.84  0.001248   -0.03    102.81   
+    21. A(O   0,H   5,O   4)          155.86  0.000678   -0.18    155.68   
+    22. D(H   6,C   1,O   0,H   5)   -180.00 -0.000000   -0.00   -180.00   
+    23. D(C   2,C   1,O   0,H   5)      0.00  0.000000   -0.00      0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00 -0.000000   -0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)    180.00 -0.000000    0.00    180.00   
+    26. D(C   3,C   2,C   1,O   0)     -0.00 -0.000000    0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)     -0.00  0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00  0.000000   -0.00     -0.00   
+    29. D(H   8,C   3,C   2,H   7)     -0.00 -0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)    180.00 -0.000000    0.00    180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00  0.000000   -0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)    180.00  0.000000   -0.00    180.00   
+    33. D(H   5,O   4,C   3,C   2)     -0.00 -0.000000    0.00     -0.00   
+    34. D(O   0,H   5,O   4,C   3)      0.00  0.000000   -0.00      0.00   
+    35. D(O   4,H   5,O   0,C   1)     -0.00 -0.000000    0.00     -0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.163 %)
+Internal coordinates            :      0.000 s ( 2.764 %)
+B/P matrices and projection     :      0.000 s (29.688 %)
+Hessian update/contruction      :      0.000 s (12.861 %)
+Making the step                 :      0.000 s (21.154 %)
+Converting the step to Cartesian:      0.000 s ( 3.726 %)
+Storing new data                :      0.000 s ( 2.644 %)
+Checking convergence            :      0.000 s ( 4.567 %)
+Final printing                  :      0.000 s (20.433 %)
+Total time                      :      0.001 s
+
+Time for energy+gradient        :     18.701 s
+Time for complete geometry iter :     18.722 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   3            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.161611    1.178017    0.000000
+  C     -1.172649   -0.090989    0.000000
+  C      0.004844   -0.845864    0.000000
+  C      1.178733   -0.087058    0.000000
+  O      1.162916    1.183141    0.000000
+  H      0.005668    1.431077   -0.000000
+  H     -2.130521   -0.614327    0.000000
+  H      0.005319   -1.923569   -0.000000
+  H      2.137302   -0.610429    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.195127    2.226130    0.000000
+   1 C     6.0000    0    12.011   -2.215985   -0.171944    0.000000
+   2 C     6.0000    0    12.011    0.009153   -1.598451    0.000000
+   3 C     6.0000    0    12.011    2.227482   -0.164516    0.000000
+   4 O     8.0000    0    15.999    2.197593    2.235813    0.000000
+   5 H     1.0000    0     1.008    0.010710    2.704344   -0.000000
+   6 H     1.0000    0     1.008   -4.026101   -1.160909    0.000000
+   7 H     1.0000    0     1.008    0.010051   -3.635018   -0.000000
+   8 H     1.0000    0     1.008    4.038915   -1.153545    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.269054148948     0.00000000     0.00000000
+ C      2   1   0     1.398686271148   122.16507540     0.00000000
+ C      3   2   1     1.397784550900   114.45786652     0.00000000
+ O      4   3   2     1.270298156777   122.16533162     0.00000000
+ H      5   4   3     1.183510367333   102.80599999     0.00000000
+ H      2   1   3     1.091513526190   119.14848474   180.00000000
+ H      3   2   1     1.077705154310   122.68865358   180.00000000
+ H      4   3   2     1.092140845906   118.48706510   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.398164790628     0.00000000     0.00000000
+ C      2   1   0     2.643133999746   122.16507540     0.00000000
+ C      3   2   1     2.641429995427   114.45786652     0.00000000
+ O      4   3   2     2.400515624733   122.16533162     0.00000000
+ H      5   4   3     2.236510470916   102.80599999     0.00000000
+ H      2   1   3     2.062661635971   119.14848474   180.00000000
+ H      3   2   1     2.036567594761   122.68865358   180.00000000
+ H      4   3   2     2.063847098432   118.48706510   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 18.167 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.319001212 Eh
+Current gradient norm                   ....     0.020366220 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.450
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.997716646
+Lowest eigenvalues of augmented Hessian:
+ -0.000758251  0.020498208  0.020853050  0.031167400  0.038027852
+Length of the computed step             ....  0.067693409
+The final length of the internal step   ....  0.067693409
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0114422745
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0117315954 RMS(Int)=    1.0621137704
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000380863
+Previously predicted energy change      ....    -0.000682976
+Actually observed energy change         ....    -0.000943170
+Ratio of predicted to observed change   ....     1.380970204
+New trust radius                        ....     0.450000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0009431701            0.0000050000      NO
+          RMS gradient        0.0020345380            0.0001000000      NO
+          MAX gradient        0.0049568848            0.0003000000      NO
+          RMS step            0.0114422745            0.0020000000      NO
+          MAX step            0.0296002423            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0152      Max(Angles)    1.70
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2691 -0.003714  0.0074    1.2764   
+     2. B(C   2,C   1)                1.3987 -0.000520 -0.0022    1.3965   
+     3. B(C   3,C   2)                1.3978  0.000461 -0.0027    1.3951   
+     4. B(O   4,C   3)                1.2703 -0.004957  0.0087    1.2790   
+     5. B(H   5,O   4)                1.1835 -0.000441 -0.0071    1.1765   
+     6. B(H   5,O   0)                1.1944 -0.004420  0.0152    1.2096   
+     7. B(H   6,C   1)                1.0915  0.000062 -0.0018    1.0897   
+     8. B(H   7,C   2)                1.0777 -0.000027 -0.0005    1.0772   
+     9. B(H   8,C   3)                1.0921  0.000706 -0.0025    1.0896   
+    10. A(C   1,O   0,H   5)          102.73  0.001265   -0.33    102.40   
+    11. A(O   0,C   1,C   2)          122.17  0.000197    0.07    122.23   
+    12. A(C   2,C   1,H   6)          118.69 -0.004254    1.43    120.12   
+    13. A(O   0,C   1,H   6)          119.15  0.004057   -1.50    117.65   
+    14. A(C   3,C   2,H   7)          122.85  0.001065   -0.18    122.67   
+    15. A(C   1,C   2,H   7)          122.69  0.000675   -0.07    122.62   
+    16. A(C   1,C   2,C   3)          114.46 -0.001740    0.25    114.71   
+    17. A(O   4,C   3,H   8)          119.35  0.004425   -1.70    117.65   
+    18. A(C   2,C   3,O   4)          122.17  0.000359    0.12    122.28   
+    19. A(C   2,C   3,H   8)          118.49 -0.004784    1.58    120.07   
+    20. A(C   3,O   4,H   5)          102.81  0.001051   -0.22    102.58   
+    21. A(O   0,H   5,O   4)          155.68 -0.001131    0.11    155.79   
+    22. D(H   6,C   1,O   0,H   5)   -180.00  0.000000   -0.00   -180.00   
+    23. D(C   2,C   1,O   0,H   5)      0.00  0.000000   -0.00      0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000   -0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00  0.000000   -0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00  0.000000   -0.00     -0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)     -0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000    0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)    180.00 -0.000000   -0.00    180.00   
+    32. D(H   5,O   4,C   3,H   8)    180.00 -0.000000    0.00    180.00   
+    33. D(H   5,O   4,C   3,C   2)     -0.00  0.000000    0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)      0.00  0.000000   -0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)     -0.00 -0.000000    0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.085 %)
+Internal coordinates            :      0.000 s ( 2.514 %)
+B/P matrices and projection     :      0.000 s (28.081 %)
+Hessian update/contruction      :      0.000 s (10.484 %)
+Making the step                 :      0.000 s (22.318 %)
+Converting the step to Cartesian:      0.000 s ( 3.740 %)
+Storing new data                :      0.000 s ( 2.820 %)
+Checking convergence            :      0.000 s ( 5.579 %)
+Final printing                  :      0.000 s (22.379 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     18.169 s
+Time for complete geometry iter :     18.193 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   4            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.167440    1.176084   -0.000000
+  C     -1.173883   -0.100282   -0.000000
+  C      0.003670   -0.850978    0.000000
+  C      1.176651   -0.095700    0.000000
+  O      1.165612    1.183312   -0.000000
+  H      0.015255    1.429886    0.000000
+  H     -2.141691   -0.601105   -0.000000
+  H      0.005661   -1.928191    0.000000
+  H      2.146164   -0.593027   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.206141    2.222477   -0.000000
+   1 C     6.0000    0    12.011   -2.218317   -0.189505   -0.000000
+   2 C     6.0000    0    12.011    0.006935   -1.608116    0.000000
+   3 C     6.0000    0    12.011    2.223547   -0.180846    0.000000
+   4 O     8.0000    0    15.999    2.202688    2.236135   -0.000000
+   5 H     1.0000    0     1.008    0.028828    2.702093    0.000000
+   6 H     1.0000    0     1.008   -4.047209   -1.135923   -0.000000
+   7 H     1.0000    0     1.008    0.010698   -3.643753    0.000000
+   8 H     1.0000    0     1.008    4.055662   -1.120658   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.276381977656     0.00000000     0.00000000
+ C      2   1   0     1.396487149679   122.22851471     0.00000000
+ C      3   2   1     1.395109000854   114.70489902     0.00000000
+ O      4   3   2     1.279059265543   122.28287577     0.00000000
+ H      5   4   3     1.176486066983   102.59252535     0.00000000
+ H      2   1   3     1.089713473459   117.64997868   180.00000000
+ H      3   2   1     1.077214625424   122.62363412   180.00000000
+ H      4   3   2     1.089628604561   120.06637881   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.412012380043     0.00000000     0.00000000
+ C      2   1   0     2.638978262434   122.22851471     0.00000000
+ C      3   2   1     2.636373938582   114.70489902     0.00000000
+ O      4   3   2     2.417071720931   122.28287577     0.00000000
+ H      5   4   3     2.223236466971   102.59252535     0.00000000
+ H      2   1   3     2.059260029281   117.64997868   180.00000000
+ H      3   2   1     2.035640629506   122.62363412   180.00000000
+ H      4   3   2     2.059099650308   120.06637881   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 27.271 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.319521971 Eh
+Current gradient norm                   ....     0.017456241 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.450
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.987247151
+Lowest eigenvalues of augmented Hessian:
+ -0.001197337  0.020498208  0.020853050  0.031167400  0.038027852
+Length of the computed step             ....  0.161251464
+The final length of the internal step   ....  0.161251464
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0272564722
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0255123076 RMS(Int)=    1.5022158014
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000614235
+Previously predicted energy change      ....    -0.000380863
+Actually observed energy change         ....    -0.000520759
+Ratio of predicted to observed change   ....     1.367313027
+New trust radius                        ....     0.450000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0005207590            0.0000050000      NO
+          RMS gradient        0.0018276296            0.0001000000      NO
+          MAX gradient        0.0061537892            0.0003000000      NO
+          RMS step            0.0272564722            0.0020000000      NO
+          MAX step            0.0926905969            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0490      Max(Angles)    2.88
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2764  0.004817  0.0087    1.2851   
+     2. B(C   2,C   1)                1.3965 -0.002486 -0.0013    1.3952   
+     3. B(C   3,C   2)                1.3951  0.001144 -0.0065    1.3886   
+     4. B(O   4,C   3)                1.2791  0.000185  0.0152    1.2942   
+     5. B(H   5,O   4)                1.1765  0.006154 -0.0430    1.1335   
+     6. B(H   5,O   0)                1.2096 -0.006077  0.0490    1.2587   
+     7. B(H   6,C   1)                1.0897 -0.000778 -0.0019    1.0878   
+     8. B(H   7,C   2)                1.0772 -0.000420 -0.0003    1.0769   
+     9. B(H   8,C   3)                1.0896 -0.000163 -0.0041    1.0856   
+    10. A(C   1,O   0,H   5)          102.40  0.000523   -0.75    101.65   
+    11. A(O   0,C   1,C   2)          122.23  0.000566   -0.07    122.16   
+    12. A(C   2,C   1,H   6)          120.12 -0.001267    2.63    122.75   
+    13. A(O   0,C   1,H   6)          117.65  0.000701   -2.56    115.09   
+    14. A(C   3,C   2,H   7)          122.67  0.000726   -0.36    122.31   
+    15. A(C   1,C   2,H   7)          122.62  0.000327   -0.09    122.54   
+    16. A(C   1,C   2,C   3)          114.70 -0.001053    0.45    115.15   
+    17. A(O   4,C   3,H   8)          117.65  0.000255   -2.88    114.78   
+    18. A(C   2,C   3,O   4)          122.28  0.001386    0.01    122.29   
+    19. A(C   2,C   3,H   8)          120.07 -0.001642    2.87    122.93   
+    20. A(C   3,O   4,H   5)          102.59 -0.000236   -0.12    102.47   
+    21. A(O   0,H   5,O   4)          155.79 -0.001187    0.48    156.27   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000   -0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)      0.00  0.000000   -0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000    0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00 -0.000000   -0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)     -0.00 -0.000000   -0.00     -0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00 -0.000000   -0.00     -0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000    0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)    180.00 -0.000000   -0.00    180.00   
+    32. D(H   5,O   4,C   3,H   8)    180.00 -0.000000    0.00    180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000    0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000   -0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00 -0.000000    0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.624 %)
+Internal coordinates            :      0.000 s ( 2.624 %)
+B/P matrices and projection     :      0.000 s (29.738 %)
+Hessian update/contruction      :      0.000 s (10.787 %)
+Making the step                 :      0.000 s (22.595 %)
+Converting the step to Cartesian:      0.000 s ( 4.082 %)
+Storing new data                :      0.000 s ( 2.770 %)
+Checking convergence            :      0.000 s ( 4.519 %)
+Final printing                  :      0.000 s (20.262 %)
+Total time                      :      0.001 s
+
+Time for energy+gradient        :     27.273 s
+Time for complete geometry iter :     27.297 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   5            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.179517    1.168604   -0.000000
+  C     -1.179649   -0.116441   -0.000000
+  C      0.001467   -0.859101    0.000000
+  C      1.170223   -0.109285    0.000000
+  O      1.161573    1.184956   -0.000000
+  H      0.053271    1.422450    0.000000
+  H     -2.164819   -0.577609   -0.000000
+  H      0.008529   -1.936017    0.000000
+  H      2.158924   -0.557558   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.228965    2.208342   -0.000000
+   1 C     6.0000    0    12.011   -2.229214   -0.220042   -0.000000
+   2 C     6.0000    0    12.011    0.002772   -1.623466    0.000000
+   3 C     6.0000    0    12.011    2.211401   -0.206518    0.000000
+   4 O     8.0000    0    15.999    2.195054    2.239243   -0.000000
+   5 H     1.0000    0     1.008    0.100667    2.688042    0.000000
+   6 H     1.0000    0     1.008   -4.090915   -1.091523   -0.000000
+   7 H     1.0000    0     1.008    0.016117   -3.658542    0.000000
+   8 H     1.0000    0     1.008    4.079775   -1.053631   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.285045817954     0.00000000     0.00000000
+ C      2   1   0     1.395198765096   122.15489334     0.00000000
+ C      3   2   1     1.388602291313   115.15696382     0.00000000
+ O      4   3   2     1.294269536522   122.29931610     0.00000000
+ H      5   4   3     1.133462302077   102.47773922     0.00000000
+ H      2   1   3     1.087765899030   115.09065044   179.99999915
+ H      3   2   1     1.076938961958   122.53650552   180.00000000
+ H      4   3   2     1.085577493071   122.92840040   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.428384665473     0.00000000     0.00000000
+ C      2   1   0     2.636543568417   122.15489334     0.00000000
+ C      3   2   1     2.624078039518   115.15696382     0.00000000
+ O      4   3   2     2.445814967503   122.29931610     0.00000000
+ H      5   4   3     2.141933334050   102.47773922     0.00000000
+ H      2   1   3     2.055579646986   115.09065044   179.99999915
+ H      3   2   1     2.035119701051   122.53650552   180.00000000
+ H      4   3   2     2.051444159053   122.92840040   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 18.638 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.321052197 Eh
+Current gradient norm                   ....     0.056975054 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.450
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.985582351
+Lowest eigenvalues of augmented Hessian:
+ -0.003149822  0.020498208  0.020853050  0.031167400  0.038027852
+Length of the computed step             ....  0.171671520
+The final length of the internal step   ....  0.171671520
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0290177831
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0226915249 RMS(Int)=    0.0290139238
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.001621326
+Previously predicted energy change      ....    -0.000614235
+Actually observed energy change         ....    -0.001530226
+Ratio of predicted to observed change   ....     2.491271016
+New trust radius                        ....     0.300000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0015302256            0.0000050000      NO
+          RMS gradient        0.0056844197            0.0001000000      NO
+          MAX gradient        0.0207512905            0.0003000000      NO
+          RMS step            0.0290177831            0.0020000000      NO
+          MAX step            0.1409172249            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0746      Max(Angles)    1.77
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2850  0.019041  0.0024    1.2874   
+     2. B(C   2,C   1)                1.3952 -0.008464  0.0034    1.3986   
+     3. B(C   3,C   2)                1.3886  0.003026 -0.0060    1.3826   
+     4. B(O   4,C   3)                1.2943  0.004352  0.0120    1.3063   
+     5. B(H   5,O   4)                1.1335  0.011059 -0.0390    1.0945   
+     6. B(H   5,O   0)                1.2587 -0.020751  0.0746    1.3332   
+     7. B(H   6,C   1)                1.0878 -0.001828 -0.0012    1.0866   
+     8. B(H   7,C   2)                1.0769 -0.000595 -0.0005    1.0764   
+     9. B(H   8,C   3)                1.0856 -0.001054 -0.0029    1.0827   
+    10. A(C   1,O   0,H   5)          101.64  0.000624   -0.81    100.83   
+    11. A(O   0,C   1,C   2)          122.15 -0.000617    0.23    122.39   
+    12. A(C   2,C   1,H   6)          122.75  0.004964    1.32    124.08   
+    13. A(O   0,C   1,H   6)          115.09 -0.004347   -1.56    113.53   
+    14. A(C   3,C   2,H   7)          122.31  0.001314   -0.47    121.83   
+    15. A(C   1,C   2,H   7)          122.54  0.000647   -0.22    122.31   
+    16. A(C   1,C   2,C   3)          115.16 -0.001961    0.70    115.85   
+    17. A(O   4,C   3,H   8)          114.77 -0.006101   -1.77    113.00   
+    18. A(C   2,C   3,O   4)          122.30  0.001918    0.26    122.56   
+    19. A(C   2,C   3,H   8)          122.93  0.004183    1.51    124.44   
+    20. A(C   3,O   4,H   5)          102.48 -0.001039    0.01    102.49   
+    21. A(O   0,H   5,O   4)          156.27  0.001074   -0.40    155.87   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000   -0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00  0.000000   -0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000    0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)    180.00 -0.000000   -0.00    180.00   
+    26. D(C   3,C   2,C   1,O   0)     -0.00 -0.000000   -0.00     -0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)     -0.00 -0.000000   -0.00     -0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000    0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)    180.00 -0.000000   -0.00    180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00 -0.000000    0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000    0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000   -0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000    0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.119 %)
+Internal coordinates            :      0.000 s ( 2.505 %)
+B/P matrices and projection     :      0.001 s (29.046 %)
+Hessian update/contruction      :      0.000 s ( 9.152 %)
+Making the step                 :      0.000 s (22.784 %)
+Converting the step to Cartesian:      0.000 s ( 3.420 %)
+Storing new data                :      0.000 s ( 2.890 %)
+Checking convergence            :      0.000 s ( 4.769 %)
+Final printing                  :      0.000 s (23.218 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     18.641 s
+Time for complete geometry iter :     18.665 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   6            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.206879    1.160433   -0.000000
+  C     -1.190471   -0.126800   -0.000000
+  C      0.000155   -0.860507    0.000000
+  C      1.166099   -0.117463    0.000000
+  O      1.167583    1.188893   -0.000000
+  H      0.099368    1.427294    0.000000
+  H     -2.180988   -0.573461   -0.000000
+  H      0.012819   -1.936842    0.000000
+  H      2.162314   -0.541546   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.280671    2.192900   -0.000000
+   1 C     6.0000    0    12.011   -2.249665   -0.239617   -0.000000
+   2 C     6.0000    0    12.011    0.000292   -1.626123    0.000000
+   3 C     6.0000    0    12.011    2.203609   -0.221973    0.000000
+   4 O     8.0000    0    15.999    2.206413    2.246682   -0.000000
+   5 H     1.0000    0     1.008    0.187778    2.697194    0.000000
+   6 H     1.0000    0     1.008   -4.121469   -1.083685   -0.000000
+   7 H     1.0000    0     1.008    0.024225   -3.660101    0.000000
+   8 H     1.0000    0     1.008    4.086180   -1.023374   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.287336984133     0.00000000     0.00000000
+ C      2   1   0     1.398540958261   122.37316897     0.00000000
+ C      3   2   1     1.382584968756   115.84819596     0.00000000
+ O      4   3   2     1.306357125100   122.57399798     0.00000000
+ H      5   4   3     1.094495084386   102.51582147     0.00000000
+ H      2   1   3     1.086567557787   113.54215670   180.00000000
+ H      3   2   1     1.076409505777   122.31701746   180.00000000
+ H      4   3   2     1.082722810255   124.43189762   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.432714342079     0.00000000     0.00000000
+ C      2   1   0     2.642859398185   122.37316897     0.00000000
+ C      3   2   1     2.612706947825   115.84819596     0.00000000
+ O      4   3   2     2.468657199536   122.57399798     0.00000000
+ H      5   4   3     2.068295964413   102.51582147     0.00000000
+ H      2   1   3     2.053315110222   113.54215670   180.00000000
+ H      3   2   1     2.034119173868   122.31701746   180.00000000
+ H      4   3   2     2.046049590332   124.43189762   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 20.150 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.324146807 Eh
+Current gradient norm                   ....     0.072373628 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.300
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.806233787
+Lowest eigenvalues of augmented Hessian:
+ -0.017342564  0.020498208  0.020853050  0.025081631  0.031167400
+Length of the computed step             ....  0.733778550
+Warning: the length of the step is outside the trust region - taking restricted step instead
+The input lambda is                     ....     0.009467
+   iter:   5  x=    0.002895  g= 6349.330320 f(x)=    15.970428
+   iter:  10  x=   -0.038370  g=   18.217784 f(x)=     0.240819
+   iter:  15  x=   -0.059339  g=    2.450628 f(x)=     0.000000
+The output lambda is                    ....    -0.059339 (17 iterations)
+The final length of the internal step   ....  0.300000000
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0507092553
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0427126751 RMS(Int)=    0.0507053945
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.006761612
+Previously predicted energy change      ....    -0.001621326
+Actually observed energy change         ....    -0.003094610
+Ratio of predicted to observed change   ....     1.908691336
+New trust radius                        ....     0.200000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0030946101            0.0000050000      NO
+          RMS gradient        0.0072039763            0.0001000000      NO
+          MAX gradient        0.0283568040            0.0003000000      NO
+          RMS step            0.0507092553            0.0020000000      NO
+          MAX step            0.2723939660            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.1441      Max(Angles)    1.71
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2873  0.028357 -0.0178    1.2695   
+     2. B(C   2,C   1)                1.3985 -0.010703  0.0185    1.4171   
+     3. B(C   3,C   2)                1.3826  0.005145 -0.0091    1.3734   
+     4. B(O   4,C   3)                1.3064  0.008241  0.0075    1.3139   
+     5. B(H   5,O   4)                1.0945  0.010340 -0.0531    1.0414   
+     6. B(H   5,O   0)                1.3332 -0.019962  0.1441    1.4774   
+     7. B(H   6,C   1)                1.0866 -0.002927  0.0028    1.0893   
+     8. B(H   7,C   2)                1.0764 -0.000811 -0.0001    1.0764   
+     9. B(H   8,C   3)                1.0827 -0.001733 -0.0004    1.0823   
+    10. A(C   1,O   0,H   5)          100.82 -0.001196   -1.18     99.64   
+    11. A(O   0,C   1,C   2)          122.37 -0.000370    0.55    122.92   
+    12. A(C   2,C   1,H   6)          124.08  0.008633   -0.81    123.27   
+    13. A(O   0,C   1,H   6)          113.54 -0.008263    0.27    113.81   
+    14. A(C   3,C   2,H   7)          121.83  0.001592   -0.93    120.91   
+    15. A(C   1,C   2,H   7)          122.32  0.000557   -0.54    121.77   
+    16. A(C   1,C   2,C   3)          115.85 -0.002149    1.47    117.32   
+    17. A(O   4,C   3,H   8)          112.99 -0.008680    0.11    113.10   
+    18. A(C   2,C   3,O   4)          122.57  0.002285    0.43    123.01   
+    19. A(C   2,C   3,H   8)          124.43  0.006395   -0.54    123.89   
+    20. A(C   3,O   4,H   5)          102.52 -0.001672    0.44    102.96   
+    21. A(O   0,H   5,O   4)          155.87  0.003102   -1.71    154.16   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00  0.000000   -0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000    0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)    180.00 -0.000000    0.00    180.00   
+    26. D(C   3,C   2,C   1,O   0)     -0.00 -0.000000    0.00     -0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000   -0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)     -0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000   -0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)    180.00 -0.000000    0.00    180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00 -0.000000    0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000    0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 1.815 %)
+Internal coordinates            :      0.000 s ( 2.051 %)
+B/P matrices and projection     :      0.001 s (22.722 %)
+Hessian update/contruction      :      0.000 s ( 8.363 %)
+Making the step                 :      0.001 s (36.134 %)
+Converting the step to Cartesian:      0.000 s ( 2.959 %)
+Storing new data                :      0.000 s ( 2.406 %)
+Checking convergence            :      0.000 s ( 4.103 %)
+Final printing                  :      0.000 s (19.448 %)
+Total time                      :      0.003 s
+
+Time for energy+gradient        :     20.154 s
+Time for complete geometry iter :     20.177 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   7            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.268135    1.144239   -0.000000
+  C     -1.217562   -0.124105   -0.000000
+  C      0.001907   -0.845772    0.000000
+  C      1.165958   -0.116666    0.000000
+  O      1.188234    1.197174   -0.000000
+  H      0.177541    1.448411    0.000000
+  H     -2.195785   -0.603393   -0.000000
+  H      0.023593   -1.921907    0.000000
+  H      2.154248   -0.557980   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.396428    2.162298   -0.000000
+   1 C     6.0000    0    12.011   -2.300858   -0.234525   -0.000000
+   2 C     6.0000    0    12.011    0.003604   -1.598278    0.000000
+   3 C     6.0000    0    12.011    2.203341   -0.220467    0.000000
+   4 O     8.0000    0    15.999    2.245436    2.262332   -0.000000
+   5 H     1.0000    0     1.008    0.335504    2.737099    0.000000
+   6 H     1.0000    0     1.008   -4.149432   -1.140248   -0.000000
+   7 H     1.0000    0     1.008    0.044585   -3.631878    0.000000
+   8 H     1.0000    0     1.008    4.070938   -1.054429   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.269351938575     0.00000000     0.00000000
+ C      2   1   0     1.417006547149   122.89989559     0.00000000
+ C      3   2   1     1.373538763458   117.32239095     0.00000000
+ O      4   3   2     1.314029230393   123.03242929     0.00000000
+ H      5   4   3     1.041450542769   102.98821192     0.00000000
+ H      2   1   3     1.089328745687   113.81952542   179.99999915
+ H      3   2   1     1.076353281962   121.77098225   180.00000000
+ H      4   3   2     1.082347145512   123.87611215   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.398727531468     0.00000000     0.00000000
+ C      2   1   0     2.677754304085   122.89989559     0.00000000
+ C      3   2   1     2.595612097261   117.32239095     0.00000000
+ O      4   3   2     2.483155377410   123.03242929     0.00000000
+ H      5   4   3     1.968056307856   102.98821192     0.00000000
+ H      2   1   3     2.058532999156   113.81952542   179.99999915
+ H      3   2   1     2.034012926255   121.77098225   180.00000000
+ H      4   3   2     2.045339686850   123.87611215   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 25.554 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.330001033 Eh
+Current gradient norm                   ....     0.056313570 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.200
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.966278052
+Lowest eigenvalues of augmented Hessian:
+ -0.006274145  0.020498208  0.020853050  0.031167400  0.038027852
+Length of the computed step             ....  0.266487397
+Warning: the length of the step is outside the trust region - taking restricted step instead
+The input lambda is                     ....     0.019498
+   iter:   5  x=   -0.030088  g=    0.823603 f(x)=     0.000816
+The output lambda is                    ....    -0.030104 (8 iterations)
+The final length of the internal step   ....  0.200000000
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0338061702
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0364992515 RMS(Int)=    1.8398388727
+ Iter   5:  RMS(Cart)=    0.0000000280 RMS(Int)=    0.0000000230
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.003107509
+Previously predicted energy change      ....    -0.006761612
+Actually observed energy change         ....    -0.005854226
+Ratio of predicted to observed change   ....     0.865803322
+New trust radius                        ....     0.300000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0058542265            0.0000050000      NO
+          RMS gradient        0.0055945776            0.0001000000      NO
+          MAX gradient        0.0245960406            0.0003000000      NO
+          RMS step            0.0338061702            0.0020000000      NO
+          MAX step            0.1338145552            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0708      Max(Angles)    3.78
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2694  0.024596 -0.0336    1.2357   
+     2. B(C   2,C   1)                1.4170 -0.005025  0.0183    1.4353   
+     3. B(C   3,C   2)                1.3735  0.006987 -0.0068    1.3668   
+     4. B(O   4,C   3)                1.3140  0.005752 -0.0085    1.3055   
+     5. B(H   5,O   4)                1.0415  0.007111 -0.0187    1.0228   
+     6. B(H   5,O   0)                1.4773 -0.006470  0.0708    1.5481   
+     7. B(H   6,C   1)                1.0893 -0.002548  0.0065    1.0958   
+     8. B(H   7,C   2)                1.0764 -0.000734  0.0012    1.0776   
+     9. B(H   8,C   3)                1.0823 -0.001469  0.0043    1.0866   
+    10. A(C   1,O   0,H   5)           99.60 -0.003871    0.05     99.65   
+    11. A(O   0,C   1,C   2)          122.90 -0.000055    0.29    123.19   
+    12. A(C   2,C   1,H   6)          123.28  0.009729   -3.78    119.50   
+    13. A(O   0,C   1,H   6)          113.82 -0.009674    3.49    117.31   
+    14. A(C   3,C   2,H   7)          120.91  0.000625   -0.39    120.51   
+    15. A(C   1,C   2,H   7)          121.77  0.000014   -0.32    121.45   
+    16. A(C   1,C   2,C   3)          117.32 -0.000639    0.71    118.04   
+    17. A(O   4,C   3,H   8)          113.09 -0.005303    2.90    115.99   
+    18. A(C   2,C   3,O   4)          123.03  0.001367    0.06    123.09   
+    19. A(C   2,C   3,H   8)          123.88  0.003936   -2.96    120.92   
+    20. A(C   3,O   4,H   5)          102.99 -0.002082    0.87    103.86   
+    21. A(O   0,H   5,O   4)          154.16  0.005280   -1.99    152.17   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00  0.000000   -0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000   -0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)    180.00 -0.000000    0.00    180.00   
+    26. D(C   3,C   2,C   1,O   0)     -0.00 -0.000000    0.00     -0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000   -0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000   -0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000   -0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)    180.00 -0.000000    0.00    180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00 -0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 1.865 %)
+Internal coordinates            :      0.000 s ( 2.103 %)
+B/P matrices and projection     :      0.001 s (23.254 %)
+Hessian update/contruction      :      0.000 s ( 8.611 %)
+Making the step                 :      0.001 s (35.079 %)
+Converting the step to Cartesian:      0.000 s ( 3.651 %)
+Storing new data                :      0.000 s ( 2.421 %)
+Checking convergence            :      0.000 s ( 3.929 %)
+Final printing                  :      0.000 s (19.087 %)
+Total time                      :      0.003 s
+
+Time for energy+gradient        :     25.559 s
+Time for complete geometry iter :     25.585 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   8            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.298758    1.133239   -0.000000
+  C     -1.235048   -0.100754   -0.000000
+  C      0.005244   -0.823121    0.000000
+  C      1.167667   -0.104035    0.000000
+  O      1.198938    1.201217   -0.000000
+  H      0.212188    1.470330    0.000000
+  H     -2.181437   -0.653147   -0.000000
+  H      0.028392   -1.900466    0.000000
+  H      2.132814   -0.603263   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.454297    2.141511   -0.000000
+   1 C     6.0000    0    12.011   -2.333903   -0.190398   -0.000000
+   2 C     6.0000    0    12.011    0.009909   -1.555474    0.000000
+   3 C     6.0000    0    12.011    2.206571   -0.196599    0.000000
+   4 O     8.0000    0    15.999    2.265664    2.269972   -0.000000
+   5 H     1.0000    0     1.008    0.400978    2.778522    0.000000
+   6 H     1.0000    0     1.008   -4.122319   -1.234269   -0.000000
+   7 H     1.0000    0     1.008    0.053654   -3.591360    0.000000
+   8 H     1.0000    0     1.008    4.030434   -1.140002   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.235636873354     0.00000000     0.00000000
+ C      2   1   0     1.435317960501   123.17274471     0.00000000
+ C      3   2   1     1.366862463760   118.04144663     0.00000000
+ O      4   3   2     1.305627454251   123.11369996     0.00000000
+ H      5   4   3     1.022788376377   103.88270193     0.00000000
+ H      2   1   3     1.095805424851   117.31593855   179.99999915
+ H      3   2   1     1.077593419086   121.44814894   180.00000085
+ H      4   3   2     1.086616736369   120.90816707   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.335015291613     0.00000000     0.00000000
+ C      2   1   0     2.712357860445   123.17274471     0.00000000
+ C      3   2   1     2.582995719242   118.04144663     0.00000000
+ O      4   3   2     2.467278321463   123.11369996     0.00000000
+ H      5   4   3     1.932789924311   103.88270193     0.00000000
+ H      2   1   3     2.070772149033   117.31593855   179.99999915
+ H      3   2   1     2.036356445788   121.44814894   180.00000085
+ H      4   3   2     2.053408044272   120.90816707   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 18.274 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.332955728 Eh
+Current gradient norm                   ....     0.019332401 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.300
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.972659310
+Lowest eigenvalues of augmented Hessian:
+ -0.002256259  0.020498208  0.020853050  0.031167400  0.034430865
+Length of the computed step             ....  0.238764653
+The final length of the internal step   ....  0.238764653
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0403585924
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0328056907 RMS(Int)=    0.0403578874
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.001192443
+Previously predicted energy change      ....    -0.003107509
+Actually observed energy change         ....    -0.002954695
+Ratio of predicted to observed change   ....     0.950824368
+New trust radius                        ....     0.450000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0029546952            0.0000050000      NO
+          RMS gradient        0.0024621974            0.0001000000      NO
+          MAX gradient        0.0064995095            0.0003000000      NO
+          RMS step            0.0403585924            0.0020000000      NO
+          MAX step            0.1993358763            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.1055      Max(Angles)    2.71
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2356 -0.004244 -0.0097    1.2259   
+     2. B(C   2,C   1)                1.4353  0.001076  0.0080    1.4433   
+     3. B(C   3,C   2)                1.3669  0.003936 -0.0155    1.3513   
+     4. B(O   4,C   3)                1.3056 -0.006500  0.0132    1.3188   
+     5. B(H   5,O   4)                1.0228  0.005838 -0.0550    0.9678   
+     6. B(H   5,O   0)                1.5481 -0.004816  0.1055    1.6536   
+     7. B(H   6,C   1)                1.0958 -0.000889  0.0037    1.0995   
+     8. B(H   7,C   2)                1.0776  0.000241 -0.0003    1.0772   
+     9. B(H   8,C   3)                1.0866  0.001249 -0.0033    1.0833   
+    10. A(C   1,O   0,H   5)           99.62 -0.002128    0.11     99.73   
+    11. A(O   0,C   1,C   2)          123.17  0.000235    0.23    123.41   
+    12. A(C   2,C   1,H   6)          119.51  0.003230   -0.94    118.57   
+    13. A(O   0,C   1,H   6)          117.32 -0.003464    0.71    118.03   
+    14. A(C   3,C   2,H   7)          120.51 -0.000637   -0.50    120.01   
+    15. A(C   1,C   2,H   7)          121.45 -0.000205   -0.26    121.19   
+    16. A(C   1,C   2,C   3)          118.04  0.000842    0.76    118.80   
+    17. A(O   4,C   3,H   8)          115.98  0.003597   -1.50    114.47   
+    18. A(C   2,C   3,O   4)          123.11 -0.001637    0.56    123.68   
+    19. A(C   2,C   3,H   8)          120.91 -0.001960    0.94    121.85   
+    20. A(C   3,O   4,H   5)          103.88 -0.002146    1.05    104.93   
+    21. A(O   0,H   5,O   4)          152.17  0.004834   -2.71    149.46   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00  0.000000   -0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)    180.00  0.000000   -0.00    180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00 -0.000000    0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)     -0.00 -0.000000    0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000   -0.00     -0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000   -0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000   -0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00 -0.000000    0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00 -0.000000    0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000    0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.282 %)
+Internal coordinates            :      0.000 s ( 2.524 %)
+B/P matrices and projection     :      0.001 s (26.796 %)
+Hessian update/contruction      :      0.000 s (11.068 %)
+Making the step                 :      0.000 s (22.039 %)
+Converting the step to Cartesian:      0.000 s ( 3.689 %)
+Storing new data                :      0.000 s ( 2.864 %)
+Checking convergence            :      0.000 s ( 5.146 %)
+Final printing                  :      0.000 s (23.592 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     18.279 s
+Time for complete geometry iter :     18.302 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   9            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.327851    1.120325   -0.000000
+  C     -1.251402   -0.102552   -0.000000
+  C      0.001818   -0.817633    0.000000
+  C      1.154164   -0.111283   -0.000000
+  O      1.206318    1.207159   -0.000000
+  H      0.282394    1.496081    0.000000
+  H     -2.187220   -0.679700   -0.000000
+  H      0.029731   -1.894516    0.000000
+  H      2.122049   -0.597880   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.509275    2.117107   -0.000000
+   1 C     6.0000    0    12.011   -2.364806   -0.193795   -0.000000
+   2 C     6.0000    0    12.011    0.003435   -1.545103    0.000000
+   3 C     6.0000    0    12.011    2.181054   -0.210294   -0.000000
+   4 O     8.0000    0    15.999    2.279610    2.281200   -0.000000
+   5 H     1.0000    0     1.008    0.533647    2.827183    0.000000
+   6 H     1.0000    0     1.008   -4.133247   -1.284447   -0.000000
+   7 H     1.0000    0     1.008    0.056183   -3.580116    0.000000
+   8 H     1.0000    0     1.008    4.010092   -1.129830   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.225263853583     0.00000000     0.00000000
+ C      2   1   0     1.442879436269   123.28614479     0.00000000
+ C      3   2   1     1.351603728925   118.78416957     0.00000000
+ O      4   3   2     1.319473282322   123.77220472     0.00000000
+ H      5   4   3     0.968044970885   105.09979498     0.00000000
+ H      2   1   3     1.099480229711   118.08616202   180.00000000
+ H      3   2   1     1.077244015888   121.19366419   180.00000085
+ H      4   3   2     1.083318496436   121.80242058   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.315413125066     0.00000000     0.00000000
+ C      2   1   0     2.726646978814   123.28614479     0.00000000
+ C      3   2   1     2.554160889255   118.78416957     0.00000000
+ O      4   3   2     2.493443144614   123.77220472     0.00000000
+ H      5   4   3     1.829339880292   105.09979498     0.00000000
+ H      2   1   3     2.077716523815   118.08616202   180.00000000
+ H      3   2   1     2.035696169435   121.19366419   180.00000085
+ H      4   3   2     2.047175274076   121.80242058   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 21.153 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.333574375 Eh
+Current gradient norm                   ....     0.034695932 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.450
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.998272201
+Lowest eigenvalues of augmented Hessian:
+ -0.001440498  0.020498208  0.020853050  0.031167400  0.033129705
+Length of the computed step             ....  0.058860644
+The final length of the internal step   ....  0.058860644
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0099492648
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0117650248 RMS(Int)=    1.0620986503
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000722744
+Previously predicted energy change      ....    -0.001192443
+Actually observed energy change         ....    -0.000618647
+Ratio of predicted to observed change   ....     0.518806457
+New trust radius                        ....     0.450000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0006186469            0.0000050000      NO
+          RMS gradient        0.0045766490            0.0001000000      NO
+          MAX gradient        0.0230783463            0.0003000000      NO
+          RMS step            0.0099492648            0.0020000000      NO
+          MAX step            0.0457746753            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0242      Max(Angles)    1.39
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2253 -0.009012  0.0026    1.2279   
+     2. B(C   2,C   1)                1.4429 -0.001130  0.0011    1.4440   
+     3. B(C   3,C   2)                1.3516 -0.005694  0.0028    1.3544   
+     4. B(O   4,C   3)                1.3195 -0.001454 -0.0001    1.3194   
+     5. B(H   5,O   4)                0.9680 -0.023078  0.0242    0.9923   
+     6. B(H   5,O   0)                1.6535 -0.003834  0.0078    1.6613   
+     7. B(H   6,C   1)                1.0995  0.000573  0.0004    1.0999   
+     8. B(H   7,C   2)                1.0772 -0.000083  0.0002    1.0775   
+     9. B(H   8,C   3)                1.0833 -0.000499  0.0006    1.0839   
+    10. A(C   1,O   0,H   5)           99.56  0.000024    0.30     99.86   
+    11. A(O   0,C   1,C   2)          123.29 -0.001386    0.30    123.59   
+    12. A(C   2,C   1,H   6)          118.63  0.003265   -0.89    117.74   
+    13. A(O   0,C   1,H   6)          118.09 -0.001879    0.59    118.68   
+    14. A(C   3,C   2,H   7)          120.02  0.000381   -0.03    119.99   
+    15. A(C   1,C   2,H   7)          121.19  0.001688   -0.23    120.97   
+    16. A(C   1,C   2,C   3)          118.78 -0.002069    0.26    119.04   
+    17. A(O   4,C   3,H   8)          114.43  0.002365   -0.06    114.37   
+    18. A(C   2,C   3,O   4)          123.77 -0.001898    0.29    124.07   
+    19. A(C   2,C   3,H   8)          121.80 -0.000467   -0.24    121.57   
+    20. A(C   3,O   4,H   5)          105.10 -0.000587    0.24    105.34   
+    21. A(O   0,H   5,O   4)          149.50  0.005918   -1.39    148.11   
+    22. D(H   6,C   1,O   0,H   5)    180.00  0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00 -0.000000   -0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)    180.00 -0.000000    0.00    180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00  0.000000    0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00  0.000000    0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)     -0.00 -0.000000   -0.00     -0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00  0.000000   -0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00 -0.000000   -0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00 -0.000000   -0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00  0.000000   -0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00  0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00 -0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.232 %)
+Internal coordinates            :      0.000 s ( 2.469 %)
+B/P matrices and projection     :      0.001 s (27.445 %)
+Hessian update/contruction      :      0.000 s (10.969 %)
+Making the step                 :      0.000 s (22.317 %)
+Converting the step to Cartesian:      0.000 s ( 3.371 %)
+Storing new data                :      0.000 s ( 2.802 %)
+Checking convergence            :      0.000 s ( 4.701 %)
+Final printing                  :      0.000 s (23.599 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     21.158 s
+Time for complete geometry iter :     21.178 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE  10            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.336592    1.123272   -0.000000
+  C     -1.254262   -0.101593    0.000000
+  C      0.000026   -0.816477   -0.000000
+  C      1.157097   -0.112486   -0.000000
+  O      1.220831    1.205574    0.000000
+  H      0.277911    1.515435    0.000000
+  H     -2.181343   -0.693399   -0.000000
+  H      0.024573   -1.893664    0.000000
+  H      2.121759   -0.606664   -0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.525794    2.122677   -0.000000
+   1 C     6.0000    0    12.011   -2.370212   -0.191982    0.000000
+   2 C     6.0000    0    12.011    0.000050   -1.542917   -0.000000
+   3 C     6.0000    0    12.011    2.186596   -0.212567   -0.000000
+   4 O     8.0000    0    15.999    2.307036    2.278205    0.000000
+   5 H     1.0000    0     1.008    0.525176    2.863758    0.000000
+   6 H     1.0000    0     1.008   -4.122141   -1.310335   -0.000000
+   7 H     1.0000    0     1.008    0.046437   -3.578506    0.000000
+   8 H     1.0000    0     1.008    4.009543   -1.146428   -0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.227628805893     0.00000000     0.00000000
+ C      2   1   0     1.443710039034   123.52647541     0.00000000
+ C      3   2   1     1.354405838174   119.00153597     0.00000000
+ O      4   3   2     1.319599717824   124.08575479     0.00000000
+ H      5   4   3     0.992527801475   105.42314980     0.00000000
+ H      2   1   3     1.099870126611   118.70691131   180.00000000
+ H      3   2   1     1.077466916964   120.98649787   180.00000000
+ H      4   3   2     1.083874671942   121.55739672   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.319882237251     0.00000000     0.00000000
+ C      2   1   0     2.728216590567   123.52647541     0.00000000
+ C      3   2   1     2.559456108333   119.00153597     0.00000000
+ O      4   3   2     2.493682073087   124.08575479     0.00000000
+ H      5   4   3     1.875605725092   105.42314980     0.00000000
+ H      2   1   3     2.078453322176   118.70691131   180.00000000
+ H      3   2   1     2.036117391422   120.98649787   180.00000000
+ H      4   3   2     2.048226293464   121.55739672   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 25.788 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.334417610 Eh
+Current gradient norm                   ....     0.009266691 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.450
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.996118900
+Lowest eigenvalues of augmented Hessian:
+ -0.000363500  0.020498208  0.020853050  0.031167400  0.031351486
+Length of the computed step             ....  0.088360763
+The final length of the internal step   ....  0.088360763
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0149356949
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0150505605 RMS(Int)=    1.0621572231
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000183169
+Previously predicted energy change      ....    -0.000722744
+Actually observed energy change         ....    -0.000843235
+Ratio of predicted to observed change   ....     1.166712570
+New trust radius                        ....     0.675000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0008432350            0.0000050000      NO
+          RMS gradient        0.0012991566            0.0001000000      NO
+          MAX gradient        0.0046474897            0.0003000000      NO
+          RMS step            0.0149356949            0.0020000000      NO
+          MAX step            0.0766708637            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0406      Max(Angles)    1.95
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2276 -0.004647  0.0006    1.2283   
+     2. B(C   2,C   1)                1.4437  0.001297  0.0012    1.4449   
+     3. B(C   3,C   2)                1.3544 -0.002312 -0.0003    1.3541   
+     4. B(O   4,C   3)                1.3196  0.000202  0.0034    1.3230   
+     5. B(H   5,O   4)                0.9925 -0.002496 -0.0003    0.9922   
+     6. B(H   5,O   0)                1.6614 -0.002608  0.0406    1.7020   
+     7. B(H   6,C   1)                1.0999  0.000738 -0.0004    1.0995   
+     8. B(H   7,C   2)                1.0775  0.000077 -0.0000    1.0775   
+     9. B(H   8,C   3)                1.0839 -0.000173  0.0000    1.0839   
+    10. A(C   1,O   0,H   5)           99.81 -0.000479    0.23    100.04   
+    11. A(O   0,C   1,C   2)          123.53  0.000144    0.21    123.73   
+    12. A(C   2,C   1,H   6)          117.77  0.000593   -0.65    117.11   
+    13. A(O   0,C   1,H   6)          118.71 -0.000737    0.45    119.15   
+    14. A(C   3,C   2,H   7)          120.01 -0.000485   -0.10    119.91   
+    15. A(C   1,C   2,H   7)          120.99  0.000538   -0.30    120.69   
+    16. A(C   1,C   2,C   3)          119.00 -0.000053    0.40    119.40   
+    17. A(O   4,C   3,H   8)          114.36  0.002055   -0.80    113.56   
+    18. A(C   2,C   3,O   4)          124.09 -0.000918    0.44    124.52   
+    19. A(C   2,C   3,H   8)          121.56 -0.001136    0.36    121.91   
+    20. A(C   3,O   4,H   5)          105.42 -0.001335    0.67    106.09   
+    21. A(O   0,H   5,O   4)          148.16  0.002641   -1.95    146.21   
+    22. D(H   6,C   1,O   0,H   5)    180.00  0.000000   -0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00 -0.000000    0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)    180.00 -0.000000    0.00    180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00  0.000000   -0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00  0.000000   -0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)     -0.00 -0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00 -0.000000   -0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00 -0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)    180.00 -0.000000    0.00    180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00  0.000000   -0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00  0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00 -0.000000    0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.144 %)
+Internal coordinates            :      0.000 s ( 2.525 %)
+B/P matrices and projection     :      0.001 s (28.585 %)
+Hessian update/contruction      :      0.000 s (10.243 %)
+Making the step                 :      0.000 s (22.106 %)
+Converting the step to Cartesian:      0.000 s ( 3.383 %)
+Storing new data                :      0.000 s ( 3.335 %)
+Checking convergence            :      0.000 s ( 5.002 %)
+Final printing                  :      0.000 s (22.677 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     25.793 s
+Time for complete geometry iter :     25.816 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE  11            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.351591    1.120432   -0.000000
+  C     -1.261634   -0.104340   -0.000000
+  C     -0.004066   -0.815460   -0.000000
+  C      1.155014   -0.115314   -0.000000
+  O      1.233661    1.205514    0.000000
+  H      0.298539    1.537816    0.000000
+  H     -2.179792   -0.709240    0.000000
+  H      0.018749   -1.892674    0.000000
+  H      2.121120   -0.606734    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.554137    2.117309   -0.000000
+   1 C     6.0000    0    12.011   -2.384142   -0.197174   -0.000000
+   2 C     6.0000    0    12.011   -0.007684   -1.540996   -0.000000
+   3 C     6.0000    0    12.011    2.182660   -0.217911   -0.000000
+   4 O     8.0000    0    15.999    2.331281    2.278091    0.000000
+   5 H     1.0000    0     1.008    0.564157    2.906051    0.000000
+   6 H     1.0000    0     1.008   -4.119210   -1.340269    0.000000
+   7 H     1.0000    0     1.008    0.035430   -3.576635    0.000000
+   8 H     1.0000    0     1.008    4.008337   -1.146560    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.228070838044     0.00000000     0.00000000
+ C      2   1   0     1.444703207634   123.68767204     0.00000000
+ C      3   2   1     1.354131511900   119.37883578     0.00000000
+ O      4   3   2     1.323166558334   124.54176892     0.00000000
+ H      5   4   3     0.992409626859   106.15547133     0.00000000
+ H      2   1   3     1.099508043259   119.17693050   180.00000000
+ H      3   2   1     1.077455438801   120.70026809   180.00000000
+ H      4   3   2     1.083907197315   121.90514993   179.99999915
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.320717556958     0.00000000     0.00000000
+ C      2   1   0     2.730093407226   123.68767204     0.00000000
+ C      3   2   1     2.558937706804   119.37883578     0.00000000
+ O      4   3   2     2.500422424815   124.54176892     0.00000000
+ H      5   4   3     1.875382407430   106.15547133     0.00000000
+ H      2   1   3     2.077769083804   119.17693050   180.00000000
+ H      3   2   1     2.036095700838   120.70026809   180.00000000
+ H      4   3   2     2.048287757512   121.90514993   179.99999915
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 18.734 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.334664078 Eh
+Current gradient norm                   ....     0.006467660 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.675
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.997904528
+Lowest eigenvalues of augmented Hessian:
+ -0.000118887  0.020498208  0.020853050  0.020945283  0.031167400
+Length of the computed step             ....  0.064839449
+The final length of the internal step   ....  0.064839449
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0109598673
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0103363384 RMS(Int)=    0.0109620648
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000059693
+Previously predicted energy change      ....    -0.000183169
+Actually observed energy change         ....    -0.000246468
+Ratio of predicted to observed change   ....     1.345575559
+New trust radius                        ....     0.675000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0002464681            0.0000050000      NO
+          RMS gradient        0.0006997271            0.0001000000      NO
+          MAX gradient        0.0024386916            0.0003000000      NO
+          RMS step            0.0109598673            0.0020000000      NO
+          MAX step            0.0571605542            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0302      Max(Angles)    1.38
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2281 -0.001393  0.0001    1.2282   
+     2. B(C   2,C   1)                1.4447  0.001405 -0.0004    1.4443   
+     3. B(C   3,C   2)                1.3541 -0.001055 -0.0000    1.3541   
+     4. B(O   4,C   3)                1.3232  0.002439  0.0007    1.3238   
+     5. B(H   5,O   4)                0.9924  0.000735 -0.0032    0.9893   
+     6. B(H   5,O   0)                1.7021 -0.001215  0.0302    1.7323   
+     7. B(H   6,C   1)                1.0995  0.000351 -0.0005    1.0990   
+     8. B(H   7,C   2)                1.0775  0.000017  0.0000    1.0775   
+     9. B(H   8,C   3)                1.0839 -0.000008 -0.0001    1.0838   
+    10. A(C   1,O   0,H   5)           99.99 -0.000092    0.14    100.13   
+    11. A(O   0,C   1,C   2)          123.69  0.000333    0.09    123.77   
+    12. A(C   2,C   1,H   6)          117.14 -0.000661   -0.21    116.92   
+    13. A(O   0,C   1,H   6)          119.18  0.000327    0.12    119.30   
+    14. A(C   3,C   2,H   7)          119.92 -0.000304   -0.05    119.87   
+    15. A(C   1,C   2,H   7)          120.70  0.000285   -0.23    120.47   
+    16. A(C   1,C   2,C   3)          119.38  0.000019    0.28    119.66   
+    17. A(O   4,C   3,H   8)          113.55  0.000764   -0.57    112.99   
+    18. A(C   2,C   3,O   4)          124.54 -0.000405    0.31    124.85   
+    19. A(C   2,C   3,H   8)          121.91 -0.000359    0.26    122.17   
+    20. A(C   3,O   4,H   5)          106.16 -0.001000    0.57    106.73   
+    21. A(O   0,H   5,O   4)          146.24  0.001145   -1.38    144.86   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00 -0.000000    0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000    0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00 -0.000000    0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00  0.000000    0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)     -0.00 -0.000000   -0.00     -0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000   -0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)    180.00 -0.000000   -0.00    180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00  0.000000   -0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00  0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.208 %)
+Internal coordinates            :      0.000 s ( 2.496 %)
+B/P matrices and projection     :      0.001 s (28.277 %)
+Hessian update/contruction      :      0.000 s (10.322 %)
+Making the step                 :      0.000 s (22.324 %)
+Converting the step to Cartesian:      0.000 s ( 3.409 %)
+Storing new data                :      0.000 s ( 3.169 %)
+Checking convergence            :      0.000 s ( 4.753 %)
+Final printing                  :      0.000 s (22.948 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     18.740 s
+Time for complete geometry iter :     18.764 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE  12            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.361599    1.116782   -0.000000
+  C     -1.266368   -0.107611   -0.000000
+  C     -0.007055   -0.814582   -0.000000
+  C      1.153194   -0.116350    0.000000
+  O      1.241357    1.204623    0.000000
+  H      0.315134    1.552252    0.000000
+  H     -2.180114   -0.718318    0.000000
+  H      0.014893   -1.891816   -0.000000
+  H      2.120557   -0.604980    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.573050    2.110412   -0.000000
+   1 C     6.0000    0    12.011   -2.393088   -0.203355   -0.000000
+   2 C     6.0000    0    12.011   -0.013331   -1.539336   -0.000000
+   3 C     6.0000    0    12.011    2.179221   -0.219870    0.000000
+   4 O     8.0000    0    15.999    2.345825    2.276408    0.000000
+   5 H     1.0000    0     1.008    0.595517    2.933331    0.000000
+   6 H     1.0000    0     1.008   -4.119818   -1.357424    0.000000
+   7 H     1.0000    0     1.008    0.028144   -3.575015   -0.000000
+   8 H     1.0000    0     1.008    4.007271   -1.143247    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.228090783407     0.00000000     0.00000000
+ C      2   1   0     1.444187592233   123.75701869     0.00000000
+ C      3   2   1     1.354143179938   119.65109203     0.00000000
+ O      4   3   2     1.323912169024   124.85763352     0.00000000
+ H      5   4   3     0.989310092759   106.75371224     0.00000000
+ H      2   1   3     1.099042794086   119.30959040   179.99999915
+ H      3   2   1     1.077458127399   120.47678061   180.00000000
+ H      4   3   2     1.083766645381   122.16162758   179.99999915
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.320755248231     0.00000000     0.00000000
+ C      2   1   0     2.729119035328   123.75701869     0.00000000
+ C      3   2   1     2.558959756200   119.65109203     0.00000000
+ O      4   3   2     2.501831424821   124.85763352     0.00000000
+ H      5   4   3     1.869525136840   106.75371224     0.00000000
+ H      2   1   3     2.076889890283   119.30959040   179.99999915
+ H      3   2   1     2.036100781552   120.47678061   180.00000000
+ H      4   3   2     2.048022152849   122.16162758   179.99999915
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 18.910 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.334736787 Eh
+Current gradient norm                   ....     0.004751327 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.675
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.999782952
+Lowest eigenvalues of augmented Hessian:
+ -0.000021512  0.018182463  0.020498208  0.020853050  0.031167400
+Length of the computed step             ....  0.020838381
+The final length of the internal step   ....  0.020838381
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0035223293
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0030708921 RMS(Int)=    1.0620580003
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000010761
+Previously predicted energy change      ....    -0.000059693
+Actually observed energy change         ....    -0.000072708
+Ratio of predicted to observed change   ....     1.218037126
+New trust radius                        ....     0.700000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0000727085            0.0000050000      NO
+          RMS gradient        0.0004957218            0.0001000000      NO
+          MAX gradient        0.0024089111            0.0003000000      NO
+          RMS step            0.0035223293            0.0020000000      NO
+          MAX step            0.0178937760            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0095      Max(Angles)    0.48
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2281 -0.000021  0.0000    1.2281   
+     2. B(C   2,C   1)                1.4442  0.000629 -0.0007    1.4435   
+     3. B(C   3,C   2)                1.3541 -0.000203  0.0001    1.3543   
+     4. B(O   4,C   3)                1.3239  0.002409 -0.0013    1.3226   
+     5. B(H   5,O   4)                0.9893  0.000537 -0.0013    0.9881   
+     6. B(H   5,O   0)                1.7324 -0.000327  0.0095    1.7418   
+     7. B(H   6,C   1)                1.0990 -0.000039 -0.0000    1.0990   
+     8. B(H   7,C   2)                1.0775 -0.000033  0.0000    1.0775   
+     9. B(H   8,C   3)                1.0838 -0.000043  0.0000    1.0838   
+    10. A(C   1,O   0,H   5)          100.11  0.000179    0.04    100.15   
+    11. A(O   0,C   1,C   2)          123.76  0.000179    0.02    123.77   
+    12. A(C   2,C   1,H   6)          116.93 -0.000863    0.07    117.00   
+    13. A(O   0,C   1,H   6)          119.31  0.000684   -0.09    119.22   
+    14. A(C   3,C   2,H   7)          119.87 -0.000017   -0.02    119.86   
+    15. A(C   1,C   2,H   7)          120.48  0.000071   -0.07    120.40   
+    16. A(C   1,C   2,C   3)          119.65 -0.000054    0.09    119.74   
+    17. A(O   4,C   3,H   8)          112.98 -0.000216   -0.09    112.89   
+    18. A(C   2,C   3,O   4)          124.86 -0.000141    0.09    124.95   
+    19. A(C   2,C   3,H   8)          122.16  0.000357   -0.01    122.15   
+    20. A(C   3,O   4,H   5)          106.75 -0.000566    0.24    106.99   
+    21. A(O   0,H   5,O   4)          144.87  0.000403   -0.48    144.39   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00 -0.000000    0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000   -0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00  0.000000   -0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00  0.000000   -0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000    0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)     -0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000   -0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)    180.00 -0.000000    0.00    180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00 -0.000000    0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00  0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.160 %)
+Internal coordinates            :      0.000 s ( 2.496 %)
+B/P matrices and projection     :      0.001 s (27.892 %)
+Hessian update/contruction      :      0.000 s (10.514 %)
+Making the step                 :      0.000 s (23.044 %)
+Converting the step to Cartesian:      0.000 s ( 3.265 %)
+Storing new data                :      0.000 s ( 2.832 %)
+Checking convergence            :      0.000 s ( 4.753 %)
+Final printing                  :      0.000 s (22.996 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     18.916 s
+Time for complete geometry iter :     18.938 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE  13            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.364621    1.115013   -0.000000
+  C     -1.267405   -0.109205   -0.000000
+  C     -0.007679   -0.814061   -0.000000
+  C      1.152745   -0.115868    0.000000
+  O      1.243222    1.203706    0.000000
+  H      0.320308    1.556566    0.000000
+  H     -2.181048   -0.720040    0.000000
+  H      0.014454   -1.891336   -0.000000
+  H      2.120024   -0.604774    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.578760    2.107069   -0.000000
+   1 C     6.0000    0    12.011   -2.395047   -0.206368   -0.000000
+   2 C     6.0000    0    12.011   -0.014511   -1.538352   -0.000000
+   3 C     6.0000    0    12.011    2.178373   -0.218959    0.000000
+   4 O     8.0000    0    15.999    2.349349    2.274674    0.000000
+   5 H     1.0000    0     1.008    0.605293    2.941483    0.000000
+   6 H     1.0000    0     1.008   -4.121584   -1.360678    0.000000
+   7 H     1.0000    0     1.008    0.027314   -3.574108   -0.000000
+   8 H     1.0000    0     1.008    4.006264   -1.142857    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.228071903446     0.00000000     0.00000000
+ C      2   1   0     1.443513134058   123.76876011     0.00000000
+ C      3   2   1     1.354273679326   119.73757449     0.00000000
+ O      4   3   2     1.322671847279   124.95639385     0.00000000
+ H      5   4   3     0.988069300006   107.00114602     0.00000000
+ H      2   1   3     1.099028649299   119.22509962   179.99999915
+ H      3   2   1     1.077502927125   120.40536086   180.00000000
+ H      4   3   2     1.083815723256   122.15185864   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.320719570276     0.00000000     0.00000000
+ C      2   1   0     2.727844494088   123.76876011     0.00000000
+ C      3   2   1     2.559206364304   119.73757449     0.00000000
+ O      4   3   2     2.499487556406   124.95639385     0.00000000
+ H      5   4   3     1.867180378347   107.00114602     0.00000000
+ H      2   1   3     2.076863160509   119.22509962   179.99999915
+ H      3   2   1     2.036185440766   120.40536086   180.00000000
+ H      4   3   2     2.048114896591   122.15185864   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 25.695 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.334751673 Eh
+Current gradient norm                   ....     0.002669754 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.700
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.999956254
+Lowest eigenvalues of augmented Hessian:
+ -0.000010006  0.019259247  0.020498208  0.020853050  0.031167400
+Length of the computed step             ....  0.009353996
+The final length of the internal step   ....  0.009353996
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0015811139
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0013132115 RMS(Int)=    0.0015811426
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000005004
+Previously predicted energy change      ....    -0.000010761
+Actually observed energy change         ....    -0.000014886
+Ratio of predicted to observed change   ....     1.383391580
+New trust radius                        ....     0.700000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0000148864            0.0000050000      NO
+          RMS gradient        0.0002834723            0.0001000000      NO
+          MAX gradient        0.0012911470            0.0003000000      NO
+          RMS step            0.0015811139            0.0020000000      YES
+          MAX step            0.0060753568            0.0040000000      NO
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0032      Max(Angles)    0.22
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+The optimization has not yet converged - more geometry cycles are needed
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+                            (Angstroem and degrees)
+
+        Definition                    Value    dE/dq     Step     New-Value
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2281  0.000054  0.0001    1.2282   
+     2. B(C   2,C   1)                1.4435  0.000161 -0.0005    1.4430   
+     3. B(C   3,C   2)                1.3543  0.000019  0.0001    1.3544   
+     4. B(O   4,C   3)                1.3227  0.001291 -0.0016    1.3211   
+     5. B(H   5,O   4)                0.9881  0.000146 -0.0004    0.9877   
+     6. B(H   5,O   0)                1.7418 -0.000067  0.0032    1.7450   
+     7. B(H   6,C   1)                1.0990 -0.000075  0.0001    1.0991   
+     8. B(H   7,C   2)                1.0775 -0.000018  0.0000    1.0775   
+     9. B(H   8,C   3)                1.0838 -0.000027  0.0001    1.0839   
+    10. A(C   1,O   0,H   5)          100.14  0.000144    0.02    100.16   
+    11. A(O   0,C   1,C   2)          123.77  0.000062    0.00    123.77   
+    12. A(C   2,C   1,H   6)          117.01 -0.000580    0.15    117.15   
+    13. A(O   0,C   1,H   6)          119.23  0.000518   -0.15    119.08   
+    14. A(C   3,C   2,H   7)          119.86  0.000064   -0.01    119.84   
+    15. A(C   1,C   2,H   7)          120.41 -0.000051   -0.01    120.39   
+    16. A(C   1,C   2,C   3)          119.74 -0.000014    0.02    119.76   
+    17. A(O   4,C   3,H   8)          112.89 -0.000373    0.07    112.96   
+    18. A(C   2,C   3,O   4)          124.96 -0.000080    0.04    125.00   
+    19. A(C   2,C   3,H   8)          122.15  0.000453   -0.11    122.04   
+    20. A(C   3,O   4,H   5)          107.00 -0.000270    0.14    107.14   
+    21. A(O   0,H   5,O   4)          144.39  0.000158   -0.22    144.17   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00  0.000000    0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000   -0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00 -0.000000    0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00 -0.000000   -0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000   -0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)     -0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000   -0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000    0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00  0.000000   -0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00  0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.079 %)
+Internal coordinates            :      0.000 s ( 3.789 %)
+B/P matrices and projection     :      0.001 s (26.571 %)
+Hessian update/contruction      :      0.000 s (10.351 %)
+Making the step                 :      0.000 s (22.551 %)
+Converting the step to Cartesian:      0.000 s ( 3.142 %)
+Storing new data                :      0.000 s ( 2.819 %)
+Checking convergence            :      0.000 s ( 4.852 %)
+Final printing                  :      0.001 s (23.706 %)
+Total time                      :      0.002 s
+
+Time for energy+gradient        :     25.702 s
+Time for complete geometry iter :     25.724 s
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE  14            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.365655    1.113965   -0.000000
+  C     -1.267381   -0.110280   -0.000000
+  C     -0.007533   -0.813790   -0.000000
+  C      1.152705   -0.114994    0.000000
+  O      1.243470    1.202974    0.000000
+  H      0.321895    1.558188    0.000000
+  H     -2.182142   -0.719580    0.000000
+  H      0.015318   -1.891083   -0.000000
+  H      2.119322   -0.605401    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.580713    2.105090   -0.000000
+   1 C     6.0000    0    12.011   -2.395003   -0.208398   -0.000000
+   2 C     6.0000    0    12.011   -0.014234   -1.537839   -0.000000
+   3 C     6.0000    0    12.011    2.178297   -0.217308    0.000000
+   4 O     8.0000    0    15.999    2.349818    2.273292    0.000000
+   5 H     1.0000    0     1.008    0.608294    2.944548    0.000000
+   6 H     1.0000    0     1.008   -4.123652   -1.359810    0.000000
+   7 H     1.0000    0     1.008    0.028947   -3.573628   -0.000000
+   8 H     1.0000    0     1.008    4.004938   -1.144042    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.228183055486     0.00000000     0.00000000
+ C      2   1   0     1.442963791194   123.76880817     0.00000000
+ C      3   2   1     1.354424881542   119.76065934     0.00000000
+ O      4   3   2     1.321090169652   124.99955632     0.00000000
+ H      5   4   3     0.987662057636   107.13918619     0.00000000
+ H      2   1   3     1.099106863960   119.07718835   180.00000000
+ H      3   2   1     1.077535419704   120.39447973   180.00000085
+ H      4   3   2     1.083903270496   122.03933931   180.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.320929617191     0.00000000     0.00000000
+ C      2   1   0     2.726806386521   123.76880817     0.00000000
+ C      3   2   1     2.559492095084   119.76065934     0.00000000
+ O      4   3   2     2.496498618858   124.99955632     0.00000000
+ H      5   4   3     1.866410801797   107.13918619     0.00000000
+ H      2   1   3     2.077010964797   119.07718835   180.00000000
+ H      3   2   1     2.036246842841   120.39447973   180.00000085
+ H      4   3   2     2.048280336899   122.03933931   180.00000000
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   > t_opt.lastext ...  done
+
+External program completed successfully in 19.606 sec
+------------------------------------------------------------------------------
+                         ORCA GEOMETRY RELAXATION STEP
+------------------------------------------------------------------------------
+
+Reading the OPT-File                    .... done
+Getting information on internals        .... done
+Copying old internal coords+grads       .... done
+Making the new internal coordinates     .... (2022 redundants) done
+Validating the new internal coordinates .... (2022 redundants) done
+Calculating the B-matrix                .... done
+Calculating the G,G- and P matrices     .... done
+Transforming gradient to internals      .... done
+Projecting the internal gradient        .... done
+Number of atoms                         ....   9
+Number of internal coordinates          ....  35
+Current Energy                          ....  -267.334757673 Eh
+Current gradient norm                   ....     0.000585918 Eh/bohr
+Maximum allowed component of the step   ....  0.300
+Current trust radius                    ....  0.700
+Updating the Hessian (BFGS)             .... done
+Forming the augmented Hessian           .... done
+Diagonalizing the augmented Hessian     .... done
+Last element of RFO vector              ....  0.999995825
+Lowest eigenvalues of augmented Hessian:
+ -0.000001281  0.020498208  0.020625064  0.020853050  0.031167400
+Length of the computed step             ....  0.002889586
+The final length of the internal step   ....  0.002889586
+Converting the step to Cartesian space:
+ Initial RMS(Int)=    0.0004884291
+Transforming coordinates:
+ Iter   0:  RMS(Cart)=    0.0005957484 RMS(Int)=    0.0004883834
+done
+Storing new coordinates                 .... done
+The predicted energy change is          ....    -0.000000641
+Previously predicted energy change      ....    -0.000005004
+Actually observed energy change         ....    -0.000006000
+Ratio of predicted to observed change   ....     1.199041890
+New trust radius                        ....     0.700000000
+
+                                .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0000059996            0.0000050000      NO
+          RMS gradient        0.0000853156            0.0001000000      YES
+          MAX gradient        0.0002899922            0.0003000000      YES
+          RMS step            0.0004884291            0.0020000000      YES
+          MAX step            0.0013753552            0.0040000000      YES
+          -------------------------------------------------------------------------
+          ........................................................
+          Max(Bonds)      0.0006      Max(Angles)    0.08
+          Max(Dihed)        0.00      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+       Everything but the energy has converged. However, the energy
+       appears to be close enough to convergence to make sure that the
+       final evaluation at the new geometry represents the equilibrium energy.
+       Convergence will therefore be signaled now
+
+
+                    ***********************HURRAY********************
+                    ***        THE OPTIMIZATION HAS CONVERGED     ***
+                    *************************************************
+
+
+    ---------------------------------------------------------------------------
+                         Redundant Internal Coordinates
+
+                          --- Optimized Parameters ---  
+                            (Angstroem and degrees)
+
+        Definition                    OldVal   dE/dq     Step     FinalVal
+    ----------------------------------------------------------------------------
+     1. B(C   1,O   0)                1.2282 -0.000014  0.0001    1.2283   
+     2. B(C   2,C   1)                1.4430 -0.000087 -0.0000    1.4429   
+     3. B(C   3,C   2)                1.3544  0.000060  0.0000    1.3545   
+     4. B(O   4,C   3)                1.3211  0.000090 -0.0004    1.3207   
+     5. B(H   5,O   4)                0.9877 -0.000035  0.0001    0.9877   
+     6. B(H   5,O   0)                1.7450  0.000017 -0.0006    1.7444   
+     7. B(H   6,C   1)                1.0991 -0.000023  0.0000    1.0991   
+     8. B(H   7,C   2)                1.0775  0.000004 -0.0000    1.0775   
+     9. B(H   8,C   3)                1.0839 -0.000003  0.0000    1.0839   
+    10. A(C   1,O   0,H   5)          100.16  0.000011    0.00    100.16   
+    11. A(O   0,C   1,C   2)          123.77 -0.000001   -0.00    123.77   
+    12. A(C   2,C   1,H   6)          117.15 -0.000189    0.06    117.22   
+    13. A(O   0,C   1,H   6)          119.08  0.000189   -0.06    119.02   
+    14. A(C   3,C   2,H   7)          119.84  0.000069   -0.01    119.83   
+    15. A(C   1,C   2,H   7)          120.39 -0.000107    0.02    120.42   
+    16. A(C   1,C   2,C   3)          119.76  0.000038   -0.01    119.75   
+    17. A(O   4,C   3,H   8)          112.96 -0.000238    0.07    113.04   
+    18. A(C   2,C   3,O   4)          125.00 -0.000052    0.00    125.00   
+    19. A(C   2,C   3,H   8)          122.04  0.000290   -0.08    121.96   
+    20. A(C   3,O   4,H   5)          107.14 -0.000014    0.00    107.14   
+    21. A(O   0,H   5,O   4)          144.17  0.000018    0.00    144.18   
+    22. D(H   6,C   1,O   0,H   5)    180.00 -0.000000    0.00    180.00   
+    23. D(C   2,C   1,O   0,H   5)     -0.00 -0.000000    0.00     -0.00   
+    24. D(C   3,C   2,C   1,H   6)   -180.00  0.000000   -0.00   -180.00   
+    25. D(H   7,C   2,C   1,O   0)   -180.00  0.000000   -0.00   -180.00   
+    26. D(C   3,C   2,C   1,O   0)      0.00  0.000000   -0.00      0.00   
+    27. D(H   7,C   2,C   1,H   6)      0.00  0.000000   -0.00      0.00   
+    28. D(O   4,C   3,C   2,C   1)      0.00 -0.000000    0.00      0.00   
+    29. D(H   8,C   3,C   2,H   7)      0.00  0.000000    0.00      0.00   
+    30. D(H   8,C   3,C   2,C   1)   -180.00  0.000000    0.00   -180.00   
+    31. D(O   4,C   3,C   2,H   7)   -180.00  0.000000    0.00   -180.00   
+    32. D(H   5,O   4,C   3,H   8)   -180.00  0.000000   -0.00   -180.00   
+    33. D(H   5,O   4,C   3,C   2)      0.00  0.000000   -0.00      0.00   
+    34. D(O   0,H   5,O   4,C   3)     -0.00 -0.000000    0.00     -0.00   
+    35. D(O   4,H   5,O   0,C   1)      0.00  0.000000   -0.00      0.00   
+    ----------------------------------------------------------------------------
+
+Geometry step timings:
+Preparation and reading OPT file:      0.000 s ( 2.201 %)
+Internal coordinates            :      0.000 s ( 2.670 %)
+B/P matrices and projection     :      0.001 s (26.838 %)
+Hessian update/contruction      :      0.000 s (10.960 %)
+Making the step                 :      0.000 s (21.499 %)
+Converting the step to Cartesian:      0.000 s ( 3.091 %)
+Storing new data                :      0.000 s ( 2.763 %)
+Checking convergence            :      0.000 s ( 5.761 %)
+Final printing                  :      0.001 s (24.169 %)
+Total time                      :      0.002 s
+                 *******************************************************
+                 *** FINAL ENERGY EVALUATION AT THE STATIONARY POINT ***
+                 ***               (AFTER   14 CYCLES)               ***
+                 *******************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O     -1.365456    1.113844   -0.000000
+  C     -1.267140   -0.110465   -0.000000
+  C     -0.007260   -0.813833   -0.000000
+  C      1.152761   -0.114613    0.000000
+  O      1.243152    1.202970    0.000000
+  H      0.321444    1.558070    0.000000
+  H     -2.182556   -0.718838   -0.000000
+  H      0.016155   -1.891109   -0.000000
+  H      2.118898   -0.606026    0.000000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999   -2.580337    2.104861   -0.000000
+   1 C     6.0000    0    12.011   -2.394547   -0.208749   -0.000000
+   2 C     6.0000    0    12.011   -0.013719   -1.537921   -0.000000
+   3 C     6.0000    0    12.011    2.178403   -0.216587    0.000000
+   4 O     8.0000    0    15.999    2.349217    2.273283    0.000000
+   5 H     1.0000    0     1.008    0.607441    2.944325    0.000000
+   6 H     1.0000    0     1.008   -4.124433   -1.358407   -0.000000
+   7 H     1.0000    0     1.008    0.030529   -3.573677   -0.000000
+   8 H     1.0000    0     1.008    4.004138   -1.145224    0.000000
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     1.228250588727     0.00000000     0.00000000
+ C      2   1   0     1.442922172771   123.76498496     0.00000000
+ C      3   2   1     1.354457954327   119.74610217     0.00000000
+ O      4   3   2     1.320679650104   125.00464702     0.00000000
+ H      5   4   3     0.987746171775   107.14528016     0.00000000
+ H      2   1   3     1.099137855223   119.01628763   180.00000000
+ H      3   2   1     1.077530370714   120.41894295   180.00000121
+ H      4   3   2     1.083931792983   121.96033262   180.00000085
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.321057236522     0.00000000     0.00000000
+ C      2   1   0     2.726727739099   123.76498496     0.00000000
+ C      3   2   1     2.559554593590   119.74610217     0.00000000
+ O      4   3   2     2.495722849339   125.00464702     0.00000000
+ H      5   4   3     1.866569754484   107.14528016     0.00000000
+ H      2   1   3     2.077069529797   119.01628763   180.00000000
+ H      3   2   1     2.036237301632   120.41894295   180.00000121
+ H      4   3   2     2.048334236588   121.96033262   180.00000085
+
+Calling /home/ruigengji/MLPATH/scripts/mace_engrad.sh t_opt_EXT.extinp.tmp   ... 
+
+
+External program completed successfully in 17.794 sec
+
+-------------------------------------------------   --------------------
+FINAL SINGLE POINT ENERGY (From external program)      -267.334758472400
+-------------------------------------------------   --------------------
+
+
+------------------
+CARTESIAN GRADIENT
+------------------
+
+   1   O   :   -0.000000090   -0.000033343   -0.000000000
+   2   C   :    0.000016276    0.000042251   -0.000000000
+   3   C   :   -0.000021145    0.000093617    0.000000000
+   4   C   :    0.000001116    0.000019566    0.000000000
+   5   O   :   -0.000044760   -0.000159842   -0.000000000
+   6   H   :    0.000037950   -0.000004078    0.000000000
+   7   H   :    0.000020657   -0.000039466    0.000000000
+   8   H   :   -0.000059569   -0.000007604   -0.000000000
+   9   H   :    0.000049565    0.000088899   -0.000000000
+
+Difference to translation invariance:
+           :   -0.0000000000    0.0000000000   -0.0000000000
+
+Difference to rotation invariance:
+           :    0.0000000000    0.0000000000    0.0000000000
+
+Norm of the Cartesian gradient     ...    0.0002402443
+RMS gradient                       ...    0.0000462350
+MAX gradient                       ...    0.0001598424
+                                *** OPTIMIZATION RUN DONE ***
+
+
+--------------------------------
+SUGGESTED CITATIONS FOR THIS RUN
+--------------------------------
+
+Below you find a list of papers that are relevant to this ORCA run
+We neither can nor want to force you to cite these papers, but we appreciate if you do
+You receive ORCA, which is the product of decades of hard work by many enthusiastic individuals, for free
+The only thing we kindly ask in return is that you cite our papers,
+We deeply appreciate it, if you show your appreciation for ORCA by not just citing the generic ORCA reference.
+
+Please note that relegating all ORCA citations to the supporting information does *not* help us.
+SI sections are not indexed - citations you put there will not count into any citation statistics
+But we need these citations in order to attract the funding resources that allow us to do what we are doing
+
+Therefore, if you are a happy ORCA user, please consider citing a few of the papers listed below in the main body of your paper
+
+In addition to the list printed below, the program has created the file t_opt.bibtex that contains the list in bibtex format
+You can import this file easily into all common literature databanks and citation aid programs
+
+It goes without saying that in many instances, there are alternative algorithms to achieve similar
+results as the ones you have gotten from ORCA. It is, of course, also the case that in some instances
+ORCA just re-implements algorithms worked out by others. We are fully aware of that and we are also
+fully appreciative of our colleagues work. Hence this citation list should not be read as indicating
+that the listed papers, which are focused on our own work, are the only ones worth citing. It simply
+meant to make it easier for users to cite ORCA specific papers. It is not a substitute for doing your
+own literature research and citing the relevant literature in a scientifically appropriate manner.
+
+List of essential papers. We consider these as the minimum necessary citations
+
+  1. Neese, F.
+     Software update: the ORCA program system, version 6.0
+     WIRES Comput. Molec. Sci. 2025 15(1), e70019
+     doi.org/10.1002/wcms.70019
+
+List of papers to cite with high priority. The work reported in these papers was absolutely
+necessary for this run to complete.
+Our perspective: the developers of density functionals and basis sets usually get cited in chemistry papers
+Good! But without the algorithms to do something with them, the functionals or basis sets would not do anything.
+Hence, in our opinion, the algorithm design and method developments papers are equally worthy of getting cited
+
+  1. Neese, F.
+     The SHARK Integral Generation and Digestion System
+     J. Comp. Chem. 2022 44(3), 381
+     doi.org/10.1002/jcc.26942
+
+List of suggested additional citations. These are papers that are important in the 'surrounding' of 
+of this run, or papers that preceded the highly important papers. If you like your results we are grateful for a citation.
+
+  1. Neese, F.
+     The ORCA program system
+     WIRES Comput. Molec. Sci. 2012 2(1), 73-78
+     doi.org/10.1002/wcms.81
+  2. Neese, F.
+     Software update: the ORCA program system, version 4.0
+     WIRES Comput. Molec. Sci. 2018 8(1), 1-6
+     doi.org/10.1002/wcms.1327
+  3. Neese, F.; Wennmohs, F.; Becker, U.; Riplinger, C.
+     The ORCA quantum chemistry program package
+     J. Chem. Phys. 2020 152(22), 224108
+     doi.org/10.1063/5.0004608
+  4. Neese, F.
+     Software update: The ORCA program system—Version 5.0
+     WIRES Comput. Molec. Sci. 2022 12(1), e1606
+     doi.org/10.1002/wcms.1606
+
+List of optional additional citations
+
+  1. Neese, F.
+     Approximate second-order SCF convergence for spin unrestricted wavefunctions
+     Chem. Phys. Lett. 2000 325(1-3), 93-98
+     doi.org/10.1016/s0009-2614(00)00662-x
+
+Timings for individual modules:
+
+Sum of individual times          ...      320.765 sec (=   5.346 min)
+Geometry relaxation              ...        0.039 sec (=   0.001 min)   0.0 %
+External energy and gradient     ...      320.726 sec (=   5.345 min) 100.0 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 5 minutes 21 seconds 206 msec

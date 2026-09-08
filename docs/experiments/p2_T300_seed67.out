@@ -1,0 +1,19 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+{
+  "output": "/home/ruigengji/MLPATH/runs/p2_T300_seed67",
+  "status": "completed",
+  "chemical_nodes": 2,
+  "microstates": 2,
+  "reactions": 1,
+  "ts_candidates": 3,
+  "attempts": 32,
+  "outcome_counts": {
+    "completed": 23,
+    "unconfirmed": 2,
+    "ts_candidate": 1,
+    "rejected": 6
+  }
+}

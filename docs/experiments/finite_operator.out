@@ -1,0 +1,42 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+saddle: fmax=4.00e-05  E=-4221.556393888
+lambda_1=-0.295964  lambda_2=+0.254958  lambda_max=+55.6040
+
+=== T1: is the force-form bilinear map symmetric? ===
+       a    <v1,D_a v2>    <v2,D_a v1>    asymmetry   asym/a^2
+   1e-02     0.00001982     0.00012778    -1.08e-04    -1.0796
+   2e-02     0.00007927     0.00051071    -4.31e-04    -1.0786
+   5e-02     0.00049469     0.00317360    -2.68e-03    -1.0716
+   1e-01     0.00196774     0.01243632    -1.05e-02    -1.0469
+   2e-01     0.00770045     0.04587841    -3.82e-02    -0.9544
+   3e-01     0.01673024     0.09073698    -7.40e-02    -0.8223
+  (a symmetric operator would give identical columns at every a)
+
+=== T2: is the energy form a quadratic form? ===
+  quadratic form => kappa(cos t v1 + sin t v2) = c2 cos^2 t + 2 c1 sin t cos t + c0 sin^2 t exactly
+  a=1e-02  best quadratic fit residual: rms=1.666e-05 max=3.202e-05   (|kappa| range -0.2945..-0.1195)
+  a=1e-01  best quadratic fit residual: rms=1.601e-03 max=3.073e-03   (|kappa| range -0.1536..-0.0429)
+  a=3e-01  best quadratic fit residual: rms=1.048e-02 max=1.983e-02   (|kappa| range +0.3793..+0.8303)
+
+=== T3: does the bottom direction rotate with a? argmin over theta ===
+
+  plane (v1, v2):
+       a  theta* (deg)  kappa at theta*   kappa at 0        gain
+   1e-02        -0.013        -0.294516    -0.294516    2.98e-08
+   2e-02        -0.054        -0.290177    -0.290176    4.83e-07
+   5e-02        -0.379        -0.259944    -0.259923    2.10e-05
+   1e-01        -2.592        -0.154190    -0.153625    5.65e-04
+   2e-01       -28.648         0.130502     0.245464    1.15e-01
+   3e-01       -28.648         0.466436     0.827313    3.61e-01
+
+  plane (v1, v_stiffest):
+       a  theta* (deg)  kappa at theta*   kappa at 0        gain
+   1e-02         0.000        -0.294516    -0.294516    0.00e+00
+   2e-02         0.000        -0.290176    -0.290176    0.00e+00
+   5e-02         0.000        -0.259923    -0.259923    0.00e+00
+   1e-01         0.000        -0.153625    -0.153625    0.00e+00
+   2e-01         0.000         0.245464     0.245464    0.00e+00
+   3e-01         0.000         0.827313     0.827313    0.00e+00

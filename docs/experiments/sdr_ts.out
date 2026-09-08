@@ -1,0 +1,57 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+torsion C0-C1-O2-H3
+saddle candidate: fmax = 3.999e-05 eV/A  dihedral = 0.000 deg  E = -4221.556393888 eV
+
+D1 trivial-mode floor: max|Rayleigh| = 2.893e-06
+physical modes: 21   6 lowest: [-0.29596369  0.25495839  0.65400474  2.33869908  2.94539198  4.11489302]
+negative (tol 1e-3): ['-0.295964']
+
+=== D2 at the saddle: kappa_a on PHYSICAL modes, eV/(A^2 amu) ===
+
+  UNSTABLE lam1    lambda = -0.295964
+    a           1e-03     3e-03     1e-02     2e-02     5e-02     1e-01     1e-01     2e-01     3e-01
+    kap_F    -0.29593  -0.29570  -0.29307  -0.28439  -0.22403  -0.01370   0.31934   0.75099   1.79024
+    kap_E    -0.29595  -0.29583  -0.29452  -0.29018  -0.25992  -0.15362   0.01761   0.24546   0.82731
+    dev_F%       0.01      0.09      0.98      3.91     24.30     95.37    207.90    353.74    704.89
+
+  lowest positive  lambda = +0.254958
+    a           1e-03     3e-03     1e-02     2e-02     5e-02     1e-01     1e-01     2e-01     3e-01
+    kap_F     0.25496   0.25499   0.25530   0.25633   0.26353   0.28908   0.33118   0.38912   0.54847
+    kap_E     0.25496   0.25497   0.25513   0.25564   0.25924   0.27205   0.29323   0.32255   0.40421
+    dev_F%       0.00      0.01      0.13      0.54      3.36     13.38     29.90     52.62    115.12
+
+  2nd positive     lambda = +0.654005
+    a           1e-03     3e-03     1e-02     2e-02     5e-02     1e-01     1e-01     2e-01     3e-01
+    kap_F     0.65401   0.65401   0.65404   0.65413   0.65479   0.65714   0.66097   0.66619   0.68040
+    kap_E     0.65400   0.65401   0.65402   0.65407   0.65440   0.65558   0.65751   0.66017   0.66750
+    dev_F%       0.00      0.00      0.00      0.02      0.12      0.48      1.07      1.86      4.04
+
+=== C-estimator check: least squares kap_F = k0 + c a^2 over bands ===
+  UNSTABLE lam1    band [1e-03,2e-02]  k0 = -0.295963 +- 8.23e-07   c = +28.9256   k0-lambda = +7.445e-07
+  UNSTABLE lam1    band [1e-02,1e-01]  k0 = -0.295431 +- 4.86e-04   c = +28.1946   k0-lambda = +5.324e-04
+  UNSTABLE lam1    band [5e-02,3e-01]  k0 = -0.228623 +- 3.72e-02   c = +22.8240   k0-lambda = +6.734e-02
+  lowest positive  band [1e-03,2e-02]  k0 = +0.254958 +- 2.19e-08   c = +3.4308   k0-lambda = +1.985e-08
+  lowest positive  band [1e-02,1e-01]  k0 = +0.254973 +- 1.31e-05   c = +3.4111   k0-lambda = +1.438e-05
+  lowest positive  band [5e-02,3e-01]  k0 = +0.257002 +- 1.15e-03   c = +3.2507   k0-lambda = +2.044e-03
+  2nd positive     band [1e-03,2e-02]  k0 = +0.654005 +- 3.86e-09   c = +0.3168   k0-lambda = +3.498e-09
+  2nd positive     band [1e-02,1e-01]  k0 = +0.654007 +- 2.24e-06   c = +0.3134   k0-lambda = +2.460e-06
+  2nd positive     band [5e-02,3e-01]  k0 = +0.654270 +- 1.42e-04   c = +0.2918   k0-lambda = +2.650e-04
+
+=== D3 along the UNSTABLE mode: ||Hv|| = 0.5252 eV/A^2 ===
+  delta=1e-05  ||dHv||/delta =   22.6530  relative per A =  43.1310
+  delta=1e-04  ||dHv||/delta =   22.6510  relative per A =  43.1271
+  delta=1e-03  ||dHv||/delta =   22.6304  relative per A =  43.0879
+  delta=1e-02  ||dHv||/delta =   22.4229  relative per A =  42.6929
+  delta=1e-01  ||dHv||/delta =   20.2684  relative per A =  38.5908
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float32 does not match model dtype float64, converting models to float32.
+
+=== D4 at the saddle ===
+  float64 negatives: ['-0.295964']
+  float32 negatives: ['-0.295966']
+  max |dlambda| = 1.505e-05
+  float32 trivial floor = 3.420e-06

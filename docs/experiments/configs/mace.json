@@ -1,0 +1,2 @@
+{"model_paths": "/home/ruigengji/MLPATH/models/MACE-OFF24_medium.model",
+ "device": "cuda", "default_dtype": "float64"}

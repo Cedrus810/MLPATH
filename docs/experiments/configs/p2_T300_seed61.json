@@ -1,0 +1,153 @@
+{
+ "active_atoms": null,
+ "analytic_hessian_check": 0.01,
+ "automorphism_limit": 20000,
+ "basin_energy_eV": 0.05,
+ "basin_rmsd_A": 0.15,
+ "bend_amplitudes_rad": [
+  0.09,
+  0.17,
+  0.35
+ ],
+ "bond_hysteresis": 0.08,
+ "bond_scale": 1.2,
+ "boundary_continuation_descend_saddles": true,
+ "boundary_continuation_enabled": true,
+ "boundary_continuation_max_steps": 8,
+ "boundary_continuation_per_run": 4,
+ "boundary_continuation_seeds": 2,
+ "boundary_continuation_step_A": 0.05,
+ "charge_sensitive": false,
+ "chemical_max_nodes": 8,
+ "chemical_trials_per_node": 120,
+ "closed_shell_only": true,
+ "collateral_bond_A": 0.05,
+ "collateral_gate": true,
+ "conformer_max_per_node": 8,
+ "conformer_temperature_K": 300.0,
+ "conformer_trials_per_microstate": 32,
+ "direction_quota_fraction": 0.5,
+ "families": [
+  "stretch",
+  "compress",
+  "bend",
+  "kick",
+  "torsion",
+  "torsion_kick"
+ ],
+ "free_alignment_samples": 24,
+ "geometry_amplitudes_A": [
+  0.15,
+  0.35,
+  0.5,
+  0.8
+ ],
+ "hbond_acceptor_A": 2.5,
+ "hbond_angle_deg": 120.0,
+ "hessian_source": "auto",
+ "irc_enabled": true,
+ "irc_max_per_run": 16,
+ "irc_relay_hops": 3,
+ "irc_step_A": 0.15,
+ "kick_energies_eV": [
+  0.3,
+  1.0
+ ],
+ "max_depth": 1,
+ "max_directions": 16,
+ "max_energy_rise_eV_atom": 20.0,
+ "max_force_eV_A": 100.0,
+ "max_nve_drift_eV_atom": 0.1,
+ "max_trials": 60,
+ "max_uncertainty_eV_A": null,
+ "min_directions_per_family": 2,
+ "min_distance_ratio": 0.45,
+ "min_mode_backtracks": 8,
+ "min_mode_fmax_eV_A": 0.01,
+ "min_mode_max_steps": 200,
+ "min_mode_overlap": 0.5,
+ "min_mode_refresh": 5,
+ "min_mode_step_A": 0.05,
+ "min_pair_hops": 4,
+ "minimum_check": "hessian",
+ "minimum_check_displacement_A": 0.05,
+ "minimum_check_eigenvalue_tol": 0.001,
+ "minimum_check_probes": 2,
+ "minimum_check_step_A": 0.01,
+ "multiplicity": null,
+ "pair_cutoff_A": 4.0,
+ "pulse_forces_eV_A": [
+  0.5,
+  1.0,
+  2.0
+ ],
+ "pulse_steps": 20,
+ "quench_fmax_eV_A": 0.02,
+ "quench_steps": 200,
+ "refinement_steps": 3,
+ "reservoir_weight_diversity": 1.0,
+ "reservoir_weight_energy": 1.0,
+ "reservoir_weight_response": 1.0,
+ "response_band_A": [
+  0.01,
+  0.1
+ ],
+ "response_band_enabled": true,
+ "response_descent_max_steps": 40,
+ "response_descent_step": 0.2,
+ "response_descent_tol": 0.001,
+ "response_samples": 5,
+ "response_significance": 3.0,
+ "response_steps": 160,
+ "saddle_search_enabled": true,
+ "saddle_search_max_rise_eV": 1.5,
+ "saddle_search_per_run": 8,
+ "saddle_search_seeds": 2,
+ "sample_interval": 20,
+ "seed": 61,
+ "soft_mode_curvature_floor_eV_rad2": 0.01,
+ "soft_mode_curvature_max_eV_rad2": 50.0,
+ "soft_mode_scan_points": 12,
+ "soft_mode_step_rad": 0.02,
+ "soft_polish_rounds": 6,
+ "soft_polish_steps": 6,
+ "temperature_K": 300.0,
+ "timestep_fs": 0.25,
+ "torsion_amplitudes_rad": [
+  0.52,
+  1.05,
+  2.09
+ ],
+ "torsion_symmetry_margin_rad": 0.2,
+ "torsion_tolerance_rad": 0.0175,
+ "total_charge": null,
+ "tracked_coordinates": [
+  {
+   "indices": [
+    0,
+    5,
+    4,
+    5
+   ],
+   "kind": "bond_difference",
+   "name": "q_PT"
+  },
+  {
+   "indices": [
+    0,
+    5
+   ],
+   "kind": "bond",
+   "name": "r_O1_H"
+  },
+  {
+   "indices": [
+    4,
+    5
+   ],
+   "kind": "bond",
+   "name": "r_O2_H"
+  }
+ ],
+ "trivial_floor_fraction": 0.5
+}

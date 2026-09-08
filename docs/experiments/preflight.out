@@ -1,0 +1,36 @@
+
+=== P1 malonaldehyde (symmetric) ===
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+  A (H on O2): fmax=1.62e-03  E=-7274.549375 eV
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+  B (H on O1): fmax=1.66e-03  E=-7274.549375 eV
+  A proton bonds: [(4, 5)]  (O1=0, O2=4)
+  B proton bonds: [(0, 5)]  (O1=0, O2=4)
+  graph_hash  A=959c23c2d9d4a1ef  B=959c23c2d9d4a1ef  same=True
+  chemical_key same: True
+  locked_bond_parity A=1 B=1
+  broken=[[4, 5]]  formed=[[0, 5]]
+  event key fwd=a04410b76e16b117  rev=a04410b76e16b117
+  >>> classification: degenerate_reaction
+  energy difference B - A = 0.00 meV
+
+=== P2 3-oxobutanal enol (asymmetric) ===
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+  A (H on O2): fmax=1.31e-03  E=-8345.309624 eV
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+  B (H on O1): fmax=9.27e-04  E=-8345.363587 eV
+  A proton bonds: [(4, 5)]  (O1=0, O2=4)
+  B proton bonds: [(0, 5)]  (O1=0, O2=4)
+  graph_hash  A=6b9cbfe364d83a0b  B=b097b7d49519f89f  same=False
+  chemical_key same: False
+  locked_bond_parity A=2 B=1
+  broken=[[4, 5]]  formed=[[0, 5]]
+  event key fwd=b4c3ba7d108c52ad  rev=b4c3ba7d108c52ad
+  >>> classification: reaction
+  energy difference B - A = -53.96 meV

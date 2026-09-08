@@ -1,0 +1,163 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+A: lam[:8] = [-0.003183, -0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.002493]
+   negative modes [0]  floor residual 4.93e-16
+   negative-mode amplitude by atom (top 8):
+     atom 13 H  |v| = 0.6256
+     atom 12 H  |v| = 0.5959
+     atom 14 H  |v| = 0.5013
+     atom  2 O  |v| = 0.0252
+     atom  0 C  |v| = 0.0211
+     atom  1 C  |v| = 0.0188
+     atom 20 H  |v| = 0.0112
+     atom 15 H  |v| = 0.0109
+   fraction of |v|^2 on the phenyl ring atoms [6, 7, 8, 9, 10, 11]: 0.000
+   fraction on the methyl (atom 0 + its H): 0.000
+   fraction on the shared proton (atom 16): 0.000
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[desc+0.05]
+   tag                desc+0.05
+   E_eV               -14637.362242395988
+   fmax               0.0011114280162396982
+   n_minus            1
+   lam6               [-0.004153, -0.0, -0.0, 0.0, 0.0, 0.0]
+   floor_residual     4.0017162294848626e-16
+   r_OO               2.518972196998284
+   key                8710064d12ce6a5a
+   graph_hash         019cb0438e57c86c
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[desc+0.10]
+   tag                desc+0.10
+   E_eV               -14637.362110237736
+   fmax               0.001240322427456881
+   n_minus            1
+   lam6               [-0.005676, -0.0, -0.0, 0.0, 0.0, 0.0]
+   floor_residual     5.266453548062067e-16
+   r_OO               2.518422081721117
+   key                8710064d12ce6a5a
+   graph_hash         019cb0438e57c86c
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[desc+0.20]
+   tag                desc+0.20
+   E_eV               -14637.362034434604
+   fmax               0.0018741480724041304
+   n_minus            1
+   lam6               [-0.005807, -0.0, -0.0, -0.0, 0.0, 0.0]
+   floor_residual     1.2269483999215354e-16
+   r_OO               2.518665390438675
+   key                8710064d12ce6a5a
+   graph_hash         019cb0438e57c86c
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[desc-0.05]
+   tag                desc-0.05
+   E_eV               -14637.362645770168
+   fmax               0.001277504346694984
+   n_minus            1
+   lam6               [-0.001635, -0.0, -0.0, 0.0, 0.0, 0.0]
+   floor_residual     4.2644127839401927e-16
+   r_OO               2.519684533997588
+   key                8710064d12ce6a5a
+   graph_hash         019cb0438e57c86c
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[desc-0.10]
+   tag                desc-0.10
+   E_eV               -14637.365131424825
+   fmax               0.0017724255186408189
+   n_minus            0
+   lam6               [-0.0, -0.0, -0.0, 0.0, 0.0, 0.0]
+   floor_residual     1.9615510343410554e-16
+   r_OO               2.528947973306359
+   key                8710064d12ce6a5a
+   graph_hash         019cb0438e57c86c
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[desc-0.20]
+   tag                desc-0.20
+   E_eV               -14637.365178337403
+   fmax               0.0015375314577193919
+   n_minus            0
+   lam6               [-0.0, -0.0, -0.0, -0.0, -0.0, 0.0]
+   floor_residual     2.5067078950192293e-16
+   r_OO               2.528673197206004
+   key                8710064d12ce6a5a
+   graph_hash         019cb0438e57c86c
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+
+confirmed minima among the six descents: ['desc-0.10', 'desc-0.20']
+lowest confirmed minimum: desc-0.20  E = -14637.365178 eV  r_OO = 2.529 A
+  vs A (saddle)            E = -14637.362424 eV  drop = -2.754 meV
+  matches the 1.50 meV lower conformer seen in the landscape sample: False
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+
+[B_from_source]
+   tag                B_from_source
+   E_eV               -14637.378327438732
+   fmax               0.0010737398160070855
+   n_minus            0
+   lam6               [-0.0, -0.0, 0.0, 0.0, 0.0, 0.0]
+   floor_residual     5.625857538455975e-16
+   r_OO               2.5181198791948765
+   key                b1a4338a45f1d300
+   graph_hash         e9d5ad68aa04d88e
+   fragments          ['C10H10O2']
+   stereo_unresolved  None
+   n_locked_parity    1
+
+--- P2-style preflight on the confirmed pair ---
+P1'  both n_minus == 0                          True
+P2'  key and graph_hash differ                  True
+P3'  both C10H10O2, valence-resolved            True
+P4'  event key direction-invariant, one O-H     True
+     classify=reaction  broken=[[5, 16]] formed=[[2, 16]]
+     event_key=6e1ee45ce5a39fd8
+P5'  chelate closed both ends                   True  (2.529 / 2.518 A)
+     dE(B-A) = -13.149 meV
+
+wrote runs/p3_source_prep.json, p3_A_source.extxyz, p3_B_source.extxyz

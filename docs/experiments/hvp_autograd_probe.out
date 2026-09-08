@@ -1,0 +1,25 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+atoms=9  E0=-4220.255326058 eV  fmax=6.6124 eV/A
+energy via direct model call: -4220.255326058  dE vs calculator = 0.000e+00
+force  via direct model call: max|dF| vs calculator = 1.110e-15 eV/A
+
+--- exact double-backward Hv vs central-difference Hv (eV/A^2) ---
+  v  |Hv_exact|inf     eps=1e-3     eps=1e-2     eps=5e-2   (max abs dev)
+  0      20.018697    1.437e-05    1.436e-03    3.542e-02
+  1      13.446469    9.160e-06    9.157e-04    2.271e-02
+  2      40.064488    7.753e-05    7.751e-03    1.924e-01
+
+symmetry  v0.H v1 = 4.388622947426   v1.H v0 = 4.388622947426   diff = 2.665e-15
+asymmetry of get_hessian: max|H-H^T| = 1.066e-14
+  v0: max|H@v - Hv_exact| = 4.441e-15
+  v1: max|H@v - Hv_exact| = 1.776e-15
+  v2: max|H@v - Hv_exact| = 7.105e-15
+
+cost per force eval           35.42 ms
+cost per exact Hv (full)      69.52 ms   = 1.96 force evals
+cost per FD Hv (2 forces)     70.83 ms
+peak CUDA mem 117.9 MiB
+full analytic Hessian        945.65 ms   = 26.7 force evals (FD full Hessian would be 54 = 1912 ms)

@@ -1,0 +1,36 @@
+
+=== kernel: 4 workers, 3 interleaved repeats ===
+   no_mps  median per-call    0.028 ms   median aggregate 132150.8 calls/s   n=12
+           backgrounds: gpu 9493, 100 MiB/%, searches 24 | gpu 9493, 100 MiB/%, searches 24 | gpu 9493, 100 MiB/%, searches 24
+      mps  median per-call    0.169 ms   median aggregate  19451.7 calls/s   n=12
+           backgrounds: gpu 9493, 100 MiB/%, searches 24 | gpu 9493, 100 MiB/%, searches 24 | gpu 9493, 100 MiB/%, searches 24
+  --> MPS / no-MPS aggregate = 0.15x   (MPS slower)
+  [mace no_mps repeat 0] 1/4 workers failed:
+    queeze(-1)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+    RuntimeError: cusolver error: CUSOLVER_STATUS_INTERNAL_ERROR, when calling `cusolverDnCreate(handle)`. If you keep seeing this error, you may use `torch.backends.cuda.preferred_linalg_library()` to try linear algebra operators with other supported backends. See https://pytorch.org/docs/stable/backends.html#torch.backends.cuda.preferred_linalg_library
+    
+  [mace mps repeat 0] 4/4 workers failed:
+    in use. Of the allocated memory 35.47 MiB is allocated by PyTorch, and 14.53 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+    
+  [mace no_mps repeat 1] 4/4 workers failed:
+    in use. Of the allocated memory 35.47 MiB is allocated by PyTorch, and 14.53 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+    
+  [mace mps repeat 1] 4/4 workers failed:
+    in use. Of the allocated memory 35.47 MiB is allocated by PyTorch, and 14.53 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+    
+  [mace no_mps repeat 2] 4/4 workers failed:
+    in use. Of the allocated memory 35.47 MiB is allocated by PyTorch, and 14.53 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+    
+  [mace mps repeat 2] 3/4 workers failed:
+    n use. Of the allocated memory 1012.50 KiB is allocated by PyTorch, and 1.01 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+    
+
+=== mace: 4 workers, 3 interleaved repeats ===
+   no_mps  median per-call  860.259 ms   median aggregate      3.5 calls/s   n=3
+           backgrounds: gpu 9797, 100 MiB/%, searches 24 | gpu 9861, 100 MiB/%, searches 24 | gpu 9839, 100 MiB/%, searches 24
+      mps  median per-call  661.103 ms   median aggregate      1.5 calls/s   n=1
+           backgrounds: gpu 9839, 100 MiB/%, searches 24 | gpu 9839, 100 MiB/%, searches 24 | gpu 9841, 100 MiB/%, searches 24
+  --> MPS / no-MPS aggregate = 0.44x   (MPS slower)
+
+wrote runs/mps_ab.json

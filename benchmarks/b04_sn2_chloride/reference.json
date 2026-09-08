@@ -1,0 +1,39 @@
+{
+  "literature_unverified_here": {
+    "note": "Gas-phase identity SN2, Cl- + CH3Cl, high-level calculations. NOT reproduced in this project. Quoted so the comparison is falsifiable, never as a criterion.",
+    "ion_dipole_complex_kcal": -10.5,
+    "barrier_kcal": 3.0
+  },
+  "textbook_expectation": {
+    "label": "SN2",
+    "claim": "concerted -- one transition state, no intermediate between the ion-dipole complex and its mirror image",
+    "status": "This is a PREDICTION this benchmark can falsify, not an input. Per benchmarks/README.md rule 5 it does not appear in CRITERIA.md. If the search reports a confirmed minimum on the substitution channel, the benchmark still passes and this line is what was wrong."
+  },
+  "measured_here": {
+    "source": "runs/sn2_probe.json via docs/experiments/sn2_probe.py, 2026-09-02",
+    "caveat": "A probe, not a search: geometries were constructed and constrained by hand, the product was known in advance. It establishes that the models can describe this surface. It establishes nothing about whether PRRS can find it.",
+    "MACE-omol-0-4M": {
+      "complex_kcal": -9.57,
+      "barrier_kcal": 13.24,
+      "negative_eigenvalue_eV_A2_amu": -0.08222271029006589
+    },
+    "MACE-POLAR-1-M": {
+      "complex_kcal": -9.23,
+      "barrier_kcal": 4.53,
+      "negative_eigenvalue_eV_A2_amu": -1.0548769311968995
+    },
+    "eigenvalue_caveat": "negative Hessian eigenvalue at a point whose residual gradient was never measured -- the D3h geometry was located by minimising energy in a two-parameter symmetric subspace and its stationarity was ARGUED from symmetry, not measured. omega^2 = lambda/mu needs a stationary point, so this may NOT be called a frequency and may NOT be quoted in cm^-1. An analytic Hessian at a non-stationary point is exact and meaningless.",
+    "barrier_caveat": "Same point, same problem: an energy read at a geometry that was not shown to be stationary is not a barrier height.",
+    "conversion_note": "The eigenvalues above are what the code computes (runner.hessian_spectrum, eV/(Angstrom^2 amu)). The cm^-1 numbers that appear in runs/sn2_probe.json (-149.5, -535.6) are the conventional rewriting nu = -(1/2 pi c) sqrt(-lambda), so a factor of 12.83 in the eigenvalues is a factor of sqrt(12.83) = 3.58 in wavenumbers. They are one fact, not two. Quote the eigenvalue: it is what was computed, and it carries no claim about stationarity."
+  },
+  "T_E_QM": {
+    "source": "docs/experiments/sn2_qm/README.md, 2026-09-04, ORCA 6.1.1",
+    "level": "wB97M-V/def2-TZVPD/DEFGRID2 // r2SCAN-3c",
+    "stationarity": "MEASURED, not argued: complex RMS grad 2.47e-5 with 0 imaginary modes; D3h saddle RMS grad 1.14e-5 with exactly 1 imaginary mode at -314.42 cm^-1 and next mode +195.87. This is the precondition runs/sn2_probe.json lacks.",
+    "complex_kcal": -9.63,
+    "ts_vs_ref_kcal": 3.39,
+    "ts_vs_complex_kcal": 13.02,
+    "ts_r_CCl_A": 2.3645,
+    "vs_literature": "complex -10.50 / barrier +3.00 / +13.50 -- agreement 0.4-0.9 kcal/mol, which is what calibrates this protocol."
+  }
+}

@@ -1,0 +1,51 @@
+note: TF32 was on at import (matmul=False, cudnn=True); forced off. float64 is unaffected either way.
+env {"label": "rotor resolution", "hostname": "kasuga01", "platform": "Linux-7.2.0-1-cachyos-x86_64-with-glibc2.44", "python": "3.12.13", "torch": "2.12.0", "numpy": "2.4.3", "cuda_visible": "<all>", "cuda_device": "NVIDIA GeForce RTX 2080 Ti", "omp_threads": "<unset>", "tf32_matmul": false, "tf32_cudnn": false, "tf32_was_on_at_import": [false, true], "default_dtype": "float64", "torch_force_no_weights_only_env": "<removed by guard; not needed>", "model_sha256_16": "e5ccf5837f685899", "implementation_sha256": "158f2f3b35200290b5548249e68e3c5a09e3c0d3a7b69a980ebf231aab4a070a"}
+/home/ruigengji/MLPATH/scripts/p3_node_bundle/_env_guard.py:115: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  return original(*args, **kwargs)
+methyl C0 H[12, 13, 14] on C1, dihedral reference O2
+
+=== as delivered, quench_fmax = 2e-3 (the protocol's tolerance) ===
+  A_source               E=-14637.3651783 fmax=1.54e-03 n-=0 lam_int=0.00220 r_OO=2.5287 dih%120=[0.46, 1.57, 119.51]
+  conf265                E=-14637.3639229 fmax=1.66e-03 n-=0 lam_int=0.00242 r_OO=2.5236 dih%120=[90.34, 91.43, 93.35]
+  dE(A_source - conf265) = -1.2554 meV
+
+=== re-relaxed at ONE tight tolerance, fmax = 2e-05 ===
+  A_source tight         E=-14637.3652117 fmax=1.27e-05 n-=0 lam_int=0.00262 r_OO=2.5289 dih%120=[0.86, 2.02, 119.96]
+  conf265 tight          E=-14637.3652117 fmax=1.21e-05 n-=0 lam_int=0.00262 r_OO=2.5289 dih%120=[0.86, 2.02, 119.96]
+  dE(A_source - conf265) at tight tolerance = +0.0000 meV
+  same minimum? True   (|dE| < 0.01 meV would mean the loose spread was convergence, not two states)
+
+=== rigid methyl rotor scan from the tight A_source ===
+   deg    E-Emin (meV)
+     0       0.000
+     5       0.309
+    10       1.194
+    15       2.548
+    20       4.228
+    25       6.092
+    30       8.018
+    35       9.907
+    40      11.679
+    45      13.265
+    50      14.605
+    55      15.649
+    60      16.365
+    65      16.736
+    70      16.767
+    75      16.477
+    80      15.894
+    85      15.046
+    90      13.969
+    95      12.705
+   100      11.324
+   105       9.927
+   110       8.643
+   115       7.606
+   120       6.922
+
+  rigid rotor barrier = 16.767 meV (period 120 deg as expected for a methyl)
+  the loose-tolerance spread over the landscape was 1.33-1.50 meV, and A_source sat
+  1.255 meV below the 80 -- both are the same size as this barrier, which is what
+  identifies them as an unresolved rotor rather than distinct conformers.
+
+wrote runs/p3_rotor_resolution.json and the two tight structures

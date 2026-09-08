@@ -1,0 +1,85 @@
+{
+  "status": "frozen_candidate",
+  "note": "User decision 2026-09-04: MACE-POLAR-1-M is the default model from P4 onward. The basis is two QM comparisons, not a preference -- see qm_reference below. MACE-OFF24 stays frozen on P0-P3; nothing there is re-run or re-labelled.",
+  "candidates": [
+    {
+      "name": "MACE-omol-0-extra-large-4M",
+      "path": "/home/ruigengji/MLP/mace/mace-omol-0-extra-large-4M.model",
+      "sha256": "1876b02448337595d9417f656f720e700140a1ac6d6d75308dab4aa85cf6d79a",
+      "checkpoint_class": "ScaleShiftMACE",
+      "mace_model_type": "MACE",
+      "heads": [
+        "omol"
+      ],
+      "elements": 82,
+      "training_set": "OMol25",
+      "why": "OMol25 is the dataset the ACS Catal. 2026 16 8053 evaluation rests on: charge, spin multiplicity, >80 elements, and explicitly systems with partially ruptured or forming bonds. That paper validated the eSEN/UMA architecture, not MACE -- what transfers here is the dataset argument, not the architecture validation."
+    },
+    {
+      "name": "MACE-POLAR-1-M",
+      "path": "/home/ruigengji/MLP/mace/MACE-POLAR-1-M.model",
+      "sha256": "fab8b8713c832f31a2a853aaa22fd638be8a369cbf5095e6b3e982a18d10e93a",
+      "checkpoint_class": "PolarMACE",
+      "mace_model_type": "PolarMACE",
+      "heads": [
+        "Default"
+      ],
+      "elements": 83,
+      "training_set": "UNVERIFIED -- not readable from the checkpoint; must be established before this model can be frozen for a benchmark",
+      "why": "Charge-aware and already exercised on this exact reaction by docs/experiments/sn2_probe.py. Its provenance is the open question."
+    }
+  ],
+  "excluded": [
+    {
+      "name": "MACE-OFF24_medium",
+      "why": "No charge machinery at all: energies are bit-identical for total charge 0, -1 and +1 (PRRS_STATUS.md section 2.5). Every point on this path would be one object to it. Also only 10 elements."
+    }
+  ],
+  "limitations": {
+    "barrier_disagreement": "On this reaction the two candidates agree on identity and disagree on the transition region: energy above reference +13.24 vs +4.53 kcal/mol, lowest Hessian eigenvalue -0.0822 vs -1.0549 eV/A^2/amu (runs/sn2_probe.json). NEITHER may be called a barrier or a frequency: the D3h point's residual gradient was never measured, so the stationarity omega^2 = lambda/mu requires was argued from symmetry rather than established. No reference calculation was done here either. NEITHER MODEL MAY BE CALLED BETTER on these numbers. This is the measured basis for benchmarks/README.md rule 2: criteria state identity and topology, never energetics.",
+    "open_shell": "ACS Catal. 2026, 16, 8053 records UMA failing on a structure bridging closed-shell and open-shell singlet states. Any pathway that could go diradical must distinguish 'the search found nothing' from 'the model cannot represent it' -- rule 4."
+  },
+  "qm_reference": {
+    "protocol": "r2SCAN-3c geometry+frequencies, then wB97M-V/def2-TZVPD single point on it. Reproduces the gas-phase SN2 literature to 0.4-0.9 kcal/mol.",
+    "documents": [
+      "docs/experiments/sn2_qm/README.md",
+      "docs/experiments/p1_qm/README.md"
+    ],
+    "error_vs_T_E_QM_same_geometries": {
+      "sn2_central_barrier_kcal": {
+        "MACE-POLAR-1-M": 2.09,
+        "MACE-omol-0-4M": 10.46,
+        "MACE-OFF24_medium": "cannot: no charge response"
+      },
+      "malonaldehyde_barrier_meV": {
+        "MACE-POLAR-1-M": 12.1,
+        "MACE-omol-0-4M": -1.8,
+        "MACE-OFF24_medium": 276.0
+      },
+      "note": "These are model errors at FIXED (r2SCAN-3c) geometries -- E_model(DFT geom) minus E_QM(DFT geom). Do not confuse with P1's own barrier: PRRS reports 419 meV on the geometry it found itself, about 285 meV from the QM value of 134.4. Use 419/285 whenever the subject is P1's barrier."
+    },
+    "why_POLAR_1": "omol-0 is the more accurate of the two on neutral organic proton transfer (-1.8 vs +12.1 meV) and the far worse of the two on ionic SN2 (+10.46 vs +2.09 kcal/mol). POLAR-1 is the only candidate that holds on both, and b05/b06 are ionic.",
+    "surprise_worth_keeping": "A specialist model did NOT win on its own domain. MACE-OFF is trained on neutral organic molecules and is off by 276 meV -- a factor of three -- on a neutral organic proton transfer, while two general 82/83-element models land within 12 meV.",
+    "caveat": "n = 2 reactions, single points on DFT geometries only. This is not T[E_m]: no model was allowed to optimise its own saddle. That needs ORCA ExtOpt driving the MLP and has not been done."
+  },
+  "chosen": "MACE-POLAR-1-M",
+  "why_this_one_for_b04": "Default from P4 onward (user, 2026-09-04). For b04 specifically it also removes the domain-gate blocker: the gate's stated reason is MACE-OFF24's neutral training domain, which does not apply, so closed_shell_only = False is a declared model property here rather than a workaround.",
+  "per_atom_charge_channel": {
+    "note": "PolarMACE learns per-atom charge/spin density with a global constraint sum(q_i) = Q_total, and returns monopole charges, density coefficients and a dipole. MACE-omol-0 has only a system-level charge/spin embedding and returns no per-atom charges. Verified by execution 2026-09-04.",
+    "measured_on_the_b04_input": {
+      "declared_Q_minus_1": {
+        "sum_q": -1.0,
+        "q_nucleophilic_Cl": -0.9729,
+        "q_leaving_Cl": -0.044,
+        "dipole_norm": 2.963
+      },
+      "declared_Q_zero": {
+        "sum_q": -0.0,
+        "q_nucleophilic_Cl": -0.0314,
+        "q_leaving_Cl": -0.0216,
+        "dipole_norm": 0.3709
+      }
+    },
+    "why_it_matters": "The two declarations are different physical objects, not a precision difference, and nothing used to notice. This is what prrs.search._stamped_with_charge now refuses to let happen. It is also why an integer valence table is the wrong thing to gate existence with here: the model resolves the local charge distribution continuously and correctly on a system the Lewis ledger cannot represent at all."
+  }
+}

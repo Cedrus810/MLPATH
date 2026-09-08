@@ -1,0 +1,4 @@
+! r2SCAN-3c TightSCF OPT FREQ
+%pal nprocs 32 end
+%maxcore 2100
+* xyzfile 0 1 g_backward.xyz

@@ -1,0 +1,4 @@
+! r2SCAN-3c TightSCF OPT Freq
+%pal nprocs 32 end
+%maxcore 2100
+* xyzfile -1 1 irc_IRC_B.xyz

@@ -1,0 +1,11 @@
+! r2SCAN-3c TightSCF PAL32 OptTS FREQ
+%maxcore 3000
+%geom Calc_Hess true Recalc_Hess 5 end
+* xyz -1 1
+C 0.000 0.000 0.000
+Cl 0.000 0.000 2.350
+Cl 0.000 0.000 -2.350
+H 1.075 0.000 0.000
+H -0.538 0.931 0.000
+H -0.538 -0.931 0.000
+*

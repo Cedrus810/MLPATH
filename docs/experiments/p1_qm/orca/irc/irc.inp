@@ -1,0 +1,8 @@
+! r2SCAN-3c TightSCF IRC
+%pal nprocs 32 end
+%maxcore 2100
+%irc
+  MaxIter 80
+  InitHess calc_anfreq
+end
+* xyzfile 0 1 p1ts.xyz
