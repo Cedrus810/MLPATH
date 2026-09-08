@@ -1,4 +1,5 @@
 """Atomic manifests, append-only attempt records, physical snapshots."""
+
 import hashlib
 import json
 import math
@@ -42,7 +43,8 @@ def dumps_strict(data):
         more = "" if len(offenders) <= 8 else f" (and {len(offenders) - 8} more)"
         raise ValueError(
             f"{exc}. Non-finite values at: {detail}{more}. A record may not carry NaN or "
-            "infinity; fix the source rather than relaxing this check.") from exc
+            "infinity; fix the source rather than relaxing this check."
+        ) from exc
 
 
 def atomic_json(path, data):
@@ -53,8 +55,8 @@ def atomic_json(path, data):
     try:
         text = json.dumps(data, indent=2, allow_nan=False)
     except ValueError:
-        dumps_strict(data)                      # raises with the field names
-        raise                                   # unreachable; kept so the intent is plain
+        dumps_strict(data)  # raises with the field names
+        raise  # unreachable; kept so the intent is plain
     temp.write_text(text + "\n", encoding="utf-8")
     os.replace(temp, path)
 
@@ -66,11 +68,15 @@ def append_json(path, data):
 
 
 def structure_hash(atoms):
-    payload = {"numbers": atoms.numbers.tolist(), "positions": atoms.positions.tolist(),
-               "masses": atoms.get_masses().tolist(), "pbc": atoms.pbc.tolist(),
-               "cell": atoms.cell.tolist(),
-               "initial_charges": atoms.get_initial_charges().tolist(),
-               "initial_magmoms": atoms.get_initial_magnetic_moments().tolist()}
+    payload = {
+        "numbers": atoms.numbers.tolist(),
+        "positions": atoms.positions.tolist(),
+        "masses": atoms.get_masses().tolist(),
+        "pbc": atoms.pbc.tolist(),
+        "cell": atoms.cell.tolist(),
+        "initial_charges": atoms.get_initial_charges().tolist(),
+        "initial_magmoms": atoms.get_initial_magnetic_moments().tolist(),
+    }
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
 
@@ -80,4 +86,3 @@ def snapshot(atoms, physical):
     result = atoms.copy()
     result.calc = SinglePointCalculator(result, energy=energy, forces=np.array(forces))
     return result
-

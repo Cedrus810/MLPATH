@@ -24,3 +24,17 @@ where = ["src"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 
+[tool.ruff]
+# 96, not 88. The prose in this codebase is load-bearing -- docstrings carry the
+# measurements that justify the defaults -- and at 88 those paragraphs rewrap into
+# noise. Installed in .venv-tools, deliberately outside the openmm_dev science
+# environment: `python -m venv .venv-tools && .venv-tools/bin/pip install ruff`.
+# Formatting must never be a reason for that environment to move.
+line-length = 96
+extend-exclude = [".venv", ".venv-tools", "runs", "docs/design"]
+
+[tool.ruff.lint]
+# Pyflakes and the pycodestyle errors only. No import sorting: the import blocks here
+# are grouped by layer, and isort would flatten that into alphabetical order.
+select = ["E", "F", "W"]
+ignore = ["E501"]   # the formatter owns line length; the linter must not second-guess it

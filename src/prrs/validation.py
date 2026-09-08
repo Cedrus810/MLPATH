@@ -17,6 +17,7 @@ Two checks, and they are not interchangeable:
 This module lives outside the search on purpose: it belongs to the analysis layer, like
 `openmm_backend`, and importing it must never be necessary to run a search.
 """
+
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import numpy as np
@@ -56,8 +57,9 @@ def internal_eigenvalues(eigenvalues, trivial_count):
 
 def cartesian_hessian(candidate, factory, config, source="auto"):
     """Our Hessian in eV/Angstrom^2, undoing the mass weighting exactly."""
-    mass_weighted, basis, provenance = _mass_weighted_hessian(candidate, factory, config,
-                                                              source)
+    mass_weighted, basis, provenance = _mass_weighted_hessian(
+        candidate, factory, config, source
+    )
     root = np.sqrt(np.repeat(candidate.get_masses(), 3))
     return mass_weighted * np.outer(root, root), basis, provenance
 
@@ -69,6 +71,7 @@ def ase_energies_from_our_hessian(candidate, factory, config, source="auto"):
     error floor rather than zeros; `internal_eigenvalues` removes them from both sides.
     """
     from ase.vibrations import VibrationsData
+
     hessian, basis, provenance = cartesian_hessian(candidate, factory, config, source)
     count = len(candidate)
     data = VibrationsData(candidate, hessian.reshape(count, 3, count, 3))
@@ -83,16 +86,23 @@ def ase_vibrations_energies(candidate, factory, config, delta=None):
     approximations of the same limit.
     """
     from ase.vibrations import Vibrations
+
     atoms = candidate.copy()
     guard = GuardedCalculator(factory(), config, None)
     atoms.calc = guard
     step = config.minimum_check_step_A if delta is None else float(delta)
     with TemporaryDirectory() as directory:
-        vibrations = Vibrations(atoms, name=str(Path(directory) / "vib"), delta=step,
-                               nfree=2)
+        vibrations = Vibrations(atoms, name=str(Path(directory) / "vib"), delta=step, nfree=2)
         vibrations.run()
         energies = vibrations.get_energies()
     trivial = len(_trivial_modes(candidate.positions, candidate.get_masses()))
-    return energies, trivial, {"source": "ase.vibrations", "delta_A": step,
-                               "force_evaluations": 6 * len(candidate),
-                               "meaning": "independent central differences, unprojected"}
+    return (
+        energies,
+        trivial,
+        {
+            "source": "ase.vibrations",
+            "delta_A": step,
+            "force_evaluations": 6 * len(candidate),
+            "meaning": "independent central differences, unprojected",
+        },
+    )

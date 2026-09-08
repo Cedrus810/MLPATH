@@ -3,8 +3,14 @@
 Why the full sweep: the local probe relaxed 18 of 300 conformers and they collapsed onto
 4 distinct energies within 1.5 meV, all one chemical_key. That is a sample, not a count.
 The reservoir capacity criterion for P3 (conformer_max_per_node) needs the real number of
-distinct closed-chelate minima, and confirm_minimum on each -- the local probe skipped the
+distinct closed-chelate minima, and a Hessian on each -- the local probe skipped the
 Hessian on the landscape members to save time, so none of those 18 is confirmed.
+
+A Hessian, not `confirm_minimum`: this counts the negatives off `curvature_spectrum`
+directly and none of the gates -- the rigid-body floor, the internal-mode recheck -- runs
+here. An earlier version of this line said confirm_minimum and it was repeated in
+docs/experiments/landscape_regression.py, where it turned into a claim that this job was
+the one exercising the recheck gate. It is not; `ts` is, through `descend_saddle`.
 
 Cost on the node (23.8 ms/point): ~150 relax (about 150 calls each) + 300 Hessians.
 Estimate 300 x (150 x 0.024 + 4.5/2.2) s ~ 3.3 h. Sequential by design; see README.

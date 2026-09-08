@@ -1,4 +1,5 @@
 """Physical potentials and calculator factories. No model is downloaded implicitly."""
+
 from importlib import import_module
 from pathlib import Path
 import numpy as np
@@ -11,9 +12,12 @@ class DoubleWell(Calculator):
 
     Minima r=1.2 and 2.4 Angstrom, barrier 0.4 eV at r=1.8 Angstrom.
     """
+
     implemented_properties = ["energy", "forces"]
 
-    def calculate(self, atoms=None, properties=("energy", "forces"), system_changes=all_changes):
+    def calculate(
+        self, atoms=None, properties=("energy", "forces"), system_changes=all_changes
+    ):
         super().calculate(atoms, properties, system_changes)
         if len(atoms) != 2:
             raise ValueError("DoubleWell requires exactly two atoms")
@@ -39,6 +43,7 @@ def demo_atoms():
 
 class Committee(Calculator):
     """Mean PES plus maximum per-atom RMS vector force disagreement in eV/A."""
+
     implemented_properties = ["energy", "forces"]
 
     def __init__(self, members):
@@ -49,7 +54,9 @@ class Committee(Calculator):
             raise ValueError("Committee members must be separate calculators")
         self.members = members
 
-    def calculate(self, atoms=None, properties=("energy", "forces"), system_changes=all_changes):
+    def calculate(
+        self, atoms=None, properties=("energy", "forces"), system_changes=all_changes
+    ):
         super().calculate(atoms, properties, system_changes)
         energies, forces = [], []
         for member in self.members:
@@ -58,8 +65,11 @@ class Committee(Calculator):
         force_array = np.asarray(forces)
         mean = force_array.mean(axis=0)
         disagreement = np.sqrt(np.mean(np.sum((force_array - mean) ** 2, axis=2), axis=0))
-        self.results = {"energy": float(np.mean(energies)), "forces": mean,
-                        "force_uncertainty_eV_A": float(np.max(disagreement))}
+        self.results = {
+            "energy": float(np.mean(energies)),
+            "forces": mean,
+            "force_uncertainty_eV_A": float(np.max(disagreement)),
+        }
 
 
 def load_factory(spec, kwargs=None):
@@ -75,6 +85,7 @@ def load_factory(spec, kwargs=None):
         if not isinstance(calc, Calculator):
             raise TypeError("Factory must return an ASE Calculator")
         return calc
+
     return create
 
 
@@ -87,7 +98,8 @@ def mace_factory(model_paths, device="cpu", default_dtype="float64"):
         from mace.calculators import MACECalculator
     except ImportError as exc:
         raise ImportError("Install mlpath-prrs[mace] to load MACE checkpoints") from exc
-    members = [MACECalculator(model_paths=str(p), device=device, default_dtype=default_dtype)
-               for p in paths]
+    members = [
+        MACECalculator(model_paths=str(p), device=device, default_dtype=default_dtype)
+        for p in paths
+    ]
     return members[0] if len(members) == 1 else Committee(members)
-

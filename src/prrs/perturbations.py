@@ -11,6 +11,7 @@ per rotatable bond rather than one per dihedral about it, because all dihedrals 
 bond differ by a constant. Spending the direction budget on symmetry copies buys
 nothing.
 """
+
 from collections import deque
 from dataclasses import asdict, dataclass
 import math
@@ -21,25 +22,68 @@ from .state import encode
 
 # mode: how the probe acts. sign: fixed by the family, or None when both are proposed.
 FAMILIES = {
-    "stretch":      {"kind": "bond", "mode": "displace", "sign": 1,
-                     "amplitudes": "geometry_amplitudes_A", "bonded": True},
-    "compress":     {"kind": "bond", "mode": "displace", "sign": -1,
-                     "amplitudes": "geometry_amplitudes_A", "bonded": False},
-    "kick":         {"kind": "bond", "mode": "kick", "sign": None,
-                     "amplitudes": "kick_energies_eV", "bonded": None},
-    "pulse":        {"kind": "bond", "mode": "pulse", "sign": None,
-                     "amplitudes": "pulse_forces_eV_A", "bonded": None},
-    "bend":         {"kind": "angle", "mode": "displace", "sign": None,
-                     "amplitudes": "bend_amplitudes_rad", "bonded": None},
-    "bend_kick":    {"kind": "angle", "mode": "kick", "sign": None,
-                     "amplitudes": "kick_energies_eV", "bonded": None},
-    "torsion":      {"kind": "dihedral", "mode": "displace", "sign": None,
-                     "amplitudes": "torsion_amplitudes_rad", "bonded": None},
-    "torsion_kick": {"kind": "dihedral", "mode": "kick", "sign": None,
-                     "amplitudes": "kick_energies_eV", "bonded": None},
+    "stretch": {
+        "kind": "bond",
+        "mode": "displace",
+        "sign": 1,
+        "amplitudes": "geometry_amplitudes_A",
+        "bonded": True,
+    },
+    "compress": {
+        "kind": "bond",
+        "mode": "displace",
+        "sign": -1,
+        "amplitudes": "geometry_amplitudes_A",
+        "bonded": False,
+    },
+    "kick": {
+        "kind": "bond",
+        "mode": "kick",
+        "sign": None,
+        "amplitudes": "kick_energies_eV",
+        "bonded": None,
+    },
+    "pulse": {
+        "kind": "bond",
+        "mode": "pulse",
+        "sign": None,
+        "amplitudes": "pulse_forces_eV_A",
+        "bonded": None,
+    },
+    "bend": {
+        "kind": "angle",
+        "mode": "displace",
+        "sign": None,
+        "amplitudes": "bend_amplitudes_rad",
+        "bonded": None,
+    },
+    "bend_kick": {
+        "kind": "angle",
+        "mode": "kick",
+        "sign": None,
+        "amplitudes": "kick_energies_eV",
+        "bonded": None,
+    },
+    "torsion": {
+        "kind": "dihedral",
+        "mode": "displace",
+        "sign": None,
+        "amplitudes": "torsion_amplitudes_rad",
+        "bonded": None,
+    },
+    "torsion_kick": {
+        "kind": "dihedral",
+        "mode": "kick",
+        "sign": None,
+        "amplitudes": "kick_energies_eV",
+        "bonded": None,
+    },
 }
-UNITS = {"displace": {"bond": "Angstrom", "angle": "radian", "dihedral": "radian"},
-         "kick": "eV", "pulse": "eV/Angstrom"}
+UNITS = {
+    "displace": {"bond": "Angstrom", "angle": "radian", "dihedral": "radian"},
+    "kick": "eV",
+    "pulse": "eV/Angstrom",
+}
 
 
 @dataclass(frozen=True)
@@ -59,7 +103,11 @@ class Probe:
         if self.family not in FAMILIES:
             raise ValueError(f"unknown perturbation family {self.family!r}")
         expected = internal.KINDS[FAMILIES[self.family]["kind"]]
-        index = tuple(int(i) for i in self.indices)
+        # internal.atom_index rather than int(): a bare int() turns 1.9 into 1 and -1 into
+        # a numpy index onto the last atom, so a probe would silently act on an atom nobody
+        # named. The upper bound cannot be checked here -- a Probe is built before it meets
+        # a molecule -- so this catches the type and the sign only.
+        index = tuple(internal.atom_index(i) for i in self.indices)
         if len(index) != expected or len(set(index)) != expected:
             raise ValueError(f"{self.family} needs {expected} distinct atom indices")
         object.__setattr__(self, "indices", index)
@@ -84,8 +132,13 @@ class Probe:
         return self.indices
 
     def to_dict(self):
-        return {**asdict(self), "indices": list(self.indices), "unit": self.unit,
-                "kind": self.kind, "mode": self.mode}
+        return {
+            **asdict(self),
+            "indices": list(self.indices),
+            "unit": self.unit,
+            "kind": self.kind,
+            "mode": self.mode,
+        }
 
 
 def pair_axis(atoms, pair):
@@ -109,13 +162,17 @@ def kick_pair(atoms, pair, energy_eV, sign=1):
 def torsion_for(atoms, indices, bond_scale=1.2, active=None):
     """Look up the torsion descriptor for a dihedral at the current geometry."""
     from .chemistry import canonical_labels
+
     graph = encode(atoms, bond_scale, active=active)
     labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
     genuine, rotors = rotatable_torsions(graph, labels)
     target = tuple(indices)
     for torsion in genuine + rotors:
-        if torsion.indices == target or torsion.indices[1:3] == target[1:3] \
-                or torsion.indices[1:3] == target[2:0:-1]:
+        if (
+            torsion.indices == target
+            or torsion.indices[1:3] == target[1:3]
+            or torsion.indices[1:3] == target[2:0:-1]
+        ):
             return torsion
     return None
 
@@ -142,6 +199,7 @@ def collateral_metrics(before, after, kind, indices, bond_scale=1.2, active=None
     sum, so a real bend probe must move its neighbours.
     """
     from ase.data import covalent_radii
+
     graph = encode(before, bond_scale, active=active)
     target_bond = {indices[0], indices[1]} if kind == "bond" else None
     target_angle = tuple(indices) if kind == "angle" else None
@@ -158,21 +216,27 @@ def collateral_metrics(before, after, kind, indices, bond_scale=1.2, active=None
     for triple in _graph_angles(graph):
         if target_angle in (triple, triple[::-1]):
             continue
-        change = abs(internal.coordinate(after.positions, "angle", triple)
-                     - internal.coordinate(before.positions, "angle", triple))
+        change = abs(
+            internal.coordinate(after.positions, "angle", triple)
+            - internal.coordinate(before.positions, "angle", triple)
+        )
         if change > worst_angle:
             worst_angle, worst_angle_triple = change, triple
 
     from .chemistry import canonical_labels
+
     labels = canonical_labels(before.numbers, graph.edges, graph.index)
     genuine, rotors = rotatable_torsions(graph, labels)
     worst_torsion, worst_torsion_indices = 0.0, None
     for torsion in genuine + rotors:
-        if kind == "dihedral" and torsion.indices[1:3] in (tuple(indices[1:3]),
-                                                          tuple(indices[2:0:-1])):
+        if kind == "dihedral" and torsion.indices[1:3] in (
+            tuple(indices[1:3]),
+            tuple(indices[2:0:-1]),
+        ):
             continue
-        delta = (internal.coordinate(after.positions, "dihedral", torsion.indices)
-                 - internal.coordinate(before.positions, "dihedral", torsion.indices))
+        delta = internal.coordinate(
+            after.positions, "dihedral", torsion.indices
+        ) - internal.coordinate(before.positions, "dihedral", torsion.indices)
         change = abs((delta + np.pi) % (2 * np.pi) - np.pi)
         if change > worst_torsion:
             worst_torsion, worst_torsion_indices = change, torsion.indices
@@ -192,11 +256,11 @@ def collateral_metrics(before, after, kind, indices, bond_scale=1.2, active=None
         "closest_distance_ratio": float(ratio.min()),
         "closest_pair": [closest // len(after), closest % len(after)],
         "fragments_before": graph.components,
-        "fragments_after": _collateral_fragments(graph, after, kind, indices,
-                                                 bond_scale, active),
+        "fragments_after": _collateral_fragments(
+            graph, after, kind, indices, bond_scale, active
+        ),
         "gated": ["max_bond_change_A", "closest_distance_ratio", "fragments_after"],
-        "reported_only": ["max_nontarget_angle_change_rad",
-                          "max_nontarget_torsion_change_rad"],
+        "reported_only": ["max_nontarget_angle_change_rad", "max_nontarget_torsion_change_rad"],
     }
 
 
@@ -208,6 +272,7 @@ def _collateral_fragments(before_graph, after, kind, indices, bond_scale, active
     fragmentation the probe caused somewhere else is collateral.
     """
     from .state import Graph
+
     graph = encode(after, bond_scale, active=active)
     edges = set(graph.edges)
     if kind == "bond":
@@ -249,8 +314,11 @@ def step_torsion(atoms, torsion, delta, in_place=True):
     before = internal.coordinate(target.positions, "dihedral", torsion.indices)
     if torsion.moving:
         j, k = torsion.indices[1], torsion.indices[2]
-        target.set_positions(internal.rotate_fragment(
-            target.positions, j, k, torsion.moving, -delta, target.get_masses()))
+        target.set_positions(
+            internal.rotate_fragment(
+                target.positions, j, k, torsion.moving, -delta, target.get_masses()
+            )
+        )
     else:
         internal.displace(target, "dihedral", torsion.indices, delta)
     after = internal.coordinate(target.positions, "dihedral", torsion.indices)
@@ -269,16 +337,23 @@ def apply(atoms, probe, bond_scale=1.2, active=None):
     if probe.mode == "kick":
         before = atoms.get_kinetic_energy()
         internal.kick(atoms, probe.kind, probe.indices, probe.amplitude, probe.sign)
-        return {"requested": probe.amplitude,
-                "achieved": atoms.get_kinetic_energy() - before, "unit": probe.unit,
-                "realization": "internal_coordinate_impulse"}
+        return {
+            "requested": probe.amplitude,
+            "achieved": atoms.get_kinetic_energy() - before,
+            "unit": probe.unit,
+            "realization": "internal_coordinate_impulse",
+        }
     if probe.mode != "displace":
         raise ValueError(f"{probe.family} is applied by the trial runner, not here")
 
     reference = atoms.copy()
     requested = probe.sign * probe.amplitude
     realization = "continuation"
-    torsion = torsion_for(atoms, probe.indices, bond_scale, active)         if probe.kind == "dihedral" else None
+    torsion = (
+        torsion_for(atoms, probe.indices, bond_scale, active)
+        if probe.kind == "dihedral"
+        else None
+    )
     if torsion is not None and torsion.moving:
         realization = "rigid_rotation"
         _, _, k, _ = torsion.indices
@@ -286,18 +361,28 @@ def apply(atoms, probe, bond_scale=1.2, active=None):
         # A right-handed rotation of the l-side about j->k decreases the dihedral in the
         # convention coordinate() follows (ASE's), so the requested change is negated.
         # The paired test pins this rather than trusting the reasoning.
-        atoms.set_positions(internal.rotate_fragment(
-            atoms.positions, j, k, torsion.moving, -requested, atoms.get_masses()))
-        achieved = internal.coordinate(atoms.positions, "dihedral", probe.indices)             - internal.coordinate(reference.positions, "dihedral", probe.indices)
+        atoms.set_positions(
+            internal.rotate_fragment(
+                atoms.positions, j, k, torsion.moving, -requested, atoms.get_masses()
+            )
+        )
+        achieved = internal.coordinate(
+            atoms.positions, "dihedral", probe.indices
+        ) - internal.coordinate(reference.positions, "dihedral", probe.indices)
         achieved = float((achieved + np.pi) % (2 * np.pi) - np.pi)
     else:
         _, achieved = internal.displace(atoms, probe.kind, probe.indices, requested)
 
-    return {"requested": requested, "achieved": achieved, "unit": probe.unit,
-            "realization": realization,
-            "target_error": abs(achieved - requested),
-            "collateral": collateral_metrics(reference, atoms, probe.kind, probe.indices,
-                                             bond_scale, active)}
+    return {
+        "requested": requested,
+        "achieved": achieved,
+        "unit": probe.unit,
+        "realization": realization,
+        "target_error": abs(achieved - requested),
+        "collateral": collateral_metrics(
+            reference, atoms, probe.kind, probe.indices, bond_scale, active
+        ),
+    }
 
 
 def _adjacency(edges, index):
@@ -329,7 +414,7 @@ def _hop_counts(graph):
     return hops
 
 
-ACCEPTORS = (7, 8, 9)                       # N, O, F
+ACCEPTORS = (7, 8, 9)  # N, O, F
 
 
 def _hydrogen_bonded_donors(atoms, graph, config):
@@ -364,21 +449,38 @@ def _hydrogen_bonded_donors(atoms, graph, config):
                     continue
                 first = positions[donor] - positions[hydrogen]
                 second = positions[acceptor] - positions[hydrogen]
-                cosine = float(np.dot(first, second)
-                               / (np.linalg.norm(first) * np.linalg.norm(second)))
+                cosine = float(
+                    np.dot(first, second) / (np.linalg.norm(first) * np.linalg.norm(second))
+                )
                 angle = float(np.degrees(np.arccos(np.clip(cosine, -1.0, 1.0))))
                 if angle < config.hbond_angle_deg:
                     continue
                 if best is None or reach < best["h_acceptor_A"]:
-                    best = {"reason": "hydrogen_bond_donor", "donor": donor,
-                            "hydrogen": hydrogen, "acceptor": acceptor,
-                            "h_acceptor_A": reach, "donor_h_acceptor_deg": angle}
+                    best = {
+                        "reason": "hydrogen_bond_donor",
+                        "donor": donor,
+                        "hydrogen": hydrogen,
+                        "acceptor": acceptor,
+                        "h_acceptor_A": reach,
+                        "donor_h_acceptor_deg": angle,
+                    }
             if best is not None:
                 donors[(min(donor, hydrogen), max(donor, hydrogen))] = best
     return donors
 
 
 def _bond_directions(atoms, graph, config, families):
+    """Stretch and compress proposals along existing bonds.
+
+    Notes
+    -----
+    [1] A pair two or three bonds apart is already held by the covalent skeleton, so
+        compressing it is a bend or a torsion in disguise and the continuation has to drag
+        the connecting bonds to deliver it. Measured on 3-oxobutanal, every pair-approach
+        the collateral gate refused was three hops or fewer, and they were 45% of the trial
+        budget. Refusing them here spends the budget on directions that can actually be
+        delivered.
+    """
     donors = _hydrogen_bonded_donors(atoms, graph, config)
     hops = _hop_counts(graph)
     for a in range(len(graph.index)):
@@ -388,12 +490,7 @@ def _bond_directions(atoms, graph, config, families):
             if not bonded:
                 if graph.distances[a, b] > config.pair_cutoff_A:
                     continue
-                # A pair two or three bonds apart is already held by the covalent skeleton,
-                # so compressing it is a bend or a torsion in disguise and the continuation
-                # has to drag the connecting bonds to deliver it. Measured on 3-oxobutanal,
-                # every pair-approach the collateral gate refused was three hops or fewer,
-                # and they were 45% of the trial budget. Refusing them here spends the
-                # budget on directions that can actually be delivered.
+                # [1] a pair two or three bonds apart is a bend in disguise
                 separation = hops.get((i, j))
                 if separation is not None and separation < config.min_pair_hops:
                     continue
@@ -442,7 +539,7 @@ class Torsion:
 
     indices: tuple[int, int, int, int]
     symmetry_order: int
-    moving: tuple[int, ...] = ()      # rigid fragment across the bond, empty inside a ring
+    moving: tuple[int, ...] = ()  # rigid fragment across the bond, empty inside a ring
 
     @property
     def is_rotor(self):
@@ -453,9 +550,12 @@ class Torsion:
         return 2 * np.pi / self.symmetry_order
 
     def to_dict(self):
-        return {"indices": list(self.indices), "symmetry_order": self.symmetry_order,
-                "fundamental_domain_rad": self.domain,
-                "realization": "rigid_rotation" if self.moving else "continuation"}
+        return {
+            "indices": list(self.indices),
+            "symmetry_order": self.symmetry_order,
+            "fundamental_domain_rad": self.domain,
+            "realization": "rigid_rotation" if self.moving else "continuation",
+        }
 
 
 def _end_symmetry(side, labels):
@@ -478,7 +578,7 @@ def _fragment_across(edges, index, j, k):
                 seen.add(neighbour)
                 stack.append(neighbour)
     if j in seen:
-        return ()                      # not a bridge: no rigid fragment exists
+        return ()  # not a bridge: no rigid fragment exists
     return tuple(sorted(seen - {k}))
 
 
@@ -491,6 +591,14 @@ def rotatable_torsions(graph, labels):
     are chosen by highest canonical colour to make the choice deterministic. These same
     coordinates describe a molecule's conformational freedom, so the conformer reservoir
     measures diversity in them.
+
+    Notes
+    -----
+    [1] A rotation that permutes equivalent substituents is a symmetry operation, so it can
+        only reach conformers that are symmetry copies of the starting one. Such a bond
+        consumed fifteen of ethanol's twenty-four trials and could not have found anything.
+        It is kept, because a rotor may still couple to a reaction coordinate, but only its
+        fundamental domain is searched and it is ranked last.
     """
     adjacency = _adjacency(graph.edges, graph.index)
     seen, genuine, rotors = set(), [], []
@@ -503,23 +611,25 @@ def rotatable_torsions(graph, labels):
         if key in seen:
             continue
         seen.add(key)
-        # A rotation that permutes equivalent substituents is a symmetry operation, so it
-        # can only reach conformers that are symmetry copies of the starting one. Such a
-        # bond consumed fifteen of ethanol's twenty-four trials and could not have found
-        # anything. It is kept, because a rotor may still couple to a reaction coordinate,
-        # but only its fundamental domain is searched and it is ranked last.
+        # [1] a rotation that permutes equivalents is a symmetry
         order = _lcm(_end_symmetry(left, labels), _end_symmetry(right, labels))
         torsion = Torsion(
-            indices=(max(left, key=lambda n: labels[n]), j, k,
-                     max(right, key=lambda n: labels[n])),
+            indices=(
+                max(left, key=lambda n: labels[n]),
+                j,
+                k,
+                max(right, key=lambda n: labels[n]),
+            ),
             symmetry_order=order,
-            moving=_fragment_across(graph.edges, graph.index, j, k))
+            moving=_fragment_across(graph.edges, graph.index, j, k),
+        )
         (rotors if torsion.is_rotor else genuine).append(torsion)
     return genuine, rotors
 
 
 def _lcm(a, b):
     from math import gcd
+
     return a * b // gcd(a, b)
 
 
@@ -541,6 +651,25 @@ def propose(atoms, config, seed, report=None):
     family, plus whether the global cap bound the selection. A fixed total budget cannot
     hold a fixed hit rate while candidates grow with the molecule, so that limitation is
     written down where the run can be audited rather than left to be inferred.
+
+    Notes
+    -----
+    [1] Stable sort by rank keeps the shuffle inside each band, so deprioritizing symmetry
+        rotors survives randomisation instead of being undone by it. Sort by the
+        within-family rank only. The priority band is element 3 and is handled by the
+        two-pass allocation below, because it means something different: rank orders
+        candidates inside a family, band decides which candidates get a front execution slot
+        at all.
+    [2] Allocate the direction budget per family, round robin. A pooled shuffle would
+        allocate it by enumeration count instead: ethanol offers 35 atom pairs but only two
+        rotatable bonds, so pair kicks would crowd out the torsion that is the one way to
+        reach its other basins. Spanning the basis has to hold for the directions actually
+        sampled, not only for the directions that could have been.
+    [3] Search S^1 / C_n only. What disqualifies an amplitude is not being larger than the
+        domain but being close to any symmetry copy of zero: 2.09 rad on a methyl rotor is
+        119.75 degrees, a quarter of a degree from the identity, and a trial spent there
+        cannot find anything. So the test is the distance to the nearest multiple of the
+        domain.
     """
     graph = encode(atoms, config.bond_scale, active=config.active_atoms)
     labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
@@ -556,28 +685,23 @@ def propose(atoms, config, seed, report=None):
         entries = grouped[family]
         order = rng.permutation(len(entries))
         shuffled = [entries[i] for i in order]
-        # Stable sort by rank keeps the shuffle inside each band, so deprioritizing
-        # symmetry rotors survives randomisation instead of being undone by it.
-        # Sort by the within-family rank only. The priority band is element 3 and
-        # is handled by the two-pass allocation below, because it means something
-        # different: rank orders candidates inside a family, band decides which
-        # candidates get a front execution slot at all.
+        # [1] stable sort keeps the shuffle inside each band
         grouped[family] = sorted(shuffled, key=lambda entry: entry[4])
 
-    # Allocate the direction budget per family, round robin. A pooled shuffle would
-    # allocate it by enumeration count instead: ethanol offers 35 atom pairs but only
-    # two rotatable bonds, so pair kicks would crowd out the torsion that is the one
-    # way to reach its other basins. Spanning the basis has to hold for the directions
-    # actually sampled, not only for the directions that could have been.
+    # [2] allocate the direction budget per family, round robin
     available = [family for family in families if grouped.get(family)]
     counts = {family: len(grouped[family]) for family in available}
     # The quota grows with the number of candidates: a constant budget cannot keep a
     # constant chance of sampling any given direction while the candidates grow with the
     # molecule. Ethanol offers eight bonds and 3-oxobutanal eleven, and the reaction
     # coordinate lost that draw.
-    quotas = {family: max(config.min_directions_per_family,
-                          math.ceil(config.direction_quota_fraction * counts[family]))
-              for family in available}
+    quotas = {
+        family: max(
+            config.min_directions_per_family,
+            math.ceil(config.direction_quota_fraction * counts[family]),
+        )
+        for family in available
+    }
     selected, taken = [], {family: 0 for family in available}
 
     # Two passes. The priority band first, so a direction the reactant's own geometry marks
@@ -603,35 +727,53 @@ def propose(atoms, config, seed, report=None):
 
     if report is not None:
         report.update(
-            families={family: {"candidates": counts[family], "quota": quotas[family],
-                               "selected": taken[family],
-                               "priority_candidates": sum(1 for e in directions
-                                                          if e[0] == family and e[3] == 0)}
-                      for family in available},
+            families={
+                family: {
+                    "candidates": counts[family],
+                    "quota": quotas[family],
+                    "selected": taken[family],
+                    "priority_candidates": sum(
+                        1 for e in directions if e[0] == family and e[3] == 0
+                    ),
+                }
+                for family in available
+            },
             max_directions=config.max_directions,
             selected_total=len(selected),
             cap_bound=len(selected) >= config.max_directions,
             priority_selected=sum(1 for e in selected if e[3] == 0),
-            meaning=("candidate counts, per-family quotas and what was actually taken; "
-                     "cap_bound true means the global cap, not the quotas, decided"))
+            meaning=(
+                "candidate counts, per-family quotas and what was actually taken; "
+                "cap_bound true means the global cap, not the quotas, decided"
+            ),
+        )
 
     result = []
     for family, indices, sign, band, _rank, torsion, detail in selected:
         amplitudes = getattr(config, FAMILIES[family]["amplitudes"])
         if torsion is not None and torsion.is_rotor and FAMILIES[family]["mode"] == "displace":
-            # Search S^1 / C_n only. What disqualifies an amplitude is not being larger
-            # than the domain but being close to any symmetry copy of zero: 2.09 rad on a
-            # methyl rotor is 119.75 degrees, a quarter of a degree from the identity, and
-            # a trial spent there cannot find anything. So the test is the distance to the
-            # nearest multiple of the domain.
-            amplitudes = tuple(a for a in amplitudes
-                               if abs((a + torsion.domain / 2) % torsion.domain
-                                      - torsion.domain / 2)
-                               > config.torsion_symmetry_margin_rad)
+            # [3] search S^1 / C_n only
+            amplitudes = tuple(
+                a
+                for a in amplitudes
+                if abs((a + torsion.domain / 2) % torsion.domain - torsion.domain / 2)
+                > config.torsion_symmetry_margin_rad
+            )
             if not amplitudes:
                 continue
         direction_seed = int(rng.integers(0, 2**32))
-        result.append([Probe(family, indices, sign, float(a), direction_seed,
-                             priority=band, priority_reason=detail)
-                       for a in amplitudes])
+        result.append(
+            [
+                Probe(
+                    family,
+                    indices,
+                    sign,
+                    float(a),
+                    direction_seed,
+                    priority=band,
+                    priority_reason=detail,
+                )
+                for a in amplitudes
+            ]
+        )
     return result

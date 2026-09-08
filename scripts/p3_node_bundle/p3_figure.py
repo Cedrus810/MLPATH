@@ -160,11 +160,48 @@ def load_stationary():
     return pts
 
 
-def load_profile():
-    f = ROOT / "p3_pes2d" / "path_profile.json"
-    if not f.exists():
+def load_profile(paths, prefer=("MACE-OFF24_medium", "descent-1")):
+    """The path profile, built from the recorder's own files.
+
+    Not from p3_pes2d: that script used to re-read the path and re-evaluate its energy,
+    which duplicated what PathRecorder had already written and created a second copy that
+    could disagree with the first. The recorder wrote q_PT and r_OO by name (its config had
+    tracked_coordinates set to exactly these two), plus the potential per frame, so the
+    only thing left to compute is arc length -- and that comes from the frames themselves.
+
+    Arc length is the distance travelled in the FULL 3N space, not in the projection. That
+    is the point of plotting against it: it is the honest measure of how far the walk went,
+    including in the coordinates the picture does not show.
+    """
+    name, stage = prefer
+    stages = paths.get(name) or {}
+    d = stages.get(stage)
+    if d is None:
+        for n, st in paths.items():
+            for sname, dd in st.items():
+                if "descent" in sname and np.isfinite(dd["E"]).any():
+                    name, stage, d = n, sname, dd
+                    break
+            if d is not None:
+                break
+    if d is None or not np.isfinite(d["E"]).any():
         return None
-    return json.load(open(f))["profile"]
+    from ase.io import read as _read
+    try:
+        frames = _read(str(d["xyz"]), index=":")
+        arc = [0.0]
+        for k in range(1, len(frames)):
+            arc.append(arc[-1] + float(np.linalg.norm(frames[k].positions
+                                                      - frames[k - 1].positions)))
+    except Exception as exc:
+        print(f"  path profile: cannot read {d['xyz']} ({exc}); arc length unavailable")
+        return None
+    n = min(len(arc), len(d["q"]))
+    print(f"  path profile from {name} / {stage}: {n} frames, "
+          f"arc 0..{arc[n-1]:.3f} A")
+    return [dict(frame=k, arc_length=arc[k], q_PT=float(d["q"][k]),
+                 r_OO=float(d["r"][k]), E_path=float(d["E"][k]))
+            for k in range(n) if np.isfinite(d["E"][k])]
 
 
 def surface_along(prof, surf):
@@ -204,7 +241,7 @@ def surface_along(prof, surf):
 surfaces = {m: load_surface(m) for m in ("relaxed", "rigid")}
 paths = load_paths()
 stat = load_stationary()
-profile = load_profile()
+profile = load_profile(paths)
 have = [k for k, v in surfaces.items() if v]
 print(f"surfaces: {have or 'none'}   paths: {list(paths) or 'none'}   "
       f"stationary: {list(stat) or 'none'}   profile: {'yes' if profile else 'no'}")

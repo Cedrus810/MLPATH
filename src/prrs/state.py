@@ -8,6 +8,7 @@ rewriting the analysis layer: solvent reorganisation must not make two visits to
 same basin look like different basins, and an all-pairs distance matrix over
 thousands of environment atoms is neither affordable nor meaningful.
 """
+
 from dataclasses import dataclass
 import numpy as np
 from ase.data import covalent_radii
@@ -32,7 +33,9 @@ def validate_atoms(atoms, active=None):
     # Scope gate, not an implementation detail: the graph below uses plain
     # displacements, so a periodic cell would be silently mis-measured, not refused.
     if np.any(atoms.pbc):
-        raise ValueError("MVP supports finite nonperiodic molecules only; PBC is not implemented")
+        raise ValueError(
+            "MVP supports finite nonperiodic molecules only; PBC is not implemented"
+        )
     if atoms.constraints:
         raise ValueError("Constraints are not supported in this MVP")
     if not np.isfinite(atoms.positions).all():
@@ -110,11 +113,15 @@ def aligned_rmsd(a, b, active=None):
 
 def same_basin(a, b, config):
     active = config.active_atoms
-    if (encode(a, config.bond_scale, active=active).edges
-            != encode(b, config.bond_scale, active=active).edges):
+    if (
+        encode(a, config.bond_scale, active=active).edges
+        != encode(b, config.bond_scale, active=active).edges
+    ):
         return False
-    return (abs(a.get_potential_energy() - b.get_potential_energy()) <= config.basin_energy_eV
-            and aligned_rmsd(a, b, active) <= config.basin_rmsd_A)
+    return (
+        abs(a.get_potential_energy() - b.get_potential_energy()) <= config.basin_energy_eV
+        and aligned_rmsd(a, b, active) <= config.basin_rmsd_A
+    )
 
 
 def classify(source, endpoint, config):
@@ -134,6 +141,7 @@ def classify(source, endpoint, config):
         "active_atoms": sorted({i for pair in broken | formed for i in pair}),
         "aligned_rmsd_A": aligned_rmsd(source, endpoint, active),
         "energy_change_eV": endpoint.get_potential_energy() - source.get_potential_energy(),
-        "components_before": ga.components, "components_after": gb.components,
+        "components_before": ga.components,
+        "components_after": gb.components,
     }
     return label, fingerprint

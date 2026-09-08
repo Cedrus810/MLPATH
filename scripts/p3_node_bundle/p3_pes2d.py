@@ -38,7 +38,7 @@ SHARD, NSHARD, ARGV = shard_arg(sys.argv)
 N = int(ARGV[1]) if len(ARGV) > 1 else 48
 MODEL = ARGV[2] if len(ARGV) > 2 else str(HERE.parents[1] / "models" / "MACE-OFF24_medium.model")
 OUT = Path(ARGV[3]) if len(ARGV) > 3 else HERE.parents[1] / "runs" / "p3_pes2d"
-PATHFILE = ARGV[4] if len(ARGV) > 4 else None
+PATHFILE = None      # kept out of the signature on purpose; see the note below
 RELAX_STEPS = int(os.environ.get("P3_PES_RELAX_STEPS", "600"))
 # The surface tolerance must be at least as tight as the tolerance the PATH was quenched
 # with, or the gap between them is a difference of two convergence criteria rather than a
@@ -149,7 +149,31 @@ for mode in ("rigid", "relaxed"):
     warm = None
     for n_done, i in enumerate(MY_ROWS):
         r = R[i]
-        for j, q in enumerate(Q):
+        # Boustrophedon: alternate the q direction each row, so the warm start carried
+        # across a row boundary is at the SAME q as the new row's first point rather than
+        # at the opposite end of the sweep.
+        #
+        # The old order made the warm start actively worse than no warm start at all.
+        # Measured at the new row's first point (q=-0.850, r=2.330), LBFGS steps to
+        # fmax=2e-3:
+        #     from A (q=-0.619)                     132
+        #     from the previous row's LAST point    169   <- what the old code did
+        #     from the same q one row back          126
+        # The old code seeded from q=+0.85 to solve q=-0.85, i.e. across the entire sweep,
+        # while A sat closer than that. Alternating fixes it for free.
+        #
+        # It is worth being clear about the size of this: 169 -> 126 is 25%, not the bulk.
+        # The cost of the relaxed pass is dominated by two other things, both deliberate:
+        #     PES_FMAX 5e-3 -> 2e-3   1.54x   (43.8 -> 67.6 calls/point, measured)
+        #     grid 32^2 -> 48^2       2.25x
+        # so ~3.5x total work versus the first 32x32 run, of which warm-start recovers a
+        # quarter of one factor. The tolerance is not negotiable -- at 5e-3 the surface sat
+        # 2.13 meV above B's true minimum and 375 of 491 path frames showed a NEGATIVE gap,
+        # a path below the relaxed surface, which cannot happen. The grid is what gives the
+        # interpolated section in the right panel its accuracy. Anyone who needs this
+        # cheaper should drop the grid, not the tolerance.
+        sweep = list(enumerate(Q)) if n_done % 2 == 0 else list(enumerate(Q))[::-1]
+        for j, q in sweep:
             seed = warm if (mode == "relaxed" and warm is not None) else A
             cand = place(seed, q, r)
             if mode == "rigid":
@@ -190,36 +214,20 @@ for mode in ("rigid", "relaxed"):
 
 # Surface energy along a supplied path's own projection, for the second panel.
 # The path profile is sharded over frames too; p3_merge.py concatenates them in order.
-if PATHFILE and Path(PATHFILE).exists():
-    frames = read(PATHFILE, index=":")
-    frames = [(k, fr) for k, fr in enumerate(frames) if k % NSHARD == SHARD]
-    print(f"shard {SHARD}: {len(frames)} path frames", flush=True)
-    prof = []
-    allframes = read(PATHFILE, index=":")
-    # arc length is cumulative over the WHOLE path, so it is computed from all frames even
-    # though this worker only evaluates its own -- otherwise each shard would restart at 0
-    arc = [0.0]
-    for k in range(1, len(allframes)):
-        arc.append(arc[-1] + float(np.linalg.norm(allframes[k].positions
-                                                  - allframes[k-1].positions)))
-    for k, fr in frames:
-        s = arc[k]
-        fr.calc = calc
-        q, r = coords(fr)
-        # The surface value at this projection is NOT recomputed here. It is obtained by
-        # interpolating the grid this same script produced (see p3_figure.surface_along),
-        # so the right panel's section and the left panel's contours are one object rather
-        # than two computations that can disagree.
-        #
-        # The earlier version did recompute it, as constrained(A, q, r) -- passing A's
-        # geometry directly to a constraint that may be far away, without place()ing it at
-        # (q, r) first. The optimiser stayed at A and E_surface came back as the constant
-        # E(A) for all 491 frames, which made the path look like it ran BELOW the relaxed
-        # surface (mean gap -9.1 meV). That is impossible, and the constant was the tell.
-    json.dump(dict(env=env, shard=SHARD, nshard=NSHARD, profile=prof),
-              open(OUT / f"path_profile_shard{SHARD:02d}.json", "w"), indent=1)
-    print(f"recorded {len(prof)} path frames with coordinates and their own energy; "
-          f"the gap is computed in p3_figure.py by interpolating this run's grid")
+# The path profile is NOT built here.
+#
+# Everything it needs -- q_PT, r_OO, the path's own energy, the arc length -- is already
+# written by p3_paths.py, which recorded the walk with tracked_coordinates set to exactly
+# these two coordinates. Reading the path a second time and re-evaluating its energy here
+# duplicated that work and created a second copy that could disagree with the first, with
+# nothing to say which was authoritative. p3_figure.py now reads the recorder's own files
+# and interpolates this run's grid for the surface side, so both curves in the right panel
+# come from a single source each.
+#
+# (It also went wrong in a way worth remembering: when the surface recomputation was cut
+# out of the loop, the prof.append() call went with it and the loop body became comments
+# only. Every shard then wrote an empty profile, and the figure reported "profile: no"
+# rather than failing -- a silent hole where a panel used to be.)
 
 json.dump(dict(env=env, N=N, q_range=[float(Q[0]), float(Q[-1])],
                r_range=[float(R[0]), float(R[-1])], source=str(src), shard=SHARD,

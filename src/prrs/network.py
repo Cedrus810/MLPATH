@@ -18,15 +18,27 @@ discovery. But conformers stay searchable: reaction accessibility is conditional
 conformer -- anti may be unreactive where gauche is not -- so a bounded set of them
 remains available as perturbation origins.
 """
+
 from collections import Counter
 from dataclasses import dataclass, field
 import numpy as np
-from .chemistry import (automorphisms, chemical_key, free_aligned_symmetric_rmsd,
-                        symmetric_rmsd)
+from .chemistry import automorphisms, chemical_key, free_aligned_symmetric_rmsd
 from .perturbations import rotatable_torsions
 from . import internal
 from .state import encode
 from .chemistry import canonical_labels
+
+# Prose that ships inside the records this module writes. Held as named constants
+# rather than inline in the dict literals so the shape of each record is visible at
+# a glance; the text is part of the output contract, so changing one is a schema
+# change and not a comment edit.
+_ADMIT_MEANING = (
+    "the Lewis annotator found no neutral closed-shell valence assignment, and this model "
+    "declares it requires one (closed_shell_only). Two statements, not one: the annotator "
+    "supplied the evidence, the model's declaration made it a refusal. A charge-aware "
+    "potential declares closed_shell_only = False and the same structure is admitted with "
+    "its stereochemistry recorded as unresolved"
+)
 
 
 def torsion_profile(atoms, bond_scale=1.2, active=None):
@@ -39,8 +51,10 @@ def torsion_profile(atoms, bond_scale=1.2, active=None):
     graph = encode(atoms, bond_scale, active=active)
     labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
     genuine, _rotors = rotatable_torsions(graph, labels)
-    return {tuple(t.indices): internal.coordinate(atoms.positions, "dihedral", t.indices)
-            for t in genuine}
+    return {
+        tuple(t.indices): internal.coordinate(atoms.positions, "dihedral", t.indices)
+        for t in genuine
+    }
 
 
 def torsion_distance(a, b):
@@ -85,11 +99,17 @@ class Microstate:
     score: float = None
 
     def summary(self, relative_path):
-        return {"id": self.id, "structure": relative_path, "energy_eV": self.energy_eV,
-                "discovered_by": self.discovered_by, "trials_spent": self.trials_spent,
-                "torsions_rad": {str(list(k)): v for k, v in self.torsions.items()},
-                "free_bonds": [list(bond) for bond in self.free_bonds],
-                "outcomes": dict(self.outcomes), "reservoir_score": self.score}
+        return {
+            "id": self.id,
+            "structure": relative_path,
+            "energy_eV": self.energy_eV,
+            "discovered_by": self.discovered_by,
+            "trials_spent": self.trials_spent,
+            "torsions_rad": {str(list(k)): v for k, v in self.torsions.items()},
+            "free_bonds": [list(bond) for bond in self.free_bonds],
+            "outcomes": dict(self.outcomes),
+            "reservoir_score": self.score,
+        }
 
 
 @dataclass
@@ -127,18 +147,26 @@ class Registry:
 
     # ---- identity -------------------------------------------------------------
     def key_of(self, structure):
-        return chemical_key(structure, self.config.bond_scale, self.config.active_atoms,
-                            charge_sensitive=self.config.charge_sensitive,
-                            charge=self.config.total_charge,
-                            multiplicity=self.config.multiplicity)
+        return chemical_key(
+            structure,
+            self.config.bond_scale,
+            self.config.active_atoms,
+            charge_sensitive=self.config.charge_sensitive,
+            charge=self.config.total_charge,
+            multiplicity=self.config.multiplicity,
+            parity_tolerance=self.config.parity_tolerance,
+        )
 
     def find_node(self, key):
         return next((node for node in self.nodes if node.key == key), None)
 
     # ---- reservoir policy -----------------------------------------------------
     def _energy_term(self, node, energy):
-        floor = min(state.energy_eV for state in node.microstates) if node.microstates else energy
+        floor = (
+            min(state.energy_eV for state in node.microstates) if node.microstates else energy
+        )
         from ase import units
+
         scale = units.kB * max(self.config.conformer_temperature_K, 1e-6)
         return float(np.exp(-max(energy - floor, 0.0) / scale))
 
@@ -166,15 +194,18 @@ class Registry:
         total = sum(state.outcomes.values())
         if not total:
             return 1.0
-        unique = sum(count for outcome, count in state.outcomes.items()
-                     if outcome not in siblings)
+        unique = sum(
+            count for outcome, count in state.outcomes.items() if outcome not in siblings
+        )
         return float(unique / total)
 
     def score(self, node, energy, torsions, state=None):
         cfg = self.config
-        return (cfg.reservoir_weight_energy * self._energy_term(node, energy)
-                + cfg.reservoir_weight_diversity * self._diversity_term(node, torsions, state)
-                + cfg.reservoir_weight_response * self._response_term(node, state))
+        return (
+            cfg.reservoir_weight_energy * self._energy_term(node, energy)
+            + cfg.reservoir_weight_diversity * self._diversity_term(node, torsions, state)
+            + cfg.reservoir_weight_response * self._response_term(node, state)
+        )
 
     def rescore(self, node):
         for state in node.microstates:
@@ -182,39 +213,87 @@ class Registry:
 
     # ---- admission ------------------------------------------------------------
     def admit(self, structure, parent, trial_id):
-        """Route a confirmed minimum to a microstate or a chemical node."""
+        """Route a confirmed minimum to a microstate or a chemical node.
+
+        Notes
+        -----
+        [1] Three separate things used to be answered by one field, and separating them is
+            what this branch now does.
+
+            **Identity content** -- the graph, the fragments, the parities. What the
+            substance is.
+            **Identity resolution status** -- whether the stereochemistry could be worked
+            out at all. A statement about the annotator, not about the substance.
+            **Model domain evidence** -- whether the potential can describe this species.
+            A statement about the model.
+
+            The branch below is the third one, and it is gated on `closed_shell_only`
+            because that is a MODEL declaration. Its original justification was explicit
+            about this: MACE-OFF is trained on neutral closed-shell molecules and does not
+            respond to total charge at all, measured bit for bit, so admitting a charged or
+            open-shell species would put a structure that potential cannot describe into
+            the network as a product.
+
+            That justification is a property of THAT model. Charge-aware potentials do not
+            carry it -- MACE-POLAR-1-M's energy spans 16.67 eV across total charge 0/-1/+1
+            -- and for them `closed_shell_only = False` is the correct declaration rather
+            than a workaround. The Lewis solver is then used as what it is: an annotator
+            whose failure is recorded, never a veto over a minimum the potential can
+            evaluate.
+
+            What must NOT happen is the inverse reading: an unresolved annotation is not
+            evidence that a species is out of domain, and a resolved one is not evidence
+            that it is in. Domain belongs to `benchmarks/*/model.json` and the preflight
+            gates -- element coverage read from the checkpoint, measured charge response,
+            uncertainty when a committee is available.
+
+            Unsupported elements were never refused here and still are not: that only means
+            the stereochemistry is unresolved.
+        """
         cfg = self.config
         components = self.key_of(structure)
-        # No neutral closed-shell bond-order assignment exists for this graph, which means
-        # an open-shell or charged species. MACE-OFF is trained on neutral closed-shell
-        # molecules and does not respond to total charge at all (measured, bit for bit), so
-        # admitting one would put a structure the potential cannot describe into the network
-        # as if it were a product. Refused rather than flagged: the failure is in the
-        # physics, not in the bookkeeping. Unsupported elements are a different verdict and
-        # are not refused -- that only means the stereochemistry is unresolved.
-        if (cfg.closed_shell_only
-                and components.get("stereo_unresolved") in ("no_assignment_satisfies_valences",
-                                                            "degree_exceeds_valence")):
-            return Admission("rejected", reason="out_of_domain",
-                             detail={"chemical_key": components["key"],
-                                     "fragments": components["fragments"],
-                                     "verdict": components["stereo_unresolved"],
-                                     "meaning": ("no neutral closed-shell valence assignment; "
-                                                 "outside the potential's domain")})
+        # [1] the model's declared domain, not the annotator's verdict
+        if cfg.closed_shell_only and components.get("stereo_unresolved") in (
+            "no_assignment_satisfies_valences",
+            "degree_exceeds_valence",
+        ):
+            return Admission(
+                "rejected",
+                reason="out_of_domain",
+                detail={
+                    "chemical_key": components["key"],
+                    "fragments": components["fragments"],
+                    "verdict": components["stereo_unresolved"],
+                    # Which layer refused, so a reader never has to infer it. The Lewis
+                    # solver supplied the evidence; the model's declaration is what made
+                    # it a refusal.
+                    "refused_by": "model_domain_declaration",
+                    "declaration": "closed_shell_only",
+                    "meaning": _ADMIT_MEANING,
+                },
+            )
         node = self.find_node(components["key"])
         energy = float(structure.get_potential_energy())
         torsions = torsion_profile(structure, cfg.bond_scale, cfg.active_atoms)
 
         if node is None:
             if len(self.nodes) >= cfg.chemical_max_nodes:
-                return Admission("rejected", reason="chemical_budget",
-                                 detail={"chemical_key": components["key"]})
-            permutations_, info = automorphisms(structure, cfg.bond_scale, cfg.active_atoms,
-                                               cfg.automorphism_limit)
-            node = ChemicalNode(id=f"c{len(self.nodes):04d}", key=components["key"],
-                                components=components,
-                                depth=0 if parent is None else parent.depth + 1,
-                                discovered_by=trial_id, permutations=permutations_)
+                return Admission(
+                    "rejected",
+                    reason="chemical_budget",
+                    detail={"chemical_key": components["key"]},
+                )
+            permutations_, info = automorphisms(
+                structure, cfg.bond_scale, cfg.active_atoms, cfg.automorphism_limit
+            )
+            node = ChemicalNode(
+                id=f"c{len(self.nodes):04d}",
+                key=components["key"],
+                components=components,
+                depth=0 if parent is None else parent.depth + 1,
+                discovered_by=trial_id,
+                permutations=permutations_,
+            )
             node.components["automorphisms"] = info
             self.nodes.append(node)
             state = self._insert(node, structure, energy, torsions, trial_id)
@@ -226,29 +305,42 @@ class Registry:
 
         if len(node.microstates) < cfg.conformer_max_per_node:
             state = self._insert(node, structure, energy, torsions, trial_id)
-            outcome = "new_chemical_node" if node.discovered_by == trial_id else "new_microstate"
+            outcome = (
+                "new_chemical_node" if node.discovered_by == trial_id else "new_microstate"
+            )
             return Admission(outcome, node, state)
 
         # Reservoir full: keep the better set rather than the earlier one, but never
         # evict a microstate that still has unspent search budget.
         candidate = self.score(node, energy, torsions, None)
         self.rescore(node)
-        evictable = [s for s in node.microstates
-                     if s.trials_spent >= cfg.conformer_trials_per_microstate]
+        evictable = [
+            s for s in node.microstates if s.trials_spent >= cfg.conformer_trials_per_microstate
+        ]
         if not evictable:
-            return Admission("rejected", node, reason="conformer_reservoir_full",
-                             detail={"capacity": cfg.conformer_max_per_node})
+            return Admission(
+                "rejected",
+                node,
+                reason="conformer_reservoir_full",
+                detail={"capacity": cfg.conformer_max_per_node},
+            )
         worst = min(evictable, key=lambda s: s.score)
         if candidate <= worst.score:
-            return Admission("rejected", node, reason="conformer_reservoir_outscored",
-                             detail={"candidate_score": candidate,
-                                     "weakest_resident_score": worst.score})
+            return Admission(
+                "rejected",
+                node,
+                reason="conformer_reservoir_outscored",
+                detail={"candidate_score": candidate, "weakest_resident_score": worst.score},
+            )
         node.microstates.remove(worst)
-        node.evicted.append({"id": worst.id, "score": worst.score,
-                             "replaced_by": trial_id})
+        node.evicted.append({"id": worst.id, "score": worst.score, "replaced_by": trial_id})
         state = self._insert(node, structure, energy, torsions, trial_id)
-        return Admission("new_microstate", node, state,
-                         detail={"evicted": worst.id, "candidate_score": candidate})
+        return Admission(
+            "new_microstate",
+            node,
+            state,
+            detail={"evicted": worst.id, "candidate_score": candidate},
+        )
 
     def _match_microstate(self, node, structure):
         cfg = self.config
@@ -260,18 +352,27 @@ class Registry:
             # coordinate is flat, and a flat coordinate is flat for both.
             free = tuple(sorted(set(state.free_bonds) | set(candidate_free)))
             distance = free_aligned_symmetric_rmsd(
-                state.structure, structure, node.permutations, cfg.active_atoms,
-                free_bonds=free, bond_scale=cfg.bond_scale,
-                samples=cfg.free_alignment_samples)
+                state.structure,
+                structure,
+                node.permutations,
+                cfg.active_atoms,
+                free_bonds=free,
+                bond_scale=cfg.bond_scale,
+                samples=cfg.free_alignment_samples,
+            )
             if distance <= cfg.basin_rmsd_A:
                 return state
         return None
 
     def _insert(self, node, structure, energy, torsions, trial_id):
-        state = Microstate(id=f"{node.id}/m{len(node.microstates) + len(node.evicted):04d}",
-                           structure=structure, energy_eV=energy,
-                           discovered_by=trial_id, torsions=torsions,
-                           free_bonds=free_bonds_of(structure))
+        state = Microstate(
+            id=f"{node.id}/m{len(node.microstates) + len(node.evicted):04d}",
+            structure=structure,
+            energy_eV=energy,
+            discovered_by=trial_id,
+            torsions=torsions,
+            free_bonds=free_bonds_of(structure),
+        )
         node.microstates.append(state)
         self.rescore(node)
         return state

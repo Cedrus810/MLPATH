@@ -25,12 +25,22 @@ MACE-OFF returns identical energies for total charge 0, -1 and +1, so declaring
 charge_sensitive keeps charged chemistry out of the search space instead of letting it
 in unnoticed.
 """
+
 from collections import Counter
 import hashlib
 import json
 import numpy as np
-from ase.data import covalent_radii, chemical_symbols
+from ase.data import chemical_symbols
 from .state import encode, resolve_active
+
+# Prose that ships inside the records this module writes. Held as named constants
+# rather than inline in the dict literals so the shape of each record is visible at
+# a glance; the text is part of the output contract, so changing one is a schema
+# change and not a comment edit.
+_REACTION_EVENT_KEY_MEANING = (
+    "reaction-event identity: canonical under the endpoints' automorphisms and undirected. NOT "
+    "a chemical-state identity"
+)
 
 
 def _digest(text):
@@ -45,9 +55,10 @@ def canonical_labels(numbers, edges, index):
         adjacency[b].add(a)
     labels = {int(i): chemical_symbols[int(numbers[i])] for i in index}
     for _ in range(len(index)):
-        refined = {i: _digest(labels[i] + "|" + ",".join(sorted(labels[j]
-                                                               for j in adjacency[i])))
-                   for i in labels}
+        refined = {
+            i: _digest(labels[i] + "|" + ",".join(sorted(labels[j] for j in adjacency[i])))
+            for i in labels
+        }
         if Counter(refined.values()) == Counter(labels.values()):
             break
         labels = refined
@@ -101,16 +112,29 @@ def _fragments(edges, index):
 
 def _formula(numbers, atoms_in_fragment):
     from ase import Atoms
-    return Atoms(numbers=[int(numbers[i]) for i in sorted(atoms_in_fragment)]
-                 ).get_chemical_formula()
+
+    return Atoms(
+        numbers=[int(numbers[i]) for i in sorted(atoms_in_fragment)]
+    ).get_chemical_formula()
 
 
-def _tetrahedral_parities(positions, numbers, edges, index, labels):
+def _tetrahedral_parities(positions, numbers, edges, index, labels, tolerance):
     """Parity at atoms with four neighbours that are all inequivalent.
 
     Four distinct colours is exactly the condition for a real stereocentre: if two
     neighbours share a colour, swapping them is an automorphism and there is no
     configuration to record. That is why a methyl carbon contributes nothing.
+
+    Notes
+    -----
+    [1] Dividing by the three edge lengths leaves the sign untouched and makes the magnitude
+        a shape, not a size: it is a signed volume ratio in [-1, 1] that does not move when
+        the molecule is scaled or when a different element sits at the centre. Without it
+        there is no threshold that can serve both a C-C skeleton and a C-H one, so
+        `int(np.sign(...))` was reading the sign of a number whose scale was unknown -- and
+        at a near-planar centre that number is float noise, so thermal jiggle alone flips
+        the recorded configuration and mints a new macrostate. np.sign(0.0) is 0 as well,
+        which silently became a third parity value that no chemistry corresponds to.
     """
     adjacency = {int(i): [] for i in index}
     for a, b in edges:
@@ -125,11 +149,26 @@ def _tetrahedral_parities(positions, numbers, edges, index, labels):
             continue
         ordered = [n for _, n in sorted(zip(colours, neighbours))]
         base = positions[ordered[0]]
-        volume = np.linalg.det(np.array([positions[ordered[1]] - base,
-                                         positions[ordered[2]] - base,
-                                         positions[ordered[3]] - base]))
-        parities.append([labels[atom], int(np.sign(volume))])
-    return sorted(parities)
+        edges_from_base = np.array(
+            [
+                positions[ordered[1]] - base,
+                positions[ordered[2]] - base,
+                positions[ordered[3]] - base,
+            ]
+        )
+        volume = float(np.linalg.det(edges_from_base))
+        # [1] dividing by the edge lengths makes it a shape
+        lengths = np.linalg.norm(edges_from_base, axis=1)
+        scale = float(np.prod(lengths))
+        shape = volume / scale if scale > 1e-30 else 0.0
+        # A real sp3 centre is nowhere near this: the ratio for an ideal tetrahedron is
+        # order 0.1, and a planar one is exactly zero. Below the band the configuration is
+        # reported as absent rather than guessed, because a token that stays put is worth
+        # more here than a sign that is right half the time.
+        parities.append(
+            [labels[atom], int(np.sign(shape)) if abs(shape) > tolerance else "planar"]
+        )
+    return sorted(parities, key=lambda entry: (entry[0], str(entry[1])))
 
 
 # Neutral closed-shell valences. Deliberately small: the first version has to be right on
@@ -138,6 +177,61 @@ def _tetrahedral_parities(positions, numbers, edges, index, labels):
 # purpose -- their valences are not single-valued in that setting -- and anything outside
 # this table is reported unresolved rather than guessed at.
 VALENCE = {1: 1, 6: 4, 8: 2, 9: 1, 17: 1, 35: 1, 53: 1}
+
+
+# The shared convention this key encodes, stated so it can be argued with.
+#
+# Model-independent by construction: nothing here reads an energy, a force or a barrier.
+# Same structure, same charge and spin, same protocol -> same key, whichever calculator is
+# attached. That is a property of the DEFINITION, and it is not the same claim as "different
+# models give the same identity": different models optimise to different structures, and
+# those may legitimately be different substances. P3's three models agreeing on (A, B) is an
+# OBSERVATION worth having, not a requirement written into the definition -- writing it in
+# would hide the case where a model really does predict a different product.
+#
+# Rotational barriers and what can actually interconvert are measured on a potential energy
+# surface, at a temperature, under a tolerance. They belong to the dynamics layer --
+# `free_bonds_of` and the microstate matcher already use them there, tagged with the model
+# that produced them. They must not silently rewrite the shared identity.
+#
+# Scope of the current resolver: neutral closed-shell integer valences over
+# H, C, O, F, Cl, Br, I. Outside that it returns unknown, and unknown is recorded as
+# unknown -- not as "no stereochemical difference", and not as grounds to refuse a species.
+_CONFIGURATION_PROTOCOL = "lewis-neutral-closed-shell/2026-09-04"
+
+
+# Reasons that mean "the budget ran out", as opposed to "this molecule cannot be
+# resolved". The distinction is the whole point of IdentityUnavailable below.
+BUDGET_REASONS = frozenset({"enumeration_limit", "candidate_limit"})
+
+
+class IdentityUnavailable(RuntimeError):
+    """The identity could not be computed inside the enumeration budget.
+
+    Not the same thing as "this substance's stereochemistry cannot be resolved". That is a
+    property of the molecule -- an element outside the valence table, a graph no neutral
+    closed-shell assignment satisfies -- and it is recorded in the key as
+    `stereo_unresolved`, so a resolved substance is never compared against an unresolved
+    one on the quiet.
+
+    A budget overflow is a property of the RUN. Measured on the P3 A structure:
+
+        bond_order_limit = 1000  ->  key 8710064d12ce6a5a
+        bond_order_limit =  100  ->  key 38584b6ee5c4eca2
+
+    Same molecule, same geometry, same code. Returning a key at all in that state makes
+    chemical identity a function of how much compute the enumerator was allowed, which is
+    not a chemical statement about anything. The event key has the same defect in a
+    quieter form: when `automorphisms` gives up it returns the identity permutation alone,
+    so the bond delta is canonicalised against an incomplete group and the key moves
+    without any field saying so.
+
+    So this raises rather than returning a degraded answer -- HANDOFF.md section 2:
+    "fail closed. If it cannot be decided, refuse and say why; never substitute a default."
+
+    No recorded result is affected: every frame in the digest corpus resolves inside the
+    default budget, and all four recorded event pairs enumerate completely.
+    """
 
 
 def admissible_bond_orders(numbers, edges, index, limit=20000):
@@ -157,8 +251,13 @@ def admissible_bond_orders(numbers, edges, index, limit=20000):
     """
     active = [int(i) for i in index]
     if any(int(numbers[i]) not in VALENCE for i in active):
-        outside = sorted({chemical_symbols[int(numbers[i])] for i in active
-                          if int(numbers[i]) not in VALENCE})
+        outside = sorted(
+            {
+                chemical_symbols[int(numbers[i])]
+                for i in active
+                if int(numbers[i]) not in VALENCE
+            }
+        )
         return None, {"reason": "unsupported_elements", "elements": outside}
     incident = {i: [] for i in active}
     ordered = sorted(tuple(sorted(e)) for e in edges)
@@ -211,12 +310,13 @@ def locked_edges(numbers, edges, index, limit=20000):
     solutions, info = admissible_bond_orders(numbers, edges, index, limit)
     if solutions is None:
         return None, info
-    always = frozenset(edge for edge in solutions[0]
-                       if all(solution[edge] >= 2 for solution in solutions))
+    always = frozenset(
+        edge for edge in solutions[0] if all(solution[edge] >= 2 for solution in solutions)
+    )
     return always, {**info, "locked": sorted(list(e) for e in always)}
 
 
-def _locked_bond_parities(positions, numbers, edges, index, labels, locked):
+def _locked_bond_parities(positions, numbers, edges, index, labels, locked, tolerance):
     """E/Z parity across bonds that are double in every admissible bond-order assignment.
 
     Which bonds those are is decided by `locked_edges`, from the graph alone, because
@@ -229,6 +329,15 @@ def _locked_bond_parities(positions, numbers, edges, index, labels, locked):
 
     An empty `locked` set therefore means "no bond can carry E/Z", and None is not passed
     here at all -- an unresolved valence is recorded in the key by the caller instead.
+
+    Notes
+    -----
+    [1] The discriminant is the cosine between the two perpendicular components, not their
+        dot product. The dot product carries the two substituent distances, so the old 1e-6
+        cut was a length in Angstrom standing in for an angle: it fired on a short
+        substituent that was nowhere near 90 degrees and never fired on a long one that was.
+        At the crossing the cosine is zero and its sign is noise, so the band reports the
+        configuration as absent instead of flipping with the last digit.
     """
     adjacency = {int(i): [] for i in index}
     for a, b in edges:
@@ -245,7 +354,7 @@ def _locked_bond_parities(positions, numbers, edges, index, labels, locked):
                 break
             best = max(labels[n] for n in options)
             if sum(1 for n in options if labels[n] == best) != 1:
-                break            # substituents are equivalent: no E/Z to record
+                break  # substituents are equivalent: no E/Z to record
             picked.append(next(n for n in options if labels[n] == best))
         if len(picked) != 2:
             continue
@@ -255,53 +364,129 @@ def _locked_bond_parities(positions, numbers, edges, index, labels, locked):
         v = positions[picked[1]] - positions[b]
         u = u - np.dot(u, axis) * axis
         v = v - np.dot(v, axis) * axis
-        if min(np.linalg.norm(u), np.linalg.norm(v)) < 1e-6:
+        lengths = (float(np.linalg.norm(u)), float(np.linalg.norm(v)))
+        if min(lengths) < 1e-6:
             continue
-        parities.append([tuple(sorted((labels[a], labels[b]))), int(np.sign(np.dot(u, v)))])
-    return sorted([[list(pair), parity] for pair, parity in parities])
+        # [1] the cosine between perpendicular components
+        cosine = float(np.dot(u, v)) / (lengths[0] * lengths[1])
+        parities.append(
+            [
+                tuple(sorted((labels[a], labels[b]))),
+                int(np.sign(cosine)) if abs(cosine) > tolerance else "planar",
+            ]
+        )
+    return sorted(
+        [[list(pair), parity] for pair, parity in parities],
+        key=lambda entry: (entry[0], str(entry[1])),
+    )
 
 
-def chemical_key(atoms, bond_scale=1.2, active=None, bond_order_limit=20000,
-                 charge_sensitive=False, charge=None, multiplicity=None):
+# Below this the configuration at a centre is reported as "planar" rather than signed.
+# Both discriminants are normalised to a dimensionless [-1, 1], so one number serves both:
+# an ideal sp3 centre sits an order of magnitude above it and the one locked C=C in the
+# frozen sample measures 0.9998, while a crossing is exactly zero.
+PARITY_TOLERANCE = 0.01
+
+
+def chemical_key(
+    atoms,
+    bond_scale=1.2,
+    active=None,
+    bond_order_limit=20000,
+    charge_sensitive=False,
+    charge=None,
+    multiplicity=None,
+    parity_tolerance=PARITY_TOLERANCE,
+):
     """Identity of the chemical macrostate this structure belongs to.
 
     Returns the components as well as the digest so a record explains itself; two
     structures belong to the same macrostate exactly when their "key" agrees.
     """
     if not charge_sensitive and charge not in (None, 0):
-        raise ValueError("charge_sensitive is false, so a nonzero total charge cannot be "
-                         "represented; the potential does not respond to it")
+        raise ValueError(
+            "charge_sensitive is false, so a nonzero total charge cannot be "
+            "represented; the potential does not respond to it"
+        )
     index = resolve_active(atoms, active)
     graph = encode(atoms, bond_scale, active=active)
     numbers = atoms.numbers
     labels = canonical_labels(numbers, graph.edges, index)
     locked, orders = locked_edges(numbers, graph.edges, index, bond_order_limit)
+    if orders.get("reason") in BUDGET_REASONS:
+        raise IdentityUnavailable(
+            f"bond-order enumeration hit its budget ({orders['reason']}, "
+            f"limit={bond_order_limit}); the key this would produce depends on the limit, "
+            "not on the molecule. Raise bond_order_limit or exclude this structure."
+        )
     components = {
         "graph_hash": _digest("|".join(sorted(labels.values())) + f"#{len(graph.edges)}"),
-        "fragments": sorted(_formula(numbers, group)
-                            for group in _fragments(graph.edges, index)),
-        "tetrahedral_parity": _tetrahedral_parities(atoms.positions, numbers,
-                                                    graph.edges, index, labels),
-        "locked_bond_parity": _locked_bond_parities(atoms.positions, numbers, graph.edges,
-                                                   index, labels, locked or frozenset()),
-        # An unresolved valence is stated, never guessed at. It is part of the key, so an
-        # unresolved substance is never compared against a resolved one on the quiet.
-        "stereo_unresolved": None if locked is not None else orders["reason"],
+        "fragments": sorted(
+            _formula(numbers, group) for group in _fragments(graph.edges, index)
+        ),
+        "tetrahedral_parity": _tetrahedral_parities(
+            atoms.positions, numbers, graph.edges, index, labels, parity_tolerance
+        ),
+        # None, not []. `locked` is None when the annotator could not decide which bonds
+        # carry configuration, and passing an empty set there computed "no locked bonds"
+        # -- which is the same value a molecule with genuinely no locked bonds produces.
+        # The two are not the same statement and a reader cannot tell them apart from the
+        # field. The key already distinguished them through `stereo_unresolved`, so the
+        # information was not lost; the SHAPE of the field was lying, and the v2 digest
+        # records that shape.
+        #
+        # Unknown is recorded as unknown. It is not "no stereochemical difference", and it
+        # is not grounds for refusing the species either -- that separation is Registry.admit.
+        "locked_bond_parity": (
+            None
+            if locked is None
+            else _locked_bond_parities(
+                atoms.positions,
+                numbers,
+                graph.edges,
+                index,
+                labels,
+                locked,
+                parity_tolerance,
+            )
+        ),
+        # The STATE, not the reason. An unresolved substance must never be compared
+        # against a resolved one on the quiet, so WHETHER the configuration could be
+        # determined belongs in the key. WHY it could not is a diagnostic about the
+        # resolver, and hashing a diagnostic makes it part of the substance's name:
+        # improve the resolver's failure reporting and every affected structure silently
+        # becomes a different species.
+        #
+        # `None` when resolved -- byte-identical to what this field hashed before -- so
+        # the 2009 resolved frames in the corpus keep their keys, and every key quoted in
+        # a frozen acceptance document still recomputes. Only the unresolved frames move,
+        # and they are the ones whose keys carried the diagnostic. The reason itself is
+        # recorded below, outside the hash.
+        "stereo_unresolved": None if locked is not None else True,
         "charge_sensitive": bool(charge_sensitive),
     }
     if charge_sensitive:
         components["charge"] = charge
         components["multiplicity"] = multiplicity
     components["key"] = hashlib.sha256(
-        json.dumps(components, sort_keys=True).encode()).hexdigest()
-    components["note"] = ("conformation deliberately excluded; only configurational "
-                          "stereochemistry contributes")
+        json.dumps(components, sort_keys=True).encode()
+    ).hexdigest()
+    # Overwritten with the reason AFTER hashing: readers and stored records want the
+    # reason, the key must not carry it. Diagnostics about the resolver, not about the
+    # substance.
+    components["stereo_unresolved"] = None if locked is not None else orders["reason"]
+    components["configuration_protocol"] = _CONFIGURATION_PROTOCOL
+    components["note"] = (
+        "conformation deliberately excluded; only configurational stereochemistry contributes"
+    )
     return components
 
 
 def same_chemistry(a, b, bond_scale=1.2, active=None, **kwargs):
-    return (chemical_key(a, bond_scale, active, **kwargs)["key"]
-            == chemical_key(b, bond_scale, active, **kwargs)["key"])
+    return (
+        chemical_key(a, bond_scale, active, **kwargs)["key"]
+        == chemical_key(b, bond_scale, active, **kwargs)["key"]
+    )
 
 
 def _factorial(n):
@@ -326,6 +511,7 @@ def automorphisms(atoms, bond_scale=1.2, active=None, limit=20000):
     over-counts conformers rather than silently mis-merging distinct ones.
     """
     from itertools import permutations, product
+
     index = resolve_active(atoms, active)
     graph = encode(atoms, bond_scale, active=active)
     labels = canonical_labels(atoms.numbers, graph.edges, index)
@@ -337,23 +523,28 @@ def automorphisms(atoms, bond_scale=1.2, active=None, limit=20000):
     for group in orbits:
         total *= _factorial(len(group))
         if total > limit:
-            return [np.asarray(index)], {"enumerated": False, "reason": "candidate_limit",
-                                         "orbit_sizes": [len(g) for g in orbits]}
-    position = {int(atom): i for i, atom in enumerate(index)}
+            return [np.asarray(index)], {
+                "enumerated": False,
+                "reason": "candidate_limit",
+                "orbit_sizes": [len(g) for g in orbits],
+            }
     found = []
     for choice in product(*[permutations(group) for group in orbits]):
         mapping = {int(atom): int(atom) for atom in index}
         for group, permuted in zip(orbits, choice):
             for source, target in zip(group, permuted):
                 mapping[source] = target
-        if {(min(mapping[a], mapping[b]), max(mapping[a], mapping[b]))
-                for a, b in graph.edges} != graph.edges:
+        if {
+            (min(mapping[a], mapping[b]), max(mapping[a], mapping[b])) for a, b in graph.edges
+        } != graph.edges:
             continue
         found.append(np.asarray([mapping[int(atom)] for atom in index]))
     found.sort(key=lambda p: not np.array_equal(p, np.asarray(index)))
-    return found, {"enumerated": True, "count": len(found),
-                   "orbit_sizes": [len(g) for g in orbits]}
-
+    return found, {
+        "enumerated": True,
+        "count": len(found),
+        "orbit_sizes": [len(g) for g in orbits],
+    }
 
 
 def _render_bonds(edges, mapping, numbers):
@@ -391,6 +582,18 @@ def stereo_only_difference(first, second):
               or a parity computed on a bond that is not actually locked.
 
     Returns (ok, reason).
+
+    Notes
+    -----
+    [1] "key" is the digest of everything else, so of course it differs -- that the two keys
+        differ IS the premise of the question being asked, and treating it as
+        counter-evidence is self-refuting. It has to be ignored explicitly, because the two
+        callers do not pass the same shape: the acceptance checker reads `key_components`
+        from network.json, where publish() has already stripped "key", while the model
+        passes `node.components`, where it is still present. Measured on P2 T=300 seed 71:
+        the checker said "parity flipped, everything else identical" and the model said "key
+        also differs" about the same pair. Sharing one implementation is not the same as
+        sharing one input convention.
     """
     if first is None or second is None:
         return False, "key components not supplied, so the key change cannot be explained"
@@ -402,19 +605,13 @@ def stereo_only_difference(first, second):
     for field in ("locked_bond_parity", "tetrahedral_parity"):
         a, b = parity_map(first, field), parity_map(second, field)
         if set(a) != set(b):
-            return False, (f"{field} is defined on different targets: "
-                           f"{sorted(a)} vs {sorted(b)}")
+            return False, (
+                f"{field} is defined on different targets: {sorted(a)} vs {sorted(b)}"
+            )
         flipped += [target for target in a if a[target] != b[target]]
     if not flipped:
         return False, "no parity differs, so the key change is unexplained"
-    # "key" is the digest of everything else, so of course it differs -- that the two keys
-    # differ IS the premise of the question being asked, and treating it as counter-evidence
-    # is self-refuting. It has to be ignored explicitly, because the two callers do not pass
-    # the same shape: the acceptance checker reads `key_components` from network.json, where
-    # publish() has already stripped "key", while the model passes `node.components`, where
-    # it is still present. Measured on P2 T=300 seed 71: the checker said "parity flipped,
-    # everything else identical" and the model said "key also differs" about the same pair.
-    # Sharing one implementation is not the same as sharing one input convention.
+    # [1] the key differing is the premise, not a finding
     ignored = {"key", "locked_bond_parity", "tetrahedral_parity", "note", "automorphisms"}
     for field in set(first) | set(second):
         if field not in ignored and first.get(field) != second.get(field):
@@ -422,8 +619,9 @@ def stereo_only_difference(first, second):
     return True, f"parity flipped on {flipped}, everything else identical"
 
 
-def classify_transition(source_key, endpoint_key, broken, formed,
-                        source_components=None, endpoint_components=None):
+def classify_transition(
+    source_key, endpoint_key, broken, formed, source_components=None, endpoint_components=None
+):
     """What happened between two minima, from the key and the bond delta together.
 
     Chemical-state identity and reaction-event identity are different questions. The key
@@ -489,36 +687,51 @@ def reaction_event_key(source, endpoint, bond_scale=1.2, active=None, limit=2000
         for permutation in found:
             relabellings.append({int(a): int(b) for a, b in zip(index, permutation)})
 
+    if not enumerated:
+        raise IdentityUnavailable(
+            "the automorphism group was not enumerated inside its budget, so the bond "
+            "delta is canonicalised against the identity permutation alone and the event "
+            "key depends on the limit rather than on the reaction. Raise "
+            "automorphism_limit or exclude this pair."
+        )
+
     def canonical(first, second):
-        return min((_render_bonds(first, mapping, numbers),
-                    _render_bonds(second, mapping, numbers))
-                   for mapping in relabellings)
+        return min(
+            (_render_bonds(first, mapping, numbers), _render_bonds(second, mapping, numbers))
+            for mapping in relabellings
+        )
 
     form = min(canonical(broken, formed), canonical(formed, broken))
+
     # The bond pattern alone is not a global identity: two different substances can break
     # and form the same elements at the same indices, and did in the malonaldehyde and
     # 3-oxobutanal preflights. Tagging the digest with the unordered pair of endpoint graph
     # hashes separates them without giving the key a direction.
     def graph_hash(structure):
         graph = encode(structure, bond_scale, active=active)
-        labels = canonical_labels(structure.numbers, graph.edges,
-                                  resolve_active(structure, active))
+        labels = canonical_labels(
+            structure.numbers, graph.edges, resolve_active(structure, active)
+        )
         return _digest("|".join(sorted(labels.values())) + f"#{len(graph.edges)}")
 
     context = tuple(sorted((graph_hash(source), graph_hash(endpoint))))
     form_with_context = (form, context)
     digest = hashlib.sha256(repr(form_with_context).encode()).hexdigest()[:16]
-    return {"key": digest, "canonical": form, "endpoint_graphs": list(context),
-            "broken": [list(e) for e in sorted(broken)],
-            "formed": [list(e) for e in sorted(formed)],
-            "symmetry_enumerated": enumerated,
-            "relabellings": len(relabellings),
-            "meaning": ("reaction-event identity: canonical under the endpoints' "
-                        "automorphisms and undirected. NOT a chemical-state identity")}
+    return {
+        "key": digest,
+        "canonical": form,
+        "endpoint_graphs": list(context),
+        "broken": [list(e) for e in sorted(broken)],
+        "formed": [list(e) for e in sorted(formed)],
+        "symmetry_enumerated": enumerated,
+        "relabellings": len(relabellings),
+        "meaning": _REACTION_EVENT_KEY_MEANING,
+    }
 
 
-def free_aligned_symmetric_rmsd(a, b, permutations_, active=None, free_bonds=(),
-                                bond_scale=1.2, samples=24):
+def free_aligned_symmetric_rmsd(
+    a, b, permutations_, active=None, free_bonds=(), bond_scale=1.2, samples=24
+):
     """symmetric_rmsd, additionally minimized over rotations about coordinates that carry
     no energy.
 
@@ -541,13 +754,17 @@ def free_aligned_symmetric_rmsd(a, b, permutations_, active=None, free_bonds=(),
     """
     from .perturbations import step_torsion, torsion_on_bond
     from .state import encode
+
     best = symmetric_rmsd(a, b, permutations_, active)
     if not free_bonds:
         return best
     graph = encode(b, bond_scale, active=active)
     labels = canonical_labels(b.numbers, graph.edges, graph.index)
-    torsions = [t for t in (torsion_on_bond(graph, labels, bond) for bond in free_bonds)
-                if t is not None]
+    torsions = [
+        t
+        for t in (torsion_on_bond(graph, labels, bond) for bond in free_bonds)
+        if t is not None
+    ]
     if not torsions:
         return best
     current = b
@@ -568,6 +785,7 @@ def free_aligned_symmetric_rmsd(a, b, permutations_, active=None, free_bonds=(),
 def symmetric_rmsd(a, b, permutations_, active=None):
     """Smallest Kabsch RMSD over a set of index permutations of b."""
     from .state import aligned_rmsd
+
     index = resolve_active(a, active)
     best = float("inf")
     for permutation in permutations_:

@@ -89,6 +89,67 @@ ACC = [o for o in OXY if o != DONOR][0]
 print(f"A {kA} E={E_A:.6f}   B {kB} E={E_B:.6f}   dE(B-A)={(E_B-E_A)*1e3:+.3f} meV")
 print(f"donor O{DONOR}  acceptor O{ACC}  shared H{H}", flush=True)
 
+def descent_failure(checked):
+    """Why a descent did not reach a minimum, in enough detail to act on.
+
+    `both sides reached 0/6` is the headline number of this job and every one of those
+    failures is `sign=+1  soft_mode_moved_on_the_last_round`. That string on its own does
+    not distinguish a limit cycle between FIRE and the torsion polish -- each undoing the
+    other, forever -- from a polish budget that is one round short of settling. The polish
+    reports per round, so the sequence of (moved, converged) and the offsets that caused
+    `moved` separate them: alternating signs on one coordinate is a cycle, same-sign
+    offsets shrinking is a budget.
+
+    Both `follow_unstable_mode` and `descend_saddle` used to flatten this to the reason
+    string, so none of it reached the record.
+    """
+    rounds = (checked or {}).get("rounds")
+    if not rounds:
+        return None
+    out = {"reason": checked.get("reason"), "failed_at_hop": checked.get("failed_at_hop"),
+           "quench_steps": checked.get("steps"), "rounds": []}
+    for report in rounds:
+        out["rounds"].append({
+            "converged": report.get("converged"), "moved": report.get("moved"),
+            "movements": report.get("movements"),
+            "not_within_tolerance": [m["indices"] for m in report.get("modes", [])
+                                     if m.get("within_tolerance") is False]})
+    return out
+
+
+def recheck_summary(checked):
+    """What the internal-mode gate saw on this hop, so a verdict change is attributable.
+
+    `descend_saddle` hands `confirm_minimum`'s whole diagnostics back and this job kept only
+    `reason` and `saddle_order` out of them, so the gate ran on every hop and left nothing on
+    the record. The part worth recording is the boundary mode: it used to be picked by
+    position in the spectrum, which in a projected spectrum is a rigid-body zero, where the
+    measured curvature is zero, it agrees with the zero eigenvalue and the comparison decides
+    nothing. It is now the softest INTERNAL non-negative mode, so on this surface it is a
+    real soft coordinate near the tolerance and the gate can genuinely fire.
+
+    `history` and the ladder are dropped; what stays is the classification and what it was
+    compared against, which is what makes a fired gate readable after the fact.
+    """
+    report = (checked or {}).get("internal_mode_recheck")
+    if not report:
+        return None
+    if not report.get("performed"):
+        # `blocked` distinguishes "nothing to certify" from "could not certify"; the
+        # second one now fails the hop closed, so it has to be readable in the record.
+        return {"performed": False, "blocked": bool(report.get("blocked")),
+                "reason": report.get("reason")}
+    keep = ("index", "eigenvalue", "subspace", "rigid_body_overlap", "compared_against",
+            "reference_curvature", "extrapolated_to_zero_step", "fits_h2_law",
+            "classification_agrees", "classification_steady_across_step")
+    return {"performed": True, "agree": report["agree"],
+            "hessian_source": report.get("hessian_source"),
+            "boundary_mode_index": report.get("boundary_mode_index"),
+            "internal_modes_available": report.get("internal_modes_available"),
+            "resolution_diagnosis": report.get("resolution_diagnosis"),
+            "modes": [{k: m.get(k) for k in keep} for m in report["modes"]]}
+
+
 def q_pt(atoms):
     p = atoms.positions
     return float(np.linalg.norm(p[DONOR]-p[H]) - np.linalg.norm(p[ACC]-p[H]))
@@ -204,6 +265,8 @@ for kidx, amp, replicate in MINE:
                 sides.append(dict(sign=sign, reached=False,
                                   reason=checked.get("reason"),
                                   saddle_order=checked.get("saddle_order"),
+                                  internal_mode_recheck=recheck_summary(checked),
+                                  descent_failure=descent_failure(checked),
                                   relays=len(relays)))
                 continue
             endpoint.calc = factory()
@@ -213,10 +276,36 @@ for kidx, amp, replicate in MINE:
                               key=k["key"][:16], graph_hash=k["graph_hash"],
                               fragments=k["fragments"],
                               saddle_order=checked.get("saddle_order"),
+                              internal_mode_recheck=recheck_summary(checked),
                               q_PT=q_pt(endpoint), r_OO=r_oo(endpoint)))
             write(str(OUT / f"end_k{kidx:02d}_amp{amp:.2f}_r{replicate}_sign{sign:+d}.extxyz"),
                   endpoint)
         base["sides"] = sides
+        # Printed as well as stored: a gate that fires shows up in the shard log rather
+        # than only in a json nobody opens until the merge.
+        for side in sides:
+            fail = side.get("descent_failure")
+            if fail:
+                for n, rnd in enumerate(fail["rounds"]):
+                    moves = ", ".join(f"{m['indices']}{m['offset_rad']:+.4f}({m['kind']})"
+                                      for m in (rnd["movements"] or [])) or "-"
+                    print(f"    [descent sign{side['sign']:+d} round {n}] "
+                          f"converged={rnd['converged']} moved={rnd['moved']}  {moves}",
+                          flush=True)
+            gate = side.get("internal_mode_recheck") or {}
+            if gate.get("performed"):
+                boundary = next((m for m in gate["modes"]
+                                 if m["index"] == gate["boundary_mode_index"]), None)
+                print(f"    [gate sign{side['sign']:+d}] agree={gate['agree']} "
+                      f"source={gate['hessian_source']} "
+                      f"boundary={gate['boundary_mode_index']} "
+                      f"lam={None if boundary is None else round(boundary['eigenvalue'], 6)} "
+                      f"ref={None if boundary is None else round(boundary['reference_curvature'], 6)} "
+                      f"against={None if boundary is None else boundary['compared_against']} "
+                      f"h2={None if boundary is None else boundary['fits_h2_law']}", flush=True)
+            elif gate:
+                print(f"    [gate sign{side['sign']:+d}] not performed: {gate.get('reason')}",
+                      flush=True)
         got = [s["key"] for s in sides if s.get("reached")]
         base["both_sides_reached"] = len(got) == 2
         base["connects_two_nodes"] = len(set(got)) == 2

@@ -1,4 +1,5 @@
 """Fail-closed guards executed for every force evaluation, including FIRE."""
+
 import numpy as np
 from ase.calculators.calculator import Calculator, all_changes
 from ase.data import covalent_radii
@@ -20,7 +21,9 @@ class GuardedCalculator(Calculator):
         self.config = config
         self.reference_energy = reference_energy
 
-    def calculate(self, atoms=None, properties=("energy", "forces"), system_changes=all_changes):
+    def calculate(
+        self, atoms=None, properties=("energy", "forces"), system_changes=all_changes
+    ):
         super().calculate(atoms, properties, system_changes)
         cfg = self.config
 
@@ -37,7 +40,11 @@ class GuardedCalculator(Calculator):
             reject("overlap", "An interatomic distance is below the overlap guard")
         energy = float(self.physical.get_potential_energy(atoms))
         forces = np.asarray(self.physical.get_forces(atoms))
-        if forces.shape != (len(atoms), 3) or not np.isfinite(forces).all() or not np.isfinite(energy):
+        if (
+            forces.shape != (len(atoms), 3)
+            or not np.isfinite(forces).all()
+            or not np.isfinite(energy)
+        ):
             reject("nonfinite", "Calculator returned invalid energy or forces")
         if np.max(np.linalg.norm(forces, axis=1)) > cfg.max_force_eV_A:
             reject("force_limit", "Physical force exceeds configured limit")
@@ -51,15 +58,22 @@ class GuardedCalculator(Calculator):
                 reject("invalid_uncertainty", "Invalid uncertainty value")
         if cfg.max_uncertainty_eV_A is not None:
             if uncertainty is None:
-                reject("uncertainty_unavailable", "Uncertainty required but calculator supplies none")
+                reject(
+                    "uncertainty_unavailable",
+                    "Uncertainty required but calculator supplies none",
+                )
             if uncertainty > cfg.max_uncertainty_eV_A:
                 reject("ood", "Force disagreement exceeds configured limit")
-        self.results = {"energy": energy, "forces": forces.copy(),
-                        "force_uncertainty_eV_A": uncertainty}
+        self.results = {
+            "energy": energy,
+            "forces": forces.copy(),
+            "force_uncertainty_eV_A": uncertainty,
+        }
 
 
 class PairPulse(Calculator):
     """Conservative central bias U=-sign*alpha*(r-r0), held constant during pulse."""
+
     implemented_properties = ["energy", "forces"]
 
     def __init__(self, physical, pair, sign, amplitude, reference_distance):
@@ -70,8 +84,11 @@ class PairPulse(Calculator):
         self.amplitude = amplitude
         self.reference_distance = reference_distance
 
-    def calculate(self, atoms=None, properties=("energy", "forces"), system_changes=all_changes):
+    def calculate(
+        self, atoms=None, properties=("energy", "forces"), system_changes=all_changes
+    ):
         from .perturbations import pair_axis
+
         super().calculate(atoms, properties, system_changes)
         energy = self.physical.get_potential_energy(atoms)
         forces = self.physical.get_forces(atoms).copy()
@@ -82,4 +99,3 @@ class PairPulse(Calculator):
         forces[j] += force
         bias = -self.sign * self.amplitude * (distance - self.reference_distance)
         self.results = {"energy": energy + bias, "forces": forces, "bias_energy": bias}
-

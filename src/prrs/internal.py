@@ -21,6 +21,7 @@ Gradients are taken by central differences of the coordinate function itself. Th
 function is analytic and cheap, involves no potential evaluation, and reaches ~1e-9
 accuracy, so the expensive resource is untouched and the result is easy to verify.
 """
+
 import numpy as np
 
 KINDS = {"bond": 2, "angle": 3, "dihedral": 4}
@@ -36,18 +37,44 @@ MAX_STEP = {"bond": 0.05, "angle": 0.05, "dihedral": 0.05}
 _STEP = 1e-6
 
 
-def _check(kind, indices):
+def atom_index(value, count=None):
+    """One atom index, validated rather than coerced.
+
+    `int(value)` accepts everything and complains about nothing: -1 becomes a valid
+    numpy index onto the last atom, and 1.9 truncates to 1. Both then perturb an atom
+    nobody named, and the coordinate that comes back is a real number for the wrong
+    triple, so nothing downstream can tell. numpy integers have to pass -- indices
+    routinely arrive from np.where or argmax on a bond graph -- so the test is on the
+    value being integral, not on `type(value) is int`.
+    """
+    if isinstance(value, bool):
+        raise ValueError(f"atom index must be an integer, got {value!r}")
+    try:
+        integral = int(value) == value
+    except (TypeError, ValueError):  # non-numeric, or a float NaN/inf
+        integral = False
+    if not integral:
+        raise ValueError(f"atom index must be an integer, got {value!r}")
+    index = int(value)
+    if index < 0:
+        raise ValueError(f"atom index must be nonnegative, got {index}")
+    if count is not None and index >= count:
+        raise ValueError(f"atom index {index} is out of range for {count} atoms")
+    return index
+
+
+def _check(kind, indices, count=None):
     if kind not in KINDS:
         raise ValueError(f"kind must be one of {sorted(KINDS)}")
     if len(indices) != KINDS[kind] or len(set(indices)) != len(indices):
         raise ValueError(f"{kind} needs {KINDS[kind]} distinct atom indices")
-    return tuple(int(i) for i in indices)
+    return tuple(atom_index(i, count) for i in indices)
 
 
 def coordinate(positions, kind, indices):
     """Bond length in Angstrom, or angle/dihedral in radians (dihedral in (-pi, pi])."""
-    indices = _check(kind, indices)
     positions = np.asarray(positions, dtype=float)
+    indices = _check(kind, indices, len(positions))
     if kind == "bond":
         i, j = indices
         return float(np.linalg.norm(positions[j] - positions[i]))
@@ -58,7 +85,7 @@ def coordinate(positions, kind, indices):
         u /= np.linalg.norm(u)
         v /= np.linalg.norm(v)
         return float(np.arccos(np.clip(np.dot(u, v), -1.0, 1.0)))
-    i, j, k, l = indices
+    i, j, k, l = indices  # noqa: E741 - i-j-k-l is the dihedral's own notation
     b1 = positions[j] - positions[i]
     b2 = positions[k] - positions[j]
     b3 = positions[l] - positions[k]
@@ -90,12 +117,16 @@ def named_values(positions, specs):
     for spec in specs or ():
         name = spec["name"]
         kind = spec["kind"]
-        indices = tuple(int(i) for i in spec["indices"])
+        # bond_difference is validated here rather than by _check: its four indices share
+        # the transferring atom by construction, so only each bond's own pair has to be
+        # distinct. The two coordinate() calls below re-check each pair.
+        indices = tuple(atom_index(i, len(positions)) for i in spec["indices"])
         if kind == "bond_difference":
             if len(indices) != 4:
                 raise ValueError("bond_difference needs four atom indices: i j k l")
-            values[name] = (coordinate(positions, "bond", indices[:2])
-                            - coordinate(positions, "bond", indices[2:]))
+            values[name] = coordinate(positions, "bond", indices[:2]) - coordinate(
+                positions, "bond", indices[2:]
+            )
         else:
             values[name] = coordinate(positions, kind, indices)
     return values
@@ -131,8 +162,8 @@ def _rigid_basis(positions):
 
 def gradient(positions, kind, indices):
     """d(coordinate)/dx as an (N, 3) array, with rigid-body components removed."""
-    indices = _check(kind, indices)
     positions = np.asarray(positions, dtype=float)
+    indices = _check(kind, indices, len(positions))
     result = np.zeros_like(positions)
     wrap = _wrap if PERIODIC[kind] else (lambda d: d)
     for atom in indices:
@@ -154,8 +185,7 @@ def gradient(positions, kind, indices):
     return result
 
 
-def displace(atoms, kind, indices, delta, in_place=True, tolerance=1e-9,
-              max_iterations=None):
+def displace(atoms, kind, indices, delta, in_place=True, tolerance=1e-9, max_iterations=None):
     """Move by delta along one internal coordinate, preserving the center of mass.
 
     Each increment is capped at MAX_STEP so the path follows the arc of the coordinate
@@ -165,18 +195,19 @@ def displace(atoms, kind, indices, delta, in_place=True, tolerance=1e-9,
     reported amplitude windows depend on. Iteration is free in the resource that
     matters: it re-evaluates the geometry, never the potential.
     """
-    indices = _check(kind, indices)
+    indices = _check(kind, indices, len(atoms))
     masses = atoms.get_masses()
     target = atoms if in_place else atoms.copy()
     start = coordinate(target.positions, kind, indices)
     # Guard the requested destination, not the step: a bond length is a norm and can
     # never come out negative, so checking the result after the fact catches nothing.
     if kind == "bond" and start + delta <= 0:
-        raise ValueError(f"Bond displacement targets a nonpositive length "
-                         f"({start:.3f} + {delta:.3f} Angstrom)")
+        raise ValueError(
+            f"Bond displacement targets a nonpositive length "
+            f"({start:.3f} + {delta:.3f} Angstrom)"
+        )
     if kind == "angle" and not 0 < start + delta < np.pi:
-        raise ValueError(f"Angle displacement targets {start + delta:.3f} rad, "
-                         "outside (0, pi)")
+        raise ValueError(f"Angle displacement targets {start + delta:.3f} rad, outside (0, pi)")
     cap = MAX_STEP[kind]
     if max_iterations is None:
         max_iterations = int(abs(delta) / cap) + 24
@@ -211,7 +242,10 @@ def rotate_fragment(positions, axis_a, axis_b, moving, angle, masses=None):
     no rigid fragment to rotate and must use the continuation scheme in displace().
     """
     positions = np.array(positions, dtype=float)
-    moving = np.asarray(sorted(set(int(i) for i in moving)), dtype=int)
+    count = len(positions)
+    axis_a = atom_index(axis_a, count)
+    axis_b = atom_index(axis_b, count)
+    moving = np.asarray(sorted({atom_index(i, count) for i in moving}), dtype=int)
     if axis_a in moving or axis_b in moving:
         raise ValueError("Axis atoms must not be part of the rotating fragment")
     origin = positions[axis_a]
@@ -228,8 +262,7 @@ def rotate_fragment(positions, axis_a, axis_b, moving, angle, masses=None):
     along = np.outer(offsets @ axis, axis)
     across = offsets - along
     perpendicular = np.cross(axis, across)
-    positions[moving] = (origin + along + across * np.cos(angle)
-                         + perpendicular * np.sin(angle))
+    positions[moving] = origin + along + across * np.cos(angle) + perpendicular * np.sin(angle)
     if before is not None:
         positions -= np.average(positions, axis=0, weights=masses) - before
     return positions

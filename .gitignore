@@ -10,3 +10,9 @@ runs/
 
 # 18 MB MACE checkpoint; ships alongside the repo, not inside git history
 models/*.model
+
+# Formatter/linter only; never the science environment.
+.venv-tools/
+.ruff_cache/
+benchmarks/**/__pycache__/
+.scratch/

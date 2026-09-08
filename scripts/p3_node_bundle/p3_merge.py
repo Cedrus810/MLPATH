@@ -23,6 +23,45 @@ def shards(pattern):
     return sorted(glob.glob(str(pattern)))
 
 
+def source_reference(path):
+    """(E_eV, r_OO) of a recorded endpoint, read out of its extxyz. No model, no recompute.
+
+    The conformer count used to run over the landscape's own 300 rows only, and A -- the
+    structure every other job in P3 is measured against -- was not among them. It sits
+    1.255 meV BELOW the landscape's lowest closed-chelate minimum, which is above the
+    0.81 meV scale this section uses, so by the project's own criterion it is a distinct
+    conformer that the sweep never generated. Counting the sweep against itself made that
+    invisible and reported 1.
+
+    Parsed by hand rather than through ase: this script is the CPU merge and has no
+    calculator, and `energy=` in the extxyz comment line is the number that was recorded
+    when the structure was made. Nothing here re-relaxes or re-evaluates anything.
+    """
+    path = Path(path)
+    if not path.is_file():
+        return None
+    lines = path.read_text().splitlines()
+    if len(lines) < 3:
+        return None
+    count = int(lines[0].split()[0])
+    energy = None
+    for field in lines[1].split():
+        if field.startswith("energy="):
+            energy = float(field.split("=", 1)[1])
+            break
+    if energy is None:
+        return None
+    oxygen = []
+    for row in lines[2:2 + count]:
+        parts = row.split()
+        if parts[0] == "O":
+            oxygen.append([float(x) for x in parts[1:4]])
+    if len(oxygen) != 2:
+        return None
+    a, b = np.array(oxygen[0]), np.array(oxygen[1])
+    return {"E_eV": energy, "r_OO": float(np.linalg.norm(a - b))}
+
+
 def check(name, found, expected):
     if expected is None:
         return
@@ -113,15 +152,44 @@ if files:
         # scale below which two energies are not being called distinct.
         print(f"  distinct at 0.1 meV   {len({round(e,4) for e in E})}")
         print(f"  distinct at 0.81 meV  {len({round(e/8.1e-4) for e in E})}"
-              f"   <- the defensible count")
+              f"   (sweep only)")
         print(f"  distinct chemical_key {len({r['key'] for r in closed})}")
         print(f"  E span {(E.max()-E.min())*1e3:.2f} meV, lowest {E.min():.6f} eV")
         if openf:
             Eo = np.array([r["E_eV"] for r in openf])
             print(f"  chelate stabilisation {(Eo.min()-E.min())*1e3:.1f} meV")
-        n_needed = len({round(e/8.1e-4) for e in E})
+
+        # The recorded endpoints belong in the same count. They are closed-chelate minima
+        # of the same substance under the same protocol, they are what every other P3 job
+        # is measured against, and the sweep does not contain them -- so a count taken over
+        # the sweep alone is a count of what RDKit happened to generate, not of what is
+        # known. Both numbers are printed; the sweep-only one is not deleted, because it is
+        # what says the 300 conformers collapse onto a single structure.
+        pooled = list(E)
+        endpoints = []
+        for name, path in (("A", ROOT / "p3_A_source.extxyz"),
+                           ("B", ROOT / "p3_B_source.extxyz")):
+            reference = source_reference(path)
+            if reference is None:
+                print(f"  endpoint {name}: not on disk, left out of the count")
+                continue
+            where = "closed" if reference["r_OO"] < 3.0 else "open"
+            offset = (reference["E_eV"] - E.min()) * 1e3
+            print(f"  endpoint {name}  E {reference['E_eV']:.6f} eV  "
+                  f"r_OO {reference['r_OO']:.4f} A  ({where})  "
+                  f"{offset:+.3f} meV vs the sweep's lowest closed")
+            if where == "closed":
+                pooled.append(reference["E_eV"])
+                endpoints.append(name)
+        n_sweep = len({round(e / 8.1e-4) for e in E})
+        n_needed = len({round(e / 8.1e-4) for e in pooled})
+        print(f"  distinct at 0.81 meV, sweep + {endpoints or 'nothing'}:  {n_needed}"
+              f"   <- the defensible count")
         print(f"  => conformer_max_per_node for P3 must be >= {n_needed} "
               f"(P2 ran 8); reservoir would evict below that")
+        if n_needed != n_sweep:
+            print(f"     the sweep alone gives {n_sweep}: it does not contain "
+                  f"{', '.join(endpoints)}, and that gap is the difference")
     json.dump(dict(source_shards=files, smiles=meta["smiles"],
                    atom_order=meta["atom_order"], rows=rows),
               open(d / "landscape.json", "w"), indent=1, default=str)

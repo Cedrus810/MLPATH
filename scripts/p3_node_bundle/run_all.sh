@@ -21,11 +21,14 @@ LOG="${LOG:-runs/p3_node_logs}"; mkdir -p "$LOG"
 
 usage() {
   cat <<USE
-usage: $0 {ts|paths|pes|figure|quench-ab|models|landscape|all|merge|status} [grid]
+usage: $0 {ts|paths|descent|pes|figure|quench-ab|models|landscape|all|merge|status} [grid]
 
   ts         first-order saddle, barrier, imaginary freq, two-sided descent (8 amplitudes)
   paths      record the delivered path (climb + both descents) with named coordinates,
              so it can be projected onto the surface. Failed descents keep their frames.
+  descent    P3 step 3: re-run only the sign=+1 descent of the six saddles already
+             on disk, keeping the polish rounds and the endpoint a failed descent throws
+             away. Answers why that side never reaches A. Six descents, no climbing.
   figure     build the two-panel figure from whatever is on disk (CPU only)
   quench-ab  2x2 over (quench_fmax, quench_steps). Tolerance alone is NOT one variable:
              at a fixed step budget it also decides whether the criterion is reachable.
@@ -82,7 +85,7 @@ capacity_check() {
 # Override with P3_THREADS; drop the pinning with P3_PIN=0.
 CORE=0
 NCORES=$(nproc)
-PATTERN='p3_(ts_barrier|pes2d|landscape_full|three_model|paths)\.py'
+PATTERN='p3_(ts_barrier|pes2d|landscape_full|three_model|paths|descent_recheck)\.py'
 # Live-worker count from the PIDs we launched, NOT from pgrep.
 # Two reasons pgrep was wrong here. First, `pgrep -fc` prints "0" AND exits 1 when nothing
 # matches, so `pgrep -fc ... || echo 0` emitted TWO lines and every arithmetic test
@@ -222,6 +225,17 @@ case "$1" in
       "$PY" "$B/p3_merge.py" runs | sed -n '/TS . barrier/,/merged/p'
       rm -rf runs/p3_ts_barrier
     done
+    ;;
+  descent)
+    # P3 step 3, and the last compute P3 is allowed: the sign=+1 side of the six
+    # first-order saddles already sitting in runs/p3_ts_barrier as ts_k*.extxyz. Nothing
+    # re-climbs, so this is six descents, not a seed scan -- budget minutes, not hours.
+    #
+    # quench_fmax and quench_steps deliberately keep the archived values (2e-3, 500). The
+    # 2x2 in `quench-ab` already separated tolerance from budget; re-sweeping them here
+    # would be the fourth scan of the same knob and is explicitly not what this answers.
+    pool p3_descent_recheck.py descent 6 "$MODEL" runs/p3_ts_barrier runs/p3_descent_recheck
+    "$PY" "$B/p3_descent_summary.py" runs/p3_descent_recheck
     ;;
   merge)  exec "$PY" "$B/p3_merge.py" runs ;;
   status)

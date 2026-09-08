@@ -112,43 +112,69 @@ def shard_arg(argv, flag="--shard"):
 
 
 def _quiet_torch_load(trusted_sha_prefix, trusted_paths):
-    """Make torch.load silent and safe without an environment variable.
+    """Arrange for the hash-verified checkpoints -- and only those -- to load as full pickles.
 
-    Registers `slice` so e3nn's constants.pt is a genuine weights-only load, then wraps
-    torch.load so that ONLY the hash-verified checkpoint gets an explicit
-    weights_only=False. Explicit is the whole point: torch warns only when the variable is
-    set and the callsite left the argument unset, so setting it at the callsite removes the
-    warning without suppressing anything.
+    Delegates to src/prrs/torch_guard.py when it is importable, so there is ONE wrapper on
+    torch.load and ONE trust registry. Falls back to a local wrapper otherwise.
+
+    Why delegate now, having argued against it earlier: the objection was that this
+    bundle's fail-closed check (an unrecorded checkpoint is refused, never run) has to
+    happen before any prrs import. That was simply wrong -- `guard` calls `model_info` on
+    every path, and raises, BEFORE calling this function at all. The ordering was never in
+    conflict. `torch_guard.install(trusted=...)` closes the remaining gap: install-then-
+    trust left a window in which the registry was empty, and a guard whose whole job is to
+    be in place before the first import should not have one.
+
+    Registering `slice` first means e3nn's constants.pt is a real weights-only load rather
+    than an exemption; it must precede any e3nn or mace import, because that import is when
+    the file is read. mace sets TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD itself
+    (mace/__init__.py:5), so its value is never depended on -- passing `weights_only`
+    explicitly at the callsite is what silences torch's warning.
+
+    The fallback path keeps three rules, each of which was a measured failure first:
+      1. contribute to an existing guard's shared registry instead of returning early.
+         Returning early meant this bundle's trust list had no effect when another guard
+         was installed first -- and the three-model probe loads omol-0 and POLAR-1, which
+         that guard has no reason to have trusted. Silent load failure, not a warning.
+      2. never impose the restrictive default when another guard sits underneath: it may
+         know the file is trusted. The mirror of this was a real UnpicklingError.
+      3. expose `_prrs_trusted` so a guard installed later can do rule 1 to us.
     """
     import torch
 
-    # `slice` first: with it registered, e3nn's constants.pt is a genuine weights-only load,
-    # so the wrapper below can hand it torch's safe default instead of an exemption.
     torch.serialization.add_safe_globals([slice])
-    if getattr(torch.load, "_prrs_wrapped", False):
-        return
-    original = torch.load
-    trusted = {str(Path(p).resolve()) for p in trusted_paths}
+    global _INSTALLED, _TRUSTED
+    wanted = set()
+    for path in trusted_paths:
+        try:
+            wanted.add(str(Path(path).resolve()))
+        except OSError:
+            pass
+
+    try:
+        from prrs import torch_guard          # after the hash check in guard(), never before
+    except Exception:
+        torch_guard = None
+    if torch_guard is not None:
+        torch_guard.install(trusted=sorted(wanted))
+        _INSTALLED = torch.load
+        _TRUSTED = getattr(torch.load, "_prrs_trusted", _TRUSTED)
+        _TRUSTED.update(wanted)
+        return _INSTALLED
+
+    existing = torch.load
+    if getattr(existing, "_prrs_wrapped", False):
+        shared = getattr(existing, "_prrs_trusted", None)
+        if shared is not None:
+            shared.update(wanted)            # rule 1
+            _TRUSTED = shared
+            _INSTALLED = existing
+            return existing
+    _TRUSTED.update(wanted)
+    original = existing
+    inner_guard = bool(getattr(original, "_prrs_wrapped", False))   # rule 2
 
     def load(*args, **kwargs):
-        """Always pass weights_only EXPLICITLY, which is what silences torch.
-
-        torch/serialization.py warns only when TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD is set AND
-        the callsite left `weights_only` unset. Setting it here makes that condition false
-        permanently, so the warning cannot come back no matter who sets the variable.
-
-        And someone does keep setting it: mace sets it itself, in mace/__init__.py:5 and
-        mace/calculators/mace.py:15. An earlier version of this guard popped the variable
-        instead, on the theory that it was inherited from the launching shell -- that was
-        wrong. Popping worked right up until `import mace`, which put it straight back, so
-        the warning returned from inside this very wrapper. Removing a variable that a
-        dependency re-asserts on import is not a fix; not depending on its value is.
-
-        The trusted checkpoint is loaded as a full pickle because its sha256 was verified
-        against the frozen model a few lines above. Everything else gets torch's safe
-        default, so a future dependency that genuinely needs weights_only=False will raise
-        an UnpicklingError naming itself rather than being silently permitted.
-        """
         target = kwargs.get("f", args[0] if args else None)
         if "weights_only" not in kwargs:
             resolved = None
@@ -157,11 +183,53 @@ def _quiet_torch_load(trusted_sha_prefix, trusted_paths):
                     resolved = str(Path(target).resolve())
                 except OSError:
                     resolved = None
-            kwargs["weights_only"] = resolved not in trusted if resolved else True
+            if resolved is not None and resolved in _TRUSTED:
+                kwargs["weights_only"] = False
+            elif not inner_guard:
+                kwargs["weights_only"] = True
         return original(*args, **kwargs)
 
     load._prrs_wrapped = True
+    load._prrs_trusted = _TRUSTED            # rule 3
+    load._prrs_defers_to_inner = inner_guard
     torch.load = load
+    _INSTALLED = load
+    return load
+
+
+_INSTALLED = None
+_TRUSTED = set()
+
+
+def torch_load_outermost():
+    """Is this module's wrapper the OUTERMOST torch.load right now?
+
+    Renamed from `torch_load_intact`, because "intact" was the wrong claim and measuring
+    the wrong thing showed up as a false alarm the first time it was layered.
+
+    It answers `torch.load is _INSTALLED`. That is exactly one of the two ways this wrapper
+    can stop having effect, and it does not distinguish them:
+
+      REMOVED     a third-party wrapper saved the pre-guard torch.load and restored it in a
+                  finally. The guard is gone. This function returns False -- correctly.
+      NESTED      a third-party wrapper installed itself on top and calls through. The guard
+                  is still on the chain and still working. This function returns False too
+                  -- a FALSE ALARM.
+
+    Measured: with `prrs.torch_guard` installed over this one, this returns False while the
+    model still loads correctly and no warning is emitted. So a False here is a prompt to
+    look, never a verdict on its own.
+
+    There is no cheap reliable test for "still on the chain" -- it would mean walking
+    closures of an arbitrary wrapper. What is cheap and worth having is the ordering fact,
+    so that is what is reported, under a name that says so.
+    """
+    import torch
+    return _INSTALLED is not None and torch.load is _INSTALLED
+
+
+# Kept so existing callers do not break; the name overstated what it measures.
+torch_load_intact = torch_load_outermost
 
 
 def shard_hint():
@@ -218,6 +286,9 @@ def guard(model_path, label="", models=None):
         "tf32_cudnn": torch.backends.cudnn.allow_tf32,
         "tf32_was_on_at_import": list(was_on),
         "default_dtype": "float64",
+        # "outermost", not "installed": a wrapper layered on top makes this False while
+        # this guard is still on the chain and still working. See torch_load_outermost.
+        "torch_load_wrapper_outermost": torch.load is _INSTALLED,
         "torch_force_no_weights_only_env": os.environ.get(
             "TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD", "<removed by guard; not needed>"),
         "models": [{k: v for k, v in i.items() if k != "path"} for i in infos],
