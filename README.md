@@ -1,5 +1,7 @@
 # PRRS — Perturbation–Response Reaction Search
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 ## What is PRRS?
 
 **PRRS is a reaction-discovery method designed for machine-learning potentials (MLPs).**
@@ -404,3 +406,15 @@ The main open question is no longer whether the basic idea works.
 The next question is:
 
 > **How broadly and efficiently can it discover chemically diverse reaction channels as system size and reaction complexity increase?**
+
+---
+
+# License
+
+This project is licensed under the **GNU Affero General Public License v3.0 only**
+(`SPDX: AGPL-3.0-only`). The full license text is in [LICENSE](LICENSE).
+
+In short: you may use, study, share, and modify this code, but any derivative work —
+whether distributed or offered over a network — must be released under the same
+license, with complete corresponding source. "Only" means the code is licensed under
+AGPL-3.0 exactly, and not automatically under future GPL/AGPL versions.

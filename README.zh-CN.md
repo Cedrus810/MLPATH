@@ -1,5 +1,7 @@
 # PRRS — 扰动–响应反应搜索（Perturbation–Response Reaction Search）
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 一个 MLP-native 的反应发现方法：**给分子一个受控扰动 → 让它在无偏 NVE 下自由响应 → 淬火 →
 看它落到哪个化学态。**
 
@@ -351,3 +353,14 @@ numpy 2.4.3      openmm 8.5.2            openmm-ml / openmm-torch / nnpops：无
 - **门（gate）不能因为它挡住了想要的结果就调。** 要动必须先量清楚它挡掉的是什么。
 - **测量优先于推断。** 本项目有大量"我推断 X，检验杀了它"的记录，那些记录是资产不是耻辱
   （`HANDOFF.md` §6）。
+
+---
+
+## 6. 许可协议
+
+本项目以 **GNU Affero General Public License v3.0**（`SPDX: AGPL-3.0-only`）发布，完整协议
+文本见 [LICENSE](LICENSE)。
+
+简言之：可以自由使用、研究、分享和修改本代码，但任何衍生作品——无论是分发还是仅通过网络
+对外提供服务——都必须以同一协议公开完整对应源码。`-only` 表示仅按 AGPL-3.0 这一版本授权，
+不自动延伸到未来的 GPL/AGPL 版本。
