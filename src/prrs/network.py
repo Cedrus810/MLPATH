@@ -21,12 +21,16 @@ remains available as perturbation origins.
 
 from collections import Counter
 from dataclasses import dataclass, field
+from pathlib import Path
+import ast
 import numpy as np
-from .chemistry import automorphisms, chemical_key, free_aligned_symmetric_rmsd
+from ase.calculators.singlepoint import SinglePointCalculator
+from ase.io import read
+from .chemistry import BUDGET_REASONS, automorphisms, chemical_key, free_aligned_symmetric_rmsd
 from .perturbations import rotatable_torsions
 from . import internal
 from .state import encode
-from .chemistry import canonical_labels
+from .canonical import canonical_form
 
 # Prose that ships inside the records this module writes. Held as named constants
 # rather than inline in the dict literals so the shape of each record is visible at
@@ -49,8 +53,10 @@ def torsion_profile(atoms, bond_scale=1.2, active=None):
     counting it would make copies look diverse and let them win reservoir slots.
     """
     graph = encode(atoms, bond_scale, active=active)
-    labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
-    genuine, _rotors = rotatable_torsions(graph, labels)
+    form = canonical_form(atoms.numbers, graph.edges, graph.index)
+    labels = form.colours
+    orbits = form.orbits if form.info.get("enumerated") else labels
+    genuine, _rotors = rotatable_torsions(graph, labels, orbits)
     return {
         tuple(t.indices): internal.coordinate(atoms.positions, "dihedral", t.indices)
         for t in genuine
@@ -80,10 +86,35 @@ def free_bonds_of(structure):
         return ()
     bonds = set()
     for mode in rounds[-1].get("modes", []):
+        # The polish reports two kinds of coordinate now, and only one of them has a bond.
+        # `indices[1:3]` off a fragment rotation is the fragment's second and third ATOM,
+        # which need not be bonded to each other and certainly is not a free rotor. Entries
+        # written before the field existed are torsions, which is what the default says.
+        if mode.get("coordinate", "torsion") != "torsion":
+            continue
         if mode.get("tier") == "free":
             indices = mode["indices"]
             bonds.add(tuple(sorted(indices[1:3])))
     return tuple(sorted(bonds))
+
+
+def measured_bonds_of(structure):
+    """Every torsion the quench measured, with the verdict it reached.
+
+    free_bonds_of answers "which are flat"; this answers "which were looked at", and the
+    difference matters when two structures are compared. A bond absent here was never
+    measured on this geometry, which is not the same as having been measured and found
+    stiff -- the same measured/not-measured split the identity layer had to make
+    (docs/DECISIONS_PENDING.md, "unknown is not empty").
+    """
+    rounds = (structure.info.get("quench") or {}).get("rounds") or []
+    if not rounds:
+        return {}
+    return {
+        tuple(sorted(mode["indices"][1:3])): mode.get("tier")
+        for mode in rounds[-1].get("modes", [])
+        if mode.get("coordinate", "torsion") == "torsion"  # same reason as free_bonds_of
+    }
 
 
 @dataclass
@@ -159,6 +190,31 @@ class Registry:
 
     def find_node(self, key):
         return next((node for node in self.nodes if node.key == key), None)
+
+    def identify(self, structure):
+        """Which (node, microstate) this geometry already IS. Reads; never inserts.
+
+        `admit` is the wrong tool for asking "where did this land": it mints nodes and
+        microstates, so using it to judge a probe would write the probe into the very
+        network the probe is supposed to observe. The committor needs exactly this
+        question and nothing else (PLAN item 2.2, decision 3, 2026-09-20: the shots are
+        an independent probe, model report only, never a criterion) -- and asking it
+        through `admit` was how the first production run produced A 0 / B 0 / other 16
+        on every bracket: nothing set `target_microstate`, so both named outcomes were
+        unreachable by construction.
+
+        Returns (None, None) for a geometry no existing node matches, which is a third
+        basin or an unrecognised one -- never silently the nearest of the two.
+        """
+        # key_of returns the decomposed identity; the node carries only its hash, so the
+        # ["key"] is the comparable half -- same extraction `admit` makes. Handing the
+        # whole dict to find_node compares a dict against a string and silently matches
+        # nothing, which is the second way this judging could report "no basin" for a
+        # geometry sitting squarely in one.
+        node = self.find_node(self.key_of(structure)["key"])
+        if node is None:
+            return None, None
+        return node, self._match_microstate(node, structure)
 
     # ---- reservoir policy -----------------------------------------------------
     def _energy_term(self, node, energy):
@@ -286,6 +342,20 @@ class Registry:
             permutations_, info = automorphisms(
                 structure, cfg.bond_scale, cfg.active_atoms, cfg.automorphism_limit
             )
+            if info.get("reason") in BUDGET_REASONS:
+                # P1-4 (decision 7, 2026-09-20): on overflow automorphisms() hands back
+                # [identity] with the reason in info, and the event path already refuses
+                # to canonicalise against that ("An incomplete group is never used").
+                # This path used to build the node anyway, and conformer matching then
+                # silently degraded to naive RMSD -- a methyl rotation would look like a
+                # new conformer forever. Refuse the node instead: the run keeps going,
+                # the geometry is withheld with this reason, and nothing downstream
+                # reads a group that was never certified.
+                return Admission(
+                    "rejected",
+                    reason="automorphism_budget",
+                    detail=dict(info),
+                )
             node = ChemicalNode(
                 id=f"c{len(self.nodes):04d}",
                 key=components["key"],
@@ -345,12 +415,30 @@ class Registry:
     def _match_microstate(self, node, structure):
         cfg = self.config
         candidate_free = free_bonds_of(structure)
+        candidate_tiers = measured_bonds_of(structure)
         for state in node.microstates:
             if abs(state.energy_eV - structure.get_potential_energy()) > cfg.basin_energy_eV:
                 continue
             # The union, because either structure may be the one that revealed the
-            # coordinate is flat, and a flat coordinate is flat for both.
-            free = tuple(sorted(set(state.free_bonds) | set(candidate_free)))
+            # coordinate is flat -- but never against a measurement. Flatness belongs to
+            # the geometry it was measured on, so when the other structure measured the
+            # same torsion and did NOT find it free, the two geometries disagree and the
+            # coordinate is not quotiented. Quotienting it anyway merges two real
+            # conformers, which free_aligned_symmetric_rmsd's own docstring names as the
+            # thing nothing may infer: measured on ethanol, anti and gauche sit 0.4383 A
+            # apart and collapse to 0.0614 A -- one side's report deciding for both.
+            # A bond nobody measured raises no objection, which keeps the original
+            # purpose: a genuinely free rotor must not mint conformers just because the
+            # structure it was measured on is not the one being compared.
+            state_tiers = measured_bonds_of(state.structure)
+            free = tuple(
+                sorted(
+                    bond
+                    for bond in set(state.free_bonds) | set(candidate_free)
+                    if candidate_tiers.get(bond, "free") == "free"
+                    and state_tiers.get(bond, "free") == "free"
+                )
+            )
             distance = free_aligned_symmetric_rmsd(
                 state.structure,
                 structure,
@@ -391,3 +479,99 @@ class Registry:
         state.trials_spent += 1
         state.outcomes[outcome] += 1
         self.rescore(node)
+
+    @classmethod
+    def from_network(cls, network, output, config):
+        """Rebuild a live Registry from a published network.json (PLAN item 6.2).
+
+        Everything a microstate needs is in `Microstate.summary()` plus the structure
+        file it points at; everything a node needs is in the published entry except
+        one thing -- `permutations`, the automorphism arrays, which are not serialised.
+        They are re-enumerated from the node's first structure instead, which is
+        legitimate exactly because the enumeration is deterministic and index-ordered:
+        same structure, same config, same group, same order. If the enumeration cannot
+        be certified inside the budget, reconstruction REFUSES rather than handing the
+        reservoir an identity-only group -- the same fail-closed rule `admit` follows
+        (P1-4), because a resumed run would otherwise compare conformers with a group
+        that was never certified.
+
+        `output` is the run directory the network.json lives in; structure paths in
+        the summary are relative to it.
+        """
+        output = Path(output)
+        registry = cls(config)
+        for published in network["chemical_nodes"]:
+            first_path = output / published["microstates"][0]["structure"]
+            if not first_path.exists():
+                raise ValueError(
+                    f"cannot rebuild node {published['id']}: {first_path} is missing"
+                )
+            first = read(str(first_path))
+            permutations_, info = automorphisms(
+                first, config.bond_scale, config.active_atoms, config.automorphism_limit
+            )
+            if info.get("reason") in BUDGET_REASONS:
+                raise ValueError(
+                    f"cannot rebuild node {published['id']}: the automorphism group "
+                    f"does not certify inside automorphism_limit ({info['reason']})"
+                )
+            components = dict(published["key_components"])
+            components["key"] = published["chemical_key"]
+            node = ChemicalNode(
+                id=published["id"],
+                key=published["chemical_key"],
+                components=components,
+                depth=published["depth"],
+                discovered_by=published["discovered_by"],
+                permutations=permutations_,
+                evicted=list(published["reservoir"]["evicted"]),
+                trials_spent=published["trials_spent"],
+                conformer_transitions=list(published["conformer_transitions"]),
+            )
+            for state in published["microstates"]:
+                path = output / state["structure"]
+                if not path.exists():
+                    raise ValueError(
+                        f"cannot rebuild microstate {state['id']}: {path} is missing"
+                    )
+                structure = read(str(path))
+                sidecar = path.with_suffix(".npz")
+                if sidecar.exists():
+                    # bit-exact positions and forces for resume: extxyz text would
+                    # cost the last ulps, and every recomputation downstream of the
+                    # rebuild (spectra, references, Hessians) would drift with them
+                    payload = np.load(sidecar)
+                    structure.set_positions(payload["positions"])
+                    forces = payload["forces"]
+                    structure.calc = SinglePointCalculator(
+                        structure,
+                        energy=float(payload["energy"]),
+                        forces=forces if len(forces) else None,
+                    )
+                else:
+                    # runs older than resume have no sidecar: the extxyz carries what
+                    # it carries, and the summary's energy stands in when it is bare
+                    try:
+                        structure.get_potential_energy()
+                    except Exception:
+                        structure.calc = SinglePointCalculator(
+                            structure, energy=state["energy_eV"]
+                        )
+                node.microstates.append(
+                    Microstate(
+                        id=state["id"],
+                        structure=structure,
+                        energy_eV=state["energy_eV"],
+                        discovered_by=state["discovered_by"],
+                        trials_spent=state["trials_spent"],
+                        torsions={
+                            tuple(ast.literal_eval(key)): value
+                            for key, value in state["torsions_rad"].items()
+                        },
+                        free_bonds=tuple(tuple(bond) for bond in state["free_bonds"]),
+                        outcomes=Counter(state["outcomes"]),
+                        score=state["reservoir_score"],
+                    )
+                )
+            registry.nodes.append(node)
+        return registry

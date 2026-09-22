@@ -639,3 +639,69 @@ def test_every_rejection_path_keeps_the_geometry_and_says_where_it_came_from():
     ):
         after = body[body.index(marker) : body.index(marker) + 400]
         assert "withhold(" in after, f"rejection at {marker!r} still drops the geometry"
+
+
+def test_event_key_is_canonical_under_the_GENERATED_group_not_the_union():
+    """A union of two subgroups is not a subgroup, so min over it canonicalises nothing.
+
+    The first version built one list out of both endpoints' automorphisms and took the
+    minimum over it. That set is closed under neither group: Aut(K1,3) has 6 elements,
+    Aut(P4) has 2, the union has 7 and the group they generate has 24. Relabelling an
+    event by an element of Aut(P4) then moved the minimum, so the same reaction got two
+    event keys -- the failure the quotient exists to prevent, one level down.
+
+    Done on graphs rather than on a molecule on purpose: the claim is about permutation
+    groups, and a real structure whose two endpoints have incomparable automorphism groups
+    is exactly the case that has never been measured (REVIEW_2026-09-05.md:117).
+    """
+    import itertools
+    from prrs.chemistry import _generated_group
+
+    n = 4
+    star, path = [(0, 1), (0, 2), (0, 3)], [(1, 0), (0, 2), (2, 3)]
+
+    def automorphisms_of(edges):
+        target = {frozenset(e) for e in edges}
+        return [
+            p
+            for p in itertools.permutations(range(n))
+            if {frozenset((p[a], p[b])) for a, b in edges} == target
+        ]
+
+    def relabel(edges, m):
+        return {tuple(sorted((m[a], m[b]))) for a, b in edges}
+
+    def form(broken, formed, mappings):
+        def render(bonds, mapping):
+            return tuple(sorted(tuple(sorted((mapping[a], mapping[b]))) for a, b in bonds))
+
+        def canonical(first, second):
+            return min((render(first, m), render(second, m)) for m in mappings)
+
+        return min(canonical(broken, formed), canonical(formed, broken))
+
+    index = list(range(n))
+    union_forms, group_forms = set(), set()
+    for m in automorphisms_of(path):  # relabel the whole event; both groups conjugate
+        endpoints = (relabel(star, m), relabel(path, m))
+        generators = [tuple(p) for edges in endpoints for p in automorphisms_of(sorted(edges))]
+        union = [dict(zip(index, p)) for p in dict.fromkeys(generators)]
+        group = [dict(zip(index, p)) for p in _generated_group(index, generators, 20000)]
+        assert len(union) == 7 and len(group) == 24, (len(union), len(group))
+        broken, formed = relabel({(0, 1)}, m), relabel({(1, 2)}, m)
+        union_forms.add(form(broken, formed, union))
+        group_forms.add(form(broken, formed, group))
+
+    assert len(union_forms) == 2, "the union bug should be reproducible, or this test lies"
+    assert len(group_forms) == 1, group_forms
+
+
+def test_generated_group_refuses_rather_than_closing_partially():
+    """A closure that stopped early is the union bug again with a bigger union."""
+    from prrs.chemistry import IdentityUnavailable, _generated_group
+
+    index = list(range(4))
+    generators = [(1, 0, 2, 3), (0, 2, 1, 3), (0, 1, 3, 2)]  # generate S4, 24 elements
+    assert len(_generated_group(index, generators, 20000)) == 24
+    with pytest.raises(IdentityUnavailable):
+        _generated_group(index, generators, 8)

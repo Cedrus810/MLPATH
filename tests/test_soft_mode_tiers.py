@@ -189,3 +189,33 @@ def test_a_flat_biased_torsion_is_not_quotiented_out_of_microstate_comparison(co
     flat_report = polish(flat, Rotor(amplitude=0.0), config)
     flat.info["quench"] = {"rounds": [flat_report]}
     assert (0, 1) in free_bonds_of(flat)
+
+
+def test_tier_takes_its_constants_so_two_unit_systems_cannot_share_one_set():
+    """B'' (PLAN item 5.4): the verdict logic is one function, the constants are arguments.
+
+    Torsions and fragment rotations are radians; fragment translations are Angstrom.
+    Feeding one unit system the other's thresholds is the silent kind of error
+    (`polish_soft_modes` footnote [1]), so the extraction exists precisely to make
+    the caller state its units. Same logic, two constant sets, same verdicts.
+    """
+    from prrs.runner import _tier
+
+    radian_set = dict(floor=0.01, cap=3.0, tolerance=0.02)  # eV/rad^2, eV/rad^2, rad
+    angstrom_set = dict(floor=0.5, cap=30.0, tolerance=0.01)  # eV/A^2, eV/A^2, A
+
+    # identical physics shape, different units -> same tier, different bound
+    for constants in (radian_set, angstrom_set):
+        assert _tier(constants["cap"] * 10, 0.0, **constants)[0] == "stiff"
+        assert _tier(-constants["floor"], 0.0, **constants)[0] == "negative_curvature"
+        assert _tier(0.0, 0.0, **constants)[0] == "free"
+        assert (
+            _tier(0.0, constants["floor"] * constants["tolerance"] * 5, **constants)[0]
+            == "flat_biased"
+        )
+        assert _tier(constants["floor"], 0.0, **constants)[0] == "soft"
+    # the bound is floor * tolerance in the CALLER's units, not a shared number
+    _, _, radian_bound = _tier(0.0, 0.0, **radian_set)
+    _, _, angstrom_bound = _tier(0.0, 0.0, **angstrom_set)
+    assert radian_bound == 0.01 * 0.02
+    assert angstrom_bound == 0.5 * 0.01

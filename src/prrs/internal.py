@@ -268,6 +268,214 @@ def rotate_fragment(positions, axis_a, axis_b, moving, angle, masses=None):
     return positions
 
 
+def translate_fragments(positions, i, j, side_i, side_j, delta, masses):
+    """Rigidly translate the two sides of a bond along its axis, by delta in total.
+
+    The bond analogue of rotate_fragment, and exact for the same reason: each side moves
+    as a rigid body, so every bond length, bond angle and torsion inside a side is
+    preserved to machine precision, and the target distance changes by exactly delta
+    because both translations are along the bond axis. The two displacements are split in
+    inverse proportion to the sides' masses, which keeps the centre of mass fixed without
+    a correcting translation afterwards.
+
+    displace() moves along `gradient / masses`, and a bond gradient is nonzero on its two
+    atoms only, so the rest of each side stays where it was and the bonded atom walks out
+    of its own substituents: pulling C-Cl by 0.600 Angstrom on the b04 input shortened
+    every C-H by 0.0628 Angstrom, which the collateral gate refused -- correctly, since
+    the damage was real, and it punched the hole that left the amplitude ladder without a
+    bracket. Atoms not on either side (a spectator fragment) are left alone.
+
+    A bond inside a ring has no rigid split; `_bond_sides` returns None there and delivery
+    falls back to the continuation scheme in displace().
+    """
+    positions = np.array(positions, dtype=float)
+    count = len(positions)
+    i = atom_index(i, count)
+    j = atom_index(j, count)
+    side_i = np.asarray(sorted({atom_index(a, count) for a in side_i}), dtype=int)
+    side_j = np.asarray(sorted({atom_index(a, count) for a in side_j}), dtype=int)
+    if i not in side_i or j not in side_j:
+        raise ValueError("Each side of a bond must contain its own bond atom")
+    if set(side_i.tolist()) & set(side_j.tolist()):
+        raise ValueError("The two sides of a bond must not overlap")
+    axis = positions[j] - positions[i]
+    length = float(np.linalg.norm(axis))
+    if length < 1e-12:
+        raise ValueError("Bond axis is undefined for coincident atoms")
+    # Guard the destination, as displace() does: a length is a norm and never comes out
+    # negative, so a check after the fact catches nothing.
+    if length + delta <= 0:
+        raise ValueError(
+            f"Bond displacement targets a nonpositive length "
+            f"({length:.3f} + {delta:.3f} Angstrom)"
+        )
+    axis = axis / length
+    masses = np.asarray(masses, dtype=float)
+    mass_i = float(masses[side_i].sum())
+    mass_j = float(masses[side_j].sum())
+    share_j = mass_i / (mass_i + mass_j)
+    positions[side_j] += axis * (delta * share_j)
+    positions[side_i] -= axis * (delta * (1.0 - share_j))
+    return positions
+
+
+def rotate_about_vertex(positions, i, vertex, k, side_i, side_k, delta, masses=None):
+    """Open an angle by rigidly rotating its two side fragments about its vertex.
+
+    The angle analogue of rotate_fragment, exact for the same reason: each side turns as a
+    rigid body about an axis through the vertex, so every bond length and bond angle
+    inside a side is preserved to machine precision, and the two bonds to the vertex are
+    preserved because the axis passes through it. Only the angle itself, and torsions
+    across the vertex, change. The sides take delta/2 each -- the symmetric choice, and
+    the one measured against the collateral gate -- and the centre of mass is restored
+    afterwards by an overall translation, which changes no internal coordinate.
+
+    Without this, `displace` moved an angle along its own gradient over the masses, and an
+    angle's gradient is nonzero on its three atoms alone, so the vertex walked out of its
+    substituents exactly as a bond's atoms used to before translate_fragments. Measured on
+    b05's relaxed source: a 0.35 rad bend at the tertiary carbon stretched C0-C6 by
+    0.1325 A, more than twice the 0.05 A gate, and 4 of that run's 15 refusals were this.
+    The same four deliveries through this routine reach the requested angle to 1e-16 with
+    a worst non-target bond change of 2e-16 A.
+
+    `side_i` and `side_k` contain their own arm atom, exclude the vertex, and must not
+    overlap; an angle inside a ring has no such split and falls back to the continuation
+    scheme in displace().
+    """
+    positions = np.array(positions, dtype=float)
+    count = len(positions)
+    i = atom_index(i, count)
+    vertex = atom_index(vertex, count)
+    k = atom_index(k, count)
+    side_i = np.asarray(sorted({atom_index(a, count) for a in side_i}), dtype=int)
+    side_k = np.asarray(sorted({atom_index(b, count) for b in side_k}), dtype=int)
+    if vertex in side_i.tolist() or vertex in side_k.tolist():
+        raise ValueError("The vertex must not be part of either side")
+    if set(side_i.tolist()) & set(side_k.tolist()):
+        raise ValueError("The two sides of an angle must not overlap")
+    if i not in side_i.tolist() or k not in side_k.tolist():
+        raise ValueError("Each side must contain its own arm atom")
+    # Guard the requested destination, as displace() does. The axis check below only
+    # catches an angle that is ALREADY linear; a 178 degree angle passes it and then folds
+    # through pi, so arccos reads back 2*pi - (theta + delta), target_error comes out near
+    # 0.63 rad for a 0.35 rad bend, and the amplitude ladder still records the requested
+    # amplitude. That is a wrong number in the record, not a refusal.
+    start = coordinate(positions, "angle", (i, vertex, k))
+    if not 0 < start + delta < np.pi:
+        raise ValueError(f"Angle displacement targets {start + delta:.3f} rad, outside (0, pi)")
+    # The axis is the normal of the plane the ANGLE lies in -- defined by its own two
+    # arms, never by a member of a side. Taking it from the lowest-numbered atom of each
+    # side instead makes the rotation plane depend on how the atoms happen to be
+    # numbered, which the relabelling test in tests/test_internal.py caught immediately.
+    axis = np.cross(positions[i] - positions[vertex], positions[k] - positions[vertex])
+    norm = np.linalg.norm(axis)
+    if norm < 1e-12:
+        raise ValueError("Angle rotation axis is undefined for a linear or degenerate angle")
+    axis = axis / norm
+    before = None
+    if masses is not None:
+        masses = np.asarray(masses, dtype=float)
+        before = np.average(positions, axis=0, weights=masses)
+
+    def turn(members, angle):
+        offsets = positions[members] - positions[vertex]
+        along = np.outer(offsets @ axis, axis)
+        across = offsets - along
+        perpendicular = np.cross(axis, across)
+        positions[members] = (
+            positions[vertex] + along + across * np.cos(angle) + perpendicular * np.sin(angle)
+        )
+
+    turn(side_i, -delta / 2.0)
+    turn(side_k, +delta / 2.0)
+    if before is not None:
+        positions -= np.average(positions, axis=0, weights=masses) - before
+    return positions
+
+
+def rotate_rigid(positions, members, axis, angle, masses=None):
+    """Rotate one fragment about an axis through its own centre of mass.
+
+    The third exact realization, after `rotate_fragment` (axis through two atoms) and
+    `rotate_about_vertex` (axis normal to an angle). This one needs no atom on the axis,
+    which is the whole point: the coordinate it moves is a fragment's orientation relative
+    to the rest of the system, and between two fragments there is no bond to hang an axis
+    on. Every intra-fragment bond length, angle and torsion is preserved to machine
+    precision because the fragment turns as a rigid body; nothing outside `members` moves.
+
+    That gap is not a budget: `polish_soft_modes` iterates `rotatable_torsions`, which
+    enumerates bonds of the graph, and a water molecule beside an alkene shares no bond
+    with it. So its orientation was outside the polish operator's DOMAIN, and b05's three
+    elimination products stopped on order-1 stationary points whose unstable mode was
+    99.9% a rigid rotation of the water -- a coordinate nothing in the polish could move.
+
+    The overall centre of mass is restored afterwards by a translation, which changes no
+    internal coordinate.
+    """
+    positions = np.array(positions, dtype=float)
+    members = np.asarray(sorted({atom_index(a, len(positions)) for a in members}), dtype=int)
+    if not len(members):
+        raise ValueError("A rigid rotation needs at least one atom to move")
+    axis = np.asarray(axis, dtype=float)
+    norm = float(np.linalg.norm(axis))
+    if norm < 1e-12:
+        raise ValueError("Rigid rotation axis is undefined")
+    axis = axis / norm
+    weights = np.ones(len(members)) if masses is None else np.asarray(masses, float)[members]
+    origin = np.average(positions[members], axis=0, weights=weights)
+    before = None
+    if masses is not None:
+        masses = np.asarray(masses, dtype=float)
+        before = np.average(positions, axis=0, weights=masses)
+
+    offsets = positions[members] - origin
+    along = np.outer(offsets @ axis, axis)
+    across = offsets - along
+    positions[members] = (
+        origin + along + across * np.cos(angle) + np.cross(axis, across) * np.sin(angle)
+    )
+    if before is not None:
+        positions -= np.average(positions, axis=0, weights=masses) - before
+    return positions
+
+
+def translate_rigid(positions, members, direction, distance, masses=None):
+    """Translate one fragment rigidly along a unit direction (B'', PLAN item 5.1).
+
+    The fourth exact relative-motion realization, and the counterpart of
+    `rotate_rigid`: between two fragments the three relative translations have no
+    internal coordinate to hang on, exactly as their rotations had no bond. Every
+    intra-fragment distance, angle and torsion is preserved to machine precision
+    because the fragment moves as a rigid body; the total centre of mass is restored
+    afterwards by translating everything, which changes no internal coordinate and
+    leaves the relative displacement between the fragments as the only physical change.
+
+    `polish_soft_modes` footnote [1] is why this is a separate operator with its own
+    thresholds and not a number reused from the rotational set: rotations are measured
+    in radians and translations in Angstrom, and one threshold mechanism fed both unit
+    systems is the silent kind of wrong. The thresholds themselves come from a
+    measurement on the b05 endpoints (fragment_translation_*), not converted from the
+    radian set.
+    """
+    positions = np.array(positions, dtype=float)
+    members = np.asarray(sorted({atom_index(a, len(positions)) for a in members}), dtype=int)
+    if not len(members):
+        raise ValueError("A rigid translation needs at least one atom to move")
+    direction = np.asarray(direction, dtype=float)
+    norm = float(np.linalg.norm(direction))
+    if norm < 1e-12:
+        raise ValueError("Rigid translation direction is undefined")
+    direction = direction / norm
+    before = None
+    if masses is not None:
+        masses = np.asarray(masses, dtype=float)
+        before = np.average(positions, axis=0, weights=masses)
+    positions[members] += distance * direction
+    if before is not None:
+        positions -= np.average(positions, axis=0, weights=masses) - before
+    return positions
+
+
 def kick(atoms, kind, indices, energy_eV, sign=1):
     """Inject exactly energy_eV of kinetic energy along one internal coordinate.
 

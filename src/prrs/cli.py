@@ -3,12 +3,14 @@
 import argparse
 import hashlib
 import json
+import logging
 from pathlib import Path
 import sys
 import numpy as np
 from ase.io import read, write
 from .calculators import demo_atoms, double_well_factory, load_factory
 from .config import SearchConfig
+from .schema import validate as schema_problems
 from .search import ReactionSearch
 
 
@@ -103,6 +105,11 @@ def main(argv=None):
         "--calculator", required=True, help="module:function returning an ASE Calculator"
     )
     search.add_argument("--calculator-kwargs", help="JSON file with factory keyword arguments")
+    search.add_argument(
+        "--strict-schema",
+        action="store_true",
+        help="exit 2 if network.json deviates from SCHEMA_2 (publish only records it)",
+    )
     path = sub.add_parser(
         "export-path", help="Export an observed channel as a local refinement seed"
     )
@@ -111,6 +118,13 @@ def main(argv=None):
     path.add_argument("--output", required=True)
     path.add_argument("--images", type=int, default=9)
     args = parser.parse_args(argv)
+    # The only place a handler is attached: library imports stay silent, a five-hour
+    # CLI run reports its milestones to stderr, and timestamps are the point.
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(name)s %(message)s",
+        datefmt="%H:%M:%S",
+    )
     try:
         if args.command == "demo":
             config = SearchConfig(
@@ -146,6 +160,12 @@ def main(argv=None):
             result = ReactionSearch(
                 factory, config, factory_metadata(args.calculator, kwargs)
             ).run(read(args.input), args.output)
+            if args.strict_schema:
+                problems = schema_problems(result)
+                if problems:
+                    for line in problems:
+                        print(f"schema: {line}", file=sys.stderr)
+                    return 2
         else:
             print(
                 json.dumps(

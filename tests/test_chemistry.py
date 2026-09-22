@@ -137,7 +137,9 @@ def test_methyl_rotamers_are_not_new_conformers():
 
     atoms = molecule("CH3CH2OH")
     permutations_, info = automorphisms(atoms)
-    assert info["enumerated"] and sorted(info["orbit_sizes"]) == [2, 3]
+    # Renamed 2026-09-09: these are colour classes, not certified orbits -- the orbits
+    # of the group are only known once the group is enumerated.
+    assert info["enumerated"] and sorted(info["colour_class_sizes"]) == [2, 3]
     assert info["count"] == 12  # 3! methyl times 2! methylene
 
     methyl = [

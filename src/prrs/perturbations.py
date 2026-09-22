@@ -161,11 +161,13 @@ def kick_pair(atoms, pair, energy_eV, sign=1):
 
 def torsion_for(atoms, indices, bond_scale=1.2, active=None):
     """Look up the torsion descriptor for a dihedral at the current geometry."""
-    from .chemistry import canonical_labels
+    from .canonical import canonical_form
 
     graph = encode(atoms, bond_scale, active=active)
-    labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
-    genuine, rotors = rotatable_torsions(graph, labels)
+    form = canonical_form(atoms.numbers, graph.edges, graph.index)
+    labels = form.colours
+    orbits = form.orbits if form.info.get("enumerated") else labels
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
     target = tuple(indices)
     for torsion in genuine + rotors:
         if (
@@ -223,10 +225,12 @@ def collateral_metrics(before, after, kind, indices, bond_scale=1.2, active=None
         if change > worst_angle:
             worst_angle, worst_angle_triple = change, triple
 
-    from .chemistry import canonical_labels
+    from .canonical import canonical_form
 
-    labels = canonical_labels(before.numbers, graph.edges, graph.index)
-    genuine, rotors = rotatable_torsions(graph, labels)
+    form = canonical_form(before.numbers, graph.edges, graph.index)
+    labels = form.colours
+    orbits = form.orbits if form.info.get("enumerated") else labels
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
     worst_torsion, worst_torsion_indices = 0.0, None
     for torsion in genuine + rotors:
         if kind == "dihedral" and torsion.indices[1:3] in (
@@ -284,7 +288,7 @@ def _collateral_fragments(before_graph, after, kind, indices, bond_scale, active
     return Graph(edges, graph.weights, graph.distances, graph.index).components
 
 
-def torsion_on_bond(graph, labels, bond):
+def torsion_on_bond(graph, labels, bond, orbits=None):
     """The rotatable torsion whose central bond is `bond`, or None.
 
     A coordinate is identified by its bond, not by the four atoms: all dihedrals about one
@@ -294,7 +298,7 @@ def torsion_on_bond(graph, labels, bond):
     applied to another's geometry.
     """
     wanted = frozenset(bond)
-    genuine, rotors = rotatable_torsions(graph, labels)
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
     for torsion in genuine + rotors:
         if frozenset(torsion.indices[1:3]) == wanted:
             return torsion
@@ -325,14 +329,114 @@ def step_torsion(atoms, torsion, delta, in_place=True):
     return target, float((after - before + np.pi) % (2 * np.pi) - np.pi)
 
 
+@dataclass(frozen=True)
+class FragmentRotation:
+    """A fragment's orientation relative to the rest of the system, as one coordinate.
+
+    Same shape as `Torsion` on purpose, so the soft-mode polish can treat the two the
+    same: an angle in radians, periodic, with a symmetry order bounding how much of the
+    circle is distinct. `symmetry_order` is 1 here rather than measured -- a conservative
+    cap of pi, which is what a rotation with no established symmetry is entitled to.
+    """
+
+    members: tuple
+    axis: tuple
+    label: str
+    symmetry_order: int = 1
+
+    @property
+    def indices(self):
+        """What the report keys on. Torsions report four atoms; this reports its fragment."""
+        return tuple(self.members)
+
+    @property
+    def domain(self):
+        return 2 * np.pi / self.symmetry_order
+
+    def to_dict(self):
+        return {
+            "members": list(self.members),
+            "axis": list(self.axis),
+            "label": self.label,
+            "symmetry_order": self.symmetry_order,
+            "fundamental_domain_rad": self.domain,
+            "realization": "rigid_rotation_about_fragment_com",
+        }
+
+
+def fragment_rotations(atoms, graph):
+    """Each fragment's three rigid rotations, about its own principal axes.
+
+    Only when there is more than one fragment: a single fragment's rotation is a trivial
+    mode, already projected out of every spectrum and carrying no energy by construction.
+    With two or more, the RELATIVE orientation is a real soft coordinate that no bond of
+    the graph can reach -- see `internal.rotate_rigid` for the measurement that made this
+    necessary.
+
+    Principal axes rather than the lab frame, because the lab frame is not a property of
+    the structure: the same geometry written down after a rotation would get a different
+    set of coordinates and a different polish. Principal axes turn with the molecule, so
+    the coordinates do too. A symmetric top makes two of them degenerate, and then the
+    pair is an arbitrary basis of the same plane -- harmless for a relaxation, which only
+    needs to span the space, and recorded rather than hidden by `degenerate_inertia`.
+
+    A monatomic fragment (a bare halide) has no orientation and contributes nothing.
+    """
+    from .chemistry import _fragments
+
+    fragments = [sorted(int(a) for a in part) for part in _fragments(graph.edges, graph.index)]
+    if len(fragments) < 2:
+        return ()
+    fragments.sort()  # deterministic order; union-find hands them back in hash order
+    masses = atoms.get_masses()
+    modes = []
+    for members in fragments:
+        if len(members) < 2:
+            continue
+        block = atoms.positions[members]
+        weights = masses[members]
+        centre = np.average(block, axis=0, weights=weights)
+        offsets = block - centre
+        inertia = np.einsum(
+            "i,ijk->jk",
+            weights,
+            np.eye(3) * (offsets**2).sum(axis=1)[:, None, None]
+            - offsets[:, :, None] * offsets[:, None, :],
+        )
+        values, axes = np.linalg.eigh(inertia)
+        for column in range(3):
+            modes.append(
+                FragmentRotation(
+                    members=tuple(members),
+                    axis=tuple(float(v) for v in axes[:, column]),
+                    label=f"fragment{members[0]}_axis{column}",
+                )
+            )
+    return tuple(modes)
+
+
+def step_fragment_rotation(atoms, mode, delta, in_place=True):
+    """Move along one fragment rotation's own exact path, by delta radians."""
+    target = atoms if in_place else atoms.copy()
+    target.set_positions(
+        internal.rotate_rigid(
+            target.positions, mode.members, mode.axis, delta, target.get_masses()
+        )
+    )
+    return target, float(delta)
+
+
 def apply(atoms, probe, bond_scale=1.2, active=None):
     """Realize a probe, preferring an exact realization, and report the collateral.
 
-    A torsion about a bridge bond is delivered as a rigid rotation of the fragment on
-    one side, which preserves every bond length and bond angle exactly. Only where no
-    rigid fragment exists -- a torsion inside a ring, or any other genuinely collective
-    coordinate -- does delivery fall back to the continuation scheme: a large
-    perturbation realized as a sequence of small, locally valid ones.
+    Each coordinate is delivered by the exact rigid motion that moves it and nothing
+    else, where one exists: a torsion about a bridge bond as a rotation of the fragment on
+    one side, a bond as a translation of its two sides along the axis, an angle as
+    opposite rotations of its two sides about the vertex. All three preserve every other
+    bond length and bond angle to machine precision. Only where no rigid split exists --
+    anything inside a ring, a non-bonded pair whose ends stay connected, or any other
+    genuinely collective coordinate -- does delivery fall back to the continuation scheme:
+    a large perturbation realized as a sequence of small, locally valid ones.
     """
     if probe.mode == "kick":
         before = atoms.get_kinetic_energy()
@@ -370,6 +474,30 @@ def apply(atoms, probe, bond_scale=1.2, active=None):
             atoms.positions, "dihedral", probe.indices
         ) - internal.coordinate(reference.positions, "dihedral", probe.indices)
         achieved = float((achieved + np.pi) % (2 * np.pi) - np.pi)
+    elif probe.kind == "angle" and (
+        sides := _angle_sides(encode(atoms, bond_scale, active=active), *probe.indices)
+    ):
+        realization = "rigid_bend"
+        atoms.set_positions(
+            internal.rotate_about_vertex(
+                atoms.positions, *probe.indices, *sides, requested, atoms.get_masses()
+            )
+        )
+        achieved = internal.coordinate(
+            atoms.positions, "angle", probe.indices
+        ) - internal.coordinate(reference.positions, "angle", probe.indices)
+    elif probe.kind == "bond" and (
+        sides := _bond_sides(encode(atoms, bond_scale, active=active), *probe.indices)
+    ):
+        realization = "rigid_translation"
+        atoms.set_positions(
+            internal.translate_fragments(
+                atoms.positions, *probe.indices, *sides, requested, atoms.get_masses()
+            )
+        )
+        achieved = internal.coordinate(
+            atoms.positions, "bond", probe.indices
+        ) - internal.coordinate(reference.positions, "bond", probe.indices)
     else:
         _, achieved = internal.displace(atoms, probe.kind, probe.indices, requested)
 
@@ -509,15 +637,15 @@ def _bond_directions(atoms, graph, config, families):
                     yield family, (i, j), 1, priority, 0, None, detail
 
 
-def _angle_directions(graph, labels, families):
-    """One representative per symmetry class of angle."""
+def _angle_directions(graph, orbits, families):
+    """One representative per symmetry class of angle, by certified orbits (P1-7)."""
     adjacency = _adjacency(graph.edges, graph.index)
     seen = set()
     for vertex, neighbours in adjacency.items():
         for a in range(len(neighbours)):
             for b in range(a + 1, len(neighbours)):
                 i, k = neighbours[a], neighbours[b]
-                key = (labels[vertex], tuple(sorted((labels[i], labels[k]))))
+                key = (orbits[vertex], tuple(sorted((orbits[i], orbits[k]))))
                 if key in seen:
                     continue
                 seen.add(key)
@@ -565,6 +693,59 @@ def _end_symmetry(side, labels):
     return 1
 
 
+def orbits_from_group(group, index):
+    """Certified orbits of an (explicitly enumerated) group, ids by index scan."""
+    order = [int(a) for a in index]
+    slot = {atom: k for k, atom in enumerate(order)}
+    orbits, next_id = {}, 0
+    for atom in order:
+        if atom in orbits:
+            continue
+        for member in sorted({int(g[slot[atom]]) for g in group}):
+            orbits[member] = next_id
+        next_id += 1
+    return orbits
+
+
+def geometric_automorphisms(atoms, group, active=None, tolerance=0.05):
+    """The subgroup of `group` that also (approximately) preserves the current geometry.
+
+    P1-7's whole point: two bridge bonds can be equivalent as a GRAPH while the fixed
+    conformation breaks that equivalence, and deduplicating proposals by graph orbits
+    merges them -- coverage lost without `coverage_censored` ever seeing it. The
+    geometric subgroup is computed by one Kabsch fit per group element: the permutation
+    preserves the geometry iff the atoms and their images superpose within `tolerance`
+    RMSD. `tolerance` is a DEDUPLICATION threshold, not an identity threshold -- it
+    decides how eager the proposal basis is to call two directions the same, never
+    whether two structures are -- and it enters RATIONALE with this exact reading
+    (PLAN section 1.3).
+    """
+    from .state import resolve_active
+
+    index = resolve_active(atoms, active)
+    positions = atoms.get_positions()
+    order = [int(a) for a in index]
+    slot = {atom: k for k, atom in enumerate(order)}
+    keep = []
+    for permutation in group:
+        source = np.asarray([positions[a] for a in order])
+        target = np.asarray([positions[int(permutation[slot[a]])] for a in order])
+        source_centred = source - source.mean(axis=0)
+        target_centred = target - target.mean(axis=0)
+        covariance = source_centred.T @ target_centred
+        u, _, vt = np.linalg.svd(covariance)
+        # no reflection: a permutation that preserves a chiral geometry as a mirror
+        # image is not a motion, and admitting it would merge enantiomer directions
+        if np.linalg.det(u @ vt) < 0:
+            u[:, -1] *= -1
+        rotation = u @ vt
+        fitted = source_centred @ rotation
+        rmsd = float(np.sqrt(((fitted - target_centred) ** 2).sum(axis=1).mean()))
+        if rmsd <= tolerance:
+            keep.append(permutation)
+    return keep
+
+
 def _fragment_across(edges, index, j, k):
     """Atoms reachable from k without using the j-k bond, empty when the bond is in a ring."""
     adjacency = _adjacency(edges, index)
@@ -582,8 +763,78 @@ def _fragment_across(edges, index, j, k):
     return tuple(sorted(seen - {k}))
 
 
-def rotatable_torsions(graph, labels):
+def _bond_sides(graph, i, j):
+    """The two rigid sides of a bond: what each end reaches without crossing it.
+
+    None when the ends stay connected without the bond -- a ring member has no rigid
+    split, exactly as a ring torsion has no fragment to rotate. Written out rather than
+    reusing `_fragment_across`, which returns an empty tuple both for a ring bond and for
+    a terminal atom: a terminal atom is a perfectly good rigid side (itself), so the two
+    cases must not share a return value here.
+
+    Atoms in neither side are spectator fragments and are left alone. The two ends being
+    in different fragments to begin with is the normal case for an approach probe: each
+    molecule is then its own side and moves rigidly.
+    """
+    adjacency = _adjacency(graph.edges, graph.index)
+
+    def reach(start):
+        seen, stack = {start}, [start]
+        while stack:
+            node = stack.pop()
+            for neighbour in adjacency[node]:
+                if (node, neighbour) in ((i, j), (j, i)):
+                    continue
+                if neighbour not in seen:
+                    seen.add(neighbour)
+                    stack.append(neighbour)
+        return seen
+
+    side_i = reach(i)
+    if j in side_i:
+        return None
+    return tuple(sorted(side_i)), tuple(sorted(reach(j)))
+
+
+def _angle_sides(graph, i, j, k):
+    """The two rigid sides of an angle: what each arm reaches without passing the vertex.
+
+    None when the arms stay connected without the vertex -- inside a ring there is no
+    rigid split, exactly as for a ring bond or a ring torsion. Atoms in neither side are
+    spectators and are left alone.
+    """
+    adjacency = _adjacency(graph.edges, graph.index)
+
+    def reach(start):
+        seen, stack = {start}, [start]
+        while stack:
+            node = stack.pop()
+            for neighbour in adjacency[node]:
+                if neighbour == j or neighbour in seen:
+                    continue
+                seen.add(neighbour)
+                stack.append(neighbour)
+        return seen
+
+    side_i = reach(i)
+    if k in side_i:
+        return None
+    side_k = reach(k)
+    if side_i & side_k:
+        return None
+    return tuple(sorted(side_i)), tuple(sorted(side_k))
+
+
+def rotatable_torsions(graph, labels, orbits=None):
     """One representative dihedral per rotatable bond.
+
+    The dedup key is ORBITS when supplied and colours otherwise. On the recorded
+    corpus the two agree on every frame (orbit_vs_colour_probe.py, 2026-09-20), so
+    orbit keys change nothing there; they certify what colours only guessed (P1-7).
+    The proposal side passes GEOMETRIC orbits -- a fixed conformation can break a
+    graph symmetry, and merging geometrically distinct bridge bonds was invisible
+    coverage loss. The measurement side passes graph orbits, keeping the coordinate
+    set a property of the substance rather than of one conformer.
 
     A rotatable bond is a bridge -- so not a ring member, whose torsion the ring already
     fixes -- with substituents on both ends. All dihedrals about one bond differ by a
@@ -607,11 +858,19 @@ def rotatable_torsions(graph, labels):
         right = [n for n in adjacency[k] if n != j]
         if not left or not right:
             continue
-        key = tuple(sorted((labels[j], labels[k])))
+        dedup = orbits if orbits is not None else labels
+        key = tuple(sorted((dedup[j], dedup[k])))
         if key in seen:
             continue
         seen.add(key)
-        # [1] a rotation that permutes equivalents is a symmetry
+        # [1] a rotation that permutes equivalents is a symmetry. Deliberately the
+        # GRAPH symmetry (colours), not the geometric subgroup: the rotor's period is
+        # a property of the moving fragment, and measuring it against a global rigid
+        # motion of the whole conformation breaks a methyl's C3 the way ethanol's
+        # CH2/O side chain breaks it for every methyl everywhere -- tripling every
+        # rotor's amplitude grid with trials that are symmetry copies by the
+        # fragment's own internal symmetry. The geometric orbits above are for WHICH
+        # coordinates exist; the period below is for how far one coordinate searches.
         order = _lcm(_end_symmetry(left, labels), _end_symmetry(right, labels))
         torsion = Torsion(
             indices=(
@@ -633,8 +892,8 @@ def _lcm(a, b):
     return a * b // gcd(a, b)
 
 
-def _dihedral_directions(graph, labels, families):
-    genuine, rotors = rotatable_torsions(graph, labels)
+def _dihedral_directions(graph, labels, orbits, families):
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
     for rank, group in ((0, genuine), (1, rotors)):
         for torsion in group:
             for family in families:
@@ -644,7 +903,41 @@ def _dihedral_directions(graph, labels, families):
                 yield family, torsion.indices, 1, 1, rank, torsion, None
 
 
-def propose(atoms, config, seed, report=None):
+def candidate_id(family, indices, sign):
+    """A candidate direction's identity, stable across everything except the structure.
+
+    It has to survive a change in what gets SELECTED -- that is the whole point. Without
+    it the ledger the 2026-09-09 ruling requires (candidate -> selected -> executed ->
+    refused) cannot be written, and every subdivision of `unanswered` is unattributable:
+    "never selected" and "searched and missed" would look the same in the record.
+
+    Derived from the coordinate the direction acts on, not from enumeration order, so
+    widening the budget adds ids without renaming any. Atom indices are the structure's
+    own; a relabelled structure is a different record and is not claimed to match.
+    """
+    return f"{family}:{'-'.join(str(int(i)) for i in indices)}:{'+' if sign >= 0 else '-'}"
+
+
+def spectral_overlap(atoms, kind, indices, modes):
+    """How much of a direction lies in the softest non-torsional modes, in [0, 1].
+
+    `displace` steps along g/m in Cartesian coordinates -- the internal coordinate's own
+    gradient over the masses -- so in mass-weighted coordinates q = sqrt(m) x that is
+    g/sqrt(m). Using g, or g*sqrt(m), computes the overlap with a direction nothing
+    travels in; that is the same mass-weighting slip the relay made once already
+    (M^(1/2) g where M^-1 g was meant), so the conversion is written out rather than
+    inherited. `modes` arrives mass-weighted and unit norm from `soft_internal_modes`.
+    """
+    gradient = internal.gradient(atoms.positions, kind, indices)
+    vector = (gradient / np.sqrt(atoms.get_masses())[:, None]).reshape(-1)
+    norm = float(np.linalg.norm(vector))
+    if norm < 1e-30:
+        return 0.0
+    vector = vector / norm
+    return max(abs(float(vector @ mode)) for _, mode in modes)
+
+
+def propose(atoms, config, seed, report=None, soft_modes=()):
     """Amplitude scans, one list per direction, in a seeded deterministic order.
 
     `report`, if given, is filled with the candidate count, quota and selected count per
@@ -665,6 +958,17 @@ def propose(atoms, config, seed, report=None):
         rotatable bonds, so pair kicks would crowd out the torsion that is the one way to
         reach its other basins. Spanning the basis has to hold for the directions actually
         sampled, not only for the directions that could have been.
+    [4] Without a spectrum every candidate's rank is 0, so the stable sort in [1] is a
+        no-op and the order inside a family is the seeded shuffle alone. That is a lottery,
+        and on b04 it happened to draw the C-Cl stretch first -- the one direction of 28
+        that reacted -- with no mechanism putting it there. Given the softest non-torsional
+        modes the rank becomes the overlap with them, which put that same direction first
+        by construction at 0.9651 against 0.6893 for the next distinct one
+        (`docs/experiments/spectral_proposal_probe.py`). The band in [1] is untouched: a
+        hydrogen-bond donor still gets a front slot on its own evidence, and the spectrum
+        only orders candidates inside a band. Absent modes changes nothing, which is what
+        a microstate whose Hessian could not be had must fall back to -- a ranking is never
+        worth failing a search for.
     [3] Search S^1 / C_n only. What disqualifies an amplitude is not being larger than the
         domain but being close to any symmetry copy of zero: 2.09 rad on a methyl rotor is
         119.75 degrees, a quarter of a degree from the identity, and a trial spent there
@@ -673,10 +977,51 @@ def propose(atoms, config, seed, report=None):
     """
     graph = encode(atoms, config.bond_scale, active=config.active_atoms)
     labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
+    # The proposal basis deduplicates by GEOMETRIC orbits: a fixed conformation can
+    # break a graph symmetry, and two bridge bonds a colour or graph orbit merges may
+    # be geometrically distinct -- merging them was invisible coverage loss (P1-7).
+    #
+    # This is a LARGE widening, and the size of it is measured rather than assumed.
+    # An earlier version of this comment cited the 2026-09-20 orbit probe's "zero
+    # diff" for the opposite claim; that probe compared colours with GRAPH orbits and
+    # says nothing about this pair. Comparison 4 was added to it on 2026-09-21 and
+    # measures the pair that actually ships: over the same 2136-frame corpus geometry
+    # breaks a graph symmetry on 2134 frames, and the angle+dihedral candidate count
+    # goes 229,472 -> 331,840 (+44.6%). A relaxed conformer almost never keeps its
+    # graph symmetry to within the 0.05 A deduplication tolerance, so "only where
+    # geometry breaks symmetry" is, in practice, almost everywhere.
+    #
+    # The cost is real and lands on the budget, because the per-family quota is a
+    # FRACTION of the candidate count: more candidates means more selected directions,
+    # more trials, and coverage_censored true more often. That is the honest direction
+    # -- over-count rather than merge on a guess -- but it is not free, and a run's
+    # ledger is where it has to be read. b04's frozen grid is unaffected (|Aut| 6 -> 3,
+    # bend 4 either way, candidates 28 / selected 14 exactly as frozen), so the frozen
+    # record still recomputes; that is a property of a six-atom system, not a general
+    # one.
+    from .canonical import canonical_form
+
+    form = canonical_form(atoms.numbers, graph.edges, graph.index)
+    if form.info.get("enumerated"):
+        subgroup = geometric_automorphisms(atoms, form.group, config.active_atoms)
+        basis_orbits = orbits_from_group(subgroup, graph.index)
+    else:
+        # uncertified group: over-count rather than merge on a guess -- the identity
+        # subgroup leaves every atom its own orbit, which is the same failure
+        # direction the event key takes
+        basis_orbits = {int(a): k for k, a in enumerate(graph.index)}
     families = tuple(config.families)
     directions = list(_bond_directions(atoms, graph, config, families))
-    directions += list(_angle_directions(graph, labels, families))
-    directions += list(_dihedral_directions(graph, labels, families))
+    directions += list(_angle_directions(graph, basis_orbits, families))
+    directions += list(_dihedral_directions(graph, labels, basis_orbits, families))
+    # [4] rank by the spectrum when there is one
+    if soft_modes:
+        directions = [
+            entry[:4]
+            + (-spectral_overlap(atoms, FAMILIES[entry[0]]["kind"], entry[1], soft_modes),)
+            + entry[5:]
+            for entry in directions
+        ]
     grouped = {}
     for entry in directions:
         grouped.setdefault(entry[0], []).append(entry)
@@ -695,23 +1040,30 @@ def propose(atoms, config, seed, report=None):
     # constant chance of sampling any given direction while the candidates grow with the
     # molecule. Ethanol offers eight bonds and 3-oxobutanal eleven, and the reaction
     # coordinate lost that draw.
+    exhaustive = getattr(config, "direction_mode", "sampled") == "exhaustive"
     quotas = {
-        family: max(
+        family: counts[family]
+        if exhaustive
+        else max(
             config.min_directions_per_family,
             math.ceil(config.direction_quota_fraction * counts[family]),
         )
         for family in available
     }
+    # In exhaustive mode the cap is not a cap: it may not silently decide coverage, and
+    # the caller is required to have refused to start if the trial budget cannot pay for
+    # the whole enumeration (search.ReactionSearch.run does that check).
+    cap = sum(counts.values()) if exhaustive else config.max_directions
     selected, taken = [], {family: 0 for family in available}
 
     # Two passes. The priority band first, so a direction the reactant's own geometry marks
     # as unusual gets a front execution slot -- the trial budget is spent in the order this
     # list is returned, so being selected late is nearly the same as not being selected.
     for band in (0, 1):
-        while len(selected) < config.max_directions:
+        while len(selected) < cap:
             progressed = False
             for family in available:
-                if len(selected) >= config.max_directions:
+                if len(selected) >= cap:
                     break
                 if taken[family] >= quotas[family]:
                     continue
@@ -726,6 +1078,16 @@ def propose(atoms, config, seed, report=None):
                 break
 
     if report is not None:
+        candidate_ids = [candidate_id(e[0], e[1], e[2]) for e in directions]
+        selected_ids = [candidate_id(e[0], e[1], e[2]) for e in selected]
+        cap_bound = (not exhaustive) and len(selected) >= config.max_directions
+        # Coverage is censored whenever anything was left unsampled, and WHICH mechanism
+        # did it matters: the cap is a declared cost limit, the quota fraction censors
+        # silently and at every system size -- b04's probe3 selected 14 of 28 candidates
+        # with cap_bound false on six atoms. Either way a negative conclusion drawn from
+        # this proposal is inadmissible (the 2026-09-09 ruling, point 3); the status is
+        # recorded here so that judgement is made from the record rather than remembered.
+        uncovered = [i for i in candidate_ids if i not in set(selected_ids)]
         report.update(
             families={
                 family: {
@@ -738,13 +1100,28 @@ def propose(atoms, config, seed, report=None):
                 }
                 for family in available
             },
+            mode=("exhaustive" if exhaustive else "sampled"),
             max_directions=config.max_directions,
+            effective_cap=cap,
             selected_total=len(selected),
-            cap_bound=len(selected) >= config.max_directions,
+            cap_bound=cap_bound,
             priority_selected=sum(1 for e in selected if e[3] == 0),
+            candidate_ids=candidate_ids,
+            selected_ids=selected_ids,
+            uncovered_ids=uncovered,
+            coverage_censored=bool(uncovered),
+            censored_by=(
+                None
+                if not uncovered
+                else "max_directions"
+                if cap_bound
+                else "direction_quota_fraction"
+            ),
             meaning=(
                 "candidate counts, per-family quotas and what was actually taken; "
-                "cap_bound true means the global cap, not the quotas, decided"
+                "cap_bound true means the global cap, not the quotas, decided; "
+                "coverage_censored true means candidates were left unsampled, so a "
+                "negative result from this proposal is not evidence of absence"
             ),
         )
 
@@ -777,3 +1154,51 @@ def propose(atoms, config, seed, report=None):
             ]
         )
     return result
+
+
+def fragment_translations(atoms, graph, reference=None):
+    """Three relative-translation directions per fragment pair (B'', PLAN item 5.2).
+
+    The basis is decision 5 (2026-09-20): the COM line between the two heaviest
+    fragments plus two deterministic orthonormal completions of it -- the coupled
+    residual on b05's elimination endpoints is inter-fragment DISPLACEMENT, and this
+    basis points at it directly. The completions are built by Gram-Schmidt against
+    the coordinate axes in fixed order, so the basis is a function of the geometry
+    and nothing else.
+
+    INERT BY DESIGN: enumerate only. These become searchable/polishable coordinates
+    when the three `fragment_translation_*` thresholds exist, and those must come
+    from a measurement on the b05 endpoints (docs/experiments/
+    b05_fragment_translation_measurement.py, needs the MACE checkpoint) -- not from
+    converting the radian set, per `polish_soft_modes` footnote [1]. Until then no
+    caller may wire them in; the function exists so the measurement has exactly the
+    enumeration it will justify.
+    """
+    from .chemistry import _fragments
+
+    fragments = [sorted(int(a) for a in part) for part in _fragments(graph.edges, graph.index)]
+    if len(fragments) < 2:
+        return ()
+    fragments.sort()
+    masses = atoms.get_masses()
+    by_mass = sorted((m for m in fragments if len(m) >= 1), key=lambda m: -masses[m].sum())
+    left, right = by_mass[0], by_mass[1]
+    line = np.average(atoms.positions[right], axis=0, weights=masses[right]) - np.average(
+        atoms.positions[left], axis=0, weights=masses[left]
+    )
+    norm = float(np.linalg.norm(line))
+    if norm < 1e-12:
+        return ()
+    line = line / norm
+    basis = [line]
+    for axis in np.eye(3):
+        candidate = axis - line * float(axis @ line)
+        if np.linalg.norm(candidate) < 1e-9:
+            continue
+        basis.append(candidate / np.linalg.norm(candidate))
+        if len(basis) == 3:
+            break
+    return tuple(
+        {"members": list(left), "against": list(right), "direction": [float(x) for x in d]}
+        for d in basis
+    )

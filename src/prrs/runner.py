@@ -1,7 +1,8 @@
 """One controlled experiment: probe, free NVE response, unbiased quench."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
+import logging
 import traceback
 import numpy as np
 from ase import units
@@ -11,7 +12,15 @@ from ase.md.verlet import VelocityVerlet
 from ase.optimize import FIRE
 from .internal import named_values
 from .io import append_json, snapshot
-from .perturbations import apply as apply_probe, pair_axis, rotatable_torsions, step_torsion
+from .perturbations import (
+    FragmentRotation,
+    apply as apply_probe,
+    fragment_rotations,
+    pair_axis,
+    rotatable_torsions,
+    step_fragment_rotation,
+    step_torsion,
+)
 from .reliability import GateRejected, GuardedCalculator, PairPulse
 from .state import classify, encode, validate_atoms
 
@@ -95,6 +104,8 @@ _LOST_TARGET_MODE_MEANING = (
     "no eigenvector still resembles the coordinate being followed, so continuing would climb a "
     "different reaction"
 )
+
+log = logging.getLogger("prrs.runner")
 
 
 @dataclass
@@ -799,6 +810,86 @@ def curvature_spectrum(candidate, factory, config, source="auto"):
         -np.asarray(candidate.get_forces()),
     )
     return eigenvalues[order], vectors[:, order], floor, provenance
+
+
+def soft_internal_modes(candidate, factory, config):
+    """The softest directions at a minimum that are neither rigid-body nor torsional.
+
+    The spectrum is already paid for wherever `minimum_check = "hessian"` runs, and
+    `confirm_minimum` keeps six eigenvalues and discards every eigenvector. What the
+    proposal layer wants out of it is a ranking: a soft direction is where large-amplitude
+    motion is cheap, which is the prior that ought to decide where a finite direction
+    budget goes. Two subspaces have to come out first, and both of them bit the probe that
+    measured this (`docs/experiments/spectral_proposal_probe.py`):
+
+      rigid body   `curvature_spectrum` PROJECTS the six trivial modes out rather than
+                   deleting them, so they remain in the spectrum as a null block at the
+                   soft end. Taking "the four softest modes" literally selects the
+                   translations and rotations, which are orthogonal to every internal
+                   coordinate by construction -- the first version of the probe scored
+                   all 28 candidate directions at exactly 0.0000 that way.
+      torsions     the softest genuine modes at any minimum are torsions, and a torsion
+                   reaches a conformer rather than a reaction. Ranking without removing
+                   them reproduces the 3-oxobutanal failure by construction: eight rotor
+                   barriers at -65 to -80 cm^-1 while the proton transfer sits at -3186.
+
+    Measured on b04's source microstate: with both subspaces removed, the C-Cl stretch
+    that actually reacted scores 0.9651 and ranks 1 of 28, clear of the next distinct
+    direction at 0.6893 and of everything else at 0.2558 or below. In the run itself that
+    direction came out first from the seeded shuffle, with no mechanism putting it there.
+
+    Vectors are returned MASS-WEIGHTED and unit norm, because that is the metric the
+    Hessian's eigenvectors are orthogonal in and the one a displacement has to be stated
+    in to be compared with them. Returns (modes, note); modes is empty and note says why
+    whenever the spectrum could not be had, because a ranking that cannot be computed must
+    fall back to the existing order rather than fail a search.
+    """
+    try:
+        eigenvalues, vectors, _, provenance = curvature_spectrum(
+            candidate, factory, config, source=config.hessian_source
+        )
+    except GateRejected as exc:
+        return (), f"gate_{exc.code}"
+    except Exception as exc:  # a ranking is never worth failing a search for
+        return (), f"{type(exc).__name__}: {exc}"
+
+    from .canonical import canonical_form
+    from . import internal
+
+    trivial = _trivial_modes(candidate.positions, candidate.get_masses())
+    graph = encode(candidate, config.bond_scale, active=config.active_atoms)
+    form = canonical_form(candidate.numbers, graph.edges, graph.index)
+    labels = form.colours
+    orbits = form.orbits if form.info.get("enumerated") else labels
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
+    columns = []
+    for torsion in list(genuine) + list(rotors):
+        gradient = internal.gradient(candidate.positions, "dihedral", torsion.indices)
+        vector = (gradient / np.sqrt(candidate.get_masses())[:, None]).reshape(-1)
+        norm = float(np.linalg.norm(vector))
+        if norm > 1e-30:
+            columns.append(vector / norm)
+    torsional = np.linalg.qr(np.array(columns).T)[0] if columns else None
+
+    modes = []
+    for column in range(vectors.shape[1]):
+        if len(modes) >= config.spectral_rank_modes:
+            break
+        mode = vectors[:, column]
+        if float(np.linalg.norm(trivial @ mode)) > 0.5:
+            continue  # a rigid-body mode wearing a zero eigenvalue
+        if torsional is not None:
+            mode = mode - torsional @ (torsional.T @ mode)
+        survival = float(np.linalg.norm(mode))
+        if survival < 1e-8:
+            continue  # entirely torsional: the direction this projection exists to drop
+        modes.append((float(eigenvalues[column]), mode / survival))
+    note = (
+        f"{provenance.get('source')}; {len(columns)} torsional direction(s) removed"
+        if modes
+        else "no internal mode survived the trivial and torsional projections"
+    )
+    return tuple(modes), note
 
 
 def _wavenumbers(eigenvalues):
@@ -1520,6 +1611,7 @@ def follow_min_mode(
     }
     if len(negative) != 1:
         diagnostics["reason"] = "wrong_index"
+        log.info("min-mode walk ended with index %d (%s)", len(negative), "wrong_index")
         return None, diagnostics
     mode = vectors[:, 0].reshape(-1, 3) / root
     mode = mode / np.linalg.norm(mode)
@@ -1532,15 +1624,35 @@ def follow_min_mode(
             diagnostics["response"] = response_curvature(atoms, guard, mode, config)
         except GateRejected as exc:
             diagnostics["response"] = {"reason": f"gate_{exc.code}"}
+    log.info(
+        "min-mode walk converged in %d step(s), %.1f cm-1 imaginary",
+        diagnostics.get("steps", -1),
+        diagnostics["imaginary_wavenumbers_icm"][0],
+    )
     return snapshot(atoms, guard), diagnostics
 
 
-def torsion_response(atoms, guard, torsion, step_rad, reference_energy=None):
-    """Generalized force and stiffness of one torsion, in eV/rad and eV/rad^2.
+def soft_mode_step(atoms, mode, delta, in_place=True):
+    """Move along one soft coordinate's own exact path. Torsion or fragment rotation.
+
+    Both are exact rigid motions in radians, which is why they share this machinery and
+    every radian-valued threshold in the config: a torsion turns one side of a bridge bond
+    about the bond, a fragment rotation turns a whole fragment about its own centre of
+    mass. The second exists because the first cannot reach it -- there is no bond between
+    two fragments to hang an axis on.
+    """
+    if isinstance(mode, FragmentRotation):
+        return step_fragment_rotation(atoms, mode, delta, in_place)
+    return step_torsion(atoms, mode, delta, in_place)
+
+
+def soft_mode_response(atoms, guard, mode, step_rad, reference_energy=None):
+    """Generalized force and stiffness of one soft coordinate, in eV/rad and eV/rad^2.
 
     Measured by differencing the energy along the coordinate's own exact path, so there
     is no chain rule and no ambiguity about how the other coordinates were held: for a
-    bridge bond the path is a rigid rotation, under which nothing else moves at all.
+    bridge bond the path is a rigid rotation, under which nothing else moves at all, and
+    for a fragment rotation nothing inside the fragment moves at all.
     Costs two energy evaluations when the reference energy is already known.
     """
     energies = []
@@ -1548,11 +1660,53 @@ def torsion_response(atoms, guard, torsion, step_rad, reference_energy=None):
         if delta == 0.0 and reference_energy is not None:
             energies.append(float(reference_energy))
             continue
-        probe, _ = step_torsion(atoms, torsion, delta, in_place=False)
+        probe, _ = soft_mode_step(atoms, mode, delta, in_place=False)
         energies.append(float(guard.get_potential_energy(probe)))
     gradient_ = (energies[2] - energies[0]) / (2 * step_rad)
     curvature = (energies[2] - 2 * energies[1] + energies[0]) / step_rad**2
     return float(gradient_), float(curvature)
+
+
+def torsion_response(atoms, guard, torsion, step_rad, reference_energy=None):
+    """The torsion case of `soft_mode_response`, kept for callers that only have one."""
+    return soft_mode_response(atoms, guard, torsion, step_rad, reference_energy)
+
+
+def _tier(curvature, gradient, floor, cap, tolerance):
+    """The four-way verdict on one soft coordinate, with its constants PASSED IN.
+
+    The constants are parameters, not config reads, because two unit systems are about
+    to share this machinery: torsions and fragment rotations are radians, fragment
+    translations (B'', PLAN item 5) are Angstrom, and footnote [1] of
+    `polish_soft_modes` is the record of why feeding one unit system the other's
+    thresholds is the silent kind of error. Each caller passes its own floor / cap /
+    tolerance -- measured in its own units -- and the verdict logic, which must not be
+    duplicated, lives here once.
+
+    Returns (tier, note, bound): `note` is the tier's shipped explanation or None;
+    `bound` is the free-gradient bound (floor * tolerance) when the question of
+    flatness was asked, else None.
+    """
+    if curvature > cap:
+        return "stiff", None, None
+    if curvature < 0 and abs(curvature) >= floor:
+        return (
+            "negative_curvature",
+            "not a minimum along this coordinate; left to the minimum check",
+            None,
+        )
+    if abs(curvature) < floor:
+        bound = floor * tolerance
+        if abs(gradient) <= bound:
+            return "free", "flat coordinate; its value carries no information", bound
+        return (
+            "flat_biased",
+            "curvature below the floor but the coordinate is not "
+            "stationary; scanned along its own path instead of "
+            "Newton-stepping on an unusable curvature",
+            bound,
+        )
+    return "soft", None, None
 
 
 def polish_soft_modes(atoms, guard, config):
@@ -1571,6 +1725,22 @@ def polish_soft_modes(atoms, guard, config):
     Negative curvature is left alone as well: it means the structure is not a minimum
     along that coordinate, which is the minimum check's decision to make, not this one.
 
+    [1] Two kinds of coordinate, one machinery. Torsions come from `rotatable_torsions`,
+        which enumerates BONDS of the graph -- so between two fragments, which share no
+        bond, there was nothing to enumerate and their relative orientation was outside
+        this operator's DOMAIN, not merely outside its budget. b05's three elimination
+        products stopped on order-1 stationary points whose unstable mode was 99.9% a
+        rigid rotation of the water, a coordinate nothing here could move; the right
+        reading of that is a missing coordinate, not a short round budget.
+        `fragment_rotations` supplies it, and it fits without a new threshold because it
+        is also an exact rigid motion measured in radians: every radian-valued floor, cap
+        and tolerance below already has its justification and applies unchanged.
+        Fragment TRANSLATIONS are deliberately not here. They are the other three relative
+        degrees of freedom and they are measured in Angstrom, so they would need their own
+        curvature floor, their own tolerance and their own measurement to justify both --
+        a tier machinery fed two unit systems through one threshold is the silent kind of
+        error, and the measured failure was a rotation.
+
     The fourth tier exists because the third one was wrong, and measurably so. On
     3-oxobutanal the run's product minimum was reported 9.97 meV above the same minimum
     reached with a tight tolerance, and the whole difference sat in one methyl torsion that
@@ -1583,11 +1753,15 @@ def polish_soft_modes(atoms, guard, config):
     derived rather than chosen: at the smallest curvature this function is willing to trust,
     a gradient below `floor * tolerance` cannot move the coordinate past the tolerance.
     """
-    from .chemistry import canonical_labels
+    from .canonical import canonical_form
 
     graph = encode(atoms, config.bond_scale, active=config.active_atoms)
-    labels = canonical_labels(atoms.numbers, graph.edges, graph.index)
-    genuine, rotors = rotatable_torsions(graph, labels)
+    form = canonical_form(atoms.numbers, graph.edges, graph.index)
+    labels = form.colours
+    orbits = form.orbits if form.info.get("enumerated") else labels
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
+    # [1] the coordinates no bond of the graph can reach
+    coordinates = list(genuine) + list(rotors) + list(fragment_rotations(atoms, graph))
     # Whether the geometry moved is a separate fact from whether every coordinate is now
     # within tolerance, and the caller needs both: a polish that moved the structure has
     # invalidated the force tolerance it was standing on, however happy its own criterion is.
@@ -1614,64 +1788,72 @@ def polish_soft_modes(atoms, guard, config):
             {"indices": list(torsion.indices), "offset_rad": float(offset), "kind": kind}
         )
 
-    for torsion in genuine + rotors:
-        entry = {"indices": list(torsion.indices), "symmetry_order": torsion.symmetry_order}
+    for torsion in coordinates:
+        entry = {
+            "indices": list(torsion.indices),
+            "symmetry_order": torsion.symmetry_order,
+            # Named, because two different coordinates now share this report and a
+            # consumer that assumes torsion reads a fragment's atom list as a bond:
+            # free_bonds_of took indices[1:3] off every "free" entry, which for a
+            # fragment rotation is two atoms that need not even be bonded.
+            "coordinate": (
+                "fragment_rotation" if isinstance(torsion, FragmentRotation) else "torsion"
+            ),
+        }
+        if isinstance(torsion, FragmentRotation):
+            entry["axis"] = list(torsion.axis)
+            entry["label"] = torsion.label
         polished = False
         reference = float(guard.get_potential_energy(atoms))
-        gradient_, curvature = torsion_response(
+        gradient_, curvature = soft_mode_response(
             atoms, guard, torsion, config.soft_mode_step_rad, reference
         )
         report["energy_evaluations"] += 2
         entry.update(curvature_eV_rad2=curvature, initial_gradient_eV_rad=gradient_)
-        if curvature > config.soft_mode_curvature_max_eV_rad2:
-            entry["tier"] = "stiff"
-        elif curvature < 0 and abs(curvature) >= config.soft_mode_curvature_floor_eV_rad2:
-            entry["tier"] = "negative_curvature"
-            entry["note"] = "not a minimum along this coordinate; left to the minimum check"
-        elif abs(curvature) < config.soft_mode_curvature_floor_eV_rad2:
-            bound = config.soft_mode_curvature_floor_eV_rad2 * config.torsion_tolerance_rad
+        tier, note, bound = _tier(
+            curvature,
+            gradient_,
+            config.soft_mode_curvature_floor_eV_rad2,
+            config.soft_mode_curvature_max_eV_rad2,
+            config.torsion_tolerance_rad,
+        )
+        entry["tier"] = tier
+        if note is not None:
+            entry["note"] = note
+        if bound is not None:
             entry["free_gradient_bound_eV_rad"] = bound
-            if abs(gradient_) <= bound:
-                entry["tier"] = "free"
-                entry["note"] = "flat coordinate; its value carries no information"
-            else:
-                entry["tier"] = "flat_biased"
-                entry["note"] = (
-                    "curvature below the floor but the coordinate is not "
-                    "stationary; scanned along its own path instead of "
-                    "Newton-stepping on an unusable curvature"
-                )
-                if config.soft_mode_scan_points >= 3:
-                    # The coordinate's path is exact -- a rigid rotation about the bond --
-                    # so a scan over its symmetry-reduced range is well defined and does not
-                    # depend on a local model that has just been shown not to hold. One
-                    # range, because values a symmetry period apart are the same structure.
-                    span = 2 * np.pi / max(int(torsion.symmetry_order), 1)
-                    offsets = np.linspace(
-                        -span / 2, span / 2, config.soft_mode_scan_points + 1
-                    )[:-1]
-                    scanned = []
-                    for delta in offsets:
-                        probe, _ = step_torsion(atoms, torsion, float(delta), in_place=False)
-                        scanned.append(float(guard.get_potential_energy(probe)))
-                    report["energy_evaluations"] += len(offsets)
-                    best = int(np.argmin(scanned))
-                    entry["scan_span_rad"] = float(span)
-                    entry["scan_points"] = int(len(offsets))
-                    entry["scan_offset_rad"] = float(offsets[best])
-                    entry["scan_energy_gain_eV"] = float(reference - scanned[best])
-                    if abs(offsets[best]) > 1e-12:
-                        step_torsion(atoms, torsion, float(offsets[best]))
-                        moved(torsion, offsets[best], "scan")
-                        gradient_, curvature = torsion_response(
-                            atoms, guard, torsion, config.soft_mode_step_rad
-                        )
-                        report["energy_evaluations"] += 3
-                        entry["scanned_gradient_eV_rad"] = gradient_
-                        entry["scanned_curvature_eV_rad2"] = curvature
-                polished = True
-        else:
-            entry["tier"] = "soft"
+        polished = False
+        if tier == "flat_biased":
+            if config.soft_mode_scan_points >= 3:
+                # The coordinate's path is exact -- a rigid rotation about the bond --
+                # so a scan over its symmetry-reduced range is well defined and does not
+                # depend on a local model that has just been shown not to hold. One
+                # range, because values a symmetry period apart are the same structure.
+                span = 2 * np.pi / max(int(torsion.symmetry_order), 1)
+                offsets = np.linspace(-span / 2, span / 2, config.soft_mode_scan_points + 1)[
+                    :-1
+                ]
+                scanned = []
+                for delta in offsets:
+                    probe, _ = soft_mode_step(atoms, torsion, float(delta), in_place=False)
+                    scanned.append(float(guard.get_potential_energy(probe)))
+                report["energy_evaluations"] += len(offsets)
+                best = int(np.argmin(scanned))
+                entry["scan_span_rad"] = float(span)
+                entry["scan_points"] = int(len(offsets))
+                entry["scan_offset_rad"] = float(offsets[best])
+                entry["scan_energy_gain_eV"] = float(reference - scanned[best])
+                if abs(offsets[best]) > 1e-12:
+                    soft_mode_step(atoms, torsion, float(offsets[best]))
+                    moved(torsion, offsets[best], "scan")
+                    gradient_, curvature = soft_mode_response(
+                        atoms, guard, torsion, config.soft_mode_step_rad
+                    )
+                    report["energy_evaluations"] += 3
+                    entry["scanned_gradient_eV_rad"] = gradient_
+                    entry["scanned_curvature_eV_rad2"] = curvature
+            polished = True
+        elif tier == "soft":
             polished = True
         if polished:
             # A torsion is periodic, so no step ever needs to exceed half of its own
@@ -1689,10 +1871,10 @@ def polish_soft_modes(atoms, guard, config):
                 entry["last_offset_rad"] = offset
                 if abs(offset) < config.torsion_tolerance_rad:
                     break
-                step_torsion(atoms, torsion, offset)
+                soft_mode_step(atoms, torsion, offset)
                 moved(torsion, offset, "newton")
                 report["energy_evaluations"] += 1
-                gradient_, curvature = torsion_response(
+                gradient_, curvature = soft_mode_response(
                     atoms, guard, torsion, config.soft_mode_step_rad
                 )
                 report["energy_evaluations"] += 3
@@ -2083,6 +2265,7 @@ def descend_saddle(saddle, mode, factory, config, sign, seed=0, recorder=None):
             return None, failed, relays
         settled, checked = confirm_minimum(endpoint, factory, config, seed + hop)
         if settled:
+            log.info("descent settled after %d relay(s)", relays)
             return endpoint, checked, relays
         if checked.get("saddle_order") != 1:
             return None, checked, relays
@@ -2528,7 +2711,6 @@ def _probe_minimum(candidate, factory, config, seed):
     orthogonal to every direction tried, and it gives no eigenvalue. Use it where the
     system is too large to diagonalize. Returns (confirmed, diagnostics).
     """
-    from .chemistry import canonical_labels
 
     masses = candidate.get_masses()
     tolerance = config.minimum_check_eigenvalue_tol
@@ -2536,10 +2718,14 @@ def _probe_minimum(candidate, factory, config, seed):
     probe = candidate.copy()
     probe.calc = guard
 
+    from .canonical import canonical_form
+
     directions = []
     graph = encode(candidate, config.bond_scale, active=config.active_atoms)
-    labels = canonical_labels(candidate.numbers, graph.edges, graph.index)
-    genuine, rotors = rotatable_torsions(graph, labels)
+    form = canonical_form(candidate.numbers, graph.edges, graph.index)
+    labels = form.colours
+    orbits = form.orbits if form.info.get("enumerated") else labels
+    genuine, rotors = rotatable_torsions(graph, labels, orbits)
     delta = config.soft_mode_step_rad
     for torsion in genuine + rotors:
         plus, _ = step_torsion(candidate, torsion, delta, in_place=False)
@@ -2631,6 +2817,7 @@ def relax_source(atoms, factory, config):
     confirmed, diagnostics = confirm_minimum(source, factory, config, config.seed)
     if not confirmed:
         raise ValueError(f"Source structure is not a confirmed local minimum: {diagnostics}")
+    log.info("source relaxed and confirmed at %.4f eV", float(source.get_potential_energy()))
     return source
 
 
@@ -2880,3 +3067,58 @@ def run_trial(source, probe, factory, config, directory, trial_id):
                 },
             )
             return Outcome(record)
+
+
+def wilson_interval(successes, total, z=1.959963985):
+    """The 95% (by default) Wilson score interval for a binomial proportion.
+
+    The project's standing convention for small-n proportions -- 16/16 gives a lower
+    bound of 0.8064, the number the P2 temperature protocol quotes -- so the committor
+    machinery uses the same interval rather than a normal approximation, which is
+    meaningless at the n=16 this feature runs at.
+    """
+    if total <= 0:
+        raise ValueError("Wilson interval needs a positive denominator")
+    if not 0 <= successes <= total:
+        raise ValueError("successes must lie in [0, total]")
+    n = float(total)
+    p = successes / n
+    z2 = z * z
+    centre = (p + z2 / (2 * n)) / (1 + z2 / n)
+    half = z * np.sqrt(p * (1 - p) / n + z2 / (4 * n * n)) / (1 + z2 / n)
+    return centre - half, centre + half
+
+
+def shoot(structure, probe, factory, config, directory, shots, seed0, prefix="shot"):
+    """One geometry, N shots: only the thermal momenta's seed differs (PLAN item 2).
+
+    The committor is defined on a thermal ensemble, so the shot ensemble IS
+    `thermal_momenta` with the run's temperature and per-shot seeds -- Maxwell-
+    Boltzmann, decision 3 of 2026-09-20. T = 0 is refused outright: deterministic
+    dynamics returns N identical results and a "committor" read off them is a number
+    with no referent (fail closed, protocol docs/P1_COMMITTOR_PROTOCOL.md).
+
+    Returns the N Outcomes. Judging A / B / other is the caller's -- it needs the
+    registry, and "other" must be counted separately rather than folded into either
+    side (unterminated shots are not evidence about p_B).
+    """
+    if config.temperature_K <= 0:
+        raise ValueError(
+            "committor shots need temperature_K > 0: at T=0 the dynamics is "
+            "deterministic and every shot returns the same result"
+        )
+    outcomes = []
+    for i in range(shots):
+        shot_probe = replace(probe, seed=seed0 + i)
+        trial_id = f"{prefix}{i:04d}"
+        outcomes.append(
+            run_trial(
+                structure,
+                shot_probe,
+                factory,
+                config,
+                directory / "trials" / trial_id,
+                trial_id,
+            )
+        )
+    return outcomes

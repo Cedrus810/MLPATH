@@ -1909,3 +1909,70 @@ def test_the_two_sides_of_a_saddle_get_distinct_non_negative_streams():
     # Deterministic: the same (seed, sign) must give the same stream every time.
     assert side_seed(17, 1) == side_seed(17, 1)
     assert side_seed(17, -1) == side_seed(17, -1)
+
+
+def _with_quench(atoms, tiers, energy):
+    """Attach the quench report free_bonds_of/measured_bonds_of read, plus a fixed energy.
+
+    Supplying the report rather than measuring it is deliberate: the question here is what
+    the comparison does with two reports that disagree, and the recorded corpus contains
+    no such pair to borrow (474 torsion measurements across 104 nodes: 473 soft, and the
+    one "free" predates the flat_biased tier -- its gradient is 0.014 eV/rad against a
+    bound of 1.75e-4). So the branch has never executed on real data and cannot be
+    exercised by picking a real structure off disk.
+    """
+    from ase.calculators.singlepoint import SinglePointCalculator
+
+    atoms = atoms.copy()
+    atoms.info["quench"] = {
+        "rounds": [{"modes": [{"indices": list(i), "tier": t} for i, t in tiers]}]
+    }
+    atoms.calc = SinglePointCalculator(atoms, energy=energy, forces=np.zeros((len(atoms), 3)))
+    return atoms
+
+
+def test_a_torsion_one_side_measured_stiff_is_not_quotiented_away():
+    """Flatness belongs to the geometry it was measured on; the other side may disagree.
+
+    `_match_microstate` unions the two structures' free bonds. Ethanol's anti and gauche
+    sit 0.4383 A apart -- well past basin_rmsd_A = 0.15 -- and collapse to 0.0614 A once
+    the C-O torsion is quotiented, so one side's report deciding for both merges two real
+    conformers. That is the case `free_aligned_symmetric_rmsd`'s docstring says nothing
+    may infer. A bond nobody measured still raises no objection, which is the other half:
+    a genuinely free rotor must not mint conformers just because the structure it was
+    measured on is not the one being compared.
+    """
+    from ase.build import molecule
+    from prrs.config import SearchConfig
+    from prrs.network import Registry
+    from prrs.perturbations import step_torsion, torsion_on_bond
+    from prrs.state import encode
+    from prrs.chemistry import canonical_labels
+
+    source = molecule("CH3CH2OH")
+    graph = encode(source)
+    labels = canonical_labels(source.numbers, graph.edges, graph.index)
+    torsion = torsion_on_bond(graph, labels, (1, 2))  # the O-H torsion: anti vs gauche
+    anti = source.copy()
+    gauche, _ = step_torsion(anti, torsion, np.deg2rad(120.0), in_place=False)
+    hydroxyl = tuple(torsion.indices)
+
+    config = SearchConfig()
+    free = [(hydroxyl, "free")]
+    soft = [(hydroxyl, "soft")]
+
+    # disagreement: anti measured it flat, gauche measured it and did not
+    registry = Registry(config)
+    first = registry.admit(_with_quench(anti, free, -100.000), None, "t0")
+    second = registry.admit(_with_quench(gauche, soft, -100.002), first.node, "t1")
+    assert first.outcome == "new_chemical_node"
+    assert second.node.key == first.node.key, "same substance, so the same node"
+    assert second.outcome == "new_microstate", second.outcome
+    assert len(second.node.microstates) == 2
+
+    # no disagreement: nobody measured it on the second structure, so nothing objects
+    registry = Registry(config)
+    first = registry.admit(_with_quench(anti, free, -100.000), None, "t0")
+    second = registry.admit(_with_quench(gauche, [], -100.002), first.node, "t1")
+    assert second.outcome == "existing_microstate", second.outcome
+    assert len(second.node.microstates) == 1

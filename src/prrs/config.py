@@ -27,6 +27,7 @@ INTEGER_POSITIVE = (
     "conformer_max_per_node",
     "conformer_trials_per_microstate",
     "automorphism_limit",
+    "spectral_rank_modes",
     "response_samples",
     "response_descent_max_steps",
     "analytic_hessian_check_directions",
@@ -47,6 +48,7 @@ INTEGER_NONNEGATIVE = (
     "soft_polish_rounds",
     "soft_mode_scan_points",
     "soft_polish_steps",
+    "committor_shots",
     # Zero backtracks is a legitimate configuration: take the step or give up.
     "min_mode_backtracks",
 )
@@ -153,6 +155,7 @@ class SearchConfig:
     quench_steps: int = 500
     quench_fmax_eV_A: float = 0.03
     torsion_tolerance_rad: float = 0.0175  # one degree
+    spectral_rank_modes: int = 4
     soft_mode_curvature_max_eV_rad2: float = 50.0  # above this, fmax already suffices
     soft_mode_curvature_floor_eV_rad2: float = 0.01  # below this, a free coordinate
     soft_mode_step_rad: float = 0.02
@@ -160,6 +163,7 @@ class SearchConfig:
     soft_polish_rounds: int = 6
     soft_polish_steps: int = 6
     minimum_check: str = "hessian"
+    direction_mode: str = "sampled"
     hessian_source: str = "auto"  # auto | analytic | fd
     analytic_hessian_check_directions: int = 3
     analytic_hessian_check: float = 1e-2  # relative, vs one finite difference
@@ -198,6 +202,9 @@ class SearchConfig:
     boundary_continuation_descend_saddles: bool = True
     boundary_continuation_seeds: int = 2
     boundary_continuation_per_run: int = 4
+    # Zero means off, and off is the default: each extra shot is another full trial,
+    # and b04's negative side is coverage-limited, not statistics-limited.
+    committor_shots: int = 0
     tracked_coordinates: tuple = ()
     minimum_check_probes: int = 2
     minimum_check_displacement_A: float = 0.05
@@ -283,6 +290,8 @@ class SearchConfig:
             )
         if self.minimum_check not in ("hessian", "probe", "none"):
             raise ValueError("minimum_check must be 'hessian', 'probe' or 'none'")
+        if self.direction_mode not in ("sampled", "exhaustive"):
+            raise ValueError("direction_mode must be 'sampled' or 'exhaustive'")
         if self.hessian_source not in ("auto", "analytic", "fd"):
             raise ValueError("hessian_source must be 'auto', 'analytic' or 'fd'")
         if self.response_samples < 3:
@@ -376,10 +385,33 @@ class SearchConfig:
 
 
 RATIONALE = {
+    "direction_mode": (
+        "Which claims a run is allowed to make. 'sampled' spends a fixed direction budget: "
+        "positive findings stand on their own, and every negative one carries the sampling "
+        "limit with it -- b04's probe3 selected 14 of 28 candidates with the global cap "
+        "never binding, so 'nothing was found there' was never evidence of absence. "
+        "'exhaustive' traverses every symmetry-reduced candidate and REFUSES TO START when "
+        "the trial budget cannot cover them, because a truncated exhaustive run is a "
+        "sampled run wearing the wrong label. Cost then grows with the candidate count, "
+        "which is the honest price of a negative result (user ruling, 2026-09-09)."
+    ),
     # Why each non-obvious default is the value it is. Every entry is the record of a
     # measurement or a failure, not a preference, so retiring a default means retiring the
     # entry that justified it. Kept beside the dataclass rather than inside it so the field
     # table stays readable; test_validation pins every key to a real field.
+    "spectral_rank_modes": (
+        "How many of the softest internal modes rank the direction budget. The spectrum is "
+        "already paid for -- minimum_check='hessian' diagonalises it and confirm_minimum "
+        "kept six eigenvalues and threw every eigenvector away -- so the ranking costs no "
+        "force evaluation at a microstate that was confirmed. Four, because the measurement "
+        "that justifies the ranking at all separates cleanly inside four: on b04's source "
+        "the three lowest non-trivial eigenvalues are 0.0186 / 0.0187 / 0.0392 eV/(A^2 amu) "
+        "and the fourth jumps to 1.5697, and the C-Cl stretch that actually reacted scores "
+        "0.9651 against 0.6893 for the next distinct direction and <=0.2558 for everything "
+        "else (docs/experiments/spectral_proposal_probe.py). Raising it past the gap adds "
+        "stiff modes that every direction overlaps a little, which flattens the ranking "
+        "back towards the shuffle it replaces."
+    ),
     "chemical_max_nodes": (
         "Two budgets, deliberately not one. A ninth conformer of a known substance is not a "
         "chemical discovery and must not consume a chemical node slot; but conformers stay "
@@ -475,6 +507,16 @@ RATIONALE = {
     "min_mode_overlap": (
         "Following a target coordinate is only meaningful while some eigenvector still "
         "resembles it. Below this mass-weighted overlap the walk has changed subject."
+    ),
+    "committor_shots": (
+        "N Maxwell-Boltzmann shots from one bracketed geometry, temperature_K at 300 K "
+        "(decision 3, 2026-09-20; protocol frozen in docs/P1_COMMITTOR_PROTOCOL.md BEFORE "
+        "any run). N=16 with a 95% Wilson interval answers only 'is p_B near 0 or 1' -- "
+        "[0.28, 0.72] around p=0.5 -- and distinguishing 0.5 from 0.25 needs N>=50 as a "
+        "separate batch. Default 0: every shot is a full trial's budget, and b04's "
+        "negative side is coverage-limited (14/28), not statistics-limited. T=0 is "
+        "refused outright: deterministic dynamics makes every shot identical and the "
+        "committor undefined."
     ),
     "saddle_search_enabled": (
         "Climbing to a saddle from a probe frame, once a scan has already shown the reaction "

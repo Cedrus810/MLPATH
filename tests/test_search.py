@@ -383,3 +383,67 @@ def test_a_run_that_dies_inside_publish_still_records_why(tmp_path, protocol):
     # The manifest is small and string-only, so it must have survived.
     manifest = json.loads((output / "config.json").read_text())
     assert manifest["status"] == "failed", manifest["status"]
+
+
+def test_a_refined_bracket_describes_the_amplitude_it_names(tmp_path, sharp_protocol):
+    """Refinement replaces the high end, so the high end's fields must come with it.
+
+    On this potential the coarse pair is (0.3 returns, 0.7 reaches c0001/m0000) and
+    refinement narrows it to 0.6, which stops on the ridge instead. Only `high_kind` was
+    refreshed there, so the bracket went on naming 0.7's confirmed product as the
+    microstate reached at 0.6 -- a window measured at one amplitude, reported at another.
+    Reading the pair off the samples is what makes this an invariant rather than a
+    transcription of one run's numbers.
+    """
+    network = ReactionSearch(SharpWell, sharp_protocol).run(demo_atoms(), tmp_path / "refined")
+    brackets = [
+        (scan, bracket)
+        for scan in network["amplitude_scans"]
+        for bracket in scan["local_brackets"]
+    ]
+    assert brackets, "this potential is chosen because it brackets"
+    refined = 0
+    for scan, bracket in brackets:
+        at_high = [s for s in scan["samples"] if s["amplitude"] == bracket["high"]]
+        assert len(at_high) == 1, (bracket, scan["samples"])
+        sample = at_high[0]
+        assert bracket["target_microstate"] == sample["target_microstate"], bracket
+        assert bracket["high_kind"] == {
+            "completed": "confirmed",
+            "ts_candidate": "boundary_unattributed",
+        }.get(sample["status"], "transient_crossing"), bracket
+        if bracket["high"] not in sharp_protocol.geometry_amplitudes_A:
+            refined += 1
+    assert refined, "no bracket moved its high end, so nothing here was exercised"
+
+
+def test_max_depth_is_a_named_budget_not_a_silent_drop(protocol, tmp_path):
+    """The fifth budget truncation gets its own word (PLAN quick win, 2026-09-20).
+
+    `termination` answers the trial budget and the direction ledger names its own; a
+    node admitted at the depth cap used to simply never enter the queue, leaving
+    "configured_scope_exhausted" to read as "everything was tried". The count lives in
+    `budgets`, not the direction ledger, because what it caps is admissions.
+    """
+    capped = ReactionSearch(double_well_factory, replace(protocol, max_depth=1)).run(
+        demo_atoms(), tmp_path / "capped"
+    )
+    assert capped["budgets"]["admissions_capped_by_depth"] >= 1
+    # the default protocol reaches no node at its own cap, and the counter says so
+    full = ReactionSearch(double_well_factory, protocol).run(demo_atoms(), tmp_path / "full")
+    assert full["budgets"]["admissions_capped_by_depth"] == 0
+
+
+def test_a_run_reports_its_milestones_through_logging(protocol, tmp_path, caplog):
+    """The package used to have zero logging; a five-hour run was totally silent.
+
+    Library imports stay quiet (no handler is attached), but the milestones exist at
+    INFO on the prrs loggers and the CLI attaches the only handler.
+    """
+    import logging
+
+    with caplog.at_level(logging.INFO, logger="prrs.search"):
+        ReactionSearch(double_well_factory, protocol).run(demo_atoms(), tmp_path / "logged")
+    messages = [record.getMessage() for record in caplog.records]
+    assert any("source admitted" in m for m in messages)
+    assert any("scanning" in m for m in messages)
