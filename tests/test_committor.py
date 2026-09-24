@@ -63,6 +63,32 @@ def test_shots_differ_by_seed_and_reproduce(tmp_path):
     assert seeds_matter, "T=300 shots with different seeds produced identical trajectories"
 
 
+def test_a_shot_starts_from_the_frame_it_is_given(tmp_path):
+    # 2026-09-23: shots re-delivered the probe on top of the ridge frame (+0.4 eV on P1,
+    # barrier 419 meV). A shot's first perturbed frame must sit at the source's
+    # potential energy: thermal momenta only, no displacement, kick or pulse.
+    import json
+
+    source = relax_source(demo_atoms(), double_well_factory, HOT)
+    for probe in (
+        _probe(),
+        Probe(family="kick", indices=(0, 1), sign=1, amplitude=0.5, seed=7),
+    ):
+        (outcome,) = shoot(
+            source, probe, double_well_factory, HOT, tmp_path / probe.family, 1, 3
+        )
+        assert outcome.record["probe_delivery"] == "skipped:committor_shot"
+        assert "probe_delivered" not in outcome.record
+        rows = [
+            json.loads(line)
+            for line in (tmp_path / probe.family / "trials" / "shot0000" / "observations.jsonl")
+            .read_text()
+            .splitlines()
+        ]
+        assert rows[1]["phase"] == "perturbed"
+        assert rows[1]["potential_eV"] == pytest.approx(rows[0]["potential_eV"], abs=1e-12)
+
+
 def test_wilson_matches_the_number_the_project_already_quotes():
     lo, hi = wilson_interval(16, 16)
     assert lo == pytest.approx(0.8064, abs=5e-5)

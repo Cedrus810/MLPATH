@@ -2821,8 +2821,14 @@ def relax_source(atoms, factory, config):
     return source
 
 
-def run_trial(source, probe, factory, config, directory, trial_id):
+def run_trial(source, probe, factory, config, directory, trial_id, deliver=True):
     """One trial end to end: probe, free response, quench, classify.
+
+    `deliver=False` skips the probe (displacement, kick, pulse) and keeps only the
+    thermal momenta: a committor shot starts FROM the ridge frame, it does not push it
+    again. Before 2026-09-23 `shoot` re-delivered the scan's lowest coarse probe on top
+    of the frame -- +0.405 / +0.491 eV (0.15 A stretch) or +0.3 eV (kick) against a
+    419 meV barrier -- and all four P1 windows read p_B 0.875-1.0.
 
     Notes
     -----
@@ -2944,7 +2950,9 @@ def run_trial(source, probe, factory, config, directory, trial_id):
         try:
             atoms.set_momenta(np.zeros((len(atoms), 3)))
             observe("source", 0, True)
-            if probe.mode == "displace":
+            if not deliver:
+                record["probe_delivery"] = "skipped:committor_shot"
+            if deliver and probe.mode == "displace":
                 # Geometry probes act on a quenched, zero-momentum structure.
                 record["probe_delivered"] = apply_probe(
                     atoms, probe, config.bond_scale, config.active_atoms
@@ -2952,14 +2960,14 @@ def run_trial(source, probe, factory, config, directory, trial_id):
                 gate_collateral(record["probe_delivered"], config, atoms)
             thermal_momenta(atoms, config.temperature_K, probe.seed)
             before_kick = atoms.get_kinetic_energy()
-            if probe.mode == "kick":
+            if deliver and probe.mode == "kick":
                 record["probe_delivered"] = apply_probe(atoms, probe)
             record["injected_kinetic_eV"] = atoms.get_kinetic_energy() - before_kick
             observe("perturbed", 0, True)
             record["geometry_energy_change_eV"] = (
                 atoms.get_potential_energy() - source.get_potential_energy()
             )
-            if probe.family == "pulse":
+            if deliver and probe.family == "pulse":
                 _, r0 = pair_axis(atoms, probe.pair)
                 atoms.calc = PairPulse(physical, probe.pair, probe.sign, probe.amplitude, r0)
                 dynamics = VelocityVerlet(
@@ -3098,6 +3106,9 @@ def shoot(structure, probe, factory, config, directory, shots, seed0, prefix="sh
     dynamics returns N identical results and a "committor" read off them is a number
     with no referent (fail closed, protocol docs/P1_COMMITTOR_PROTOCOL.md).
 
+    The probe is carried for its seed and its label only; it is NOT delivered
+    (`run_trial(deliver=False)`) -- the shot starts from `structure` as given.
+
     Returns the N Outcomes. Judging A / B / other is the caller's -- it needs the
     registry, and "other" must be counted separately rather than folded into either
     side (unterminated shots are not evidence about p_B).
@@ -3119,6 +3130,7 @@ def shoot(structure, probe, factory, config, directory, shots, seed0, prefix="sh
                 config,
                 directory / "trials" / trial_id,
                 trial_id,
+                deliver=False,
             )
         )
     return outcomes
