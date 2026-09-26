@@ -2821,7 +2821,9 @@ def relax_source(atoms, factory, config):
     return source
 
 
-def run_trial(source, probe, factory, config, directory, trial_id, deliver=True):
+def run_trial(
+    source, probe, factory, config, directory, trial_id, deliver=True, first_entry=None
+):
     """One trial end to end: probe, free response, quench, classify.
 
     `deliver=False` skips the probe (displacement, kick, pulse) and keeps only the
@@ -2838,6 +2840,13 @@ def run_trial(source, probe, factory, config, directory, trial_id, deliver=True)
         nearest the dividing surface -- which is exactly where a saddle is reachable.
         Measured on malonaldehyde, the 0.35 A probe crossed, was discarded whole, and the
         run found no transition state in sixty trials.
+    [2] `first_entry = {"graphs": {label: edges}, "k": k}` ends the free segment at the
+        first step that completes k consecutive steps on one label's graph -- the
+        hysteretic graph `observe` already computes every step, compared exactly -- and
+        records it as `record["first_entry"]`; `response_steps` is then the cap. The quench
+        that follows is unchanged, so it runs from the entry geometry: the confirmation
+        quench of docs/P1_COMMITTOR_FIRST_ENTRY_PROTOCOL.md. None (the default) leaves the
+        trial and its record exactly as they were.
     """
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=False)
@@ -2995,10 +3004,33 @@ def run_trial(source, probe, factory, config, directory, trial_id, deliver=True)
             dynamics = VelocityVerlet(
                 atoms, timestep=config.timestep_fs * units.fs, logfile=None
             )
+            entry_label, entry_run = None, 0
+            if first_entry is not None:
+                record["first_entry"] = {"side": None, "step": None, "k": first_entry["k"]}
             for step in range(1, config.response_steps + 1):
                 dynamics.run(1)
                 elapsed_fs += config.timestep_fs
                 observe("free", step, step == config.response_steps, free_baseline)
+                if first_entry is None:
+                    continue
+                # [2] consecutive steps on one endpoint's graph; any other graph resets
+                label = next(
+                    (
+                        name
+                        for name, edges in first_entry["graphs"].items()
+                        if previous_edges == edges
+                    ),
+                    None,
+                )
+                entry_run = (
+                    entry_run + 1
+                    if label is not None and label == entry_label
+                    else int(label is not None)
+                )
+                entry_label = label
+                if entry_run >= first_entry["k"]:
+                    record["first_entry"].update(side=label, step=step, time_fs=elapsed_fs)
+                    break
             raw = snapshot(atoms, physical)
             write(str(directory / "raw_endpoint.extxyz"), raw)
             record["raw_endpoint"] = f"trials/{trial_id}/raw_endpoint.extxyz"
@@ -3097,7 +3129,9 @@ def wilson_interval(successes, total, z=1.959963985):
     return centre - half, centre + half
 
 
-def shoot(structure, probe, factory, config, directory, shots, seed0, prefix="shot"):
+def shoot(
+    structure, probe, factory, config, directory, shots, seed0, prefix="shot", first_entry=None
+):
     """One geometry, N shots: only the thermal momenta's seed differs (PLAN item 2).
 
     The committor is defined on a thermal ensemble, so the shot ensemble IS
@@ -3108,6 +3142,7 @@ def shoot(structure, probe, factory, config, directory, shots, seed0, prefix="sh
 
     The probe is carried for its seed and its label only; it is NOT delivered
     (`run_trial(deliver=False)`) -- the shot starts from `structure` as given.
+    `first_entry` is handed to every shot unchanged (see `run_trial` Notes [2]).
 
     Returns the N Outcomes. Judging A / B / other is the caller's -- it needs the
     registry, and "other" must be counted separately rather than folded into either
@@ -3131,6 +3166,7 @@ def shoot(structure, probe, factory, config, directory, shots, seed0, prefix="sh
                 directory / "trials" / trial_id,
                 trial_id,
                 deliver=False,
+                first_entry=first_entry,
             )
         )
     return outcomes

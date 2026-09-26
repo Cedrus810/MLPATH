@@ -40,6 +40,11 @@ def cover(centre, basis, radius, delta):
     cell can be from its centre is h*sqrt(d)/2 = delta, so every ball point lies
     within delta of some grid point that is itself kept only if inside the ball.
     Deterministic -- no low-discrepancy sequence, nothing seeded.
+
+    The rows of `basis` must be orthonormal, and are checked. Both the grid map
+    `basis.T @ combo` and the distance `basis @ offset` are isometries only then; with
+    a scaled or skewed basis the grid spacing in real coordinates is no longer h and
+    the stated covering radius delta overstates the cover.
     """
     basis = np.asarray(basis, dtype=float)
     if basis.ndim != 2 or basis.shape[1] != len(centre):
@@ -47,6 +52,8 @@ def cover(centre, basis, radius, delta):
     d = basis.shape[0]
     if not 1 <= d <= MAX_SUBSPACE_DIM:
         raise ValueError(f"subspace dimension {d} exceeds the enforced cap {MAX_SUBSPACE_DIM}")
+    if not np.allclose(basis @ basis.T, np.eye(d), atol=1e-10):
+        raise ValueError("basis rows must be orthonormal; the covering radius assumes it")
     if delta <= 0 or radius <= 0:
         raise ValueError("radius and delta must be positive")
     h = 2.0 * delta / np.sqrt(d)

@@ -12,6 +12,7 @@ import math
 # plain ZeroDivisionError deep inside a run. Naming the buckets here is what makes the
 # omission a failing test instead of a crash an hour in.
 INTEGER_POSITIVE = (
+    "committor_max_steps",
     "max_trials",
     "max_directions",
     "response_steps",
@@ -49,6 +50,7 @@ INTEGER_NONNEGATIVE = (
     "soft_mode_scan_points",
     "soft_polish_steps",
     "committor_shots",
+    "committor_entry_steps",
     # Zero backtracks is a legitimate configuration: take the step or give up.
     "min_mode_backtracks",
 )
@@ -205,6 +207,8 @@ class SearchConfig:
     # Zero means off, and off is the default: each extra shot is another full trial,
     # and b04's negative side is coverage-limited, not statistics-limited.
     committor_shots: int = 0
+    committor_entry_steps: int = 0
+    committor_max_steps: int = 1280
     tracked_coordinates: tuple = ()
     minimum_check_probes: int = 2
     minimum_check_displacement_A: float = 0.05
@@ -507,6 +511,22 @@ RATIONALE = {
     "min_mode_overlap": (
         "Following a target coordinate is only meaningful while some eigenvector still "
         "resembles it. Below this mass-weighted overlap the walk has changed subject."
+    ),
+    "committor_entry_steps": (
+        "k of docs/P1_COMMITTOR_FIRST_ENTRY_PROTOCOL.md (frozen 2026-09-25): a committor "
+        "shot ends at the first step completing k consecutive free steps on A's or B's "
+        "hysteretic bond graph, and is judged by that side. Zero (default) keeps the fixed "
+        "response_steps + quench rule. Fixed length was measured to move P1's p_B with "
+        "t_free (scan 8: 0.06 / 0.57 / 0.67 at 40 / 80 / 160 fs, runs/p1_tfree_sensitivity); "
+        "k <= 20 steps read the proton rattling on the ridge as entry, k >= 80 was a plateau "
+        "(runs/p1_first_entry_stage0), and k = 160 (40 fs at 0.25 fs) passed V1-V5 on "
+        "all four windows with fresh seeds (runs/p1_first_entry_confirm)."
+    ),
+    "committor_max_steps": (
+        "L_max of the first-entry rule: a shot not entered by then is 'uncommitted', "
+        "reported and kept out of p_B's denominator. 1280 steps (320 fs at 0.25 fs) is "
+        "twice the 640 every P1 stage-0 shot needed to enter at k = 160; the confirmation "
+        "batch's latest entry was step 744. Unused while committor_entry_steps is 0."
     ),
     "committor_shots": (
         "N Maxwell-Boltzmann shots from one bracketed geometry, temperature_K at 300 K "

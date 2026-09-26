@@ -121,6 +121,17 @@ def test_cover_radius_holds_over_the_ball():
         assert distance <= delta + 1e-9
 
 
+def test_a_basis_that_is_not_orthonormal_is_refused():
+    """A scaled row stretches the real grid spacing past h: the cover would still
+    claim radius delta while leaving ball points up to 2*delta from every grid point."""
+    centre = np.zeros(6)
+    with pytest.raises(ValueError, match="orthonormal"):
+        cover(centre, np.vstack([2.0 * STRETCH, TRANSVERSE]), 0.25, 0.05)
+    skewed = np.vstack([STRETCH, (STRETCH + TRANSVERSE) / np.sqrt(2)])
+    with pytest.raises(ValueError, match="orthonormal"):
+        cover(centre, skewed, 0.25, 0.05)
+
+
 def test_gradient_bound_recovers_a_linear_field():
     points = [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]]
     gradients = [[0.0, 0.0], [2.0, 0.0], [0.0, 2.0]]

@@ -62,7 +62,7 @@ from .runner import (
     side_seed,
     soft_internal_modes,
 )
-from .state import classify, validate_atoms
+from .state import classify, encode, validate_atoms
 
 log = logging.getLogger("prrs.search")
 
@@ -272,37 +272,104 @@ def _bracket_high(record):
     }
 
 
-def _rebuild_for_resume(output, cfg):
+def _sample_outcome(record, source_microstate):
+    """What one scan sample did, as (class, reason). Recorded; nothing routes on it.
+
+    returned    completed on the source microstate
+    departed    completed on another microstate in the registry
+    ridge       the quench stopped on a saddle (ts_candidate)
+    transient   a crossing that did not hold through the free tail
+    unresolved  everything else, with the reason: the failure code, or the admission
+                outcome when a completed trial was kept out of the network
+
+    Notes
+    -----
+    [1] `unresolved` used to be invisible: the bracket rule reads only "returned" and
+        "departed", so a failed quench, a gate rejection and an unverified minimum all
+        looked the same as "not a departure". The window census over runs/ (2026-09-26)
+        found 154 adjacent pairs with an unresolved side against 151 bracketed ones --
+        as much unexplained as explained -- which is why the reason travels with it.
+    """
+    status = record["status"]
+    if status == "completed":
+        target = record.get("target_microstate")
+        if target is None:
+            return "unresolved", f"admission:{record.get('admission')}"
+        return ("returned" if target == source_microstate else "departed"), None
+    if status == "ts_candidate":
+        return "ridge", None
+    if status == "unconfirmed" and (record.get("crossing") or {}).get("observed"):
+        return "transient", None
+    code = (record.get("failure") or {}).get("code")
+    return "unresolved", f"{status}:{code}" if code else status
+
+
+def _rebuild_for_resume(output, cfg, input_sha256):
     """Reconstruct a dead run's state from disk (PLAN items 6.2-6.5).
 
-    A process kill leaves network.json at status "running" with the last published
-    scan as the consistent boundary. Everything after that boundary is in flight and
-    is ROLLED BACK: attempt rows not referenced by any published scan are dropped from
-    attempts.jsonl and their trial directories deleted, because re-running the
-    direction from the queue would otherwise duplicate them. Deletion is the one place
-    this touches already-written data, so it is named in resume.json -- a separate
-    file, deliberately NOT inside network.json, or the acceptance criterion (resumed
-    run byte-identical to an uninterrupted one) could not even be stated.
+    A process kill leaves network.json at status "running". Its consistent boundary is
+    `resume_point.json`, written just before each microstate leaves the queue: the
+    network as published at that moment plus the counters that live only in memory.
+    Everything after it is in flight and is ROLLED BACK -- attempt rows past the
+    snapshot's count, their trial and committor directories, and the climbs,
+    continuations, descents and ts files the snapshot does not know -- because the
+    rerun of that microstate would otherwise duplicate or collide with them. Deletion
+    is the one place this touches already-written data, so it is named in resume.json
+    -- a separate file, deliberately NOT inside network.json, or the acceptance
+    criterion (resumed run byte-identical to an uninterrupted one) could not even be
+    stated.
 
-    Refuses (never guesses) when: the network is not mid-run, the config differs, the
-    implementation fingerprint differs (a resume across implementations is a mixed
-    batch -- this project retired one of those already), or a queued pair is missing
-    from the rebuilt registry.
+    Refuses (never guesses) when: the network is not mid-run, there is no resume point,
+    the config differs, the input structure differs, the implementation fingerprint
+    differs (a resume across implementations is a mixed batch -- this project retired
+    one of those already), or a queued pair is missing from the rebuilt registry. Every
+    refusal but the last happens BEFORE the rollback, so such a refused resume has
+    deleted nothing.
+
+    Notes
+    -----
+    [1] The manifest recorded `input_structure_sha256` from the start, and nothing read
+        it back: the same config resumed on a different geometry passed every check and
+        continued one run's evidence from another run's structure.
+    [2] Why a snapshot, and why at the microstate boundary. The rollback used to take
+        network.json as it stood and keep every attempt it referenced. But publish()
+        runs after EVERY trial, so a reaction or ts candidate found mid-scan is on disk
+        before its scan is; those rows survived, the rows around them did not, the
+        rebuilt record list had holes, and the next trial id collided with a kept
+        directory (killed after 4 trials of the double-well demo: FileExistsError on
+        t000002). And the queue on disk never holds the microstate being searched --
+        it was popped before its first trial -- so that microstate's remaining
+        directions were silently dropped. The one moment the in-memory state is
+        entirely on disk, queue included, is just before the pop; restarting the
+        microstate there costs its trials and is the only restart that replays the
+        same direction seed. Counters come from the snapshot, not from counting
+        `paths/`: climb and continuation directories are written before their scan is
+        published, so counting them spent budget on discarded work.
     """
     network_path = output / "network.json"
     if not network_path.exists():
         raise FileNotFoundError(f"resume needs {network_path}")
-    network = json.loads(network_path.read_text(encoding="utf-8-sig"))
-    if network.get("status") != "running":
+    status = json.loads(network_path.read_text(encoding="utf-8-sig")).get("status")
+    if status != "running":
         raise ValueError(
-            f"resume needs a mid-run network (status 'running'); this one is "
-            f"{network.get('status')!r}"
+            f"resume needs a mid-run network (status 'running'); this one is {status!r}"
+        )
+    point_path = output / "resume_point.json"
+    if not point_path.exists():
+        raise ValueError(
+            "resume refused: no resume_point.json -- the run died before its first "
+            "microstate was searched, or was written by an implementation without one"
         )
     manifest = json.loads((output / "config.json").read_text(encoding="utf-8-sig"))
     # JSON round-trips tuples as lists, so compare through the same serialisation
     # rather than letting the container types veto an identical config
     if json.loads(json.dumps(cfg.to_dict())) != manifest.get("config"):
         raise ValueError("resume refused: config.json differs from the supplied config")
+    # [1] fail closed: a manifest without the hash cannot vouch for the input either
+    if manifest.get("input_structure_sha256") != input_sha256:
+        raise ValueError(
+            "resume refused: input_structure_sha256 differs from the supplied structure"
+        )
     source_hash = hashlib.sha256()
     for path in sorted(Path(__file__).parent.glob("*.py")):
         source_hash.update(path.name.encode())
@@ -313,18 +380,12 @@ def _rebuild_for_resume(output, cfg):
             "across implementations is a mixed batch"
         )
 
-    keep = set()
-    for scan in network.get("amplitude_scans") or []:
-        keep.update(sample["attempt"] for sample in scan.get("samples") or [])
-    keep.update(candidate["attempt"] for candidate in network.get("ts_candidates") or [])
-    keep.update(
-        withheld["attempt"]
-        for withheld in network.get("withheld_candidates") or []
-        if withheld.get("attempt")
-    )
-    for edge in network.get("reactions") or []:
-        keep.update(edge.get("attempts") or [])
-        keep.update(c.get("seed_attempt") for c in edge.get("continuations") or [])
+    # [2] roll back to the snapshot, by count
+    point = json.loads(point_path.read_text(encoding="utf-8-sig"))
+    network = point["network"]
+    attempts = point["attempts"]
+    saddle_searches = point["saddle_searches"]
+    continuations = point["continuations"]
 
     records, lines, dropped_rows = [], [], 0
     jsonl = output / "attempts.jsonl"
@@ -332,12 +393,16 @@ def _rebuild_for_resume(output, cfg):
         for line in jsonl.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
-            record = json.loads(line)
-            if record.get("attempt_id") in keep:
-                records.append(record)
+            if len(records) < attempts:
+                records.append(json.loads(line))
                 lines.append(line)
             else:
                 dropped_rows += 1
+    if len(records) != attempts:
+        raise ValueError(
+            f"resume refused: resume point counts {attempts} attempts, "
+            f"attempts.jsonl holds {len(records)}"
+        )
     if dropped_rows:
         jsonl.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
 
@@ -348,12 +413,12 @@ def _rebuild_for_resume(output, cfg):
         for entry in sorted(trials_dir.iterdir()):
             name = entry.name
             if len(name) == 7 and name.startswith("t") and name[1:].isdigit():
-                if name not in keep:
+                if int(name[1:]) >= attempts:
                     shutil.rmtree(entry)
                     deleted.append(name)
             elif name.startswith("c") and "s" in name:
                 # committor shots: c###b##s#### -- the leading number is the scan
-                # index, so anything at or past the published boundary is in flight
+                # index, so anything at or past the snapshot's scan count is in flight
                 try:
                     scan_index = int(name[1:].split("b", 1)[0])
                 except ValueError:
@@ -362,10 +427,43 @@ def _rebuild_for_resume(output, cfg):
                     shutil.rmtree(entry)
                     deleted.append(name)
 
-    registry = Registry.from_network(network, output, cfg)
+    published_ts = {c["id"] for c in network.get("ts_candidates") or []}
+    deleted_paths = []
     paths_dir = output / "paths"
-    saddle_searches = len(list(paths_dir.glob("climb*"))) if paths_dir.exists() else 0
-    continuations = len(list(paths_dir.glob("continuation*"))) if paths_dir.exists() else 0
+    if paths_dir.exists():
+        for entry in sorted(paths_dir.iterdir()):
+            name = entry.name
+            for prefix, published in (
+                ("climb", saddle_searches),
+                ("continuation", continuations),
+            ):
+                if name.startswith(prefix) and name[len(prefix) :].isdigit():
+                    if int(name[len(prefix) :]) > published:
+                        shutil.rmtree(entry)
+                        deleted_paths.append(f"paths/{name}")
+                    break
+            else:
+                # a descent directory is named by its ts id, which the rerun hands out
+                # again -- and PathRecorder appends
+                if name.startswith("ts") and name not in published_ts:
+                    shutil.rmtree(entry)
+                    deleted_paths.append(f"paths/{name}")
+    ts_dir = output / "ts_candidates"
+    if ts_dir.exists():
+        for entry in sorted(ts_dir.iterdir()):
+            if entry.name.split(".")[0].removesuffix("_mode") not in published_ts:
+                entry.unlink()
+                deleted_paths.append(f"ts_candidates/{entry.name}")
+    withheld_published = len(network.get("withheld_candidates") or [])
+    withheld_dir = output / "withheld"
+    if withheld_dir.exists():
+        for entry in sorted(withheld_dir.iterdir()):
+            index = entry.name.split("_", 1)[0]
+            if index.isdigit() and int(index) >= withheld_published:
+                entry.unlink()
+                deleted_paths.append(f"withheld/{entry.name}")
+
+    registry = Registry.from_network(network, output, cfg)
     node_by_id = {node.id: node for node in registry.nodes}
     pair_by_state = {
         state.id: (node, state) for node in registry.nodes for state in node.microstates
@@ -423,11 +521,13 @@ def _rebuild_for_resume(output, cfg):
         {
             "dropped_attempt_rows": dropped_rows,
             "deleted_trial_dirs": deleted,
+            "deleted_path_entries": deleted_paths,
             "rebuilt_records": len(records),
             "queue_length": len(queue),
             "meaning": (
-                "rollback to the last published scan boundary; every deletion is "
-                "named here because it is the only place resume touches written data"
+                "rollback to resume_point.json, the last microstate boundary; every "
+                "deletion is named here because it is the only place resume touches "
+                "written data"
             ),
         },
     )
@@ -722,14 +822,15 @@ class ReactionSearch:
 
         `resume=True` continues a run whose process died mid-flight (network.json
         status "running" -- the exception handler's "partial"/"failed" snapshots are
-        NOT resumable: they record a reason). Three hard preconditions, any failure of
+        NOT resumable: they record a reason). Four hard preconditions, any failure of
         which refuses (PLAN item 6.3): the network exists and is mid-run; the config is
-        the same object; the implementation fingerprint is the same -- a resume across
-        implementations is a mixed batch, and this project has retired one of those
-        already. Work in flight when the process died is rolled back to the last
-        published scan boundary: trials after it are deleted from attempts.jsonl and
-        disk, and every deletion is named in resume.json (kept OUTSIDE network.json so
-        the byte-identical acceptance is even stateable).
+        the same object; the input structure is the same one the manifest hashed; the
+        implementation fingerprint is the same -- a resume across implementations is a
+        mixed batch, and this project has retired one of those already. Work in flight
+        when the process died is rolled back to the last published scan boundary:
+        trials, climbs, continuations and descents after it are deleted from
+        attempts.jsonl and disk, and every deletion is named in resume.json (kept
+        OUTSIDE network.json so the byte-identical acceptance is even stateable).
 
         Notes
         -----
@@ -761,7 +862,7 @@ class ReactionSearch:
         atoms = _stamped_with_charge(atoms, cfg)
         output = Path(output)
         schedules = {}
-        resumed = _rebuild_for_resume(output, cfg) if resume else None
+        resumed = _rebuild_for_resume(output, cfg, structure_hash(atoms)) if resume else None
         if resumed is None and output.exists() and any(output.iterdir()):
             raise FileExistsError(f"Output must be a new or empty directory: {output}")
         if resumed is None:
@@ -1252,10 +1353,15 @@ class ReactionSearch:
                     to the second, and is a reaction with a self-loop.
                 """
                 ends, admissions = [], []
+                # One recorder for both sides. It was one per side, each counting frames
+                # from 0 into the same descent.extxyz, so the minus side's first write
+                # (append=False) erased the plus side's geometry; descent.jsonl, which
+                # only ever appends, kept both. Found 2026-09-26: every saddle descent on
+                # disk held the minus branch alone.
+                descent = PathRecorder(output / "paths" / ts_entry["id"], cfg, "descent")
                 for sign in (1, -1):
                     entry = {"sign": sign}
                     # [1] local connectivity, one ridge at a time
-                    descent = PathRecorder(output / "paths" / ts_entry["id"], cfg, "descent")
                     descent.context = {"sign": sign}
                     endpoint, checked, relays = descend_saddle(
                         saddle,
@@ -1842,6 +1948,18 @@ class ReactionSearch:
             if cfg.direction_mode == "exhaustive":
                 _refuse_unaffordable_enumeration(atoms, cfg)
             while queue and len(records) < cfg.max_trials:
+                # The resume point (see _rebuild_for_resume [2]): the last moment the
+                # whole in-memory state is on disk, queue still holding this microstate.
+                publish()
+                atomic_json(
+                    output / "resume_point.json",
+                    {
+                        "attempts": len(records),
+                        "saddle_searches": saddle_searches,
+                        "continuations": continuations,
+                        "network": network,
+                    },
+                )
                 node, state = queue.popleft()
                 allowed, blocked = registry.may_search(node, state)
                 if not allowed:
@@ -2019,6 +2137,9 @@ class ReactionSearch:
                             "admission": r["admission"],
                             "target": r["target"],
                             "target_microstate": r["target_microstate"],
+                            **dict(
+                                zip(("outcome", "outcome_reason"), _sample_outcome(r, state.id))
+                            ),
                         }
                         for r in observed
                     ]
@@ -2038,7 +2159,13 @@ class ReactionSearch:
                     # Gated OFF by default: every shot is a full trial's budget, and
                     # b04's negative side is coverage-limited, not statistics-limited.
                     # "other" is counted, never folded into A or B -- a shot that did
-                    # not terminate says nothing about p_B.
+                    # not terminate says nothing about p_B. With committor_entry_steps > 0
+                    # the shot ends on first entry into A's or B's graph and is judged by
+                    # that side (docs/P1_COMMITTOR_FIRST_ENTRY_PROTOCOL.md, frozen
+                    # 2026-09-25): fixed length moved P1's p_B with t_free. The quench from
+                    # the entry geometry is the protocol's check -- a disagreement is
+                    # counted, never a re-judgement. Endpoints that share one graph (a
+                    # torsion window) cannot be told apart by it and keep the fixed rule.
                     if cfg.committor_shots > 0 and scan["local_brackets"]:
                         for bracket_index, bracket in enumerate(scan["local_brackets"]):
                             at_high = next(
@@ -2061,18 +2188,56 @@ class ReactionSearch:
                                     "reason": "no_ridge_frame",
                                 }
                                 continue
+                            target = bracket.get("target_microstate")
+                            first_entry, shot_cfg, termination = None, cfg, "fixed_t_free"
+                            if cfg.committor_entry_steps > 0:
+                                target_state = next(
+                                    (
+                                        s
+                                        for n in registry.nodes
+                                        for s in n.microstates
+                                        if s.id == target
+                                    ),
+                                    None,
+                                )
+                                graphs = {
+                                    side: frozenset(
+                                        encode(
+                                            geometry.structure,
+                                            cfg.bond_scale,
+                                            active=cfg.active_atoms,
+                                        ).edges
+                                    )
+                                    for side, geometry in (("A", state), ("B", target_state))
+                                    if geometry is not None
+                                }
+                                if len(set(graphs.values())) == 2:
+                                    first_entry = {
+                                        "graphs": graphs,
+                                        "k": cfg.committor_entry_steps,
+                                    }
+                                    shot_cfg = replace(
+                                        cfg, response_steps=cfg.committor_max_steps
+                                    )
+                                    termination = "first_entry"
+                                else:
+                                    termination = (
+                                        "fixed_t_free:endpoints_share_one_graph"
+                                        if target_state is not None
+                                        else "fixed_t_free:no_target_microstate"
+                                    )
                             shots = shoot(
                                 frame,
                                 probes[0],
                                 physical_factory,
-                                cfg,
+                                shot_cfg,
                                 output,
                                 cfg.committor_shots,
                                 cfg.seed + 1009 * len(records),
                                 prefix=f"c{len(network['amplitude_scans']):03d}b{bracket_index:02d}s",
+                                first_entry=first_entry,
                             )
-                            target = bracket.get("target_microstate")
-                            reached_a = reached_b = other = 0
+                            reached_a = reached_b = other = mismatch = 0
                             # Where the "other" shots actually went. Without this the
                             # count is a dead end: "other 16" cannot distinguish a third
                             # basin from a quench that never terminated from a judging
@@ -2088,13 +2253,31 @@ class ReactionSearch:
                                 # reads the registry instead of writing to it: a probe
                                 # that is never a criterion must not enter the network.
                                 landed = None
-                                if record["status"] == "completed":
+                                # the entry check quenches whatever the free tail did;
+                                # the fixed rule keeps its completed-only reading
+                                judged = (
+                                    outcome.endpoint is not None
+                                    if first_entry is not None
+                                    else record["status"] == "completed"
+                                )
+                                if judged:
                                     _, landed = registry.identify(outcome.endpoint)
                                     landed = landed.id if landed is not None else None
                                 record["committor_landed_microstate"] = landed
                                 bucket = landed or f"unidentified:{record['status']}"
                                 landings[bucket] = landings.get(bucket, 0) + 1
-                                if landed is not None and landed == state.id:
+                                if first_entry is not None:
+                                    side = (record.get("first_entry") or {}).get("side")
+                                    if side == "A":
+                                        reached_a += 1
+                                    elif side == "B":
+                                        reached_b += 1
+                                    else:
+                                        other += 1
+                                    expected = {"A": state.id, "B": target}.get(side)
+                                    if expected is not None and landed != expected:
+                                        mismatch += 1
+                                elif landed is not None and landed == state.id:
                                     reached_a += 1
                                 elif (
                                     landed is not None
@@ -2115,14 +2298,40 @@ class ReactionSearch:
                                 "reached_B": reached_b,
                                 "other": other,
                                 "landings": dict(sorted(landings.items())),
-                                "p_B": p_b,
+                                "termination": termination,
+                                "p_B_given_AB": p_b,
+                                # p_B is conditional on reaching A or B; with a third
+                                # basin or unterminated shots it is NOT the committor,
+                                # so its denominator and the excluded share are stated
+                                "p_B_conditioned_on": "reached_A or reached_B",
+                                "other_fraction": other / len(shots) if shots else None,
+                                # the measured drift, not "passed the gate": the gate
+                                # is a guard at 0.1 eV/atom, not an accuracy statement
+                                "max_nve_drift_eV_atom": max(
+                                    (
+                                        o.record.get("max_nve_drift_eV_atom") or 0.0
+                                        for o in shots
+                                    ),
+                                    default=None,
+                                ),
                                 "wilson_95": list(wilson) if wilson else None,
+                                **(
+                                    {
+                                        "entry_steps": cfg.committor_entry_steps,
+                                        "max_steps": cfg.committor_max_steps,
+                                        "entry_quench_mismatch": mismatch,
+                                    }
+                                    if first_entry is not None
+                                    else {}
+                                ),
                                 "ensemble": "maxwell-boltzmann",
                                 "temperature_K": cfg.temperature_K,
                                 "meaning": (
                                     "independent probe, model report only, never a "
                                     "criterion (decision 3, 2026-09-20); 'other' shots "
-                                    "are excluded from p_B's denominator and reported"
+                                    "are excluded from p_B_given_AB's denominator and "
+                                    "reported; under first_entry, other = not entered by "
+                                    "max_steps or rejected by a gate"
                                 ),
                             }
                             log.info(

@@ -6,6 +6,8 @@ closed), shots must differ by seed and be reproducible, and the Wilson interval 
 reproduce the number the project already quotes (16/16 -> lower bound 0.8064).
 """
 
+import json
+
 import numpy as np
 import pytest
 
@@ -111,10 +113,18 @@ def test_committor_shots_defaults_off_and_validates():
         SearchConfig(committor_shots=-1)
 
 
-def test_brackets_carry_a_committor_record_when_shots_are_enabled(tmp_path):
+# (0.1, 0.9) for the first-entry case: with the fixed-rule amplitudes, refinement ends
+# the only window on a transient crossing (0.600), which names no B to enter; (0.1, 0.9)
+# still refines twice and ends on a confirmed product (measured 2026-09-26).
+@pytest.mark.parametrize(
+    "entry_steps, amplitudes", [(0, (0.1, 0.3, 0.7, 1.0)), (10, (0.1, 0.9))]
+)
+def test_brackets_carry_a_committor_record_when_shots_are_enabled(
+    tmp_path, entry_steps, amplitudes
+):
     """End to end on the analytic double well: the record's shape and its arithmetic.
 
-    Each bracket gets {shots, reached_A, reached_B, other, p_B, wilson_95, ...}; the
+    Each bracket gets {shots, reached_A, reached_B, other, p_B_given_AB, wilson_95, ...}; the
     three counters add up to the shot count; other is never folded into p_B's
     denominator. The committor lands on the bracket (model report only), and with
     shots disabled nothing appears at all.
@@ -124,11 +134,13 @@ def test_brackets_carry_a_committor_record_when_shots_are_enabled(tmp_path):
     config = HOT.__class__(
         **{
             **HOT.to_dict(),
-            "geometry_amplitudes_A": (0.1, 0.3, 0.7, 1.0),
+            "geometry_amplitudes_A": amplitudes,
             "response_steps": 20,
             "max_trials": 40,
             "refinement_steps": 2,
             "committor_shots": 3,
+            "committor_entry_steps": entry_steps,
+            "committor_max_steps": 200,
         }
     )
     network = ReactionSearch(double_well_factory, config).run(demo_atoms(), tmp_path / "run")
@@ -144,9 +156,30 @@ def test_brackets_carry_a_committor_record_when_shots_are_enabled(tmp_path):
         assert record["temperature_K"] == config.temperature_K
         terminated = record["reached_A"] + record["reached_B"]
         if terminated:
-            assert record["p_B"] == pytest.approx(record["reached_B"] / terminated)
+            assert record["p_B_given_AB"] == pytest.approx(record["reached_B"] / terminated)
         else:
-            assert record["p_B"] is None
+            assert record["p_B_given_AB"] is None
+        # bonded vs dissociated ends have different graphs, so entry applies wherever
+        # the bracket names its B; a window whose high end never confirmed a product
+        # has no B to enter and keeps the fixed rule, saying why
+        if not entry_steps:
+            expected = "fixed_t_free"
+        elif bracket.get("target_microstate") is not None:
+            expected = "first_entry"
+        else:
+            expected = "fixed_t_free:no_target_microstate"
+        assert record["termination"] == expected
+        if expected == "first_entry":
+            assert record["entry_steps"] == entry_steps
+            assert 0 <= record["entry_quench_mismatch"] <= terminated
+        else:
+            assert "entry_quench_mismatch" not in record
+        assert record["p_B_conditioned_on"] == "reached_A or reached_B"
+        assert record["other_fraction"] == pytest.approx(record["other"] / 3)
+        assert record["max_nve_drift_eV_atom"] >= 0.0
+    if entry_steps:
+        used = [b for b in brackets if b["committor"]["termination"] == "first_entry"]
+        assert used, "no bracket named its B; the first-entry path went unexercised"
 
 
 def test_a_shot_that_terminates_is_judged_a_basin_not_other(tmp_path):
@@ -194,3 +227,94 @@ def test_a_shot_that_terminates_is_judged_a_basin_not_other(tmp_path):
             "judging reading a key nothing sets, not of a potential without basins; "
             f"landings were {record['landings']}"
         )
+
+
+def _barrier_frame():
+    """C2 on the double-well barrier top (r = 1.8), where the bond graph is undecided."""
+    atoms = demo_atoms()
+    atoms.positions = [[-0.9, 0, 0], [0.9, 0, 0]]
+    atoms.calc = double_well_factory()
+    atoms.get_potential_energy()
+    return atoms
+
+
+def _end_graphs(config):
+    from prrs.state import encode
+
+    graphs = {}
+    for side, r in (("A", 1.2), ("B", 2.4)):
+        atoms = demo_atoms()
+        atoms.positions = [[-r / 2, 0, 0], [r / 2, 0, 0]]
+        graphs[side] = frozenset(encode(atoms, config.bond_scale).edges)
+    assert graphs["A"] != graphs["B"]
+    return graphs
+
+
+def _offline_entry(directory, graphs, k):
+    """The frozen rule applied afterwards to a full-length run, every step saved."""
+    rows = [json.loads(line) for line in (directory / "observations.jsonl").open()]
+    free = [r for r in rows if r["phase"] == "free"]
+    assert [r["step"] for r in free] == list(range(1, len(free) + 1)), "every step saved"
+    run, last = 0, None
+    for row in free:
+        edges = frozenset(tuple(e) for e in row["edges"])
+        label = next((side for side, g in graphs.items() if edges == g), None)
+        run = run + 1 if label is not None and label == last else int(label is not None)
+        last = label
+        if run >= k:
+            return label, row["step"]
+    return None, None
+
+
+def _free_steps(directory):
+    rows = [json.loads(line) for line in (directory / "observations.jsonl").open()]
+    return max(r["step"] for r in rows if r["phase"] == "free")
+
+
+@pytest.mark.parametrize("k", [5, 20])
+def test_stopping_on_first_entry_matches_the_rule_applied_afterwards(tmp_path, k):
+    """Protocol stage 2's requirement, on the analytic well: same seed, same verdict.
+
+    One run stops at entry; the other runs the full length with every step saved and
+    the rule is applied afterwards. Side and entry step must agree, and the early
+    run's free segment must end exactly at that step.
+    """
+    config = HOT.__class__(**{**HOT.to_dict(), "response_steps": 400, "sample_interval": 1})
+    graphs = _end_graphs(config)
+    frame = _barrier_frame()
+    entry = {"graphs": graphs, "k": k}
+    (stopped,) = shoot(
+        frame,
+        _probe(),
+        double_well_factory,
+        config,
+        tmp_path / "stop",
+        1,
+        31,
+        first_entry=entry,
+    )
+    (full,) = shoot(frame, _probe(), double_well_factory, config, tmp_path / "full", 1, 31)
+    side, step = _offline_entry(tmp_path / "full" / "trials" / "shot0000", graphs, k)
+    assert side is not None, "the fixture must enter; otherwise this compares nothing"
+    assert stopped.record["first_entry"]["side"] == side
+    assert stopped.record["first_entry"]["step"] == step
+    assert _free_steps(tmp_path / "stop" / "trials" / "shot0000") == step
+    assert "first_entry" not in full.record, "off by default: the record is unchanged"
+
+
+def test_a_shot_that_never_enters_runs_to_the_cap_uncommitted(tmp_path):
+    config = HOT.__class__(**{**HOT.to_dict(), "response_steps": 60})
+    entry = {"graphs": _end_graphs(config), "k": 10**6}
+    (outcome,) = shoot(
+        _barrier_frame(),
+        _probe(),
+        double_well_factory,
+        config,
+        tmp_path / "s",
+        1,
+        31,
+        first_entry=entry,
+    )
+    assert outcome.record["first_entry"]["side"] is None
+    assert outcome.record["first_entry"]["step"] is None
+    assert _free_steps(tmp_path / "s" / "trials" / "shot0000") == 60
