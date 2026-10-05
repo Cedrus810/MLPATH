@@ -86,13 +86,13 @@ config = SearchConfig(
     max_trials=20,
     refinement_steps=2,
 )
-ReactionSearch(double_well_factory, config).run(demo_atoms(), sys.argv[1])
+ReactionSearch(double_well_factory, config, calculator_metadata={metadata!r}).run(demo_atoms(), sys.argv[1])
 """
 
 
-def _kill_after(tmp_path, trial_limit, climb_limit=None, name="killed"):
+def _kill_after(tmp_path, trial_limit, climb_limit=None, name="killed", metadata=None):
     script = tmp_path / "child.py"
-    script.write_text(CHILD.format(root=str(ROOT)), encoding="utf-8")
+    script.write_text(CHILD.format(root=str(ROOT), metadata=metadata), encoding="utf-8")
     output = tmp_path / name
     subprocess.run(
         [
@@ -107,6 +107,39 @@ def _kill_after(tmp_path, trial_limit, climb_limit=None, name="killed"):
     )
     assert (output / "network.json").exists()
     return output
+
+
+def test_resume_refuses_a_different_pes_before_rollback(tmp_path):
+    from prrs.calculators import DoubleWell
+
+    class DifferentPES(DoubleWell):
+        def calculate(self, *args, **kwargs):
+            super().calculate(*args, **kwargs)
+            self.results["energy"] *= 2
+            self.results["forces"] *= 2
+
+    killed = _kill_after(tmp_path, trial_limit=4)
+    before = {p: p.read_bytes() for p in killed.rglob("*") if p.is_file()}
+    with pytest.raises(ValueError, match="calculator"):
+        ReactionSearch(DifferentPES, _config()).run(demo_atoms(), killed, resume=True)
+    assert {p: p.read_bytes() for p in killed.rglob("*") if p.is_file()} == before
+
+
+def test_resume_refuses_a_checkpoint_replaced_under_the_same_name(tmp_path):
+    from prrs.cli import factory_metadata
+
+    model = tmp_path / "checkpoint.model"
+    model.write_bytes(b"original checkpoint")
+    metadata = factory_metadata("prrs.calculators:double_well_factory", {"model": str(model)})
+    killed = _kill_after(tmp_path, trial_limit=4, metadata=metadata)
+    model.write_bytes(b"replacement checkpoint")
+    current = factory_metadata("prrs.calculators:double_well_factory", {"model": str(model)})
+    before = {p: p.read_bytes() for p in killed.rglob("*") if p.is_file()}
+    with pytest.raises(ValueError, match="calculator"):
+        ReactionSearch(double_well_factory, _config(), current).run(
+            demo_atoms(), killed, resume=True
+        )
+    assert {p: p.read_bytes() for p in killed.rglob("*") if p.is_file()} == before
 
 
 # 6 kills between microstates -- the only point the original acceptance exercised.

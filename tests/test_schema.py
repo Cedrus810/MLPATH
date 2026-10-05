@@ -147,6 +147,7 @@ def patterns_of(network):
     return tuple(sorted({re.sub(r"\[\w+\]", "[*]", p) for p in validate(network)}))
 
 
+@pytest.mark.skipif(not RUNS.is_dir(), reason="historical runs corpus is not distributed")
 def test_anchor_every_network_on_disk_matches_the_ledger_or_is_clean():
     seen = 0
     for path in sorted(RUNS.glob("*/network.json")) + sorted(RUNS.glob("*/*/network.json")):
@@ -223,6 +224,7 @@ def test_read_network_matches_plain_json(tmp_path):
     assert read_network(path)["status"] == "running"
 
 
+@pytest.mark.skipif(not RUNS.is_dir(), reason="historical runs corpus is not distributed")
 def test_ledger_covers_only_existing_files():
     for relative in EXPECTED:
         assert (RUNS / relative).exists(), relative

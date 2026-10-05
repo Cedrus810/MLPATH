@@ -240,6 +240,27 @@ def test_fractions_are_bounded_above():
             SearchConfig(**{name: 1.0})
 
 
+def test_charge_and_multiplicity_must_be_integers_when_set():
+    """The identity layer and the potential must receive the same charge.
+
+    `network.Registry` hands `total_charge` to `chemical_key` as given, while
+    `_stamped_with_charge` passes it through `int()` before the potential sees it. A
+    1.5 would therefore key the species as 1.5 and evaluate it as 1, and `True` would
+    silently become +1. Refused at construction, like every other integer field.
+    """
+    import pytest as _pytest
+    from prrs.config import SearchConfig
+
+    assert SearchConfig(charge_sensitive=True, total_charge=-1, multiplicity=1)
+    assert SearchConfig(charge_sensitive=True, total_charge=None, multiplicity=None)
+    for value in (1.5, -1.0, True, "1"):
+        with _pytest.raises(ValueError, match="total_charge"):
+            SearchConfig(charge_sensitive=True, total_charge=value)
+    for value in (2.0, 0, -1, False, True, "1"):
+        with _pytest.raises(ValueError, match="multiplicity"):
+            SearchConfig(multiplicity=value)
+
+
 def test_the_declared_charge_reaches_the_structure_or_the_run_refuses():
     """Two statements about the same charge may not disagree, and may not both be absent.
 
