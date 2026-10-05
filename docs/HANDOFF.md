@@ -1,9 +1,11 @@
 # PRRS — 交接文档
 
-**最后更新** 2026-09-05（三项正确性修复之后；接手请先读 §12 与 `DECISIONS_PENDING.md`）· 环境 `openmm_dev` · 工作目录 `/home/ruigengji/MLPATH`
-（不是 git 仓库；`implementation_sha256` 是对 `src/prrs/*.py` 的哈希，是唯一的代码指纹）
+**阅读入口更新 · 2026-10-03**：先读 [MLPATH 项目总览](PROJECT_OVERVIEW.md) 和 [文档索引](README.md)。本文保留项目规矩（§2）、历史结论与交接沿革；各节“现在/下一步”对应写作时期。当前跨模块进度统一看总览，实验协议与裁决仍引用原件。
 
-**当前实现 `5b69dfed41c4bdb2`**。别手抄这个数 —— 用 `make hash`
+**最后更新** 2026-09-30（connect 测试台 T-绕路变体落地：`ProtonRelayGated`，指纹 → **`ebff4ec0`**；同日较早：connect 模式 G4 落地：R→P 路径分 observed / any_evidence 两视图记录，指纹 → `2cbcaec8`；此前 2026-09-28：续跑丢失方向停止原因的主线 bug 修复，指纹 → `bb525621`；同日较早：connect 模式 G2 = 干预 I-a 落地：队列按到产物的 d 出队，指纹 → `5487b5f1`；同日较早：connect 模式 G3 = 干预 I-b 落地：方向按到产物的键差提前，指纹 → `47803359`；同日较早：性能审查 PERF-22 落地：`state.encode` 向量化，指纹 → `22d90bd9`；同日较早：connect 测试台 T0 的 T-链变体落地：`calculators.ProtonRelay`，指纹 → `1098bcc8`；同日较早：性能审查 PERF-03a 落地：`symmetric_rmsd` 不再逐群元素拷贝 Atoms，b05 上 159 → 79 ms/次，指纹 → `f03de1bf`；同日较早：connect 模式 G1 落地：产物只记录不路由，指纹 → `06d6b071`，计划见 `PLAN_2026-09-28.md`；同日较早：性能审查 PERF-02 落地：`audit_basin` 只建一个 calculator，指纹 → `a13da932`；同日 PERF-11 `prrs_watch` 不进指纹；清单与协议见 `REVIEW_2026-09-28.md`；此前 2026-09-27：首次进入 committor 主线 A 完成：确认批四窗口全过 + 生产实现逐发等价，指纹 → `b601b124`；随后 C1 样本分类 + D1 下降几何，指纹 → `99edddde`；2026-09-27 电荷 / 多重度整数校验，指纹 → `b2c05652`；支线 B0 / B2 / C2 / C3 已跑，新决策 R8 待定；此前 2026-09-25：外部审查核对 + 续跑回滚重做 + 四处小修，指纹 → `ae47c4d9`；**正文见 `REVIEW_2026-09-24.md`，交接见 §15**；此前 2026-09-24：committor 射击二次扰动修复 + `runs/p1_committor2` 重跑：09-22 的「ridge 代理有偏」被推翻；**正文见 `DONE_LOG.md` 末节**；此前 2026-09-22：kasuga02 实跑队列七步全执行 + committor 判归修复；接手请先读 `DONE_LOG.md` 末两节与 `DECISIONS_PENDING.md` 的 2026-09-22 收口；文档索引见 `docs/README.md`）· 环境 `openmm_dev` · 工作目录 `/home/ruigengji/MLPATH`
+（~~不是 git 仓库~~ 是 git 仓库，`main`；但 2026-09-25 之前工作区长期大量未提交，所以 `implementation_sha256` —— 对 `src/prrs/*.py` 的哈希 —— 仍是**判定用**的代码指纹）
+
+**当前实现 `ebff4ec05fbc0c3d`**（2026-09-30）。别手抄这个数 —— 用 `make hash`
 （`scripts/implementation_hash.py`）现算，它和 manifest 用的是同一个算法。
 这一行以前是手抄的，抄完就过期了：它写着 `9c13fdb5` 时树已经是 `dba26be3`，中间隔了两轮修复。
 
@@ -23,6 +25,37 @@
 | `6b372359` | 2026-09-04 | 未知记为未知（`locked_bond_parity` 为 `None` 而非 `[]`）—— **本轮唯一的身份迁移** |
 | `69d53501` | 2026-09-04 | 失败原因移出哈希；`withheld_candidates` 检索路径 |
 | `5b69dfed` | 2026-09-05 | **三项正确性修复**（见 §12）：验证不完整不再当通过 · 候选出口统一 · 失败落盘独立于网络快照 |
+| `d7d53219` | 2026-09-09 | **扰动交付**：bond 位移改刚体片段平移（`internal.translate_fragments`），torsion 的 `rotate_fragment` 终于有了 bond 的对应物；环上键与同碎片 1–3 对仍走 continuation |
+| `8418b82b` | 2026-09-09 | **bracket 高端派生字段**（REVIEW §7.3）：细化换掉高端后 `target_microstate` 不再留着 coarse 高端的值；`_bracket_high` 一处定义，不改搜索决策 |
+| `093bf311` | 2026-09-09 | **`free_bonds` 并集 fail-closed**（REVIEW §7.4）：另一侧测过同一根扭转而判的不是 free 时不再商掉它（`measured_bonds_of`）。该分支在语料里从未执行过，是预防不是修复 |
+| `5dc83ed4` | 2026-09-09 | **方向合同第 2/3 条**（用户裁决）：`candidate_id` 稳定 ID、`coverage_censored` / `censored_by` / `uncovered_ids` 进提案账本。只加记录字段，行为零改动 |
+| `fa15a829` | 2026-09-09 | **方向合同第 4/5 条**：`DirectionSchedule` 从 `run()` 抽出（只搬调度这一片，策略未改）· `direction_ledger` 两个单位各自自洽 · `direction_mode = sampled/exhaustive`，exhaustive 预算不足则**开跑前**拒绝 |
+| `7636cd82` | 2026-09-09 | 内层预算名归位（`inner_blocked`）：批中途被 `conformer_trials_per_microstate` 截断不再错记成泛化 `node_budget` · b04 判据 §5 口径收窄为「该微态在枚举提案基内的可采纳负记录」 |
+| `1b96d400` | 2026-09-09 | **bend 的刚体交付**（`rotate_about_vertex`）：两侧片段绕顶点各转 δ/2，非目标键变化 2e-16 Å。三种坐标至此都有精确刚体实现；同碎片非键对与 quench 预算两项**未做**，各自另议 |
+| `6b293d16` | 2026-09-09 | exhaustive 开跑前检查覆盖全部三道预算（b05 probe2 发现 `conformer_trials_per_microstate` 会绕过它） |
+| `460dd519` | 2026-09-09 | **自同构枚举改逐点回溯**（用户裁决：走剪枝不提限）：b05 的 1296 阶群从 2e6 候选 / 19.8 s 拿不到，变成 3889 nodes / 28 ms；permutation 集合与旧实现逐位相同、digest 零差异；预算单位改为 `search_nodes` |
+| `89f41c80` | 2026-09-09 | 运行级账本改为按 (微态, 方向) 对**求和**而非按 ID 取并（b04 probe4 抓到 28 ≠ 17+7）· 新增 `termination_detail.directions_dropped_by`：`termination` 只回答 trial 预算，别的预算按名另记 |
+| `c393da78` | 2026-09-13 | **三路审计落地**（P0 生成群闭包、P1-6 (0,π) 守卫、check.py 对齐、规矩 5 改写）· 商层置换不变性 fuzz · 谱提案 · 碎片刚体转动 · b04 冻结 + `runs/b04_frozen1` 首评 `observed_direct` |
+| `b4e92642` | 2026-09-20 | **PLAN 七决策落笔**（`DECISIONS_PENDING.md` 2026-09-20 收口）· **第 4 件 schema 显式化**（`schema.py` + `publish()` 记录 `schema_warnings` + CLI `--strict-schema` + runs/ 全量锚测试与漂移清单）· **P1-4 溢出拒建**（决策 7：`admit` 拒 `automorphism_budget`，不再拿 `[identity]` 当群） |
+| `1a6a2971` | 2026-09-20 | **第 6 件收尾**：resume 全件——三条硬前提、盘上重建（queue 落盘 / 计数器数 paths 目录 / schedules 逐向恢复）、scan 边界回滚记 resume.json、**npz sidecar 保位精确**；验收 = kill(os._exit)→续跑→与不中断孪生 network.json/attempts.jsonl 逐字节相同 |
+| `b1c4d440` | 2026-09-20 | **第 1 件正则标号全件**（`canonical.py` IR 引擎、`structural_key`、轨道取代色类：P1-3 关、P1-7 关、xfail 同次摘；先量 2136 帧零差异 ⇒ 免费）· 第 2 件 committor 机器+接线（T=0 拒绝、Wilson、bracket 记录；实跑排队 MACE 机）· 第 3 件证书机器+解析势链条（命题待批故恒盖 DRAFT 章）· 第 5 件 5.1/5.4/5.2(惰性)+测量脚本+5.0 协议 · 第 6 件 6.1/6.2（from_network 逐字段等价）· logging/max_depth 随手件 · **digest 全程零差异** |
+| `ec32bc3d` | 2026-09-21 | manifest 记 `host` · `make fmt` 全量（15 个文件自 09-13 漂出格式而每道门都绿）· `make check` 加 `fmt-check` |
+| `63be7064` | 2026-09-22 | **committor 判归修复**：`Registry.identify`（只读的 `key_of()["key"] → find_node → _match_microstate`）取代读 `record["target_microstate"]` —— 那个键只有扫描路径在 `admit` 之后才写，所以射击的 A/B 两个分支**在代码里不可达**，首次实跑四个 bracket 全报 `A 0 / B 0 / other 16`。另加 `landings`（每发落在哪个微态）。digest 零差异（committor 默认关，语料无此路径）· 正文见 `DONE_LOG.md` 末节 |
+| `4014c4b2` | 2026-09-23 | **committor 射击不再二次扰动**：`shoot` 把 ridge 帧交给 `run_trial`，后者又施加了一遍扫描的 `probes[0]`（0.15 Å 拉伸 +0.405/+0.491 eV 势能，或 0.3 eV kick），对 419 meV 的势垒。`run_trial(deliver=False)` 只留热动量，射击记录带 `probe_delivery`。digest 零差异 · 重跑 `runs/p1_committor2` 推翻 09-22 的「ridge 代理有偏」· 正文见 `DONE_LOG.md` 末节 |
+| `ae47c4d9` | 2026-09-24 | **续跑回滚重做**：旧回滚以 network.json 为边界、保留它引用的 attempt，而 `publish()` 每个 trial 后都跑 —— scan 中途 kill 后记录有洞、trial id 撞目录（kill@4 → `FileExistsError`），且在飞微态已出队、被静默丢掉。改为微态出队前写 `resume_point.json` 快照、按计数回滚（含 climb / continuation / descent / ts / withheld）· resume 核对 `input_structure_sha256` · `completeness.cover` 要求正交归一基底 · committor 记录加 `p_B_conditioned_on` / `other_fraction` / `max_nve_drift_eV_atom`。476 passed / 1 skipped，digest 零差异，变异检验五次全红（**本机 kasuga01**，见 §15）· 正文 `REVIEW_2026-09-24.md` |
+| `b601b124` | 2026-09-26 | **committor 首次进入（A5）**：`run_trial(first_entry=…)` 逐步计数、连续 k 步在 A / B 图上即停，之后原有 quench 就是入口核对；`shoot` 透传；配置 `committor_entry_steps`（k，0 = 关，默认）/ `committor_max_steps`（1280）；search 的 committor 分支按进入侧判，核对不一致只计数不改判，没有 B 或两端同图时退回固定规则并在 `termination` 写明；R1：`p_B` → `p_B_given_AB`。 kasuga02：`make check` 绿、digest 零差异 332 / 2136 / 4；变异检验两条都红（`>=`→`>` 进入步差一；删 `break` 跑满上限）；**真实数据核对** `runs/p1_first_entry_production_check`：生产路径重打 A3 的 200 发（同帧同 seed、提前停），**进入侧与进入步 200/200 相同、入口 quench 落点 200/200 相同**，约 23 min。 正文 `DONE_LOG.md` 末节 |
+| `99edddde` | 2026-09-26 | D1：鞍点双侧下降改用**一个** `PathRecorder` 管两支，帧计数连续，`descent.extxyz` 不再被第二支覆盖（此前历来只剩 minus 支的几何）。 C1：scan 每个样本加 `outcome`（returned / departed / ridge / transient / unresolved）与 `outcome_reason`（未定时的失败码或 `admission:…`），只记录不路由。 测试 `tests/test_scan_records.py`（双阱真实搜索里两支帧都在且与日志一一对应；各分类单测；端到端字段一致）。变异检验两条都红（D1：记录器挪回循环 → 帧数 ≠ 行数；C1：returned / departed 对调 → 两条测试红），脚本还原并核指纹 `99edddde`；变异检验在 **yayoi**（PBS 作业）上跑。未变异全量：**用户报告通过**（未贴 digest 行）。 |
+| `b2c05652` | 2026-09-27 | `SearchConfig`：`total_charge` 设了值必须是 `int`，`multiplicity` 设了值必须是 >= 1 的 `int`（`type(v) is int`，`bool` 也拒）。此前身份层（`network.Registry` → `chemical_key`）原样收下 `total_charge`，势能侧（`_stamped_with_charge`）取 `int()`：1.5 会以 1.5 记身份、以 1 算能量，`True` 静默成 +1。 测试 `test_charge_and_multiplicity_must_be_integers_when_set`，修复前先红（`DID NOT RAISE`）。本机（用户授权）：全量 484 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4。仓内配置（b04、b05、preflight）都是整数，不受影响。 |
+| `a13da932` | 2026-09-28 | **PERF-02**（`REVIEW_2026-09-28.md`）：`completeness.audit_basin` 整个审计只调一次 `factory()`，能量循环和 `membership` quench 共用同一个 calculator。此前每个覆盖点调两次，b04 审计（619 点）会重载模型约 1237 次。测试 `test_audit_builds_one_calculator`；变异检验：恢复旧实现后变红（`assert 14 == 1`）；新旧 audit 记录逐字节一致（解析三阱，d1 9 个样本、d2 37 个样本）。本机（用户授权，并已和同目录会话 mlpath-35 商量好先后）：`make check` 全绿，488 passed / 1 skipped，digest 零差异 332 / 2136 / 4。488 里另含 PERF-11 的 3 条新测试（`tests/test_prrs_watch.py`；`scripts/prrs_watch.py` 不进指纹；三个变异体全红）。 |
+| `06d6b071` | 2026-09-28 | **connect 模式 G1**（`PLAN_2026-09-28.md` §3，只记录不路由）：新模块 `product.py`；`ReactionSearch.run(product=…)` / CLI `search --product`。产物原子数或元素序列与反应物不一致、或反应物自同构群溢出，**开跑前拒绝、什么都不写**（K4，不做 MCS）；给了产物才写：manifest `product_structure_sha256`、`product.extxyz`、network 顶层 `product` 块、每节点 `product_compatible`（同 `Registry.key_of`）、每微态 `d_to_product`；续跑时产物不一致即拒（回滚之前）。**d 在 Aut(G_R) 下取最小**（K5 修订：Aut(G_P) 下取最小是恒等）。schema：出现 `product` 块则所有节点 / 微态字段必须齐。不给产物时逐字节不变。测试 `tests/test_product.py` 13 条（甲醇 → 甲醛 + H₂：换一个等价甲基 H 做反应 d 仍为 0；双阱端到端；续跑三种拒绝）。变异检验五条全红（去掉群最小 / 元素不一致放行 / 续跑不查产物 / schema 不查 d / 群溢出放行）。本机（用户授权）：全量 501 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4 |
+| `f03de1bf` | 2026-09-28 | **PERF-03a**（`REVIEW_2026-09-28.md`）：`chemistry.symmetric_rmsd` 直接置换坐标数组，不再对每个群元素做 `Atoms.copy` + `set_positions`；Kabsch 从 `state.aligned_rmsd` 抽成共用的 `centred_kabsch_rmsd`，算术逐位相同。先测后改：b05（|Aut| = 1296）上 159 → 79 ms/次，`free_aligned_symmetric_rmsd` 两次调用 7.66 → 4.05 s；改前冻结的判据是「每次调用降一半且结果逐位相同」，基准的全部结果（全体、active 子集、自由转子路径）逐位一致。余下的开销是每个群元素一次 SVD：批量 SVD 不保证逐位相同，没有做。测试 `test_symmetric_rmsd_is_the_relabelled_aligned_rmsd_without_copies`；变异检验：换回旧循环后变红（多出 24 次 copy）。本机：`make check` 全绿，502 passed / 1 skipped，digest 零差异 332 / 2136 / 4。 |
+| `1098bcc8` | 2026-09-28 | **connect 测试台 T0（T-链变体）**（`PLAN_2026-09-28.md` §2）：`calculators.ProtonRelay` / `proton_relay_factory` / `proton_relay_atoms(sides)`。F–C–O–Cl 平面反式锯齿、间距 3.0 Å（重原子互不成键），每个空隙一个质子，2³ 种排布即 8 个极小；R = 全左、P = 全右，沿单跳路径 d = 6→4→2→0。全部项只依赖距离 / 角 / 二面角（平移转动不变）；阱半径 = 0.8 × H–X 键截断（不重叠）。针对草稿测试台审出的四处缺陷设计：固定空间点阱 + tether、阱心在重原子核上、1.5 Å 间距使新键在旧阱内就形成、诱饵 / 桥原子不受力。原型实测：直链有 2 / 8 极小过不了 `confirm_minimum`（`trivial_mode_floor_above_tolerance`），锯齿全过。测试 `tests/test_relay_testbed.py` 9 条：力 = 解析梯度（有限差分 1e-7）、刚体不变、8 个极小全过 `confirm_minimum` 且 `chemical_key` 两两不同、零模恰为 6 个（二面角项由它守，`confirm_minimum` 容忍平扭转所以守不住）、d 数剩余跳数、每个空隙新键在势垒顶之后才形成。变异检验五条全红（去二面角 / 梯度漏顶点项 / 四原子同元素 / 间距 2.2 Å / 直骨架）。**T-诱饵、T-绕路两个变体与鞍点清单未做**。本机：全量 511 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4 |
+| `22d90bd9` | 2026-09-28 | **PERF-22**（`REVIEW_2026-09-28.md`）：`state.encode` 的逐对 Python 双循环改成向量化。hysteresis 因子仍是 1 ± h，数值和原来一样；`np.nonzero` 按行优先扫上三角，边的插入顺序与原循环相同，所以下游看到的集合迭代顺序也不变。先测后改：N=16 时每次 112 → 56 µs，N=22 时 188 → 68 µs，带 hysteresis 的 N=16 为 118 → 75 µs（只快 1.57 倍，没达到改前冻结的「快一倍」；plain 路径达到了）。在 2138 帧上（digest 语料加各 benchmark 的输入），plain、hysteresis、active 子集三种调用下的边集连同迭代顺序与旧实现完全一样。测试 `test_vectorised_encode_is_the_pairwise_rule_in_the_same_order`（以旧的逐对循环为参考实现，hysteresis 带两侧各一个原子对，并包含反向对和子集外的对）；三个变异体（去掉 1−h、1+h 写反、`triu` 取 k=0）全红。本机：`make check` 全绿，512 passed / 1 skipped，digest 零差异 332 / 2136 / 4。 |
+| `47803359` | 2026-09-28 | **connect 模式 G3 = 干预 I-b**（`PLAN_2026-09-28.md` §3）：配置 `connect_direction_priority`（默认关；开而无产物则开跑前拒绝）。开时每个微态按它到产物的键差（`ProductReference.key_difference`：在所有 d 最小的产物像上取并集）给方向重排：拉伸 B⁻ 里的键、压缩 B⁺ 里的对进 band −1，`propose` 的分配循环只在有键差时才走 (−1, 0, 1)，否则仍是 (0, 1) —— 这正是草稿的 bug（放进 band −1 而循环只走 0 / 1，想提前的方向一个都选不到）。**只在各族配额内重排、不增不减**：sampled 模式下键差方向仍可能被配额截掉（测试台 R 上 3 条 B⁻ 拉伸只选 2 条），此时 `uncovered_ids` 点名。提案账本记 `connect_priority_selected` 与 `connect_key_difference`，scan 的 `proposal.priority_reason` 记 `connect: B-/B+`。测试 `tests/test_connect_directions.py` 8 条（含 exhaustive 模式全部提前、甲醇三个等价甲基 H 的平局并集）。变异检验五条全红（草稿的 band 循环 / B⁻B⁺ 对调 / 无产物放行 / search 不传键差 / 平局只取第一像）。本机：全量 520 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4 |
+| `5487b5f1` | 2026-09-28 | **connect 模式 G2 = 干预 I-a**（`PLAN_2026-09-28.md` §3）：配置 `connect_queue_priority`（默认关；开而无产物则开跑前拒绝）。出队时取队列里 `d_to_product` 最小的微态、同 d 先入先出（`search._closest_first`）；**不剪枝**，更远的留在队列里。K3 未落笔，所以**无参数**：只按 d 排，相当于 K3 先验 λ→∞、不学习；「随观测更新」没做。每次选择记进 network 的 `connect_queue_order`（选中的微态、d、位置、当时全队列的 d），「每次都取最近」可从记录核对。队列仍按入队顺序落盘，规则在其上确定，续跑复现同样的选择（续跑测试见下一行的修复）。测试 `tests/test_connect_queue.py` 6 条；中途测试台上一次选择是从 [4, 2, 4, 4] 里取了 d = 2 的双跳态。变异检验四条全红（最远先 / 同 d 后入先出 / 只记录不改序 / 无产物放行）。本机：全量 526 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4。**同时发现主线原有续跑 bug**：已选中但从未交付的方向的停止原因只在内存里，续跑后记成 `unknown`（纯 discover 下在测试台上复现），另作一条干预修 |
+| `bb525621` | 2026-09-28 | **续跑丢失方向停止原因（主线原有 bug）**：方向调度在续跑时只从 scan 记录重建，而「已选中、预算截断前从未交付」的方向没有 scan 记录，它的原因（`never_offered`）只在内存里 —— 续跑后一律记成 `unknown`，`directions_dropped_by` 与两级 `direction_ledger` 都错。双阱续跑测试从来碰不到这类预算；connect 测试台的反应物会碰到（`conformer_trials_per_microstate` 截掉最后一个方向），纯 discover 下复现。修法：`resume_point.json` 里加 `unscanned_directions`（这些原因 + 从未交付任何方向的调度的提案），`_rebuild_for_resume` 注 [3] 读回；在 network.json 之外，所以任何运行发布的记录都不变。测试 `tests/test_resume_unscanned.py`：测试台上 discover / connect 两种各杀在第 36 个 trial 再续跑，network.json 与 attempts.jsonl 逐字节等于不中断的孪生运行。变异检验两条全红（不存 / 不读）。本机：全量 528 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4 |
+| `2cbcaec8` | 2026-09-30 | **connect 模式 G4：R→P 路径，只记录**（`PLAN_2026-09-28.md` §3）：`product.product_paths(network)`，给了产物的运行每次 publish 写 network 顶层 `product_paths`。两种视图**不合并**：`observed` 只走试验自己从源走到目标的有向边（`reactions[].attempts`），`any_evidence` 另加续行（`continuations`）与鞍点双侧下降的无向边（`ts_connected_channels`）；路径上每条边各自列出 attempts / continuations / ts。从 depth-0 根节点广度优先、邻居按节点 id 排序，同一网络同一路径；根节点不唯一则拒绝。没连上也是答案：`closest` 给 d 最小的节点。**终止条件（到达 P 即停）未做**，等 G4 落笔，仍跑满预算。schema：product 运行必须有 `product_paths`。测试 `tests/test_product_paths.py` 8 条（7 条纯网络 + 双阱端到端）。变异检验五条全红（两视图合并 / TS 边单向 / 平局反序 / publish 不写 / closest 取最远）。本机：全量 536 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4 |
+| `ebff4ec0` | 2026-09-30 | **connect 测试台 T0 的 T-绕路变体**：`calculators.ProtonRelayGated` / `proton_relay_gated_factory` / `proton_relay_gated_atoms(sides, gatekeeper_home)`。导线原样（先把 `ProtonRelay` 的三个内嵌项抽成模块级 `_spring` / `_angle` / `_dihedral` / `_well`，导线的能量与力**逐位不变**，对 8 个随机几何核过），再加 Br（接在 Cl 后面续锯齿）与第四个质子「看门者」（家在 Cl、外阱在 Br）；唯一的耦合项在看门者在家时把质子 5 穿越 C–O 空隙中点的势垒抬高 A = 1.5 eV。刚性扫描：门关 2.37 eV、门开 0.90 eV、看门者出 / 回 0.60–0.70 eV；最低势垒路径出去 → 质子 5 过 → 回来，**d 沿路 6, 4, 6, 4, 2, 0**，最高垒 0.92 eV。**第一版把看门者的家放在 C，d 沿路 6, 4, 4, 4, 2, 0 —— 绕路是 d 中性的**：反应物里看门者与质子 5 是同一个 C 上的两个 H，Aut(G_R) 交换它们，G1 的对称感知 d 把「一个 H 离开 C」也读成质子 5 的动作；家改到反应物里没有质子的 Cl，群平凡（阶 1）。测试 `tests/test_relay_detour.py` 7 条：力、刚体不变、16 个极小全过 `confirm_minimum` 且 key 两两不同、零模恰 6 个、门只在看门者在家时关、最便宜路径上 d 有上升且比强行过门便宜、看门者在外的态能量都更高。变异检验四条全红（去门 / 去 Br 二面角 / 门梯度漏 Cl 项 / 看门者偏好 Br）。本机：全量 543 passed / 1 skipped、fmt-check / lint 绿、digest 零差异 332 / 2136 / 4 |
 
 改 `src/prrs/` 前先跑 `make digest`（= `python docs/experiments/digest_regression.py`）
 （332 文件 / 2136 帧的 digest 黄金样本，不匹配即非零退出）。
@@ -452,11 +485,16 @@ RTX 5080      天花板 1.7×   （1→24 并发：单点 23.8→328 ms，聚合
 
 ## 9. 技术债
 
-- **manifest 不记 hostname**，只有内核串。跨主机判断运行状态靠它碰巧能用。
-  改它会改变 `implementation_sha256` —— P2 已冻结，**现在可以做了**。
+- ~~**manifest 不记 hostname**，只有内核串。跨主机判断运行状态靠它碰巧能用。
+  改它会改变 `implementation_sha256` —— P2 已冻结，**现在可以做了**。~~
+  **已做 2026-09-21**：`search.py` 的 manifest 新增 `"host": platform.node()`。
+  指纹如期移位（`1a6a297143deb645…` → `ec32bc3df5d2bf14…`），digest 零差异，
+  不影响续跑（`_rebuild_for_resume` 比的是 `config` 与 `implementation_sha256`）。
+  （2026-09-24 起还比 `input_structure_sha256`，并要求 `resume_point.json`，见 §15。）
+  记在 `env/BASELINE.md` 文首。
 - **扫描不可续跑。** `run` 拒绝非空目录，一次外部中断丢掉在飞的全部工作。
   要做需重建 registry 状态，而**接纳顺序会影响结果**，做错比不做更糟。
-- **这个目录不是 git 仓库。** 所以"两份实现只差记录层"这类判断**无法独立核验** ——
+- ~~**这个目录不是 git 仓库。**~~（已作废，见本节下文 2026-09-13 那条）所以"两份实现只差记录层"这类判断**无法独立核验** ——
   P2 的混合实现批次就是因此只能作废重跑。**建议接手后第一件事是 `git init`。**
 
   2026-09-04 又收到一次证据，而且比 P2 那次更难处理：`make hash --check` 报出
@@ -526,177 +564,13 @@ RTX 5080      天花板 1.7×   （1→24 并发：单点 23.8→328 ms，聚合
 
 ---
 
-## 10. 2026-09-04 工程化重构（`dba26be3` → `23179dea`，零行为改动）
+## 10–11. 2026-09-04 两轮记录（正文见 [ROUNDS.md](ROUNDS.md)）
 
-改的是代码长什么样，不是代码做什么。**验收标准是两条同时绿**：
-`pytest 224 passed, 1 skipped`（重构前 223，多的一条是新加的 `RATIONALE` 校验）
-与 `digest_regression.py` 的 `332 files, 2136 frames, 4 event pairs` **零差异**。
-每一步落盘前后都跑过这两条。
+- **10. 2026-09-04 工程化重构（`dba26be3` → `23179dea`，零行为改动）**
+- **11. 2026-09-04 QM 参照：冻结结论第一次被外部尺子量过**
 
-改动的机械性由 AST 层面证明，不是靠人读 diff：
-
-| 改动 | 怎么证明它是零行为的 |
-| --- | --- |
-| `config.py` 的 30 段字段说明搬到模块底部的 `RATIONALE` 表 | 去掉注释后 token 流逐个相同（1883 个）；注释里的每个词都还在文件里 |
-| 26 段 `"meaning"` 散文提成模块级常量 | 把常量代回去之后 **AST 完全相同** |
-| 39 段 ≥5 行的函数体内注释搬进 docstring 的 `Notes` 脚注 | 抹掉 docstring 之后 AST 完全相同；注释词零丢失 |
-| `ruff format`（line-length 96）+ `ruff check` 清零 | pytest + digest |
-
-**注意 digest 绿证明不了什么。** 它比对的是 `runs/` 里已有帧重算出来的 digest，
-所以它覆盖身份层（`chemical_key` / `event_key`）和几何，**不覆盖搜索编排**。
-上面四项改动全部在 AST 层面被证明等价，这才是它们的依据；digest 只是第二道。
-
-另有一条**只对 digest 沉默的分支**：`follow_unstable_mode` 在
-「quench 未收敛 + 力容差满足 + polish 收缩」三条同时成立时才接纳端点，
-而 digest 语料里没有这种几何（该现象只在苯甲酰丙酮的近自由甲基转子上出现过）。
-digest 对它是**沉默**，不是**通过**；覆盖它的是 `tests/test_convergence.py` 的两条 monkeypatch 测试。
-
-### 全树 reformat 之后，「测试通过」不足以说明测试还有牙
-
-一个被排版打断的 assert 也会安静地通过。所以这一轮的验收还包含一次**变异检验**
-（由 `mlpath-e5` 独立执行）：把 `internal_mode_recheck` 的 `"blocked": True` 翻回 `False`，
-把 `follow_unstable_mode` 的三条件接纳判据换成 `if True:` —— 两条安全性测试**如期失败**，
-恢复后 65 passed。**以后任何一次全量格式化都应照做**：绿本身不是证据，
-能被杀死的绿才是。判据选那些 fail-closed 的分支，因为它们正是排版最容易变成空壳的地方。
-
-### 具体做了什么
-
-1. **`config.py`**：dataclass 字段体 215 行 → 101 行，字段列表恢复成可以一眼扫完的表。
-   30 段"这个默认值为什么是这个值"的说明**一字未删**，移到文件末尾的 `RATIONALE` 字典。
-   `tests/test_validation.py::test_every_rationale_entry_names_a_live_field` 钉住
-   每个 key 都是真字段 —— 搬出函数体的代价是它会悄悄过期，这条测试是补偿。
-   顺带 `total_charge: int = None` / `multiplicity: int = None` → `int | None`（原来是笔误）。
-
-2. **散文常量化**：`runner.py` 18 处、`search.py` 6 处、`network.py` / `chemistry.py` 各 1 处。
-   这些字符串**是输出契约的一部分**（`network.json` 里的 `meaning` 字段），
-   提成常量之后改它们是一次 schema 变更，不再是一次注释编辑。
-
-3. **注释搬进 docstring 脚注**：`runner.py` 17 段、`search.py` 12 段、`perturbations.py` 5 段、
-   `chemistry.py` 3 段、`network.py` / `openmm_backend.py` 各 1 段。
-   原地留 `# [n] <短标签>`，正文在函数 docstring 的 `Notes` 段按序号排列。
-   `run_trial` / `Search.run` / `departed` / `_bond_directions` 原本没有 docstring，现在有了。
-
-4. **`engine.py` 移出包**（→ `docs/design/engine_contract.py`）。
-   它 215 行，全仓**零 import**，却又定义了第二个 `GateRejected`
-   （和 `reliability.py` 里真正在用的那个结构不同）。
-   包里放一个没人用的抽象，读起来像是"runner 通过契约和后端对话"，
-   而事实是 `runner.py` 直接 import `ase.md.verlet` / `ase.optimize.FIRE`。
-   文件原样保留在 `docs/design/`，加了一段说明它从未接线以及为什么。
-   **`reliability.GateRejected` 一行未动** —— fail-closed 语义全靠它。
-
-5. **`ruff` 落地**，装在 `.venv-tools/`，**刻意不装进 `openmm_dev`**。
-   那个环境的版本号是每一个结果的一部分（backend parity 在一次 openmm 小版本上翻过红），
-   所以任何纯开发便利都不许进它。配置在 `pyproject.toml` 的 `[tool.ruff]`。
-   `ruff check` 报的 20 条已清零：13 个未使用 import、2 个死变量、
-   3 处风格（`i,j,k,l` 的 `l` 是二面角自己的记法，用 `# noqa` 保留并写明理由）。
-   `src/` + `tests/` 全量格式化，**代价是 `src/` + `tests/` 一共长了 1606 行（+13%）** ——
-   black 系格式化器不保留紧凑多行集合，所以每个 `INTEGER_POSITIVE` 这样的元组
-   都从打包排列变成一行一个元素。这是引入 formatter 换来一致性所付的价。
-
-6. **`Makefile`**：`make check` = lint + test + digest。
-   `make hash` 现算 `implementation_sha256`，算法与 `search.py` 一致但**不 import 它**
-   （import 会让这个脚本和一个坏掉的实现达成一致）。两者若不一致，manifest 是对的。
-
-### 没做，但应该做
-
-- **`Search.run` 仍然是 837 行 / 14 个嵌套闭包 / 最深 8 层嵌套**，占 `search.py` 的 76%。
-  `record_channel` / `record_reaction` / `register_saddle` / `publish` 都带着 10–25 行
-  解释化学语义的 docstring —— 能写出那种 docstring 的东西应该是一等公民，
-  现在它们捕获六个可变变量，无法单独测试（tests 里 `from prrs.search import` 只有 6 次，
-  对比 `from prrs.runner import` 54 次）。
-  **没做的原因是没有安全网**：digest 不覆盖编排层，pytest 在这一层也薄。
-  正确顺序是先补 search 层的测试（或先进 git），再拆。
-- **`network.json` 的 schema 仍然是隐式的**。它写着 `schema_version: 2`，
-  但没有任何地方定义 schema 2 是什么 —— 它是 `search.py` 里 16 处 `network[...]`
-  赋值涌现的结果，而 8 个分析脚本各自手工解析它。
-- **全包零 `logging`**，一个五小时的 run 中途完全静默。
-- **225 个函数里只有 3 个有参数类型注解。**
-
----
-
-## 11. 2026-09-04 QM 参照：冻结结论第一次被外部尺子量过
-
-**没有任何冻结判据被改动。** 这一节加的是一把尺子，以及用它做的一次归因。
-
-### 11.1 尺子
-
-ORCA 6.1.1 on `kasuga02`（`scripts/orca_remote.sh`，40 物理核 + NUMA 绑定）。两段协议：
-
-| | 方法 |
-| --- | --- |
-| 几何 + 频率 | r2SCAN-3c / TightSCF |
-| 能量 | ωB97M-V / def2-TZVPD / DEFGRID2，**在上一段的几何上** |
-
-**校准**：气相 SN2 上复现文献到 0.4–0.9 kcal/mol。
-**r2SCAN-3c 单独用不行** —— SN2 势垒偏低 11 kcal、丙二醛偏低 72 meV，
-meta-GGA 自相互作用误差。几何好，能量必须补单点。
-
-两个鞍点的驻点性都是**测量**的（收敛 + 恰好一个虚模），
-不是从对称性论证的 —— 这正是 `runs/sn2_probe.json` 缺的那个前提。
-
-### 11.2 归因：285 meV 是模型的，不是方法的
-
-| | 值 |
-| --- | --- |
-| `A_θ[E_OFF24]` —— PRRS 在自己找到的几何上（P1 冻结，13/13） | **419.1 meV** |
-| `E_OFF24` 在 DFT 几何上 | **410.4 meV** |
-| `T[E_QM]` | **134.4 meV** |
-
-**两张势能面的鞍点位置几乎重合**：PRRS 在 MACE-OFF24 上找到的四个 TS 对 DFT TS 的
-对称感知 RMSD 全部是 **0.0151 Å**（自同构群 2 元，即两个氧的对换）；
-内坐标上 r(O···O) 差 0.042 Å、转移中的 r(O–H) 差 0.020 Å。
-
-所以那 285 meV 的分歧是**纯能量的，不是几何的**。
-
-**注意 419.1 − 410.4 = 8.7 meV 不是"搜索误差"。** 鞍点在正交的 3N−1 维里是极小、
-只沿反应坐标是极大，所以在一个偏离几何上取值可高可低；410.4 < 419.1 只说明
-DFT 几何相对 OFF24 的鞍点主要偏在反应坐标方向上。
-**"PRRS 找到的确实是 OFF24 自己的鞍点"这一条，证据是解析 Hessian**
-（saddle order 1 + 力容差收敛），不是这个能量差。
-
-（这个更窄的措辞由 `mlpath-e5` 2026-09-04 提出并纠正；原稿把 8.7 meV 读成了搜索误差界。）
-虚频同理：−3186 cm⁻¹ 对 DFT 的 −909，是势垒顶太陡的另一面。
-
-**这是"方法 / 模型"这条分界线第一次真正产出归因，而方向有利于方法。**
-
-### 11.3 三个模型，两个化学，同一组几何
-
-| | 丙二醛质子转移 | 离子 SN2 中心势垒 |
-| --- | --- | --- |
-| MACE-OFF24_medium | **+276 meV** | 做不了（对电荷逐位无响应） |
-| MACE-omol-0-4M | −1.8 meV | **+10.46 kcal/mol** |
-| **MACE-POLAR-1-M** | **+12.1 meV** | **+2.09 kcal/mol** |
-
-> **两个数不要混。** 上表的 `+276 meV` 是**固定几何**下的模型误差（同一模型在 DFT 几何上的单点 410.4 对 QM 的 134.4）。
-> **P1 的势垒是 419 meV，相对 QM 的偏差约 285 meV** —— 那是 PRRS 在**自己找到的几何**上的值。
-> 涉及 P1 势垒时用后者。
-
-
-**用户 2026-09-04 定：从 P4 起统一用 `MACE-POLAR-1-M`。**
-P0–P3 冻结在 MACE-OFF24 上，**不重跑、不改标签**。
-
-**一个被推翻的先验**：MACE-OFF 专门训练在中性有机分子上，
-却在中性有机分子的质子转移上比两个 82/83 元素的通用模型差一个数量级。
-"专用模型在自己域内更好"在这里不成立。
-
-### 11.4 不能说的
-
-1. **n = 2 个反应。** 两次测量，不是基准。
-2. **这不是 `T[E_m]`。** 三个模型只在 DFT 几何上做单点，
-   没有一个被允许优化出自己的鞍点。要 ORCA `ExtOpt` 驱动 MLP，**尚未做**。
-3. **P0–P3 的方法验收在另一个模型上**，所以它们不自动成为 P4+ 的参照。
-   要继承需跑 conformance 第 2 阶（冻结配置重跑 b00–b02，只比身份字段）。
-4. 文献值（SN2 −10.5/+3.0 kcal；丙二醛 3–4 kcal 电子势垒）**本项目未核验**，
-   只用来让比较可证伪。
-
-### 11.5 落盘位置
-
-- `docs/experiments/sn2_qm/`、`docs/experiments/p1_qm/` —— 两份完整记录 + 几何
-- `benchmarks/REFERENCES.md` 末节 —— 套件级的协议描述
-- `benchmarks/MANIFEST.md` —— 默认模型决定与它的代价
-- `scripts/orca_remote.sh` —— 可复现的启动器
-
----
+两节都是**已结账的**：重构零行为改动，QM 参照没有推翻任何冻结结论
+（推翻了什么、量到多少都在 `ROUNDS.md`）。当前状态看 §5，接手看 §12。
 
 ## 12. 2026-09-05 交接：三项正确性修复，与接手要先知道的事
 
@@ -792,13 +666,148 @@ r2SCAN-3c 单独用把 SN2 中心势垒错 11 kcal，**几何好、能量必须�
 
 ### 12.6 接手要知道的三条规矩之外的事
 
-- **这个目录仍然不是 git 仓库。** 2026-09-04 实测：一次扫描的**中途**树哈希变了
-  （`0a7aa55d` → `23179dea`），连"批"这个单位都不成立。
+- ~~**这个目录仍然不是 git 仓库。**~~ **已作废（2026-09-13 核实：它是了，`main` 上有提交）。**
+  当日那条观察本身仍然成立并且仍然要紧：2026-09-04 实测一次扫描的**中途**树哈希变了
+  （`0a7aa55d` → `23179dea`），连"批"这个单位都不成立；
   `runs/` 下 16 个实现 / 107 个 run，14 个实现只分摊 62 个。
+  **扛住可追溯性的仍然是 `implementation_sha256`，不是 git。**
 - **`benchmarks/` 是新建的反应基准套件**，六条规矩在它的 `README.md`。
   b00–b03 已转 `fixture`（判据冻结过、判定通过过，验收职责移交 P4+ 的 QM 协议）。
-  **b04 仍缺正式判据与机械评定**（`CRITERIA.md` / `check.py` 是空壳）。
+  ~~**b04 仍缺正式判据与机械评定**（`CRITERIA.md` / `check.py` 是空壳）。~~
+  **已作废（2026-09-13）**：b04 的判据与 `config.json` 同日冻结，`check.py` 逐条对得上、
+  自检 5 例，冻结后首次运行 `runs/b04_frozen1` 评定为 `observed_direct`（分步侧 `unanswered`），
+  状态词已是 `done`。见 §13。
 - **默认模型从 P4 起是 `MACE-POLAR-1-M`**（用户 2026-09-04）。
   P0–P3 冻结在 MACE-OFF24 上，不重跑、不改标签。
   依据是两组 QM 对照，不是偏好：POLAR-1 在中性有机质子转移上偏 +12 meV、
   在离子 SN2 中心势垒上偏 +2.1 kcal，是唯一两边都成立的候选。
+
+
+## 13. 2026-09-13 交接：三路审计的执行、b04 冻结、两条脑洞落地
+
+树 `fa15a829869cdc29` → **`c393da782a1350a1`** · `416 passed, 1 skipped, 9 xfailed`
+· digest **零差异**（332 files / 2136 frames / 4 event pairs）· `make lint` 绿
+
+### 13.1 接手先读这三份
+
+| | |
+| --- | --- |
+| [`SESSION_2026-09-13.md`](SESSION_2026-09-13.md) | **当日记录。** 三路审计的逐条核实（P0/P1/P2 各自成立到什么程度、证据在哪），以及两轮脑洞里**被实测推翻的前提**。这两样别处没有 |
+| [`DECISIONS_PENDING.md`](DECISIONS_PENDING.md) | 「未决清单 · 2026-09-13 收口」。**没做完的都在这里** |
+| [`DONE_LOG.md`](DONE_LOG.md) | 今天四条落地的细节、证据与运行目录 |
+
+### 13.2 一句话摘要
+
+**修了**：`reaction_event_key` 改在生成群闭包上正则化（并集不是群）·
+`rotate_about_vertex` 补 `(0, π)` 守卫（唯一会把错数字写进命运-幅度记录的路径）·
+`b04/check.py` 与 `CRITERIA.md` §5 对齐两处 · 规矩 5 与 `TAXONOMY.md` 的
+「不存在 ⇒ 协同」改写（走修订记录）。
+
+**建了**：`tests/test_quotient_invariance.py`（六个商点统一的置换不变性 fuzz，**首跑即抓到一条**）·
+谱提案（Hessian 已算白扔，投掉平凡模与扭转后最软；b04 上把实际反应的方向从抽签变成 1/28 第一名）·
+碎片刚体转动（`internal.rotate_rigid`，第三种精确实现）。
+
+**冻了**：b04 的 `CRITERIA.md` 与 `config.json`，同日。首次评定通过。
+
+### 13.3 接手要先知道的三件事
+
+- **`reaction_event_key` 只在同一套原子编号内是身份。** fuzzer 首跑抓到的，已钉成
+  `xfail(strict=True)`。一次 run 内共享编号所以**已记录结果不受影响**，坏的是跨 run 比 key。
+  修法会改掉历史上每一个 `event_key` 摘要 —— 这是此刻**唯一挡着队列**的决定。
+- **B（碎片刚体转动）关闭了一个真实的定义域缺口，但没解决 b05。** 我预测它会，实测否掉了。
+  `quench_steps` / `irc_relay_hops` 那条原诊断依然成立。
+- **`frozen1` vs `probe4` 不是受控对照**（ts 1→2、reactive 2→4）。两次运行实现树不同，
+  且同一轮动了七个文件。要隔离谱提案的效果需要一次只切 `spectral_rank_modes` 的 A/B，**没做**。
+
+---
+
+## 14. 2026-09-20 交接：七决策落笔，第 4 件与 P1-4 落地
+
+树 `c393da782a1350a1` → **`b4e92642c66c9bab`** · `420 passed, 7 skipped, 9 xfailed`
+（yayoi；skip 全是环境性，本机无 MACE checkpoint / CUDA）· digest **零差异** · lint 绿
+
+### 14.1 接手先读这三份
+
+| | |
+| --- | --- |
+| [`PLAN_2026-09-20.md`](PLAN_2026-09-20.md) | **六件大事的实施计划**（现状带行号、验收、量） |
+| [`DECISIONS_PENDING.md`](DECISIONS_PENDING.md) | 「未决清单 · 2026-09-20 收口」——七决策的正文与队列状态 |
+| [`DONE_LOG.md`](DONE_LOG.md) | 当日三条的细节、漂移清单、两次变异检验 |
+
+### 14.2 一句话摘要
+
+**落笔了**：PLAN 文末的七个决策点（用户授权按推荐项落笔），逐条见 DECISIONS_PENDING
+2026-09-20 节。**从此「不落笔不开写」的门是开的**，队列顺序 4→1→2→5.0→5→6→3，
+下一件是 1（正则标号，唯一挡队列的）。
+
+**建了**：`src/prrs/schema.py`——schema 2 首次被定义（此前 `schema_version: 2` 盖在一个
+未定义对象上，`runs/` 70 个文件实测两种旧版本、五档字段漂移）。锚测试把整个 `runs/`
+钉在「清单内的偏差逐字复现、清单外的零问题」上；漂移清单里 65 个文件的偏差全部可用
+写入年代解释。`publish()` 末尾记录 `schema_warnings`（干净时不写该键，文件逐字节不变），
+CLI `--strict-schema` 才把非空当失败。
+
+**修了**：P1-4（决策 7）——`admit` 建节点遇自同构溢出改拒 `automorphism_budget`，
+不再拿 `[identity]` 当群去量 RMSD。语料里该分支从未执行，digest 零差异是证据。
+
+### 14.3 接手要先知道的三件事
+
+- **决策已全部落笔但决策 4（证书命题）是草案**，显式批准前不发任何证书；它只挡第 3 件
+  （排最后），不挡队列。
+- **B′ 挂起是有触发条件的**（决策 6）：5.0 放开 `quench_steps`/`irc_relay_hops` 重跑之后
+  若负曲率仍在精确周期坐标上，才单独命名启用。先跑 5.0，别直接写 B′。
+- **committor（决策 3）是独立探针**：T=300 K、N=16/窗口、只进模型报告不进判据、
+  默认 `committor_shots = 0`。分辨率限定（只答"接近 0/1"）必须开跑前写进协议。
+
+### 14.4 下午追加（指纹移到 b1c4d440，正文见 DONE_LOG）
+
+六件里**本机可做的全部做完**：第 1 件全件（引擎由 flash 写、验收全过）、第 2 件机器+接线、
+第 3 件机器+解析势链条（恒盖 DRAFT 章等决策 4 批准）、第 5 件算子/分流/惰性枚举/测量脚本、
+第 6 件 6.1+6.2。**排队给 kasuga02（MACE 机）**：5.0 重跑、平动阈值测量、committor 实跑。
+**另起会话做**：6.3–6.5 resume 接线（运行态重建清单在 DONE_LOG）。GLM-5.3-Flash 配额事件
+与"flash 写+主会话门"分工的结论如实记录在 DONE_LOG 末节。
+
+## 15. 2026-09-24/25 交接：外部审查核对、续跑回滚重做
+
+**下一步看 [`PLAN_2026-09-25.md`](PLAN_2026-09-25.md)**。A0（零 MD 离线重分析）**已做**；A1 **已落笔、协议已冻结**（2026-09-25）（冻结时 sha256 `b685120fe25665a4…`）；落笔值：k = 160 步（40 fs）、L_max_run = 1280 步（320 fs）、V3–V5 阈值 10% / 5% / 20%、键图判归 + `q_PT` 交叉检查。
+
+树 `4014c4b2`（按本文件记载，会话开始时未现算）→ **`ae47c4d9142203dc`** ·
+`476 passed, 1 skipped` · digest **零差异** 332 / 2136 / 4 · fmt + lint 绿 · 变异检验五次全红。
+先在 kasuga01 本机跑（当时会话环境里 ssh kasuga02 被拒，用户一次性授权），会话重开后在 **kasuga02 复跑，结果一致**。
+
+- **正文**：[`REVIEW_2026-09-24.md`](REVIEW_2026-09-24.md) —— 外部审查逐条核对（数学两条成立，
+  不波及现有 TS；committor 那条只是键名）、修了什么、committor 规划器草稿与 PRRS-2 原型对照现码、
+  轨迹终止规则（固定 50 fs + quench vs 首次进入即停）、计划 F0–F5、**七条待落笔**。
+- **最要紧的一条**：PLAN 第 6 件（续跑）09-21 的验收只在 kill@6 测，那恰是微态之间的缝。
+  scan 中途 kill 的续跑是坏的（记录有洞撞目录 + 在飞微态被丢）。已改快照回滚，验收参数化
+  kill@4 / kill@6。**代价：kill 会重做在飞的那个微态。**之前的 run 不能跨指纹续跑，本来也不能。
+- **没动的**：`PRRS_CURVATURE_ROUTES.md` 只在 B.7 与 C 节加勘误引用块，原文一字未删；
+  `p_B` 键名、PRRS-2 新增部分都等落笔。
+- **t_free 敏感性已量**（`runs/p1_tfree_sensitivity`，R7）：P1 committor 的 p_B 随自由段长度动 —— scan 8 在 40 / 80 / 160 fs 为 0.06 / 0.57 / 0.67，轨迹在 160 fs 仍回越。**「scan 8 接近 0」不可再引**；R6（终止规则）变成必答。
+- **首次进入第 0 段已做**（`runs/p1_first_entry_stage0`，kasuga02，零 MD）：k ≤ 20 步是假进入（质子在脊上来回），k = 40 仍不稳，**k ≥ 80 步是平台**（k = 80 / 120 / 160 逐发判归相同，再离开 ≤ 1/16，quench 核对 0 例不一致）。回越**不是无限的**：待满 20–40 fs 之后几乎不再离开，固定 160 fs 与平台接近 —— 此前「孤立 NVE 会一直回越」的说法已更正。只用于选参数，不可引为 p_B。
+- **首次进入确认批跑完并判定（2026-09-26）**：V1 过，scan 0 / 2 / 6 / 8 四窗口 V2–V5 全过，`p_B_given_AB` = **0.76 [0.63, 0.86] / 0.12 [0.06, 0.24] / 1.00 [0.93, 1.00] / 0.72 [0.58, 0.83]**（N = 50），已替换撤回的 40 fs 值（`P1_COMMITTOR_PROTOCOL.md` 末节）。主线 A 剩 A5。原记录：**协议已冻结，确认批（A3）在跑**：**2026-09-25 19:5x 起在 kasuga02 跑**（`setsid nohup`，关窗口不影响）：`docs/experiments/p1_first_entry_confirm.py` → `runs/p1_first_entry_confirm/`，日志 `.scratch/first_entry/confirm.log`。每步存帧使每步约 0.2 s（`sample_interval = 20` 时约 0.07 s），实测外推约 **15 h**（协议里「约 5 h」是冻结前的估算，不是判据）。被杀了就原命令重跑，已完成的发跳过、只丢在飞的一发。跑完后 `python docs/experiments/p1_first_entry_confirm.py --analyse` 出 `verdict.json`（V1 整批 + V2–V5 逐窗口）。
+- **A5 完成（2026-09-26）**：`run_trial(first_entry=…)` 逐步计数、连续 k 步在 A / B 图上即停，之后原有 quench 就是入口核对；`shoot` 透传；配置 `committor_entry_steps`（k，0 = 关，默认）/ `committor_max_steps`（1280）；search 的 committor 分支按进入侧判，核对不一致只计数不改判，没有 B 或两端同图时退回固定规则并在 `termination` 写明；R1：`p_B` → `p_B_given_AB`。 kasuga02：`make check` 绿、digest 零差异 332 / 2136 / 4；变异检验两条都红（`>=`→`>` 进入步差一；删 `break` 跑满上限）；**真实数据核对** `runs/p1_first_entry_production_check`：生产路径重打 A3 的 200 发（同帧同 seed、提前停），**进入侧与进入步 200/200 相同、入口 quench 落点 200/200 相同**，约 23 min。 指纹 → `b601b124`。**主线 A 全部完成**；下一步见 `PLAN_2026-09-25.md` 支线 B / C。
+- **支线 B0 / C2 / C3 已跑（2026-09-26）**：搜索的 bracket 也随 t_free 移动（→ 新决策 R8）；窗口普查显示最大缺口是 unresolved（154）而非窗口泛化（+24）；沿鞍点不稳定模 p_B 的变化全在 |q_PT| < 0.1（探索批，不可引用）。另发现 D1：鞍点下降 `descent.extxyz` 只剩 minus 分支。
+- **C1 + D1 已改（2026-09-26，指纹 → `99edddde`）**：D1：鞍点双侧下降改用**一个** `PathRecorder` 管两支，帧计数连续，`descent.extxyz` 不再被第二支覆盖（此前历来只剩 minus 支的几何）。 C1：scan 每个样本加 `outcome`（returned / departed / ridge / transient / unresolved）与 `outcome_reason`（未定时的失败码或 `admission:…`），只记录不路由。 变异检验两条红（yayoi）；未变异全量用户报告通过。
+- **所有改动未提交**，与工作区原有的大量未提交改动混在一起；git 由用户自己管。
+
+
+## 16. 2026-10-01 交接：PARS 独立模块落地（MVP-1..5）
+
+**新模块在 `pars/`，`src/prrs` 一行未动**。依据根目录《Pareto-Adaptive Reaction Path Search (PARS) — MLPATH Integration Design.md》（§6/§25/§26/§31/§43）实现 MVP-1..5：候选表示 → 静态 frontier → margin/archive → 机制感知 cover → ASE NEB 适配器。QM 反馈实验（MVP-6）未做，选择记录里已留 audit 槽位（§20）。
+
+- **独立性契约**：`pars/src/pars` 内禁止 `import prrs`（AST 边界测试钉死）；与 PRRS 的唯一集成面是**文件契约**——run 目录的 `network.json`（`reaction_channels` 即 channel 身份）、`config.json` manifest、`attempts.jsonl`、`trials/*/{response.traj,observations.jsonl,result.json,endpoint.extxyz}`。读取器唯一入口 `pars/src/pars/adapters/prrs_run.py`。旧格式 run（无 reaction_channels）fail-closed 拒收。整个 `pars/` 文件夹可整体摘出独立成库（自带 pyproject/Makefile/README/LICENSE，依赖仅 numpy+ase）。
+- **权威留在 PRRS 侧**：channel/对称/键感知直接消费产物，不重写；不确定性只用已落盘的逐帧 `uncertainty_eV_A`；缺失目标量记 None 不造假（§7），全通道缺失时该维度整体退出归一化空间。
+- **关键语义决策**（如与设计字面有出入，以此为准）：(a) CERTAINLY_DOMINATED 需要**真实存在的不确定性数据**（或有配置容差）才可判——σ 未知不当 0 用，否则 margin 机制死代码、每次硬删都"伪确定"；(b) `dominance_mode: nominal` = 严格 Pareto 剪枝（§38 消融的对照组）；(c) NEB 分两段：普通 NEB 收敛后再开 CI，CI 段不收敛/势垒反升/最高像不在内侧 → 判病理 band，回退报告普通 NEB 结果并写明（§18 监控要求）；(d) 事件窗口按产物里权威的 `phase` 标签裁剪（source/free_start/free），强制帧丢弃但保留在 provenance（含 `kept_frames` 原始帧号，窗口不连续）。
+- **测试**：`pars/` 自有 78 个测试全绿（openmm_dev，`cd pars && make test`），含设计 §31 不变量逐条（排列不变、尺度不变、duplicate stability、channel isolation、γ rescue 单调、cover 确定性）+ 边界测试 + 解析势上的精修契约（含 UNRESOLVED_MLP 门与 backend 失败报告）。测试不依赖 `runs/`，合成 run 目录 + 自建解析势（triple well / per-atom double well）。
+- **门禁**：父仓库 `make check` 绿：fmt + lint + **537 passed, 7 skipped** + **digest 零差异** 332 / 2136 / 4（2026-10-01 实测，PARS 不在父 lint/test 路径内，属预期）。
+- **真实 run 冒烟（只读）**：`pars select --run-dir runs/connect_g5_explore_detour/seed1/pIapIb` → 120 attempts → 16 候选 → 5 通道 → **5 条代表路径**（压缩 16:1），每通道带冷存档与 audit 样本；代表种子 extxyz（9 图）可直接送 NEB。`pars refine` 已在解析势上端到端跑通；真实体系精修需 `--calculator-factory` 给一个包一层 MACE 的工厂（运行时 importlib 解析，静态依赖仍为零）。
+- **下一步**（等用户决策）：① MACE 工厂包装与真实体系 refine 试跑；② MVP-6 QM 反馈实验协议（ranking inversion / margin rescue 度量）；③ 是否给 pars 单独建 git 仓库（现与父仓库同样未提交，git 由用户自管）。
+
+## 17. 2026-10-03 交接：路径成熟层独立模块（骨架 + M0 + M1）
+
+**下一步看 [`PLAN_GEN_COMPAS_MATURATION_2026-10-03.md`](PLAN_GEN_COMPAS_MATURATION_2026-10-03.md)（§9 修订 + §4 M0–M6）与 [`docs/README.md`](README.md) 路径成熟层行**。正文见 `DONE_LOG.md` 末节。
+
+- **新模块 [`mature/`](../mature/README.md)**（用户决定：独立模块形态，与 `pars/` 同级；修订记录在施工计划 §9）：单向 `import prrs`（复用 `runner.shoot` 与只读 `Registry.identify`，不复制动力学）；`src/prrs` 与 `pars/src/pars` 禁止反向 import，AST 边界测试钉死并做过变异检验。**不碰 `src/prrs/`，指纹仍 `ebff4ec0`**（实测 `make hash` 与 preflight 记录一致）。
+- **M0 已做（只读）**：`docs/experiments/maturation_preflight.py` → `docs/experiments/maturation_preflight/preflight.json`。四个指定 run 全 supported（探索批标 reference-only）；P1 区域 = 无序对 {m0000, m0001}，chemical_key 相同而键图不同 → 首次进入 eligible；27/27 精化记录同一鞍点（0.419128–0.419208 eV）；PARS selection 缺失，M2 前须重 select。基线：537 passed / 7 skipped + digest 零差异 332/2136/4（存 `baseline_2026-10-03.json`）。
+- **M1 已做**：`mature/src/mature/schema.py`（协议/区域/提案/射击/统计/诊断全件，同图区域定义期即拒、pulse 拒、漂移容差只有零号测量批可留空、A/B=0 时 p_B 为 null、词表无"已验证 TS"）+ `io.py`（原子写、提交标记定完成、同配置任务表可重建、换协议/内容/指纹拒绝续跑、半写隔离不删除）。`mature/` 自有 53 测试全绿（含已发布 Wilson 值的两条数字锚）。
+- **未做（下一施工块 M2+M3）**：候选提取（等 pars select 重跑）、射击接线（`shoot(..., first_entry=...)` + `Registry.from_network` 离线判归已勘察可行）、CLI 实装。M4 前不做 console script 的正式解析方式决定。
