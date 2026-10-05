@@ -1,0 +1,147 @@
+{
+  "inspected_commit": "cf9c90d781b33cb30ba4ffca41d93643e6547dd4",
+  "pars_implementation_sha256": "046bd92fab88a5a4b8166880e01f4135532cc8c0e6d411c3cc5af0f9b87eea70",
+  "numerical_versions": {
+    "python": "3.12.13",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "ase": "3.29.0",
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "openmm": "8.5.2"
+  },
+  "endpoint_identity": {
+    "atoms": 500,
+    "potential": "x^2*(x^2-1)^2 + harmonic spectators/transverse DOFs",
+    "true_minima_x": [
+      -1,
+      0,
+      1
+    ],
+    "outer_endpoint_rmsd_A": 0.08944271909999159,
+    "config": {
+      "include_classifications": [
+        "reactive"
+      ],
+      "include_phases": [
+        "source",
+        "free_start",
+        "free"
+      ],
+      "min_path_frames": 3,
+      "uncertainty_quantile": 1.0,
+      "normalization": "robust",
+      "objective_scales": [],
+      "dominance_mode": "uncertainty_aware",
+      "dominance_tolerance": 0.0,
+      "margin_gamma": 0.15,
+      "cover_objective_tolerance": 0.1,
+      "preserve_mechanism_diversity": true,
+      "tube_distance_threshold": 0.3,
+      "audit_size": 5,
+      "audit_seed": 0,
+      "refinement_images": 9,
+      "refinement_fmax_endpoints": 0.01,
+      "refinement_fmax_neb": 0.001,
+      "refinement_climbing_image": true,
+      "refinement_max_steps_endpoints": 500,
+      "refinement_max_steps_neb": 1000,
+      "refinement_endpoint_min_rmsd": 0.05,
+      "refinement_spring_k": 5.0,
+      "refinement_remove_rigid_motion": false,
+      "refinement_max_top_gap_ratio": 2.0,
+      "refinement_uncertainty_refusal": null,
+      "refinement_endpoint_hessian_step": 0.001,
+      "refinement_endpoint_curvature_tolerance": 0.0001,
+      "refinement_endpoint_identity_rmsd": 0.05,
+      "refinement_saddle_hessian_step": 0.001,
+      "refinement_saddle_curvature_tolerance": 0.0001,
+      "refinement_descent_displacement": 0.05,
+      "refinement_descent_step": 0.05,
+      "refinement_descent_max_displacement": 0.05,
+      "refinement_descent_fmax": 0.001,
+      "refinement_descent_max_steps": 2000,
+      "refinement_descent_max_backtracks": 20,
+      "refinement_descent_resolution_factor": 0.25
+    },
+    "status": "ci_neb_converged",
+    "message": "",
+    "barrier_eV": 0.14814814729750936,
+    "connectivity_status": "matched",
+    "saddle_negative_modes": 1,
+    "branches": [
+      {
+        "sign": -1,
+        "active_x": 0.0004907335209775978,
+        "matched_endpoint": "reactant",
+        "endpoint_rmsd_A": {
+          "reactant": 0.04474330582023067,
+          "product": 0.044699413279760916
+        },
+        "active_atom_error_to_assigned_endpoint_A": 1.0004907335209776
+      },
+      {
+        "sign": 1,
+        "active_x": 0.9999172409040202,
+        "matched_endpoint": "product",
+        "endpoint_rmsd_A": {
+          "reactant": 0.08943901800070424,
+          "product": 3.7010992873437934e-06
+        },
+        "active_atom_error_to_assigned_endpoint_A": 8.27590959797675e-05
+      }
+    ],
+    "resolution_status": "stable_on_tested_scales",
+    "fine_branches": [
+      {
+        "sign": -1,
+        "active_x": 0.0004894956107523584,
+        "matched_endpoint": "reactant",
+        "endpoint_rmsd_A": {
+          "reactant": 0.04474325045920239,
+          "product": 0.04469946864078919
+        },
+        "active_atom_error_to_assigned_endpoint_A": 1.0004894956107524
+      },
+      {
+        "sign": 1,
+        "active_x": 0.9998834218708812,
+        "matched_endpoint": "product",
+        "endpoint_rmsd_A": {
+          "reactant": 0.0894375055675636,
+          "product": 5.213532427987915e-06
+        },
+        "active_atom_error_to_assigned_endpoint_A": 0.00011657812911880505
+      }
+    ]
+  },
+  "file_integrity": {
+    "initial_record_status": "failed",
+    "missing_geometry_resume": {
+      "exit_code": 0,
+      "geometry_exists": false
+    },
+    "interrupted_redo_resume": {
+      "exit_code": 0,
+      "old_marker_preserved": true,
+      "geometry_content": "truncated extxyz\n"
+    },
+    "reordered_observations": {
+      "accepted": true,
+      "observation_frame_indices": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "first_phase": "quenched",
+      "first_energy_eV": -0.8,
+      "expected_first_phase": "source",
+      "expected_first_energy_eV": -1.0
+    }
+  }
+}

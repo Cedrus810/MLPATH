@@ -1,0 +1,500 @@
+{
+  "status": "passed",
+  "evidence_scope": "analytic_external_field_engineering_benchmark",
+  "reference_saddles": 2,
+  "pool_saddles": 2,
+  "candidate_count": 12,
+  "reference_oracle_force_evaluations": 18024,
+  "reference_certification_force_evaluations": 2578,
+  "shared_pool_generation_force_evaluations": 252,
+  "cost_accounting": "per-arm cold refinement calls include endpoint checks and failures; shared pool generation, reference certification and all-pool oracle are reported separately; total wall includes preparation, all arms and oracle",
+  "rows": [
+    {
+      "arm": "pars",
+      "outcomes": [
+        {
+          "candidate": "pc-2b2e7f32b3cf",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735120760834
+        },
+        {
+          "candidate": "pc-37e970c24886",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.675103274438821
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 1926,
+      "refinement_wall_s": 0.7088072469923645,
+      "failed": 0
+    },
+    {
+      "arm": "channel_pruning",
+      "outcomes": [
+        {
+          "candidate": "pc-2b2e7f32b3cf",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735120760834
+        },
+        {
+          "candidate": "pc-37e970c24886",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.675103274438821
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 1926,
+      "refinement_wall_s": 0.7135031009675004,
+      "failed": 0
+    },
+    {
+      "arm": "cheap_energy",
+      "outcomes": [
+        {
+          "candidate": "pc-2b2e7f32b3cf",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735120760834
+        },
+        {
+          "candidate": "pc-9649e760b43e",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005758338980511
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 2091,
+      "refinement_wall_s": 0.7785582990036346,
+      "failed": 0
+    },
+    {
+      "arm": "random-00",
+      "outcomes": [
+        {
+          "candidate": "pc-c8d6a0bc6849",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022939517938
+        },
+        {
+          "candidate": "pc-b3a132bc8f10",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005754794753861
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2949,
+      "refinement_wall_s": 1.2747490390320309,
+      "failed": 0
+    },
+    {
+      "arm": "random-01",
+      "outcomes": [
+        {
+          "candidate": "pc-82494fd95f60",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022214475197
+        },
+        {
+          "candidate": "pc-9649e760b43e",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005758338980511
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2586,
+      "refinement_wall_s": 1.1315661040134728,
+      "failed": 0
+    },
+    {
+      "arm": "random-02",
+      "outcomes": [
+        {
+          "candidate": "pc-4ed543099792",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022292380875
+        },
+        {
+          "candidate": "pc-c8d6a0bc6849",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022939517938
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 2916,
+      "refinement_wall_s": 1.3292838259949349,
+      "failed": 0
+    },
+    {
+      "arm": "random-03",
+      "outcomes": [
+        {
+          "candidate": "pc-37e970c24886",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.675103274438821
+        },
+        {
+          "candidate": "pc-bde412e178c5",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735139064559
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2256,
+      "refinement_wall_s": 0.83460483700037,
+      "failed": 0
+    },
+    {
+      "arm": "random-04",
+      "outcomes": [
+        {
+          "candidate": "pc-b3a132bc8f10",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005754794753861
+        },
+        {
+          "candidate": "pc-f3b988f030f7",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005743049609732
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 3840,
+      "refinement_wall_s": 1.584699056984391,
+      "failed": 0
+    },
+    {
+      "arm": "random-05",
+      "outcomes": [
+        {
+          "candidate": "pc-c8d6a0bc6849",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022939517938
+        },
+        {
+          "candidate": "pc-b3a132bc8f10",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005754794753861
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2949,
+      "refinement_wall_s": 1.145306584017817,
+      "failed": 0
+    },
+    {
+      "arm": "random-06",
+      "outcomes": [
+        {
+          "candidate": "pc-551422874fb8",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005741743006727
+        },
+        {
+          "candidate": "pc-9649e760b43e",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005758338980511
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 2982,
+      "refinement_wall_s": 1.4737354820244946,
+      "failed": 0
+    },
+    {
+      "arm": "random-07",
+      "outcomes": [
+        {
+          "candidate": "pc-eb439126b2f0",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022420202525
+        },
+        {
+          "candidate": "pc-b3a132bc8f10",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005754794753861
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 3807,
+      "refinement_wall_s": 1.8310907959821634,
+      "failed": 0
+    },
+    {
+      "arm": "random-08",
+      "outcomes": [
+        {
+          "candidate": "pc-4ed543099792",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022292380875
+        },
+        {
+          "candidate": "pc-b3a132bc8f10",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005754794753861
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 4137,
+      "refinement_wall_s": 1.6318954869639128,
+      "failed": 0
+    },
+    {
+      "arm": "random-09",
+      "outcomes": [
+        {
+          "candidate": "pc-551422874fb8",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005741743006727
+        },
+        {
+          "candidate": "pc-eb439126b2f0",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022420202525
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 3444,
+      "refinement_wall_s": 1.3263254499761388,
+      "failed": 0
+    },
+    {
+      "arm": "random-10",
+      "outcomes": [
+        {
+          "candidate": "pc-f3b988f030f7",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005743049609732
+        },
+        {
+          "candidate": "pc-bde412e178c5",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735139064559
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 2916,
+      "refinement_wall_s": 1.1811314530204982,
+      "failed": 0
+    },
+    {
+      "arm": "random-11",
+      "outcomes": [
+        {
+          "candidate": "pc-37e970c24886",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.675103274438821
+        },
+        {
+          "candidate": "pc-f3b988f030f7",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005743049609732
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2850,
+      "refinement_wall_s": 1.1048481600009836,
+      "failed": 0
+    },
+    {
+      "arm": "random-12",
+      "outcomes": [
+        {
+          "candidate": "pc-9649e760b43e",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005758338980511
+        },
+        {
+          "candidate": "pc-4ed543099792",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022292380875
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 3312,
+      "refinement_wall_s": 1.2863339069881476,
+      "failed": 0
+    },
+    {
+      "arm": "random-13",
+      "outcomes": [
+        {
+          "candidate": "pc-c8d6a0bc6849",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022939517938
+        },
+        {
+          "candidate": "pc-eb439126b2f0",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022420202525
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 2586,
+      "refinement_wall_s": 1.139609281963203,
+      "failed": 0
+    },
+    {
+      "arm": "random-14",
+      "outcomes": [
+        {
+          "candidate": "pc-37e970c24886",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.675103274438821
+        },
+        {
+          "candidate": "pc-c8d6a0bc6849",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022939517938
+        }
+      ],
+      "coverage": 0.5,
+      "force_evaluations": 1959,
+      "refinement_wall_s": 0.7846662409720011,
+      "failed": 0
+    },
+    {
+      "arm": "random-15",
+      "outcomes": [
+        {
+          "candidate": "pc-eb439126b2f0",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022420202525
+        },
+        {
+          "candidate": "pc-bde412e178c5",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735139064559
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2883,
+      "refinement_wall_s": 1.1873006229870953,
+      "failed": 0
+    },
+    {
+      "arm": "random-16",
+      "outcomes": [
+        {
+          "candidate": "pc-82494fd95f60",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022214475197
+        },
+        {
+          "candidate": "pc-9649e760b43e",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005758338980511
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2586,
+      "refinement_wall_s": 0.9635753589682281,
+      "failed": 0
+    },
+    {
+      "arm": "random-17",
+      "outcomes": [
+        {
+          "candidate": "pc-eb439126b2f0",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022420202525
+        },
+        {
+          "candidate": "pc-bde412e178c5",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005735139064559
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2883,
+      "refinement_wall_s": 1.0847250510123558,
+      "failed": 0
+    },
+    {
+      "arm": "random-18",
+      "outcomes": [
+        {
+          "candidate": "pc-551422874fb8",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005741743006727
+        },
+        {
+          "candidate": "pc-c8d6a0bc6849",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022939517938
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2586,
+      "refinement_wall_s": 1.0045096319518052,
+      "failed": 0
+    },
+    {
+      "arm": "random-19",
+      "outcomes": [
+        {
+          "candidate": "pc-82494fd95f60",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-1",
+          "barrier_eV": 0.6751022214475197
+        },
+        {
+          "candidate": "pc-9649e760b43e",
+          "status": "ci_neb_converged",
+          "saddle": "saddle-0",
+          "barrier_eV": 0.6005758338980511
+        }
+      ],
+      "coverage": 1.0,
+      "force_evaluations": 2586,
+      "refinement_wall_s": 1.0240829139947891,
+      "failed": 0
+    }
+  ],
+  "random_mean_coverage": 0.85,
+  "random_full_coverage_fraction": 0.7,
+  "total_wall_s": 36.03799293900374,
+  "no_general_superiority_claim": true
+}

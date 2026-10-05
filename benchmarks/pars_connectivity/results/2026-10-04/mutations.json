@@ -1,0 +1,26 @@
+{
+  "scope": "isolated copies; checkout unchanged",
+  "mutations": [
+    {
+      "mutation": "skip_connectivity",
+      "test": "tests/test_refinement_contract.py::test_index_one_saddle_connecting_an_intermediate_basin_is_refused",
+      "exit_code": 1,
+      "caught": true,
+      "summary": [
+        "FAILED tests/test_refinement_contract.py::test_index_one_saddle_connecting_an_intermediate_basin_is_refused",
+        "1 failed in 2.39s"
+      ]
+    },
+    {
+      "mutation": "accept_ambiguous_pairing",
+      "test": "tests/test_connectivity.py::test_ambiguous_endpoint_pairing_is_refused",
+      "exit_code": 1,
+      "caught": true,
+      "summary": [
+        "E         - failed",
+        "FAILED tests/test_connectivity.py::test_ambiguous_endpoint_pairing_is_refused",
+        "1 failed in 0.47s"
+      ]
+    }
+  ]
+}

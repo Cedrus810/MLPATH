@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlpath-pars"
+version = "0.1.0"
+description = "PARS: Pareto-Adaptive Reaction Path Search; channel-conditioned selection, compression and refinement planning for candidate reaction paths"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "AGPL-3.0-only"
+authors = [{ name = "MLPATH / PRRS contributors" }]
+dependencies = [
+    "ase>=3.23,<4",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+pars = "pars.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 96
+extend-exclude = [".venv", ".venv-tools"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]

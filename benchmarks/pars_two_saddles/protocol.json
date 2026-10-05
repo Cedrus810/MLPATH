@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "frozen_before_execution": "2026-10-04",
+  "evidence_scope": "analytic_external_field_engineering_benchmark",
+  "potential": {"a": 0.8, "b": 0.08, "anchor_k": 10.0, "z_k": 2.0},
+  "pool": {"amplitudes": [0.7, 0.8, 0.9, 1.0, 1.1, 1.2], "frames": 21},
+  "selection": {"max_candidates": 2, "random_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]},
+  "cost": {"force_evaluations_per_arm": 6000, "count_reference_oracle_separately": true, "include_failed_refinements": true},
+  "refinement": {"refinement_images": 11, "refinement_fmax_endpoints": 0.0001, "refinement_fmax_neb": 0.005, "refinement_remove_rigid_motion": false},
+  "reference": {"stationary_fmax": 0.000001, "negative_eigenvalue_cutoff": -0.0001, "saddle_match_rmsd_A": 0.03, "endpoint_match_rmsd_A": 0.01, "descent_displacement_A": 0.03},
+  "acceptance": {"reference_first_order_saddles": 2, "pool_reaches_both_saddles": true, "pars_reaches_both_within_budget": true, "required_speedup_or_random_superiority": false},
+  "claims_excluded": ["molecular_mechanism_validation", "QM_accuracy", "general_PARS_superiority", "PRRS_discovery_recall"]
+}

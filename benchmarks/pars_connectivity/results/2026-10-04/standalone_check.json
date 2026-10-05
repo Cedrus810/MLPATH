@@ -1,0 +1,5 @@
+{
+  "scope": "standalone copy outside checkout, historical runs absent",
+  "exit_code": 0,
+  "pytest_summary": "159 passed, 1 skipped in 7.73s"
+}

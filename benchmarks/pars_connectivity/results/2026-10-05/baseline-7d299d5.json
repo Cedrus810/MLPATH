@@ -1,0 +1,436 @@
+{
+  "evidence_scope": "analytic_external_field_resolution_counterexample",
+  "potential": "E=(x^2-1)^2+(y^2+z^2)/2-0.02*exp(-((x-0.015)/0.002)^2)",
+  "reference": {
+    "first_right_minimum_x": 0.015006001102849734,
+    "next_saddle_x": 0.020079346465583056,
+    "minimum_energy_difference_curvature_eV_A2": 9995.731464762513,
+    "main_saddle": [
+      0,
+      0,
+      0
+    ],
+    "coarse_kick_A": 0.05
+  },
+  "config": {
+    "include_classifications": [
+      "reactive"
+    ],
+    "include_phases": [
+      "source",
+      "free_start",
+      "free"
+    ],
+    "min_path_frames": 3,
+    "uncertainty_quantile": 1.0,
+    "normalization": "robust",
+    "objective_scales": [],
+    "dominance_mode": "uncertainty_aware",
+    "dominance_tolerance": 0.0,
+    "margin_gamma": 0.15,
+    "cover_objective_tolerance": 0.1,
+    "preserve_mechanism_diversity": true,
+    "tube_distance_threshold": 0.3,
+    "audit_size": 5,
+    "audit_seed": 0,
+    "refinement_images": 9,
+    "refinement_fmax_endpoints": 0.01,
+    "refinement_fmax_neb": 0.05,
+    "refinement_climbing_image": true,
+    "refinement_max_steps_endpoints": 500,
+    "refinement_max_steps_neb": 1000,
+    "refinement_endpoint_min_rmsd": 0.05,
+    "refinement_spring_k": 5.0,
+    "refinement_remove_rigid_motion": false,
+    "refinement_max_top_gap_ratio": 2.0,
+    "refinement_uncertainty_refusal": null,
+    "refinement_endpoint_hessian_step": 0.001,
+    "refinement_endpoint_curvature_tolerance": 0.0001,
+    "refinement_endpoint_identity_rmsd": 0.05,
+    "refinement_saddle_hessian_step": 0.001,
+    "refinement_saddle_curvature_tolerance": 0.0001,
+    "refinement_descent_displacement": 0.05,
+    "refinement_descent_step": 0.05,
+    "refinement_descent_max_displacement": 0.05,
+    "refinement_descent_fmax": 0.001,
+    "refinement_descent_max_steps": 2000,
+    "refinement_descent_max_backtracks": 20
+  },
+  "versions": {
+    "python": "3.12.13",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "ase": "3.29.0",
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "openmm": "8.5.2"
+  },
+  "runner_sha256": "2ccf8c2a5d9b74d8afe458dfd11b81d44105ba32a9c0d4e8158d48a6894e15bf",
+  "pars_implementation_sha256": "6989959d45ec9a0af5b0a163de896716948bf592677d1360fd037294de68e82b",
+  "result": {
+    "candidate_id": "narrow",
+    "backend": "ase-neb",
+    "status": "ci_neb_converged",
+    "barrier_eV": 1.0,
+    "max_image_force_eV_A": 1.5,
+    "neb_residual_eV_A": 5.585044682625766e-23,
+    "uncertainty_max_eV_A": null,
+    "climbing_image": true,
+    "message": "",
+    "provenance": {
+      "backend": "ase-neb",
+      "images": 9,
+      "fmax_endpoints": 0.01,
+      "fmax_neb": 0.05,
+      "climbing_image": true,
+      "neb_method": "improvedtangent",
+      "spring_k": 5.0,
+      "remove_rigid_motion": false,
+      "candidate_id": "narrow",
+      "source": {
+        "run_dir": "analytic-narrow-well",
+        "attempt_id": "straight-chain",
+        "channel_id": "outer-to-outer",
+        "event_key": null,
+        "reactant_state_id": "x=-1",
+        "product_state_id": "x=+1",
+        "frame_start": 0,
+        "frame_stop": 9,
+        "perturbation_family": null,
+        "perturbation_amplitude": null,
+        "perturbation_unit": null,
+        "seed": null,
+        "implementation_sha256": null,
+        "calculator": {},
+        "extra": {
+          "endpoint_basin_references": {
+            "reactant": [
+              [
+                -1.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "product": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        }
+      },
+      "endpoint_checks": {
+        "reactant": {
+          "lowest_eigenvalue_eV_A2": 1.0,
+          "eigenvalues_eV_A2": [
+            1.0,
+            1.0,
+            8.000003999999338
+          ],
+          "negative_modes": 0,
+          "removed_rigid_modes": 0,
+          "step_A": 0.001,
+          "negative_tolerance_eV_A2": 0.0001,
+          "basin_identity": "matched",
+          "basin_reference_rmsd_A": 0.0
+        },
+        "product": {
+          "lowest_eigenvalue_eV_A2": 1.0,
+          "eigenvalues_eV_A2": [
+            1.0,
+            1.0,
+            8.000003999999338
+          ],
+          "negative_modes": 0,
+          "removed_rigid_modes": 0,
+          "step_A": 0.001,
+          "negative_tolerance_eV_A2": 0.0001,
+          "basin_identity": "matched",
+          "basin_reference_rmsd_A": 0.0
+        }
+      },
+      "uncertainty_coverage": "unavailable",
+      "saddle_check": {
+        "lowest_eigenvalue_eV_A2": -3.9999959999999994,
+        "eigenvalues_eV_A2": [
+          -3.9999959999999994,
+          1.0,
+          1.0
+        ],
+        "negative_modes": 1,
+        "removed_rigid_modes": 0,
+        "step_A": 0.001,
+        "negative_tolerance_eV_A2": 0.0001,
+        "negative_mode_cartesian": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "image_index": 4,
+        "connectivity": "matched"
+      },
+      "connectivity_check": {
+        "status": "matched",
+        "branches": [
+          {
+            "sign": -1,
+            "status": "minimum_checked",
+            "start_positions_A": [
+              [
+                -0.05,
+                0.0,
+                0.0
+              ]
+            ],
+            "energies_eV": [
+              0.9950062500000001,
+              0.9928189371634962,
+              0.9896798201696758,
+              0.9851813912081555,
+              0.9787487422640604,
+              0.969578271910693,
+              0.9565618929688103,
+              0.938202231511279,
+              0.9125366948486368,
+              0.8771120578541968,
+              0.8290904098442697,
+              0.7711207723218162,
+              0.7068195900246965,
+              0.6373091387368373,
+              0.5638616942421654,
+              0.48789953232460825,
+              0.4109949287680929,
+              0.3348701593565462,
+              0.26139749987389543,
+              0.19259922610406754,
+              0.13064761383098972,
+              0.07786493883858887,
+              0.03854398584403306,
+              0.017417204384098762,
+              0.007318236579631487,
+              0.0029146633986086396,
+              0.0011187785135851223,
+              0.00041914966991761293,
+              0.00015463231357738775,
+              5.6502568791651794e-05,
+              2.052497131275466e-05,
+              7.4292350780653345e-06,
+              2.683282256008884e-06,
+              9.678817089830353e-07,
+              3.4884893700484515e-07,
+              1.256746491524655e-07,
+              4.526212315536097e-08
+            ],
+            "accepted_steps": 36,
+            "backtracks": 0,
+            "uncertainty_max_eV_A": null,
+            "uncertainty_observations": 37,
+            "uncertainty_missing": 37,
+            "fmax_target_eV_A": 0.001,
+            "uncertainty_coverage": "unavailable",
+            "positions_A": [
+              [
+                -0.9998936198579026,
+                0.0,
+                0.0
+              ]
+            ],
+            "max_force_eV_A": 0.0008509053407790516,
+            "minimum_check": {
+              "lowest_eigenvalue_eV_A2": 1.0,
+              "eigenvalues_eV_A2": [
+                1.0,
+                1.0,
+                7.997451012390591
+              ],
+              "negative_modes": 0,
+              "removed_rigid_modes": 0,
+              "step_A": 0.001,
+              "negative_tolerance_eV_A2": 0.0001
+            },
+            "endpoint_rmsd_A": {
+              "reactant": 0.00010638014209740643,
+              "product": 1.9998936198579025
+            },
+            "matched_endpoint": "reactant"
+          },
+          {
+            "sign": 1,
+            "status": "minimum_checked",
+            "start_positions_A": [
+              [
+                0.05,
+                0.0,
+                0.0
+              ]
+            ],
+            "energies_eV": [
+              0.9950062500000001,
+              0.9928189371634962,
+              0.9896798201696758,
+              0.9851813912081555,
+              0.9787487422640604,
+              0.969578271910693,
+              0.9565618929688103,
+              0.938202231511279,
+              0.9125366948486368,
+              0.8771120578541968,
+              0.8290904098442697,
+              0.7711207723218162,
+              0.7068195900246965,
+              0.6373091387368373,
+              0.5638616942421654,
+              0.48789953232460825,
+              0.4109949287680929,
+              0.3348701593565462,
+              0.26139749987389543,
+              0.19259922610406754,
+              0.13064761383098972,
+              0.07786493883858887,
+              0.03854398584403306,
+              0.017417204384098762,
+              0.007318236579631487,
+              0.0029146633986086396,
+              0.0011187785135851223,
+              0.00041914966991761293,
+              0.00015463231357738775,
+              5.6502568791651794e-05,
+              2.052497131275466e-05,
+              7.4292350780653345e-06,
+              2.683282256008884e-06,
+              9.678817089830353e-07,
+              3.4884893700484515e-07,
+              1.256746491524655e-07,
+              4.526212315536097e-08
+            ],
+            "accepted_steps": 36,
+            "backtracks": 0,
+            "uncertainty_max_eV_A": null,
+            "uncertainty_observations": 37,
+            "uncertainty_missing": 37,
+            "fmax_target_eV_A": 0.001,
+            "uncertainty_coverage": "unavailable",
+            "positions_A": [
+              [
+                0.9998936198579026,
+                0.0,
+                0.0
+              ]
+            ],
+            "max_force_eV_A": 0.0008509053407790516,
+            "minimum_check": {
+              "lowest_eigenvalue_eV_A2": 1.0,
+              "eigenvalues_eV_A2": [
+                1.0,
+                1.0,
+                7.997451012390591
+              ],
+              "negative_modes": 0,
+              "removed_rigid_modes": 0,
+              "step_A": 0.001,
+              "negative_tolerance_eV_A2": 0.0001
+            },
+            "endpoint_rmsd_A": {
+              "reactant": 1.9998936198579025,
+              "product": 0.00010638014209740643
+            },
+            "matched_endpoint": "product"
+          }
+        ],
+        "method": "energy_monotone_cartesian_gradient_descent",
+        "settings": {
+          "refinement_descent_displacement": 0.05,
+          "refinement_descent_step": 0.05,
+          "refinement_descent_max_displacement": 0.05,
+          "refinement_descent_fmax": 0.001,
+          "refinement_descent_max_steps": 2000,
+          "refinement_descent_max_backtracks": 20
+        },
+        "endpoint_match_rmsd_A": 0.05,
+        "saddle_energy_eV": 1.0,
+        "message": "two checked minima match distinct endpoint basins",
+        "endpoint_identity_scope": "source_basin_witnesses"
+      }
+    }
+  },
+  "band_positions_A": [
+    [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.75,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.5,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.25,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.25,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.5,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.75,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        1.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "band_energies_eV": [
+    0.0,
+    0.19140625,
+    0.5625,
+    0.87890625,
+    1.0,
+    0.87890625,
+    0.5625,
+    0.19140625,
+    0.0
+  ]
+}

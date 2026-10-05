@@ -1,0 +1,136 @@
+{
+  "inspected_commit": "ea83caf2641d70efd8962534b8f292ad01103243",
+  "pars_implementation_sha256": "57fcad4d8785761bcdf862337e972fc9a2688cb87b735b8527adf1e30dc6b3d0",
+  "numerical_versions": {
+    "python": "3.12.13",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "ase": "3.29.0",
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "openmm": "8.5.2"
+  },
+  "endpoint_identity": {
+    "atoms": 500,
+    "potential": "x^2*(x^2-1)^2 + harmonic spectators/transverse DOFs",
+    "true_minima_x": [
+      -1,
+      0,
+      1
+    ],
+    "outer_endpoint_rmsd_A": 0.08944271909999159,
+    "config": {
+      "include_classifications": [
+        "reactive"
+      ],
+      "include_phases": [
+        "source",
+        "free_start",
+        "free"
+      ],
+      "min_path_frames": 3,
+      "uncertainty_quantile": 1.0,
+      "normalization": "robust",
+      "objective_scales": [],
+      "dominance_mode": "uncertainty_aware",
+      "dominance_tolerance": 0.0,
+      "margin_gamma": 0.15,
+      "cover_objective_tolerance": 0.1,
+      "preserve_mechanism_diversity": true,
+      "tube_distance_threshold": 0.3,
+      "audit_size": 5,
+      "audit_seed": 0,
+      "refinement_images": 9,
+      "refinement_fmax_endpoints": 0.01,
+      "refinement_fmax_neb": 0.001,
+      "refinement_climbing_image": true,
+      "refinement_max_steps_endpoints": 500,
+      "refinement_max_steps_neb": 1000,
+      "refinement_endpoint_min_rmsd": 0.05,
+      "refinement_spring_k": 5.0,
+      "refinement_remove_rigid_motion": false,
+      "refinement_max_top_gap_ratio": 2.0,
+      "refinement_uncertainty_refusal": null,
+      "refinement_endpoint_hessian_step": 0.001,
+      "refinement_endpoint_curvature_tolerance": 0.0001,
+      "refinement_endpoint_identity_rmsd": 0.05,
+      "refinement_saddle_hessian_step": 0.001,
+      "refinement_saddle_curvature_tolerance": 0.0001,
+      "refinement_descent_displacement": 0.05,
+      "refinement_descent_step": 0.05,
+      "refinement_descent_max_displacement": 0.05,
+      "refinement_descent_fmax": 0.001,
+      "refinement_descent_max_steps": 2000,
+      "refinement_descent_max_backtracks": 20,
+      "refinement_descent_resolution_factor": 0.25
+    },
+    "status": "failed",
+    "message": "climbing image connectivity check: signed descents do not uniquely match both endpoint basins; not reporting success; no barrier reported",
+    "barrier_eV": null,
+    "connectivity_status": "failed",
+    "saddle_negative_modes": 1,
+    "branches": [
+      {
+        "sign": -1,
+        "active_x": 0.0004907335209775978,
+        "matched_endpoint": null,
+        "endpoint_rmsd_A": {
+          "reactant": 0.04474330582023067,
+          "product": 0.044699413279760916
+        },
+        "endpoint_max_displacement_A": {
+          "reactant": 1.0004907335209776,
+          "product": 0.9995092664790224
+        },
+        "active_atom_error_to_assigned_endpoint_A": null
+      },
+      {
+        "sign": 1,
+        "active_x": 0.9999172409040202,
+        "matched_endpoint": null,
+        "endpoint_rmsd_A": {
+          "reactant": 0.08943901800070424,
+          "product": 3.7010992873437934e-06
+        },
+        "endpoint_max_displacement_A": {
+          "reactant": 1.9999172409040202,
+          "product": 8.27590959797675e-05
+        },
+        "active_atom_error_to_assigned_endpoint_A": null
+      }
+    ],
+    "resolution_status": null,
+    "fine_branches": []
+  },
+  "file_integrity": {
+    "initial_record_status": "failed",
+    "missing_geometry_resume": {
+      "exit_code": null,
+      "refused": true,
+      "reason": "missing or changed geometry artifact; pass --redo",
+      "geometry_exists": false
+    },
+    "interrupted_redo_resume": {
+      "exit_code": 0,
+      "refused": false,
+      "old_marker_preserved": true,
+      "old_geometry_preserved": true
+    },
+    "reordered_observations": {
+      "observation_frame_indices": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "expected_first_phase": "source",
+      "expected_first_energy_eV": -1.0,
+      "accepted": false,
+      "reason": "t000001: observation frame index mismatch at row 0; refusing to guess the pairing"
+    }
+  }
+}

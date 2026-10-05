@@ -1,0 +1,11 @@
+{
+  "scope": "isolated module copy; source unchanged",
+  "mutation": "skip_finer_resolution",
+  "test": "tests/test_connectivity.py::test_smaller_resolution_detects_a_basin_skipped_by_the_coarse_kick",
+  "exit_code": 1,
+  "caught": true,
+  "summary": [
+    "FAILED tests/test_connectivity.py::test_smaller_resolution_detects_a_basin_skipped_by_the_coarse_kick",
+    "1 failed in 0.31s"
+  ]
+}

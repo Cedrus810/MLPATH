@@ -1,0 +1,273 @@
+{
+  "evidence_scope": "analytic_external_field_counterexample",
+  "potential": "E=x^2*(x^2-1)^2+(y^2+z^2)/2",
+  "reference": {
+    "minima_x": [
+      -1,
+      0,
+      1
+    ],
+    "saddles_x": [
+      -0.5773502691896258,
+      0.5773502691896258
+    ],
+    "saddle_eigenvalues_eV_A2": [
+      -2.6666666666666665,
+      1,
+      1
+    ],
+    "local_barrier_eV": 0.14814814814814814,
+    "connectivity": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "config": {
+    "include_classifications": [
+      "reactive"
+    ],
+    "include_phases": [
+      "source",
+      "free_start",
+      "free"
+    ],
+    "min_path_frames": 3,
+    "uncertainty_quantile": 1.0,
+    "normalization": "robust",
+    "objective_scales": [],
+    "dominance_mode": "uncertainty_aware",
+    "dominance_tolerance": 0.0,
+    "margin_gamma": 0.15,
+    "cover_objective_tolerance": 0.1,
+    "preserve_mechanism_diversity": true,
+    "tube_distance_threshold": 0.3,
+    "audit_size": 5,
+    "audit_seed": 0,
+    "refinement_images": 11,
+    "refinement_fmax_endpoints": 0.01,
+    "refinement_fmax_neb": 0.001,
+    "refinement_climbing_image": true,
+    "refinement_max_steps_endpoints": 500,
+    "refinement_max_steps_neb": 1000,
+    "refinement_endpoint_min_rmsd": 0.05,
+    "refinement_spring_k": 5.0,
+    "refinement_remove_rigid_motion": false,
+    "refinement_max_top_gap_ratio": 2.0,
+    "refinement_uncertainty_refusal": null,
+    "refinement_endpoint_hessian_step": 0.001,
+    "refinement_endpoint_curvature_tolerance": 0.0001,
+    "refinement_endpoint_identity_rmsd": 0.05,
+    "refinement_saddle_hessian_step": 0.001,
+    "refinement_saddle_curvature_tolerance": 0.0001
+  },
+  "pars_implementation_sha256": "136b467066468434ef835582364cef9a4502d5e6c2340d70887fde06f7db1959",
+  "runner_sha256": "710b90e02a65c605843fd319a2b5598e487d210b6e03d206716aa0c8bd8f8533",
+  "versions": {
+    "python": "3.12.13",
+    "numpy": "2.4.3",
+    "scipy": "1.17.1",
+    "ase": "3.29.0",
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "openmm": "8.5.2"
+  },
+  "result": {
+    "candidate_id": "straight-chain",
+    "backend": "ase-neb",
+    "status": "ci_neb_converged",
+    "barrier_eV": 0.14814813557235473,
+    "max_image_force_eV_A": 0.532675301526594,
+    "neb_residual_eV_A": 0.0008682209088819448,
+    "uncertainty_max_eV_A": null,
+    "climbing_image": true,
+    "message": "",
+    "provenance": {
+      "backend": "ase-neb",
+      "images": 11,
+      "fmax_endpoints": 0.01,
+      "fmax_neb": 0.001,
+      "climbing_image": true,
+      "neb_method": "improvedtangent",
+      "spring_k": 5.0,
+      "remove_rigid_motion": false,
+      "candidate_id": "straight-chain",
+      "source": {
+        "run_dir": "analytic-three-minima",
+        "attempt_id": "straight-chain",
+        "channel_id": "outer-to-outer",
+        "event_key": null,
+        "reactant_state_id": "x=-1",
+        "product_state_id": "x=+1",
+        "frame_start": 0,
+        "frame_stop": 11,
+        "perturbation_family": null,
+        "perturbation_amplitude": null,
+        "perturbation_unit": null,
+        "seed": null,
+        "implementation_sha256": null,
+        "calculator": {},
+        "extra": {
+          "endpoint_basin_references": {
+            "reactant": [
+              [
+                -1.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "product": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        }
+      },
+      "endpoint_checks": {
+        "reactant": {
+          "lowest_eigenvalue_eV_A2": 1.0,
+          "eigenvalues_eV_A2": [
+            1.0,
+            1.0,
+            8.000052000005336
+          ],
+          "negative_modes": 0,
+          "removed_rigid_modes": 0,
+          "step_A": 0.001,
+          "negative_tolerance_eV_A2": 0.0001,
+          "basin_identity": "matched",
+          "basin_reference_rmsd_A": 0.0
+        },
+        "product": {
+          "lowest_eigenvalue_eV_A2": 1.0,
+          "eigenvalues_eV_A2": [
+            1.0,
+            1.0,
+            8.000052000005336
+          ],
+          "negative_modes": 0,
+          "removed_rigid_modes": 0,
+          "step_A": 0.001,
+          "negative_tolerance_eV_A2": 0.0001,
+          "basin_identity": "matched",
+          "basin_reference_rmsd_A": 0.0
+        }
+      },
+      "saddle_check": {
+        "lowest_eigenvalue_eV_A2": -2.667102875151383,
+        "eigenvalues_eV_A2": [
+          -2.667102875151383,
+          1.0,
+          1.0
+        ],
+        "negative_modes": 1,
+        "removed_rigid_modes": 0,
+        "step_A": 0.001,
+        "negative_tolerance_eV_A2": 0.0001,
+        "image_index": 2,
+        "connectivity": "not_checked"
+      },
+      "uncertainty_coverage": "unavailable"
+    }
+  },
+  "band_positions_A": [
+    [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.7887422568948176,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.5774473841548357,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.38008299226644343,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        -0.1827415346034592,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.014454143553705428,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.21148355968182636,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.4084408878711246,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.6054566263175707,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.8026460089457932,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        1.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "band_energies_eV": [
+    0.0,
+    0.08883641472197974,
+    0.14814813557235473,
+    0.10573880154289221,
+    0.03120132861534517,
+    0.000208834977963917,
+    0.04081405814828647,
+    0.11580624205765516,
+    0.14707969984063368,
+    0.08153814572043533,
+    0.0
+  ]
+}

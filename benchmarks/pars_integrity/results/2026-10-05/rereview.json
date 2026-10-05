@@ -1,0 +1,60 @@
+{
+  "workspace": "/home/ruigengji/MLPATH",
+  "evidence_directory": "/tmp/mlpath-rereview-b7p6rxoq",
+  "inspected_commit": "0ad9137f5eedf05dd33febfe33eebe1fd14db614",
+  "pars_implementation_sha256": "57fcad4d8785761bcdf862337e972fc9a2688cb87b735b8527adf1e30dc6b3d0",
+  "numerical_versions": {
+    "python": "3.12.13",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "ase": "3.29.0",
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "openmm": "8.5.2"
+  },
+  "charge_spin_loss": {
+    "source_charge": -1,
+    "source_spin": 3,
+    "seed_charge": null,
+    "seed_spin": null,
+    "backend_observed_states": [
+      [
+        null,
+        null
+      ]
+    ],
+    "status": "ci_neb_converged",
+    "reported_barrier_eV": 0.24999997991998818,
+    "correct_charged_barrier_eV": 0.5,
+    "connectivity_status": "matched"
+  },
+  "hessian_uncertainty_bypass": [
+    {
+      "bad_value": "nan",
+      "bad_hessian_samples": 28,
+      "status": "ci_neb_converged",
+      "barrier_eV": 0.25,
+      "recorded_uncertainty_max_eV_A": 0.005,
+      "coverage": "complete",
+      "connectivity": "matched"
+    },
+    {
+      "bad_value": "1000.0",
+      "bad_hessian_samples": 28,
+      "status": "ci_neb_converged",
+      "barrier_eV": 0.25,
+      "recorded_uncertainty_max_eV_A": 0.005,
+      "coverage": "complete",
+      "connectivity": "matched"
+    }
+  ],
+  "skipped_authoritative_conflict": {
+    "ledger_classification": "elastic",
+    "result_classification": "reactive",
+    "ingest_succeeded": true,
+    "ingested_ids": [
+      "t000002"
+    ],
+    "explicit_load_error": "t000001: result/attempt ledger mismatch in classification"
+  }
+}

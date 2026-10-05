@@ -1,0 +1,37 @@
+{
+  "scope": "isolated copies; checkout unchanged",
+  "mutations": [
+    {
+      "mutation": "pairwise_intersection",
+      "test": "tests/test_pareto_margin.py::test_missing_objectives_cannot_cycle_and_empty_the_frontier",
+      "exit_code": 1,
+      "caught": true,
+      "summary": [
+        "FAILED tests/test_pareto_margin.py::test_missing_objectives_cannot_cycle_and_empty_the_frontier",
+        "1 failed in 0.08s"
+      ]
+    },
+    {
+      "mutation": "unknown_sigma_as_zero",
+      "test": "tests/test_frontier_uncertainty.py::test_unrelated_partial_sigma_does_not_hard_delete_missing_pair",
+      "exit_code": 1,
+      "caught": true,
+      "summary": [
+        "FAILED tests/test_frontier_uncertainty.py::test_unrelated_partial_sigma_does_not_hard_delete_missing_pair[0.0]",
+        "FAILED tests/test_frontier_uncertainty.py::test_unrelated_partial_sigma_does_not_hard_delete_missing_pair[0.05]",
+        "2 failed in 0.09s"
+      ]
+    },
+    {
+      "mutation": "skip_saddle_gate",
+      "test": "tests/test_refinement_contract.py::test_stationary_climbing_image_requires_one_resolved_negative_mode",
+      "exit_code": 1,
+      "caught": true,
+      "summary": [
+        "FAILED tests/test_refinement_contract.py::test_stationary_climbing_image_requires_one_resolved_negative_mode[False-2]",
+        "FAILED tests/test_refinement_contract.py::test_stationary_climbing_image_requires_one_resolved_negative_mode[True-0]",
+        "2 failed in 0.27s"
+      ]
+    }
+  ]
+}
