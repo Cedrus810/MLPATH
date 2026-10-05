@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "source_run": "/home/ruigengji/MLPATH/runs/b04_frozen2",
+  "source_sha256": {
+    "config.json": "265a5adbf1023db66dee97e14c938948e044b9d56c62ce5c6ceb2acf2f72b584",
+    "network.json": "65475a8288a21538d1c8afabcd1e687c00e24de32b42a2faf6a16f7167e1dff1",
+    "attempts.jsonl": "400cf8b0fccadc95dc5e3bbf99ca73d7211cd99d86c8b6c7bb55658376fbf2d3"
+  },
+  "source_implementation_sha256": "ec32bc3df5d2bf1443d486eb4ccbe6a01cf23529a55b56744e3c87437e7efdf0",
+  "audit_implementation_sha256": "2b340eb680e0f8096bb27448d20f7d59b64a0c71d2895e1657541c33877112be",
+  "calculator_identity": {
+    "factory": {
+      "module": "prrs.calculators",
+      "qualname": "load_factory.<locals>.create",
+      "source_sha256": "244e0a8bf94662f9500804d43c4f22830f6e5bca780a322eebad7f7e536116b9",
+      "code_sha256": "3c4f9c5279fac453a6567a439f8fe4a9da52d05a302ce010d62aae66cf6d6abf",
+      "defaults": null,
+      "kwdefaults": null,
+      "closure": {
+        "function": {
+          "module": "benchmarks.b04_sn2_chloride.calculator",
+          "qualname": "polar1",
+          "source_sha256": "6c52e5ed449b1d0129bc10f91bb31d386047300872a63b302833f4126c2bcc1b",
+          "code_sha256": "747a4cd2cd057bd91e2adec8c82ccb5463fc91383e22d8f8d9feef24ee3f67b4",
+          "defaults": [
+            "cuda",
+            "float64"
+          ],
+          "kwdefaults": null,
+          "closure": {}
+        },
+        "options": {
+          "default_dtype": "float64",
+          "device": "cpu"
+        }
+      }
+    },
+    "metadata": {
+      "factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+      "kwargs": {
+        "default_dtype": "float64",
+        "device": "cpu"
+      },
+      "local_file_sha256": {
+        "/home/ruigengji/MLP/mace/MACE-POLAR-1-M.model": "fab8b8713c832f31a2a853aaa22fd638be8a369cbf5095e6b3e982a18d10e93a"
+      }
+    },
+    "local_file_sha256": {},
+    "verifiable": true,
+    "opaque_captures": []
+  },
+  "versions": {
+    "python": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 16:50:00) [GCC 14.3.0]",
+    "platform": "Linux-7.2.8-1-cachyos-x86_64-with-glibc2.44",
+    "ase": "3.29.0",
+    "numpy": "2.4.3",
+    "scipy": "1.17.1",
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "openmm": "8.5.2",
+    "openmm-ml": "installed; no version metadata",
+    "openmm-torch": "installed; no version metadata",
+    "nnpops": "installed; no version metadata"
+  },
+  "semantics": {
+    "rule": "finite_horizon_response_then_quench",
+    "response_steps": 200,
+    "timestep_fs": 0.25,
+    "response_time_fs": 50.0,
+    "horizon_stability": "not_measured",
+    "static_basin_boundary": false,
+    "meaning": "amplitude windows depend on the response horizon, thermal seed and quench; neither a static basin boundary nor a committor"
+  },
+  "horizons_steps": [
+    100,
+    200,
+    400
+  ],
+  "horizons_fs": [
+    25.0,
+    50.0,
+    100.0
+  ],
+  "baseline_reproduced": true,
+  "scope": "selected_fixed_amplitude_samples",
+  "scan_indices": [
+    0
+  ],
+  "status": "not_certified",
+  "scans": [
+    {
+      "scan": 0,
+      "source_microstate": "c0000/m0000",
+      "by_steps": {
+        "200": {
+          "labels": {
+            "0.1": "returned",
+            "0.3": "returned",
+            "0.6": "returned",
+            "0.7": "returned",
+            "0.75": "returned",
+            "0.8": "departed:c0000/m0001",
+            "1.0": "departed:c0000/m0001"
+          },
+          "windows": [
+            [
+              0.75,
+              0.8
+            ]
+          ]
+        },
+        "100": {
+          "labels": {
+            "0.1": "returned",
+            "0.3": "returned",
+            "0.6": "returned",
+            "0.7": "returned",
+            "0.75": "returned",
+            "0.8": "unresolved:unconfirmed",
+            "1.0": "departed:c0000/m0001"
+          },
+          "windows": []
+        },
+        "400": {
+          "labels": {
+            "0.1": "returned",
+            "0.3": "returned",
+            "0.6": "departed:c0000/m0001",
+            "0.7": "departed:c0000/m0001",
+            "0.75": "unresolved:unconfirmed",
+            "0.8": "returned",
+            "1.0": "returned"
+          },
+          "windows": [
+            [
+              0.3,
+              0.6
+            ]
+          ]
+        }
+      },
+      "samples": [
+        {
+          "amplitude": 0.1,
+          "attempt": "t000000",
+          "status": "completed",
+          "admission": "existing_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0000"
+        },
+        {
+          "amplitude": 0.3,
+          "attempt": "t000001",
+          "status": "completed",
+          "admission": "existing_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0000"
+        },
+        {
+          "amplitude": 0.6,
+          "attempt": "t000002",
+          "status": "completed",
+          "admission": "existing_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0000"
+        },
+        {
+          "amplitude": 0.7,
+          "attempt": "t000005",
+          "status": "completed",
+          "admission": "existing_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0000"
+        },
+        {
+          "amplitude": 0.75,
+          "attempt": "t000006",
+          "status": "completed",
+          "admission": "existing_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0000"
+        },
+        {
+          "amplitude": 0.8,
+          "attempt": "t000004",
+          "status": "completed",
+          "admission": "existing_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0001"
+        },
+        {
+          "amplitude": 1.0,
+          "attempt": "t000003",
+          "status": "completed",
+          "admission": "new_microstate",
+          "target": "c0000",
+          "target_microstate": "c0000/m0001"
+        }
+      ],
+      "assessment": {
+        "status": "unresolved",
+        "stable_on_tested_grid": false,
+        "label_changes": true,
+        "static_basin_boundary": false
+      }
+    }
+  ],
+  "baseline_tolerance_A": 1e-05,
+  "static_basin_boundary": false,
+  "wall_s": 2429.568886236986,
+  "source_unchanged": true
+}
