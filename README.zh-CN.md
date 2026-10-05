@@ -6,8 +6,8 @@
 
 [English](README.md) | 简体中文
 
-**MLPATH 项目入口**：[整体逻辑与当前进度](docs/PROJECT_OVERVIEW.md) · [文档导航](docs/README.md) · [PARS 路径模块](pars/README.md)。
-MLPATH 包含 PRRS 反应发现、PARS 路径选择与精修，以及规划中的射击成熟层。本文介绍 PRRS；整体关系与 connect 进度见项目总览。
+**MLPATH 项目入口**：[整体逻辑与当前进度](docs/PROJECT_OVERVIEW.md) · [文档导航](docs/README.md) · [PARS 路径模块](pars/README.md) · [路径成熟层](mature/README.md)。
+MLPATH 包含 PRRS 反应发现、PARS 路径选择与精修（MVP-1..5 已落地），以及射击式路径成熟层（`mature/`，M0+M1 已落地）。本文介绍 PRRS；整体关系与 connect 进度见项目总览。
 
 **PRRS 是一个面向机器学习势（MLP）的反应发现方法。**
 
@@ -151,6 +151,10 @@ prrs demo --output runs/demo --seed 42
 prrs search input.extxyz --output runs/my_run \
     --config config.json --calculator mace --calculator-kwargs calc.json
 
+# connect 模式：给了产物，每个微态记录它到产物的距离（只记录，绝不路由）
+prrs search input.extxyz --product product.extxyz --output runs/my_connect \
+    --config config.json --calculator mace
+
 # 导出未精化的路径种子，供下游 NEB / dimer / string 精化；
 # 淬火迭代被排除 —— 它们不是动力学
 prrs path --run runs/my_run --attempt <id> --output seed.extxyz --images 9
@@ -175,7 +179,7 @@ python scripts/prrs_watch.py runs/my_run
 ## 文件地图
 
 ```
-src/prrs/                 搜索核心 —— 19 个模块，约 12k 行
+src/prrs/                 搜索核心 —— 25 个模块，约 13k 行
   config.py               全部协议参数 + 校验；不合法配置在启动前拒绝
   internal.py             primitive internals、精确刚体 fragment 旋转、continuation 位移
   chemistry.py            三层身份、自同构群、对称感知 RMSD
@@ -188,12 +192,16 @@ src/prrs/                 搜索核心 —— 19 个模块，约 12k 行
   search.py               预算调度、幅度细化、TS pool、run manifest
   completeness.py         盆地归属的条件完备性证书
   product.py              connect 模式的产物目标：只记录距离，绝不路由
+  window_audit.py         匹配响应时窗的回放审计（绝不认证静态盆地边界）
+  geometric_backend.py    可选的 geomeTRIC 精修（ASE 或已有 OpenMM Context）
+  geometric_cli.py        精修的 CLI 接线（懒加载）
+  provenance.py           calculator 身份记录，供续跑核对（不执行）
   schema.py               显式的 network.json schema（schema 2）
   calculators.py          calculator 工厂
   openmm_backend.py       经实测验证的 openmm-ml/MACE 原语
   torch_guard.py          唯一一个经审计的 torch.load 包装
   validation.py           独立交叉校验路径（ase.vibrations）—— 搜索侧从不 import
-tests/                    31 个文件、349 个测试函数
+tests/                    36 个文件、388 个测试函数
 benchmarks/               基准套件 —— 每个反应体系一个目录（判据 + 评定脚本）
 docs/                     工作记录：交接、验收文档、计划、实验日志
 scripts/                  溯源、实现哈希、实时观察器
@@ -221,7 +229,8 @@ make hash      # run manifest 会记的 implementation_sha256
 - **`implementation_sha256`**（`make hash`）是每个 run manifest 的溯源锚：对
   `src/prrs/*.py` 的内容哈希，不依赖 VCS 状态。绝不手抄；现行指纹的记录在
   `docs/HANDOFF.md` 与 `env/BASELINE.md` 维护。
-- 最近一次记录的完整验证门：**476 passed, 1 skipped，digest 零差异**（2026-09-26）。
+- 最近一次记录的完整验证门：**537 passed, 7 skipped，digest 零差异**（2026-10-01；
+  7 个 skip 是环境性的 —— 门禁机器上没有 MACE checkpoint / CUDA）。
 
 ### 项目的规矩
 
@@ -249,12 +258,15 @@ make hash      # run manifest 会记的 implementation_sha256
 | [docs/onboarding/README.md](docs/onboarding/README.md) | 新人导读 |
 | [benchmarks/README.md](benchmarks/README.md) | 基准套件的规矩与队列 |
 | [env/BASELINE.md](env/BASELINE.md) | 环境基线与指纹沿革 |
-| [docs/PLAN_2026-09-28.md](docs/PLAN_2026-09-28.md) | 现行计划 —— connect 模式两层桥 |
+| [docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md](docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md) | 现行计划 —— 路径成熟层（下一步 M2+M3） |
+| [docs/PLAN_2026-09-28.md](docs/PLAN_2026-09-28.md) | connect 模式两层桥 —— G1–G4 已落地，到产物即停的终止条件未做 |
 
-截至 2026-09-28 的活跃工作：**connect 模式两层桥计划**（已知反应物与产物，
-求其间通道）—— 代码草稿在仓库根 `PLAN_2026-09-28.py`，待分段并入 `src/prrs`；
-**首次进入 committor**（主线 A）2026-09-26 完成并确认；静态性能审查
-（`docs/REVIEW_2026-09-28.md`，PERF-01…28）待按"先量后建"分诊。
+截至 2026-10-05 的活跃工作：connect 模式已并入 `src/prrs`（G1–G4 落地；到产物
+即停的终止条件仍未做）；**PARS** 选择/精修以独立模块落地（MVP-1..5；QM 反馈实验
+MVP-6 待决策）；**路径成熟层** `mature/` 落地 M0+M1，下一施工块是 M2+M3；
+10-04/10-05 的完整性与 connectivity 复审收口在
+`docs/INTEGRITY_REVIEW_2026-10-05.md` 与 `docs/REREVIEW_2026-10-05.md`。
+PERF 批次（PERF-02/03a/22）已落地；09-28 静态审查的其余候选项仍按"先量后建"分诊。
 
 方法原稿：
 [`mlp_native_perturbation_response_reaction_search.md`](mlp_native_perturbation_response_reaction_search.md)。

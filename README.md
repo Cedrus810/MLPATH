@@ -6,8 +6,8 @@
 
 English | [简体中文](README.zh-CN.md)
 
-**MLPATH project entry:** [architecture and current status (Chinese)](docs/PROJECT_OVERVIEW.md) · [documentation index](docs/README.md) · [PARS path module](pars/README.md).
-MLPATH includes PRRS discovery, PARS path selection/refinement, and a planned shooting-based maturation workflow. This README covers PRRS; the project overview tracks their boundaries and connect-mode progress.
+**MLPATH project entry:** [architecture and current status (Chinese)](docs/PROJECT_OVERVIEW.md) · [documentation index](docs/README.md) · [PARS path module](pars/README.md) · [path maturation layer](mature/README.md).
+MLPATH includes PRRS discovery, PARS path selection/refinement (MVP-1..5 landed), and the shooting-based maturation layer (`mature/`, M0+M1 landed). This README covers PRRS; the project overview tracks their boundaries and connect-mode progress.
 
 **PRRS is a reaction-discovery method designed for machine-learning interatomic
 potentials (MLPs).**
@@ -192,6 +192,11 @@ prrs demo --output runs/demo --seed 42
 prrs search input.extxyz --output runs/my_run \
     --config config.json --calculator mace --calculator-kwargs calc.json
 
+# connect mode: given a product, every microstate records its distance to it
+# (recorded, never routed)
+prrs search input.extxyz --product product.extxyz --output runs/my_connect \
+    --config config.json --calculator mace
+
 # export an unrefined path seed for downstream NEB / dimer / string refinement;
 # quench iterations are excluded — they are not dynamics
 prrs path --run runs/my_run --attempt <id> --output seed.extxyz --images 9
@@ -218,7 +223,7 @@ full-resolution PNGs go to `.scratch/prrs_watch/<run>/`.
 ## Repository layout
 
 ```
-src/prrs/                 search core — 19 modules, ≈12k lines
+src/prrs/                 search core — 25 modules, ≈13k lines
   config.py               all protocol parameters + validation; invalid configs rejected before launch
   internal.py             primitive internals, exact rigid-fragment rotation, continuation displacements
   chemistry.py            the three identity layers, automorphism groups, symmetry-aware RMSD
@@ -231,12 +236,16 @@ src/prrs/                 search core — 19 modules, ≈12k lines
   search.py               budget scheduling, amplitude refinement, TS pool, run manifest
   completeness.py         conditional completeness certificates for basin membership
   product.py              connect-mode product target: records distances only, never routes
+  window_audit.py         matched response-horizon replay audit (never certifies a static boundary)
+  geometric_backend.py    optional geomeTRIC refinement on ASE or an existing OpenMM Context
+  geometric_cli.py        CLI wiring for the refinement (lazy import)
+  provenance.py           calculator identity for resume verification (no execution)
   schema.py               explicit network.json schema (schema 2)
   calculators.py          calculator factory
   openmm_backend.py       tested openmm-ml/MACE primitives
   torch_guard.py          single audited wrapper around torch.load
   validation.py           independent cross-check path (ase.vibrations) — never imported by the search
-tests/                    31 files, 349 test functions
+tests/                    36 files, 388 test functions
 benchmarks/               the benchmark suite — one directory per reaction system (criteria + grader)
 docs/                     working records: handoff, acceptance docs, plans, experiment logs
 scripts/                  provenance, implementation hash, live run observer
@@ -267,8 +276,9 @@ make hash      # the implementation_sha256 a run manifest would record
   manifest: a content hash of `src/prrs/*.py`, independent of VCS state. Never
   copied by hand; the fingerprint of record is tracked in `docs/HANDOFF.md` and
   `env/BASELINE.md`.
-- Last recorded full gate: **476 passed, 1 skipped, digest zero-diff**
-  (2026-09-26).
+- Last recorded full gate: **537 passed, 7 skipped, digest zero-diff**
+  (2026-10-01; the skips are environmental — no MACE checkpoint / CUDA on the
+  gate machine).
 
 ### Project norms
 
@@ -303,14 +313,18 @@ have been voided before.
 | [docs/onboarding/README.md](docs/onboarding/README.md) | newcomer guide |
 | [benchmarks/README.md](benchmarks/README.md) | benchmark suite rules and queue |
 | [env/BASELINE.md](env/BASELINE.md) | environment baseline and fingerprint history |
-| [docs/PLAN_2026-09-28.md](docs/PLAN_2026-09-28.md) | current plan — connect-mode two-layer bridge |
+| [docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md](docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md) | current plan — path maturation layer (M2+M3 next) |
+| [docs/PLAN_2026-09-28.md](docs/PLAN_2026-09-28.md) | connect-mode two-layer bridge — G1–G4 landed, stop-at-product termination pending |
 
-Active work as of 2026-09-28: the **connect-mode bridge plan** (given known
-reactant and product, find the channels between them) — code draft in
-`PLAN_2026-09-28.py` at the repo root, awaiting staged merge into `src/prrs`;
-the **first-entry committor** machinery (main line A) completed and confirmed
-2026-09-26; a static performance review (`docs/REVIEW_2026-09-28.md`,
-PERF-01…28) awaiting measurement-first triage.
+Active work as of 2026-10-05: connect mode is merged into `src/prrs`
+(G1–G4 landed; the stop-at-product termination condition is still pending);
+**PARS** selection/refinement landed as an independent module (MVP-1..5; the
+QM-feedback experiment MVP-6 awaits a decision); the **path maturation
+layer** `mature/` landed M0+M1, with M2+M3 as the next construction block;
+the 10-04/10-05 integrity and connectivity review rounds are closed in
+`docs/INTEGRITY_REVIEW_2026-10-05.md` and `docs/REREVIEW_2026-10-05.md`.
+The PERF batch (PERF-02/03a/22) landed; the rest of the 09-28 static review
+remains measurement-first triage.
 
 The original method note is
 [`mlp_native_perturbation_response_reaction_search.md`](mlp_native_perturbation_response_reaction_search.md).

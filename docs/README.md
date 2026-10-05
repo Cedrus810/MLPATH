@@ -1,6 +1,6 @@
 # MLPATH 文档入口
 
-**先读 [项目总览](PROJECT_OVERVIEW.md)**：目标、数据流、模块边界、当前进度与后续工作，按逻辑顺序组织。状态核对日期：2026-10-03。
+**先读 [项目总览](PROJECT_OVERVIEW.md)**：目标、数据流、模块边界、当前进度与后续工作，按逻辑顺序组织。状态核对日期：2026-10-05。
 
 本索引负责告诉你去哪找资料。日期计划和交接记录保留原路径，避免打断脚本与记录的引用；其中“当前”“下一步”“未实施”描述的是相应时期。最新实现状态见总览及各工作线后续记录，冻结判据与用户裁决仍以原件为依据。
 
@@ -14,7 +14,7 @@
 | 历史结论与项目规矩 | [HANDOFF.md](HANDOFF.md)；规矩在其 §2 |
 | 冻结判据与基准结果 | [benchmarks/README.md](../benchmarks/README.md)、各体系判据和运行记录 |
 | 新旧结果为何不同 | 对应日期报告、run manifest、[DONE_LOG.md](DONE_LOG.md) |
-| 10-03 审查问题与修复 | [大问题复核](REVIEW_2026-10-03.md)、[10-04 修复与验证](FIXES_2026-10-04.md) |
+| 10-03 审查问题与修复 | [大问题复核](REVIEW_2026-10-03.md)、[10-04 修复与验证](FIXES_2026-10-04.md)；10-05 收口见 [完整性复审](INTEGRITY_REVIEW_2026-10-05.md)、[INTEGRITY_FIX](INTEGRITY_FIX_2026-10-05.md)、[复审的复审](REREVIEW_2026-10-05.md) |
 | 哪些决策尚未收口 | 项目总览 §9 → [DECISIONS_PENDING.md](DECISIONS_PENDING.md) 及对应工作线计划 |
 | 如何复跑与验证改动 | 两套 Makefile；[env/BASELINE.md](../env/BASELINE.md) 是环境与历史验证记录 |
 
