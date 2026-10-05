@@ -90,6 +90,22 @@ def export_path(run, attempt, output, images):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="PRRS: perturb, respond, quench, discover")
     sub = parser.add_subparsers(dest="command", required=True)
+    from .geometric_cli import add_parser
+
+    add_parser(sub)
+    audit = sub.add_parser(
+        "audit-windows",
+        help="Replay matched response horizons; certify only the tested finite grid",
+    )
+    audit.add_argument("--run", required=True)
+    audit.add_argument("--output", required=True)
+    audit.add_argument("--calculator", required=True)
+    audit.add_argument("--calculator-kwargs")
+    audit.add_argument(
+        "--calculator-metadata", help="JSON provenance for external model files and settings"
+    )
+    audit.add_argument("--response-steps", type=int, nargs="+", required=True)
+    audit.add_argument("--scans", type=int, nargs="+")
     demo = sub.add_parser(
         "demo", help="Offline analytic double-well benchmark (not chemical validation)"
     )
@@ -105,6 +121,11 @@ def main(argv=None):
         "--calculator", required=True, help="module:function returning an ASE Calculator"
     )
     search.add_argument("--calculator-kwargs", help="JSON file with factory keyword arguments")
+    search.add_argument(
+        "--product",
+        help="product structure with the input's atom numbering; recorded, never routed "
+        "(connect mode G1: each microstate gets its distance to it)",
+    )
     search.add_argument(
         "--strict-schema",
         action="store_true",
@@ -126,7 +147,34 @@ def main(argv=None):
         datefmt="%H:%M:%S",
     )
     try:
-        if args.command == "demo":
+        if args.command == "audit-windows":
+            from .window_audit import replay_window_audit
+
+            kwargs = load_json(args.calculator_kwargs) if args.calculator_kwargs else {}
+            metadata = factory_metadata(args.calculator, kwargs)
+            if args.calculator_metadata:
+                declared = load_json(args.calculator_metadata)
+                metadata["external"] = declared
+                metadata["local_file_sha256"].update(declared.get("local_file_sha256", {}))
+            report = replay_window_audit(
+                args.run,
+                args.output,
+                load_factory(args.calculator, kwargs),
+                metadata,
+                args.response_steps,
+                args.scans,
+            )
+            print(
+                json.dumps(
+                    {"output": str(Path(args.output).resolve()), "status": report["status"]}
+                )
+            )
+            return 0 if report["status"] == "stable_on_tested_grid" else 2
+        elif args.command == "optimize":
+            from .geometric_cli import run
+
+            return run(args)
+        elif args.command == "demo":
             config = SearchConfig(
                 seed=args.seed,
                 max_trials=48,
@@ -159,7 +207,11 @@ def main(argv=None):
             factory = load_factory(args.calculator, kwargs)
             result = ReactionSearch(
                 factory, config, factory_metadata(args.calculator, kwargs)
-            ).run(read(args.input), args.output)
+            ).run(
+                read(args.input),
+                args.output,
+                product=read(args.product) if args.product else None,
+            )
             if args.strict_schema:
                 problems = schema_problems(result)
                 if problems:
