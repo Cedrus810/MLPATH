@@ -45,6 +45,9 @@ from ase.io import read, write
 from .config import SearchConfig
 from .io import append_json, atomic_json, structure_hash
 from .network import Registry
+from .product import DEFINITION as PRODUCT_DEFINITION, product_paths, product_reference
+from .provenance import calculator_identity
+from .window_audit import window_semantics
 from .schema import validate as schema_problems
 from . import internal
 from .perturbations import FAMILIES, candidate_id, propose
@@ -304,7 +307,19 @@ def _sample_outcome(record, source_microstate):
     return "unresolved", f"{status}:{code}" if code else status
 
 
-def _rebuild_for_resume(output, cfg, input_sha256):
+def _unscanned(schedule):
+    """What a schedule knows that no scan record carries: reasons of directions that
+    were selected and never offered, and the proposal of one that offered none."""
+    halted = {k: r for k, r in schedule.halted.items() if k not in schedule.offered}
+    if not halted and schedule.offered:
+        return {}
+    saved = {"halted": halted}
+    if not schedule.offered:
+        saved["report"] = schedule.report
+    return saved
+
+
+def _rebuild_for_resume(output, cfg, input_sha256, product_sha256=None, calculator=None):
     """Reconstruct a dead run's state from disk (PLAN items 6.2-6.5).
 
     A process kill leaves network.json at status "running". Its consistent boundary is
@@ -320,7 +335,8 @@ def _rebuild_for_resume(output, cfg, input_sha256):
     stated.
 
     Refuses (never guesses) when: the network is not mid-run, there is no resume point,
-    the config differs, the input structure differs, the implementation fingerprint
+    the config differs, the input structure differs, the product differs (or one side
+    has a product and the other does not), the implementation fingerprint
     differs (a resume across implementations is a mixed batch -- this project retired
     one of those already), or a queued pair is missing from the rebuilt registry. Every
     refusal but the last happens BEFORE the rollback, so such a refused resume has
@@ -345,6 +361,14 @@ def _rebuild_for_resume(output, cfg, input_sha256):
         same direction seed. Counters come from the snapshot, not from counting
         `paths/`: climb and continuation directories are written before their scan is
         published, so counting them spent budget on discarded work.
+    [3] The direction schedules are rebuilt from the scan records, and a direction that
+        was selected and then never offered -- the loop stopped at a budget before its
+        batch -- has no scan record: its reason lived only in memory, and every resumed
+        run reported it as "unknown" (found 2026-09-28 on the relay testbed, where
+        conformer_trials_per_microstate stops a reactant's last direction; the
+        double-well resume tests never reach that budget). The resume point now carries
+        those reasons, and the proposal of a schedule that never offered anything, in
+        resume_point.json -- outside network.json, so no run's published record moves.
     """
     network_path = output / "network.json"
     if not network_path.exists():
@@ -370,6 +394,14 @@ def _rebuild_for_resume(output, cfg, input_sha256):
         raise ValueError(
             "resume refused: input_structure_sha256 differs from the supplied structure"
         )
+    # A product is part of what the run was asked (PLAN_2026-09-28 G1): resuming with a
+    # different one, or with one the run never had, or without the one it had, would
+    # stitch distances to two different endpoints into one network. None == None is the
+    # discover case and passes.
+    if manifest.get("product_structure_sha256") != product_sha256:
+        raise ValueError(
+            "resume refused: product_structure_sha256 differs from the supplied product"
+        )
     source_hash = hashlib.sha256()
     for path in sorted(Path(__file__).parent.glob("*.py")):
         source_hash.update(path.name.encode())
@@ -379,6 +411,22 @@ def _rebuild_for_resume(output, cfg, input_sha256):
             "resume refused: implementation_sha256 differs from the tree -- a resume "
             "across implementations is a mixed batch"
         )
+
+    recorded = manifest.get("calculator_identity")
+    if calculator is None or not calculator.get("verifiable") or recorded != calculator:
+        raise ValueError(
+            "resume refused: calculator identity differs or cannot be verified "
+            "(factory, metadata, captured parameters or checkpoint contents)"
+        )
+    current_versions = versions()
+    # Host/kernel changes are allowed; numerical package and Python versions
+    # are not. Check before deleting any work from an interrupted scan.
+    numerical = {k: v for k, v in current_versions.items() if k != "platform"}
+    recorded_versions = {
+        k: v for k, v in manifest.get("versions", {}).items() if k != "platform"
+    }
+    if numerical != recorded_versions:
+        raise ValueError("resume refused: numerical environment versions differ")
 
     # [2] roll back to the snapshot, by count
     point = json.loads(point_path.read_text(encoding="utf-8-sig"))
@@ -500,6 +548,13 @@ def _rebuild_for_resume(output, cfg, input_sha256):
         )
         if per.get("halted_by"):
             schedule.halted.setdefault(key, per["halted_by"])
+    # [3] directions that were selected and never offered have no scan record
+    for state_id, saved in (point.get("unscanned_directions") or {}).items():
+        schedule = schedules.get(state_id)
+        if schedule is None:
+            schedule = schedules[state_id] = DirectionSchedule(saved.get("report") or {})
+        for key, reason in (saved.get("halted") or {}).items():
+            schedule.halted.setdefault(key, reason)
 
     # Admissions at the depth cap, derived: every admission to a node at (or past)
     # max_depth happened at that fixed depth, and only new admissions reach the cap
@@ -770,6 +825,13 @@ def _dividing_frame(directory, probe=None):
     return None, "no_switch_frame", None, None
 
 
+def _closest_first(distances):
+    """Intervention I-a's choice (PLAN_2026-09-28.md G2): the index of the smallest
+    distance, the first-queued among equals -- so equal distances are served FIFO, and a
+    run with every distance equal is the discover run's order exactly."""
+    return min(range(len(distances)), key=lambda i: (distances[i], i))
+
+
 def _stamped_with_charge(atoms, config):
     """Make the declared total charge reach the potential, or refuse to start.
 
@@ -817,20 +879,26 @@ class ReactionSearch:
         self.config = config or SearchConfig()
         self.calculator_metadata = calculator_metadata or {"factory": "python_callable"}
 
-    def run(self, atoms, output, resume=False):
+    def run(self, atoms, output, resume=False, product=None):
         """Search until a budget is exhausted, writing the network as it goes.
 
         `resume=True` continues a run whose process died mid-flight (network.json
         status "running" -- the exception handler's "partial"/"failed" snapshots are
         NOT resumable: they record a reason). Four hard preconditions, any failure of
         which refuses (PLAN item 6.3): the network exists and is mid-run; the config is
-        the same object; the input structure is the same one the manifest hashed; the
-        implementation fingerprint is the same -- a resume across implementations is a
+        the same object; the input structure is the same one the manifest hashed (and
+        so is the product, when there is one); the implementation fingerprint is the same -- a resume across implementations is a
         mixed batch, and this project has retired one of those already. Work in flight
         when the process died is rolled back to the last published scan boundary:
         trials, climbs, continuations and descents after it are deleted from
         attempts.jsonl and disk, and every deletion is named in resume.json (kept
         OUTSIDE network.json so the byte-identical acceptance is even stateable).
+
+        `product` (connect mode, PLAN_2026-09-28 item G1) is RECORDED, never routed: each
+        microstate gets its distance to it and each node whether it is it, and nothing
+        the search decides reads either. It is checked before anything is written -- a
+        product that does not share the reactant's numbering refuses the run
+        (`product.ProductMismatch`). Without one the run is byte-for-byte a discover run.
 
         Notes
         -----
@@ -862,7 +930,28 @@ class ReactionSearch:
         atoms = _stamped_with_charge(atoms, cfg)
         output = Path(output)
         schedules = {}
-        resumed = _rebuild_for_resume(output, cfg, structure_hash(atoms)) if resume else None
+        reference = product_hash = None
+        if cfg.connect_direction_priority and product is None:
+            raise ValueError(
+                "connect_direction_priority orders directions by the key difference to a "
+                "product, and no product was given"
+            )
+        if cfg.connect_queue_priority and product is None:
+            raise ValueError(
+                "connect_queue_priority orders the queue by distance to a product, and no "
+                "product was given"
+            )
+        if product is not None:
+            validate_atoms(product, cfg.active_atoms)
+            product = _stamped_with_charge(product, cfg)
+            reference = product_reference(atoms, product, Registry(cfg))
+            product_hash = structure_hash(product)
+        calculator = calculator_identity(self.factory, self.calculator_metadata)
+        resumed = (
+            _rebuild_for_resume(output, cfg, structure_hash(atoms), product_hash, calculator)
+            if resume
+            else None
+        )
         if resumed is None and output.exists() and any(output.iterdir()):
             raise FileExistsError(f"Output must be a new or empty directory: {output}")
         if resumed is None:
@@ -881,6 +970,8 @@ class ReactionSearch:
                 "status": "running",
                 "config": cfg.to_dict(),
                 "calculator": self.calculator_metadata,
+                "calculator_identity": calculator,
+                "window_semantics": window_semantics(cfg),
                 "versions": versions(),
                 # WHERE the run happened, as its own field. Before this the manifest
                 # carried only the kernel string inside versions()["platform"], so
@@ -914,11 +1005,15 @@ class ReactionSearch:
         if resumed:
             manifest = resumed["manifest"]
         else:
+            if product is not None:
+                manifest["product_structure_sha256"] = product_hash
             manifest["experiment_sha256"] = hashlib.sha256(
                 json.dumps(manifest, sort_keys=True).encode()
             ).hexdigest()
             atomic_json(output / "config.json", manifest)
             write(str(output / "input.extxyz"), atoms)
+            if product is not None:
+                write(str(output / "product.extxyz"), product)
 
         if resumed:
             registry = resumed["registry"]
@@ -960,10 +1055,25 @@ class ReactionSearch:
                 "ts_candidates": [],
                 "ts_connected_channels": [],
                 "amplitude_scans": [],
+                "window_semantics": window_semantics(cfg),
                 "attempts": 0,
                 "interpretation": _RUN_INTERPRETATION,
             }
         )
+        if reference is not None and not resumed:
+            network["product"] = {
+                "structure": "product.extxyz",
+                "chemical_key": reference.key,
+                "d_source": reference.distance(atoms),
+                "reactant_group_order": reference.group_order,
+                "definition": PRODUCT_DEFINITION,
+            }
+        distances = {}
+
+        def distance_of(state):
+            if state.id not in distances:
+                distances[state.id] = reference.distance(state.structure)
+            return distances[state.id]
 
         def structure_path(state):
             return f"chemical/{state.id.replace('/', '_')}.extxyz"
@@ -1012,6 +1122,13 @@ class ReactionSearch:
             network["ts_candidates"] = ts_candidates
             for published, node in zip(network["chemical_nodes"], registry.nodes):
                 published["conformer_transitions"] = node.conformer_transitions
+                if reference is None:
+                    continue
+                # Recorded, never read back by the search (G1). Memoised by id: a
+                # microstate's structure never changes, and eviction mints a new id.
+                published["product_compatible"] = node.key == reference.key
+                for summary, state in zip(published["microstates"], node.microstates):
+                    summary["d_to_product"] = distance_of(state)
             # Derived here rather than stamped when a saddle is found: a directed edge
             # discovered later would otherwise miss saddle evidence recorded earlier.
             for edge in network["reactions"]:
@@ -1024,6 +1141,9 @@ class ReactionSearch:
                 if support:
                     edge["ts_support"] = support
             network["attempts"] = len(records)
+            if reference is not None:
+                # G4: derived from what is already in the network, like ts_support above
+                network["product_paths"] = product_paths(network)
             # The queue is memory-only, so a kill loses it unless it ships: written as
             # [[node_id, microstate_id], ...] in FIFO order (PLAN item 6.4 -- the one
             # field this feature required, and the reason schema came first).
@@ -1958,9 +2078,32 @@ class ReactionSearch:
                         "saddle_searches": saddle_searches,
                         "continuations": continuations,
                         "network": network,
+                        # [3] of _rebuild_for_resume: what no scan record carries
+                        "unscanned_directions": {
+                            state_id: _unscanned(schedule)
+                            for state_id, schedule in schedules.items()
+                            if _unscanned(schedule)
+                        },
                     },
                 )
-                node, state = queue.popleft()
+                if cfg.connect_queue_priority:
+                    # I-a (G2): closest to the product first, first-queued among equals.
+                    # The deque keeps insertion order, which is what network["queue"]
+                    # persists, so this rule replays identically on resume.
+                    queued = [distance_of(s) for _, s in queue]
+                    pick = _closest_first(queued)
+                    node, state = queue[pick]
+                    del queue[pick]
+                    network.setdefault("connect_queue_order", []).append(
+                        {
+                            "microstate": state.id,
+                            "d_to_product": queued[pick],
+                            "position": pick,
+                            "queued_d": queued,
+                        }
+                    )
+                else:
+                    node, state = queue.popleft()
                 allowed, blocked = registry.may_search(node, state)
                 if not allowed:
                     network.setdefault("budget_blocks", []).append(
@@ -1990,7 +2133,16 @@ class ReactionSearch:
                     )
                 modes, spectrum_note = spectra[state.id]
                 generator = propose(
-                    state.structure, cfg, direction_seed, report=proposal, soft_modes=modes
+                    state.structure,
+                    cfg,
+                    direction_seed,
+                    report=proposal,
+                    soft_modes=modes,
+                    key_difference=(
+                        reference.key_difference(state.structure)
+                        if cfg.connect_direction_priority
+                        else None
+                    ),
                 )
                 proposal["ranked_by"] = (
                     f"spectral overlap with {len(modes)} soft internal mode(s) "
@@ -2042,6 +2194,7 @@ class ReactionSearch:
                         "seed": probes[0].seed,
                         "unit": probes[0].unit,
                         "local_brackets": [],
+                        "window_semantics": window_semantics(cfg),
                     }
                     observed = list(coarse)
                     log.info(

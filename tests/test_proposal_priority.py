@@ -20,9 +20,9 @@ from prrs.config import SearchConfig
 from prrs.perturbations import propose
 from prrs.state import encode
 
-ROOT = Path(__file__).resolve().parents[1]
-P2 = ROOT / "runs" / "p2_oxobutanal" / "p2_input.extxyz"
-P1 = ROOT / "runs" / "p1_malonaldehyde" / "input.extxyz"
+DATA = Path(__file__).resolve().parent / "data"
+P2 = DATA / "p2_oxobutanal" / "p2_input.extxyz"
+P1 = DATA / "p1_malonaldehyde" / "input.extxyz"
 
 
 def _config(**overrides):

@@ -19,7 +19,7 @@ from pathlib import Path
 from prrs.chemistry import automorphisms, chemical_key, classify_transition, reaction_event_key
 from prrs.state import encode
 
-ETHANOL = Path(__file__).resolve().parents[1] / "runs" / "e2e_ethanol" / "input.extxyz"
+ETHANOL = Path(__file__).resolve().parent / "data" / "e2e_ethanol" / "input.extxyz"
 
 
 def _malonaldehyde(proton_on):
@@ -173,7 +173,7 @@ def test_the_same_bond_pattern_in_a_different_substance_is_a_different_channel()
 # Which bonds can bear E/Z is an energetic question, not a bond length.
 # ---------------------------------------------------------------------------
 
-P1 = Path(__file__).resolve().parents[1] / "runs" / "p1_malonaldehyde"
+P1 = Path(__file__).resolve().parent / "data" / "p1_malonaldehyde"
 
 
 def test_bond_order_semantics_give_the_two_structures_one_key():

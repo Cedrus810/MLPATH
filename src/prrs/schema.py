@@ -223,6 +223,18 @@ SCHEMA_2 = {
     },
 }
 
+# Connect mode (PLAN_2026-09-28.md item G1). Written only when the run was given a
+# product -- a discover network has none of these, which is what keeps it byte-for-byte
+# what it was -- and then written COMPLETELY: every node says whether it is the product
+# and every microstate carries its distance. Optional as a block, never as a field.
+PRODUCT_BLOCK = (
+    "structure",
+    "chemical_key",
+    "d_source",
+    "reactant_group_order",
+    "definition",
+)
+
 # Collections checked entry-by-entry; microstates are nested inside chemical_nodes
 # entries and validated through the same table.
 _COLLECTION_KEYS = tuple(
@@ -278,6 +290,28 @@ def validate(network):
                 problems.append(
                     f"chemical_nodes[{i}].microstates[{j}]: missing {', '.join(missing)}"
                 )
+    product = network.get("product")
+    if product is not None:
+        if not isinstance(product, dict):
+            problems.append("top: 'product' is not a dict")
+        else:
+            missing = [f for f in PRODUCT_BLOCK if f not in product]
+            if missing:
+                problems.append(f"product: missing {', '.join(missing)}")
+        paths = network.get("product_paths")
+        if not isinstance(paths, dict) or not all(
+            k in paths for k in ("observed", "any_evidence", "closest")
+        ):
+            problems.append("top: product run missing product_paths")
+        for i, node in enumerate(network.get("chemical_nodes") or []):
+            if "product_compatible" not in node:
+                problems.append(f"chemical_nodes[{i}]: product run missing product_compatible")
+            for j, state in enumerate(node.get("microstates") or []):
+                if "d_to_product" not in state:
+                    problems.append(
+                        f"chemical_nodes[{i}].microstates[{j}]: product run missing "
+                        "d_to_product"
+                    )
     ledger_required = SCHEMA_2["direction_ledger"]["required"]
     # microstates_searched is a run-level total; the per-microstate ledger() has no
     # such field, and demanding it there was the second bug of the first draft.

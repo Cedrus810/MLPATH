@@ -209,6 +209,11 @@ class SearchConfig:
     committor_shots: int = 0
     committor_entry_steps: int = 0
     committor_max_steps: int = 1280
+    # Connect mode, intervention I-b (PLAN_2026-09-28.md G3). Off by default; on,
+    # it requires a product and reorders directions, nothing else.
+    connect_direction_priority: bool = False
+    # Intervention I-a (G2): which queued microstate is searched next.
+    connect_queue_priority: bool = False
     tracked_coordinates: tuple = ()
     minimum_check_probes: int = 2
     minimum_check_displacement_A: float = 0.05
@@ -251,6 +256,8 @@ class SearchConfig:
             "closed_shell_only",
             "boundary_continuation_enabled",
             "boundary_continuation_descend_saddles",
+            "connect_direction_priority",
+            "connect_queue_priority",
         ):
             if not isinstance(getattr(self, name), bool):
                 raise ValueError(f"{name} must be a bool")
@@ -287,6 +294,14 @@ class SearchConfig:
             raise ValueError("at least one reservoir weight must be positive")
         if not isinstance(self.charge_sensitive, bool):
             raise ValueError("charge_sensitive must be a bool")
+        # The identity key takes these as given and the potential takes int() of them,
+        # so anything but an exact int would key one species and evaluate another.
+        if self.total_charge is not None and type(self.total_charge) is not int:
+            raise ValueError("total_charge must be an integer or None")
+        if self.multiplicity is not None and (
+            type(self.multiplicity) is not int or self.multiplicity < 1
+        ):
+            raise ValueError("multiplicity must be an integer >= 1 or None")
         if not self.charge_sensitive and self.total_charge not in (None, 0):
             raise ValueError(
                 "charge_sensitive is false, so total_charge cannot be set; "
@@ -521,6 +536,30 @@ RATIONALE = {
         "k <= 20 steps read the proton rattling on the ridge as entry, k >= 80 was a plateau "
         "(runs/p1_first_entry_stage0), and k = 160 (40 fs at 0.25 fs) passed V1-V5 on "
         "all four windows with fresh seeds (runs/p1_first_entry_confirm)."
+    ),
+    "connect_direction_priority": (
+        "Intervention I-b of connect mode (PLAN_2026-09-28.md G3): the directions acting "
+        "on the key difference to the product -- stretch a bond the product lacks, "
+        "compress a pair the product bonds -- get a band of their own ahead of the "
+        "hydrogen-bond priority band. It reorders inside each family's quota and neither "
+        "removes nor adds a direction, so a run with it on offers the same candidates -- "
+        "and under direction_mode='sampled' a key-difference direction can still be cut "
+        "by the quota (on the relay testbed's reactant, one of three B- stretches), in "
+        "which case the ledger's uncovered_ids names it. Requires a product (refuses to start "
+        "without one). Named apart from the queue order (I-a) so an improvement is "
+        "attributable to one of them."
+    ),
+    "connect_queue_priority": (
+        "Intervention I-a of connect mode (PLAN_2026-09-28.md G2): the next microstate "
+        "searched is the queued one closest to the product (smallest d_to_product), "
+        "first-queued among equals, instead of the first-queued overall. Nothing is "
+        "dropped -- a microstate farther from the product stays queued and is searched "
+        "when nothing closer is left, which is the upper layer's guard for an "
+        "intermediate that must raise d before lowering it (plan section 1 item 4). "
+        "Parameter-free on purpose: the prior and update rule of h_graph (K3) are "
+        "not decided, and ordering by d alone is their lambda -> infinity limit with "
+        "no learning. Every choice is recorded in connect_queue_order. Requires a "
+        "product."
     ),
     "committor_max_steps": (
         "L_max of the first-entry rule: a shot not entered by then is 'uncommitted', "

@@ -937,7 +937,7 @@ def spectral_overlap(atoms, kind, indices, modes):
     return max(abs(float(vector @ mode)) for _, mode in modes)
 
 
-def propose(atoms, config, seed, report=None, soft_modes=()):
+def propose(atoms, config, seed, report=None, soft_modes=(), key_difference=None):
     """Amplitude scans, one list per direction, in a seeded deterministic order.
 
     `report`, if given, is filled with the candidate count, quota and selected count per
@@ -969,6 +969,13 @@ def propose(atoms, config, seed, report=None, soft_modes=()):
         only orders candidates inside a band. Absent modes changes nothing, which is what
         a microstate whose Hessian could not be had must fall back to -- a ranking is never
         worth failing a search for.
+    [5] `key_difference = (broken, formed)` is connect mode's intervention I-b
+        (PLAN_2026-09-28.md G3): a bond-kind direction that stretches a pair in `broken`
+        or compresses a pair in `formed` moves to band -1, allocated before band 0. The
+        allocation loop visits band -1 only when there is a key difference -- the draft
+        of this feature put the directions in band -1 while the loop visited (0, 1), so
+        the directions it meant to put first were never selected at all. None (every
+        discover run) is the old proposal exactly.
     [3] Search S^1 / C_n only. What disqualifies an amplitude is not being larger than the
         domain but being close to any symmetry copy of zero: 2.09 rad on a methyl rotor is
         119.75 degrees, a quarter of a degree from the identity, and a trial spent there
@@ -1022,6 +1029,27 @@ def propose(atoms, config, seed, report=None, soft_modes=()):
             + entry[5:]
             for entry in directions
         ]
+    if key_difference is not None:
+        # [5] the key difference takes its own band; the donor evidence rides along
+        broken, formed = key_difference
+        relabelled = []
+        for entry in directions:
+            family, indices, sign = entry[0], entry[1], entry[2]
+            pair = frozenset(indices) if FAMILIES[family]["kind"] == "bond" else None
+            side = (
+                "B-"
+                if pair in broken and sign == 1
+                else "B+"
+                if pair in formed and sign == -1
+                else None
+            )
+            if side is not None:
+                reason = {"connect": side, "pair": sorted(int(a) for a in pair)}
+                if entry[6] is not None:
+                    reason["donor"] = entry[6]
+                entry = entry[:3] + (-1,) + entry[4:6] + (reason,)
+            relabelled.append(entry)
+        directions = relabelled
     grouped = {}
     for entry in directions:
         grouped.setdefault(entry[0], []).append(entry)
@@ -1059,7 +1087,7 @@ def propose(atoms, config, seed, report=None, soft_modes=()):
     # Two passes. The priority band first, so a direction the reactant's own geometry marks
     # as unusual gets a front execution slot -- the trial budget is spent in the order this
     # list is returned, so being selected late is nearly the same as not being selected.
-    for band in (0, 1):
+    for band in (-1, 0, 1) if key_difference is not None else (0, 1):
         while len(selected) < cap:
             progressed = False
             for family in available:
@@ -1123,6 +1151,15 @@ def propose(atoms, config, seed, report=None, soft_modes=()):
                 "coverage_censored true means candidates were left unsampled, so a "
                 "negative result from this proposal is not evidence of absence"
             ),
+        )
+
+    if report is not None and key_difference is not None:
+        report.update(
+            connect_priority_selected=sum(1 for e in selected if e[3] == -1),
+            connect_key_difference={
+                "broken": sorted(sorted(int(a) for a in pair) for pair in key_difference[0]),
+                "formed": sorted(sorted(int(a) for a in pair) for pair in key_difference[1]),
+            },
         )
 
     result = []
