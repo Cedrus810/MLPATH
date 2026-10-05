@@ -13,7 +13,7 @@ help:
 	@echo "make lint       ruff check"
 	@echo "make test       pytest (needs the science environment)"
 	@echo "make digest     the golden-sample gate; run before and after touching src/prrs"
-	@echo "make check      lint + test + digest, in that order"
+	@echo "make check      fmt-check + lint + test + digest, in that order"
 	@echo "make hash       the implementation_sha256 a run manifest would record"
 
 tools:
@@ -39,7 +39,13 @@ test:
 digest:
 	$(PYTHON) docs/experiments/digest_regression.py
 
-check: lint test digest
+# fmt-check is part of the gate because the drift it catches is invisible otherwise:
+# `lint` is ruff CHECK, not ruff FORMAT, so 15 files drifted out of format between
+# 2026-09-13 and 2026-09-21 with every gate green. It runs first because it is the
+# cheapest and because a reformat mid-acceptance invalidates the run that preceded it.
+# Note ROUNDS.md: a bulk reformat must be followed by a mutation check -- a green test
+# that an assert's reflow turned hollow is still green.
+check: fmt-check lint test digest
 
 hash:
 	@$(PYTHON) scripts/implementation_hash.py
