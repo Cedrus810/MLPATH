@@ -1,0 +1,437 @@
+{
+  "kind": "mlpath-maturation-preflight",
+  "m0_of_plan": "PLAN_GEN_COMPAS_MATURATION_2026-10-03.md section 4",
+  "generated_utc": "2026-10-02T22:06:34+00:00",
+  "script": "docs/experiments/maturation_preflight.py",
+  "script_sha256": "476417187b361871650b23144f811a7beae929ad714e29bc052b8a9912cf91d4",
+  "current_prrs_implementation_sha256": "ebff4ec05fbc0c3d126af5b5bac5449fbba0889223f6314dc592d84b0dec4921",
+  "runs": {
+    "runs/p1_committor2": {
+      "role": "source_run",
+      "verdict": "supported",
+      "evidence": {
+        "implementation_sha256": "4014c4b267b251422fbdc07cb48cb5d3edf6de62b25d4320025864b8b181dae7",
+        "input_structure_sha256": "29926f3cd421e3d367b0971772fb7ea58e5047c3bc7f50b5c82e46209148a304",
+        "host": "kasuga02",
+        "versions": {
+          "python": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 16:50:00) [GCC 14.3.0]",
+          "platform": "Linux-7.2.2-1-cachyos-x86_64-with-glibc2.44",
+          "ase": "3.29.0",
+          "numpy": "2.4.3",
+          "scipy": "1.17.1",
+          "torch": "2.12.0",
+          "mace-torch": "0.3.16",
+          "openmm": "8.5.2",
+          "openmm-ml": "installed; no version metadata",
+          "openmm-torch": "installed; no version metadata",
+          "nnpops": "installed; no version metadata"
+        },
+        "calculator": {
+          "factory": "prrs.calculators:mace_factory",
+          "kwargs": {
+            "model_paths": "/home/ruigengji/MLP/mace/MACE-OFF24_medium.model",
+            "device": "cuda",
+            "default_dtype": "float64"
+          },
+          "checkpoint_sha256_ok": true
+        },
+        "network": {
+          "schema_version": 2,
+          "status": "completed",
+          "attempts": 60,
+          "chemical_nodes": 1,
+          "reaction_channels": 1,
+          "ts_candidates": 2,
+          "product_block_present": false
+        },
+        "channels": [
+          {
+            "id": "rc0000",
+            "class": "degenerate_reaction",
+            "self_loop": true,
+            "event_key": "a04410b76e16b117",
+            "broken": [
+              [
+                4,
+                5
+              ]
+            ],
+            "formed": [
+              [
+                0,
+                5
+              ]
+            ],
+            "ends": [
+              "c0000",
+              "c0000"
+            ]
+          }
+        ],
+        "microstates": [
+          {
+            "id": "c0000/m0000",
+            "energy_eV": -7274.549374639572,
+            "structure": "chemical/c0000_m0000.extxyz",
+            "structure_present": true
+          },
+          {
+            "id": "c0000/m0001",
+            "energy_eV": -7274.549194529666,
+            "structure": "chemical/c0000_m0001.extxyz",
+            "structure_present": true
+          },
+          {
+            "id": "c0000/m0002",
+            "energy_eV": -7274.03360464823,
+            "structure": "chemical/c0000_m0002.extxyz",
+            "structure_present": true
+          }
+        ],
+        "trials": {
+          "dirs": 140,
+          "with_response_traj": 140,
+          "sample_dir": "c000b00s0000"
+        },
+        "input": {
+          "n_atoms": 9,
+          "formula": "C3H4O2"
+        },
+        "trials_sample": {
+          "n_frames": 20,
+          "n_atoms": 9,
+          "all_atom": true
+        },
+        "paths": [
+          "climb001",
+          "climb002",
+          "climb003",
+          "climb004",
+          "climb005",
+          "climb006",
+          "ts0000",
+          "ts0001"
+        ],
+        "ts_files": [
+          "ts0000.extxyz",
+          "ts0000_mode.json",
+          "ts0001.extxyz",
+          "ts0001_mode.json"
+        ]
+      },
+      "failures": [],
+      "caveats": [
+        "the source run's fingerprint is historical provenance; M3 shooting runs under the CURRENT tree, whose fingerprint is recorded at batch initialize"
+      ]
+    },
+    "runs/p1_first_entry_confirm": {
+      "role": "confirm_batch_reference",
+      "verdict": "supported",
+      "evidence": {
+        "protocol": "docs/P1_COMMITTOR_FIRST_ENTRY_PROTOCOL.md",
+        "protocol_sha256": "b685120fe25665a4c00efa6688e0951839286206a1addb9ec051c71868714955",
+        "source_run": "runs/p1_committor2",
+        "source_fingerprint": "4014c4b267b251422fbdc07cb48cb5d3edf6de62b25d4320025864b8b181dae7",
+        "N_per_window": 50,
+        "first_entry_k": 160,
+        "L_max_run": 1280,
+        "seed_offset": 100000,
+        "thresholds": {
+          "V2_flip": 0.1,
+          "V3": 0.1,
+          "V4": 0.05,
+          "V5": 0.2
+        },
+        "V1_whole_batch": true,
+        "windows": [
+          {
+            "scan": 0,
+            "A": "c0000/m0000",
+            "B": "c0000/m0001",
+            "counts": {
+              "A": 12,
+              "B": 38,
+              "uncommitted": 0
+            },
+            "p_B_given_AB": 0.76,
+            "wilson_95": [
+              0.6258731623866494,
+              0.8570260860478336
+            ]
+          },
+          {
+            "scan": 2,
+            "A": "c0000/m0000",
+            "B": "c0000/m0001",
+            "counts": {
+              "A": 44,
+              "B": 6,
+              "uncommitted": 0
+            },
+            "p_B_given_AB": 0.12,
+            "wilson_95": [
+              0.05617600149956063,
+              0.23804817386542582
+            ]
+          },
+          {
+            "scan": 6,
+            "A": "c0000/m0000",
+            "B": "c0000/m0001",
+            "counts": {
+              "A": 0,
+              "B": 50,
+              "uncommitted": 0
+            },
+            "p_B_given_AB": 1.0,
+            "wilson_95": [
+              0.9286524008355442,
+              1.0000000000000002
+            ]
+          },
+          {
+            "scan": 8,
+            "A": "c0000/m0001",
+            "B": "c0000/m0000",
+            "counts": {
+              "A": 14,
+              "B": 36,
+              "uncommitted": 0
+            },
+            "p_B_given_AB": 0.72,
+            "wilson_95": [
+              0.5833487630067897,
+              0.8252582933608497
+            ]
+          }
+        ],
+        "trial_dirs": 200,
+        "region_pair_unordered": [
+          "c0000/m0000",
+          "c0000/m0001"
+        ],
+        "windows_with_swapped_labels": [
+          8
+        ]
+      },
+      "failures": [],
+      "caveats": []
+    },
+    "runs/p1_path_committor_explore": {
+      "role": "explore_batch_not_citable",
+      "verdict": "supported_reference_only",
+      "evidence": {
+        "meaning": "exploration batch (N = 16), first-entry rule k = 160 / cap 1280; not citable",
+        "source_run": "runs/p1_committor2",
+        "saddles": [
+          {
+            "ts": "ts0000",
+            "A": "c0000/m0000",
+            "B": "c0000/m0001",
+            "frames": [
+              {
+                "frame": "saddle-1.00delta",
+                "A": 0,
+                "B": 16,
+                "other": 0,
+                "p_B_given_AB": 1.0
+              },
+              {
+                "frame": "saddle-0.67delta",
+                "A": 0,
+                "B": 16,
+                "other": 0,
+                "p_B_given_AB": 1.0
+              },
+              {
+                "frame": "saddle-0.33delta",
+                "A": 0,
+                "B": 16,
+                "other": 0,
+                "p_B_given_AB": 1.0
+              },
+              {
+                "frame": "saddle+0.00delta",
+                "A": 10,
+                "B": 6,
+                "other": 0,
+                "p_B_given_AB": 0.375
+              },
+              {
+                "frame": "saddle+0.33delta",
+                "A": 16,
+                "B": 0,
+                "other": 0,
+                "p_B_given_AB": 0.0
+              },
+              {
+                "frame": "saddle+0.67delta",
+                "A": 16,
+                "B": 0,
+                "other": 0,
+                "p_B_given_AB": 0.0
+              },
+              {
+                "frame": "saddle+1.00delta",
+                "A": 16,
+                "B": 0,
+                "other": 0,
+                "p_B_given_AB": 0.0
+              }
+            ]
+          },
+          {
+            "ts": "ts0001",
+            "A": "c0000/m0000",
+            "B": "c0000/m0001",
+            "frames": [
+              {
+                "frame": "saddle-1.00delta",
+                "A": 0,
+                "B": 16,
+                "other": 0,
+                "p_B_given_AB": 1.0
+              },
+              {
+                "frame": "saddle-0.67delta",
+                "A": 0,
+                "B": 16,
+                "other": 0,
+                "p_B_given_AB": 1.0
+              },
+              {
+                "frame": "saddle-0.33delta",
+                "A": 0,
+                "B": 16,
+                "other": 0,
+                "p_B_given_AB": 1.0
+              },
+              {
+                "frame": "saddle+0.00delta",
+                "A": 12,
+                "B": 4,
+                "other": 0,
+                "p_B_given_AB": 0.25
+              },
+              {
+                "frame": "saddle+0.33delta",
+                "A": 15,
+                "B": 1,
+                "other": 0,
+                "p_B_given_AB": 0.0625
+              },
+              {
+                "frame": "saddle+0.67delta",
+                "A": 16,
+                "B": 0,
+                "other": 0,
+                "p_B_given_AB": 0.0
+              },
+              {
+                "frame": "saddle+1.00delta",
+                "A": 16,
+                "B": 0,
+                "other": 0,
+                "p_B_given_AB": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      "failures": [],
+      "caveats": [
+        "exploration batch (N=16): usable to LOCATE the next batch, never citable as a result -- the file says so itself"
+      ]
+    },
+    "runs/pars_ground_truth": {
+      "role": "refinement_baseline",
+      "verdict": "supported",
+      "evidence": {
+        "n_records": 27,
+        "records_per_source_run": {
+          "p1_committor1": 12,
+          "p1_round7": 15
+        },
+        "distinct_sources": [
+          {
+            "channel_id": "rc0000",
+            "event_key": "a04410b76e16b117",
+            "run_dir": "/home/ruigengji/MLPATH/runs/p1_committor1"
+          },
+          {
+            "channel_id": "rc0000",
+            "event_key": "a04410b76e16b117",
+            "run_dir": "/home/ruigengji/MLPATH/runs/p1_round7"
+          }
+        ],
+        "backend": [
+          "ase-neb"
+        ],
+        "status_counts": {
+          "ci_neb_converged": 27
+        },
+        "barrier_eV": {
+          "n": 27,
+          "min": 0.4191284203043324,
+          "max": 0.4192075298497002,
+          "mean": 0.4191608865801552
+        },
+        "source_run_fingerprints": {
+          "/home/ruigengji/MLPATH/runs/p1_committor1": "ec32bc3df5d2bf1443d486eb4ccbe6a01cf23529a55b56744e3c87437e7efdf0",
+          "/home/ruigengji/MLPATH/runs/p1_round7": "8eb7d82f572a995f8a211d5a6ef97b007e7e0878521a77869788baa36dbfcbdf"
+        }
+      },
+      "failures": [],
+      "caveats": [
+        "refinement records postdate the 2026-10-02 PARS fixes (PARS_REVIEW_2026-10-02.md); they are the baseline, not a new run of this layer"
+      ]
+    }
+  },
+  "region": {
+    "method": "mapped_microstate_graphs",
+    "same_chemical_key": true,
+    "graphs": {
+      "A": {
+        "n_edges": 8,
+        "graph_sha256": "b45c290bd0a8f5af20ef995b4d54beb8b0ecfcdeaaccbe37dc3a1983cafdf232"
+      },
+      "B": {
+        "n_edges": 8,
+        "graph_sha256": "eb18bc7dbb90aa3ff8ad88967da3e7c4723cfef09173e930c9677937d43a677f"
+      }
+    },
+    "sides": {
+      "A": "c0000/m0000",
+      "B": "c0000/m0001"
+    },
+    "first_entry_eligible": true,
+    "meaning": "eligible: first-entry shooting can tell the sides apart"
+  },
+  "pars_selection": {
+    "pars_selection_present": false,
+    "action_required": "no pars selection directory exists for the P1 source run: M2 must run 'pars select' into a NEW output directory under the fixed 2026-10-02 implementation and record its hash in the protocol; the original run directory stays untouched"
+  },
+  "notes": [
+    "only the four named inputs were read; no recursion over runs/",
+    "all checks are read-only; the only file written is --out",
+    "confirm and explore batches are classified separately and the explore batch keeps its not-citable marking"
+  ],
+  "baseline": {
+    "kind": "mlpath-maturation-baseline",
+    "recorded_utc": "2026-10-03",
+    "environment": "openmm_dev (/home/ruigengji/miniforge3/envs/openmm_dev), repository root make targets",
+    "pytest": {
+      "command": "make test",
+      "result": "537 passed, 7 skipped",
+      "wall": "373.29s (0:06:13)",
+      "log": "/tmp/mlpath_baseline_test.log (transient; result recorded here)",
+      "skips_are_environmental": "backend parity etc. need PRRS_RUN_BENCHMARKS/CUDA gating as documented in HANDOFF section 9"
+    },
+    "digest": {
+      "command": "make digest",
+      "result": "digests unchanged: 332 files, 2136 frames, 4 event pairs",
+      "note": "matches the 2026-10-01 baseline quoted in HANDOFF section 16; the mature module is outside src/prrs so the fingerprint stays ebff4ec0"
+    },
+    "meaning": "M0 baseline recorded before any M1+ work ran; parent make check re-run after each behavior change per plan section 7"
+  }
+}

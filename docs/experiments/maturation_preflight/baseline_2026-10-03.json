@@ -1,0 +1,18 @@
+{
+  "kind": "mlpath-maturation-baseline",
+  "recorded_utc": "2026-10-03",
+  "environment": "openmm_dev (/home/ruigengji/miniforge3/envs/openmm_dev), repository root make targets",
+  "pytest": {
+    "command": "make test",
+    "result": "537 passed, 7 skipped",
+    "wall": "373.29s (0:06:13)",
+    "log": "/tmp/mlpath_baseline_test.log (transient; result recorded here)",
+    "skips_are_environmental": "backend parity etc. need PRRS_RUN_BENCHMARKS/CUDA gating as documented in HANDOFF section 9"
+  },
+  "digest": {
+    "command": "make digest",
+    "result": "digests unchanged: 332 files, 2136 frames, 4 event pairs",
+    "note": "matches the 2026-10-01 baseline quoted in HANDOFF section 16; the mature module is outside src/prrs so the fingerprint stays ebff4ec0"
+  },
+  "meaning": "M0 baseline recorded before any M1+ work ran; parent make check re-run after each behavior change per plan section 7"
+}

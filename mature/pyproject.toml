@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlpath-mature"
+version = "0.1.0"
+description = "Path maturation layer: shooting-based transition-region diagnosis and refinement handoff on top of PRRS-discovered reaction channels"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [{ name = "MLPATH / PRRS contributors" }]
+dependencies = [
+    "ase>=3.23,<4",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+mature = "mature.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# "../src" puts the parent checkout's prrs on the path, the same way the
+# parent repository reaches it (PYTHONPATH=src); it is not pip-installed.
+# A missing ../src (standalone extraction) is not an error by itself --
+# tests that need prrs fail on the import, as they should.
+pythonpath = ["src", "../src"]
+
+[tool.ruff]
+line-length = 96
+extend-exclude = [".venv", ".venv-tools"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]
