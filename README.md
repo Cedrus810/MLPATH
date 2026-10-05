@@ -1,420 +1,329 @@
 # PRRS — Perturbation–Response Reaction Search
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+![Lint: ruff](https://img.shields.io/badge/lint-ruff-261230)
 
-## What is PRRS?
+English | [简体中文](README.zh-CN.md)
 
-**PRRS is a reaction-discovery method designed for machine-learning potentials (MLPs).**
+**MLPATH project entry:** [architecture and current status (Chinese)](docs/PROJECT_OVERVIEW.md) · [documentation index](docs/README.md) · [PARS path module](pars/README.md).
+MLPATH includes PRRS discovery, PARS path selection/refinement, and a planned shooting-based maturation workflow. This README covers PRRS; the project overview tracks their boundaries and connect-mode progress.
 
-The idea is simple:
+**PRRS is a reaction-discovery method designed for machine-learning interatomic
+potentials (MLPs).**
 
-> Perturb a molecule in a controlled way, remove the perturbation, let the system respond naturally, and observe which chemical state it reaches.
+> Perturb a molecule in a controlled way, remove the perturbation, let the system
+> respond on the MLP potential-energy surface, quench, and observe which chemical
+> state it reaches.
 
-PRRS does **not** require:
-
-- a predefined reaction coordinate,
-- a predefined product,
-- or an initial guess of the transition state.
-
-Instead, it first discovers possible reaction channels and products. Transition states are then located and verified afterwards.
-
----
-
-## Why do we need it?
-
-Most reaction-search methods work best when we already know roughly **what reaction we are looking for**.
-
-That is much harder when the reaction channel itself is unknown.
-
-PRRS approaches the problem from the opposite direction:
-
-1. start from a known molecular state,
-2. systematically perturb physically meaningful internal coordinates,
-3. let the system evolve freely on the MLP potential-energy surface,
-4. relax the resulting structure,
-5. determine whether it returned to the original state, found a new conformer, or reached a new chemical state.
-
-Repeating this procedure allows us to gradually construct a reaction network without specifying the products in advance.
+PRRS does **not** require a predefined reaction coordinate, a predefined product,
+or an initial guess of the transition state. It discovers possible reaction
+channels and products first; transition states are located and verified
+afterwards.
 
 ---
 
-## Core idea
+## How it works
 
-A PRRS trial can be summarized as:
+```
+seed state → controlled perturbation → short MLP trajectory → quench → classify
+                                                                       │
+     conformer of source ◄── same chemical identity ──► new chemical state
+                                                                       │
+                              first-order saddle (n₋ = 1) ──► TS pool
+```
 
-**starting structure → controlled perturbation → free dynamics → relaxation → chemical-state identification**
+Each trial is a small numerical experiment in two phases: a **delivery phase**,
+in which the perturbation is applied incrementally to internal coordinates, and
+a **free response phase**, in which the perturbation is removed and the system
+relaxes without bias. Three possible outcomes:
 
-There are three possible outcomes.
+1. **Return to the source minimum** — elastic evidence. This direction does not
+   easily lead to another basin at the tested amplitude.
+2. **Relaxation to another minimum** — a basin is discovered. Conformer and new
+   chemical state are distinguished explicitly: what decides is chemical
+   connectivity, not energy or distance.
+3. **A stationary point with exactly one negative Hessian eigenvalue** — a
+   transition-state candidate, admitted to a TS pool and verified by following
+   the downhill directions on both sides to see which states it connects.
 
-### 1. The system returns to the original minimum
+### Design choices that carry the method
 
-The perturbation was essentially elastic.
-
-This tells us that this direction does not easily lead to another basin at the tested amplitude.
-
-### 2. The system reaches another minimum
-
-PRRS has discovered either:
-
-- another conformer of the same molecule, or
-- a genuinely different chemical state.
-
-These two cases are explicitly distinguished.
-
-### 3. The search approaches a first-order saddle point
-
-This becomes a transition-state candidate.
-
-The candidate is then checked by following the downhill directions on both sides to determine which states the saddle connects.
-
----
-
-## Why perturb internal coordinates?
-
-Random Cartesian displacement is inefficient because most random motion has little chemical meaning.
-
-PRRS instead perturbs coordinates such as:
-
-- bond lengths,
-- bond angles,
-- torsions,
-- collective internal motions,
-- and intermolecular approach coordinates.
-
-Early ethanol tests showed why this matters.
-
-Using only radial perturbations repeatedly returned to the starting state even though several nearby conformational basins were known to exist. Adding torsional and collective motions allowed the search to reach the relevant parts of configuration space.
-
-This is an important design principle:
-
-> **The perturbation set must cover the chemically relevant degrees of freedom.**
-
----
-
-## Chemical states and conformers are treated separately
-
-A different minimum is not necessarily a different chemical species.
-
-For example, bond rotation can create another conformer without changing chemical connectivity.
-
-PRRS therefore uses two levels:
-
-**Chemical state**
-
-A distinct molecular connectivity and stereochemical state.
-
-**Conformer reservoir**
-
-Multiple geometries belonging to the same chemical state.
-
-This distinction is important because reaction accessibility can depend strongly on the starting conformer.
-
-A conformer that appears unreactive does not imply that every conformer of the same molecule is unreactive.
+- **Perturbations act on primitive internal coordinates** — bond lengths, bond
+  angles, torsions, collective fragment motions, intermolecular approach — not
+  Cartesian noise. The reason is measured, not aesthetic: early ethanol trials
+  with radial-only perturbations returned to the start in all cases while three
+  real conformational basins sat 4 meV away, because pairwise radial moves never
+  couple into torsions within the trajectory length. **The perturbation set must
+  span the chemically relevant degrees of freedom.**
+- **Delivery is incremental** (≤ 0.05 Å/rad per step, gradient re-evaluated every
+  step), because a large perturbation is a sequence of locally valid small ones.
+  Requested target displacement and collateral damage are reported separately;
+  covalent-bond damage and atom overlaps are hard gates.
+- **Symmetry is handled explicitly.** Chemically equivalent atoms never generate
+  artificial "new reactions": identity is hashed by automorphism-invariant graph
+  invariants, conformers are deduplicated by symmetry-aware RMSD, and stereo
+  signatures use configurational chirality only. Symmetric rotors are *demoted,
+  not removed* — one of them contributed a real methyl-rotation saddle point.
+- **Three identity layers that are never collapsed**: the *chemical state*
+  (connectivity + configurational stereochemistry), the *conformer reservoir*
+  (many geometries per state, because reaction accessibility depends on the
+  starting conformer), and the *reaction event* (bond-difference keys
+  canonicalised under the automorphism groups of both endpoints). A degenerate
+  reaction — such as an equivalent-H proton transfer — is a self-loop, not a new
+  node.
+- **Convergence criteria are mode-resolved.** A fixed force tolerance controls
+  how small the forces are, not how far the structure is from the stationary
+  point; ethanol torsions are ~150× softer than bond stretches, so soft modes
+  get their own gradient-over-stiffness criterion while genuinely free modes are
+  recorded, not forced to "converge".
+- **Fail closed.** Anything unresolvable is rejected with a stated reason, never
+  replaced by a default; existence claims must be proven by execution, not by
+  records.
 
 ---
 
-## Symmetry is handled explicitly
+## What PRRS does — and does not — claim
 
-Chemically equivalent atoms should not generate artificial “new reactions.”
-
-For example, transferring one of three equivalent methyl hydrogens must not create three different products simply because the atom labels are different.
-
-PRRS therefore compares structures and reaction events while accounting for molecular symmetry.
-
-This avoids:
-
-- duplicated products,
-- duplicated conformers,
-- duplicated reaction channels,
-- and artificial stereochemical distinctions caused by equivalent atoms.
-
----
-
-# What has been demonstrated so far?
-
-The method has progressed from conformational discovery to genuine reaction-network expansion.
-
-## P0 — Ethanol
-
-**Question:** Can the method correctly discover nearby conformational basins?
-
-**Result:** Yes.
-
-The test established the basic perturbation, relaxation, symmetry handling, and conformer-identification framework.
-
-It also revealed that radial perturbations alone are insufficient and motivated the inclusion of torsional and collective perturbations.
-
----
-
-## P1 — Malonaldehyde proton transfer
-
-**Question:** Can PRRS discover a real reaction event and its transition state?
-
-**Result:** Yes.
-
-The proton transfer was reproducibly identified.
-
-Because the two sides are chemically equivalent, the reaction is represented as a **degenerate self-loop** rather than as a new chemical node.
-
-A subsequent QM calculation independently confirmed the transition-state geometry and reaction identity.
-
-The PRRS and QM saddle geometries agree to approximately **0.015 Å RMSD**.
-
-The MLP and QM barrier heights differ substantially, but this is an energy-model error rather than a failure to locate the reaction geometry.
-
----
-
-## P2 — 3-Oxobutanal enol
-
-**Question:** Can PRRS discover a genuinely different chemical state and expand the reaction network?
-
-**Result:** Yes.
-
-Across 16 independent starting seeds, the expected reaction channel was found in all 16 cases.
-
-This case demonstrates transition from:
-
-**single-state exploration → reaction-network expansion**
-
-rather than simply conformational sampling.
-
----
-
-## P3 — Benzoylacetone
-
-**Question:** Does the approach still work in a more complicated system involving aromatic structure, chelation, and competing conformations?
-
-**Result:** Yes under the predefined acceptance criteria.
-
-The reaction channel and transition-state structure were successfully identified.
-
-The geometry also shows the expected contraction of the donor–acceptor heavy-atom distance at the transition state.
-
----
-
-## Independent QM checks
-
-Two reaction cases have now been checked against QM calculations.
-
-### Malonaldehyde
-
-Bidirectional IRC calculations confirm that the PRRS transition state connects the expected minima.
-
-The MLP and QM saddle geometries are nearly identical.
-
-### SN2 reaction: Cl⁻ + CH₃Cl
-
-A transition state generated from the PRRS search refined to essentially the same geometry as an independently located QM transition state.
-
-Bidirectional IRC calculations also reached the expected products and reactants.
-
-These tests support an important conclusion:
-
-> **PRRS can identify the reaction event and transition-state geometry even when the MLP does not reproduce the QM barrier energy accurately.**
-
----
-
-# What PRRS is — and is not — trying to predict
-
-This distinction is central to the project.
-
-## PRRS is responsible for
-
-- discovering possible reaction channels,
-- identifying products,
-- locating candidate transition states,
-- identifying which states a transition state connects,
-- and building the reaction network.
-
-## PRRS is not expected to provide final quantitative barrier energies
-
-Absolute barrier heights and imaginary frequencies depend on the quality of the potential-energy surface.
-
-The current workflow therefore separates two questions:
-
-### Question 1 — Is the search algorithm good?
-
-Compare the PRRS result with a reference search performed on the **same MLP potential-energy surface**.
-
-This tests the search method itself.
-
-### Question 2 — Is the MLP chemically accurate?
-
-Compare the corresponding MLP transition state with a **QM calculation**.
-
-This tests the potential-energy model.
-
-Mixing these two comparisons would make it impossible to determine whether an error came from the search algorithm or from the MLP.
-
----
-
-# Choice of machine-learning potential
-
-The first development stages used **MACE-OFF24**.
-
-This model worked adequately for the initial neutral organic systems but has an important limitation: it does not properly represent changes in total molecular charge.
-
-This becomes unacceptable for ionic reactions such as SN2 chemistry.
-
-For the next stage, the default model is therefore **MACE-POLAR-1-M**, which performed substantially better across both:
-
-- neutral proton-transfer chemistry,
-- and the ionic SN2 benchmark.
-
-The earlier P0–P3 results remain frozen and are not retrospectively changed.
-
----
-
-# Current limitations
-
-The method is working, but several important problems remain.
-
-## 1. Perturbing bond lengths can distort the rest of the molecule
-
-The current bond-stretch perturbation can move the selected atoms while unintentionally deforming nearby bonds.
-
-This is an artifact of how the perturbation is applied, not a necessary physical effect.
-
-The next implementation step is therefore to move molecular fragments more rigidly when a bond is stretched.
-
----
-
-## 2. Reaction-direction selection is still heuristic
-
-PRRS currently generates several chemically motivated perturbation directions, but their priority is not yet learned or optimized.
-
-A future version should rank perturbations according to their observed usefulness for:
-
-- basin discovery,
-- reaction discovery,
-- and transition-state discovery.
-
----
-
-## 3. Transition-state verification becomes expensive for larger molecules
-
-For the current small test systems, rigorous curvature analysis is practical.
-
-For larger systems, the same calculation will eventually become too expensive.
-
-A scalable transition-state verification strategy will therefore be required before applying PRRS to substantially larger molecules.
-
----
-
-## 4. Ionic chemistry is only entering formal validation
-
-The SN2 system has passed the initial feasibility tests and the transition state has already been independently confirmed by QM.
-
-However, the formal benchmark criteria and automated acceptance test are not yet frozen.
-
-Therefore this case should currently be described as **promising but not yet a completed benchmark**.
-
----
-
-# How results are evaluated
-
-The project deliberately uses strict prospective evaluation.
-
-Before a benchmark is run:
-
-1. the scientific question is defined,
-2. the acceptance criteria are frozen,
-3. the calculation is then performed,
-4. and the result is evaluated against those original criteria.
-
-Parameters are not adjusted afterwards simply to turn a failed result into a successful one.
-
-Incomplete calculations, numerical failures, and genuine negative results are also recorded separately.
-
-This is intended to prevent benchmark design from gradually adapting to the desired answer.
-
----
-
-# Current benchmark progression
-
-The benchmark series is designed to add new chemical difficulty rather than repeatedly test the same reaction class.
-
-| Stage | Chemical problem | Status |
+| Question | Comparison | What it tests |
 |---|---|---|
-| P0 | Conformer discovery | Completed |
-| P1 | Degenerate intramolecular proton transfer | Completed + QM checked |
-| P2 | Reaction-network expansion | Completed |
-| P3 | More complex intramolecular proton transfer | Completed |
-| b04 | Ionic intermolecular SN2 | Preflight successful + QM checked |
-| b05 | Competing substitution / elimination | Next group |
-| b06 | Electrophilic addition | Planned |
-| b07 | Bond formation / fragmentation and Diels–Alder-type chemistry | Planned |
+| Is the **search** good? | PRRS vs a reference search on the *same* MLP surface | the method |
+| Is the **potential** accurate? | MLP transition state vs QM | the energy model |
 
-The next benchmarks are intentionally moving away from repeated proton-transfer examples toward:
-
-- charged systems,
-- intermolecular reactions,
-- competing pathways,
-- heavy-atom bond formation/breaking,
-- and changes in fragment number.
+PRRS is responsible for discovering channels, identifying products, locating and
+verifying transition-state candidates, and building the network. It is **not**
+expected to deliver final quantitative barriers: barrier heights and imaginary
+frequencies are properties of the chosen surface, checked downstream by QM.
+Mixing the two comparisons makes errors unattributable — in the benzoylacetone
+three-model comparison every chemical-identity field agreed across models while
+barrier heights differed 3.7×, which is exactly the separation this design
+enforces.
 
 ---
 
-# Next steps
+## Status
 
-The immediate priorities are:
+The benchmark suite (`benchmarks/`) follows one rule: one cell = one reaction
+system + acceptance criteria frozen *before* the run + a script that grades the
+result mechanically against those criteria.
 
-### 1. Fix perturbation delivery
+| Stage | System | New axis tested | Status |
+|---|---|---|---|
+| P0 | Ethanol | Conformer discovery; framework | Completed — 13/13 |
+| P1 | Malonaldehyde | Reaction event — **degenerate** self-loop | Completed — 13/13, QM-checked |
+| P2 | 3-Oxobutanal enol | Reaction-network expansion A→B | Completed — 16/16 seeds |
+| P3 | Benzoylacetone | Aromaticity, chelation, competing isomers | Completed — criteria frozen and passed |
+| b04 | Cl⁻ + CH₃Cl | **Total charge**, 2 fragments, heavy-atom coordinate | Completed — criteria frozen 2026-09-13, TS QM-confirmed |
+| b05 | Tertiary halide + nucleophile | Substitution vs elimination competition | In progress |
+| b06 | Electrophilic addition substrate | Polar addition | Planned |
+| b07 | Cyclohexene (retro-DA) · butadiene + ethylene (DA) | **Fragment number 1↔2** | Planned (probe green) |
 
-Bond stretching should move chemically connected fragments without introducing artificial internal distortion.
+P0–P3 are now frozen regression fixtures: their results remain valid, and formal
+acceptance passes to the P4+ independent-QM protocol. The series deliberately
+moves away from repeated proton-transfer examples toward charged systems,
+intermolecular reactions, competing pathways, heavy-atom bond breaking/formation,
+and changes in fragment number.
 
-This must be solved before interpreting amplitude scans.
+### Independent QM cross-checks
 
-### 2. Complete the SN2 benchmark
+Protocol: **r2SCAN-3c** for geometries and frequencies → **ωB97M-V/def2-TZVPD**
+single points on the same geometry. (r2SCAN-3c alone misestimates the SN2 central
+barrier by ~11 kcal — geometries are good, energies must be re-checked.)
 
-Freeze formal acceptance criteria and evaluate the first charge-sensitive intermolecular reaction.
+- **Malonaldehyde (P1).** Bidirectional IRC from the PRRS saddle converges to the
+  expected minima, both endpoints with zero imaginary frequencies. The MLP and QM
+  saddle geometries agree to **0.0151 Å** (symmetry-aware RMSD). The MLP barrier
+  (419 meV) vs QM (134 meV) differ substantially — an energy-model error, not a
+  failure to locate the reaction geometry.
+- **SN2: Cl⁻ + CH₃Cl (b04).** The transition state found by PRRS refined to
+  2.3645/2.3645 Å, matching an independently located QM saddle to four decimal
+  places. Bidirectional IRC reached the expected reactants and products, and the
+  reaction-event key matches the PRRS one exactly.
 
-### 3. Expand chemical diversity
+> **PRRS identifies the reaction event and transition-state geometry even when
+> the MLP does not reproduce QM barrier energies accurately.**
 
-Proceed to systems with:
+### Choice of machine-learning potential
 
-- substitution versus elimination competition,
-- polar addition,
-- bond formation and breaking,
-- and changes in molecular fragment number.
-
-### 4. Measure search efficiency
-
-The final efficiency metric should not simply be trajectories per second.
-
-The scientifically useful quantity is:
-
-> **computational cost per independently QM-confirmed reaction channel discovered**
+P0–P3 are frozen on **MACE-OFF24** and are not retrospectively rerun or relabelled.
+From b04 onward the default is **MACE-POLAR-1-M**, chosen on QM cross-comparisons
+rather than preference: it is the only candidate tested that holds up on both
+neutral proton-transfer chemistry and the ionic SN2 benchmark. MACE-OFF24 does
+not respond to total molecular charge at all (bitwise-identical energies for
+charge 0/−1/+1), which disqualifies it for ionic chemistry. Frozen results never
+automatically serve as references for later stages.
 
 ---
 
-# Current conclusion
+## Installation
 
-PRRS has already demonstrated that controlled perturbation followed by unbiased molecular response can discover:
+Requirements: **Python ≥ 3.10**; the core dependencies are ASE and NumPy only.
 
-- conformational basins,
-- reaction events,
-- new chemical states,
-- and transition-state geometries,
+```bash
+pip install -e .            # core: prrs CLI; runs on any ASE calculator
+pip install -e ".[mace]"    # MACE support (mace-torch)
+pip install -e ".[test]"    # pytest
+```
 
-without requiring a predefined reaction coordinate or product.
+The MACE-OFF24 medium checkpoint used by the frozen P0–P3 fixtures ships in
+`models/` (sha256 prefix `e5ccf5837f685899`). Each benchmark declares its model
+in `benchmarks/b0*/model.json` — **no model is ever downloaded implicitly**.
 
-The strongest evidence so far is that independently performed QM calculations reproduce the reaction identity and transition-state geometry in the tested cases.
+### Two environments, on purpose
 
-The main open question is no longer whether the basic idea works.
+The **science environment** (conda spec in `env/openmm_dev.yml`; baseline and
+history in `env/BASELINE.md`) produces every published number, and its package
+versions are part of each result. Developer tooling (ruff) lives in a separate
+`.venv-tools` (`make tools`) so that formatting can never move a scientific
+dependency. Backend parity once went red on an openmm *patch* release — never
+install dev tools into the science environment.
 
-The next question is:
+## Quickstart
 
-> **How broadly and efficiently can it discover chemically diverse reaction channels as system size and reaction complexity increase?**
+Optional local minimum / TS-candidate refinement is available as `prrs optimize`.
+It supports ASE calculators and existing OpenMM/MACE contexts through geomeTRIC;
+see [commands, outputs and validation boundaries](docs/GEOMETRIC_REFINEMENT.md).
+
+```bash
+# minimal self-contained demo
+prrs demo --output runs/demo --seed 42
+
+# a search run
+prrs search input.extxyz --output runs/my_run \
+    --config config.json --calculator mace --calculator-kwargs calc.json
+
+# export an unrefined path seed for downstream NEB / dimer / string refinement;
+# quench iterations are excluded — they are not dynamics
+prrs path --run runs/my_run --attempt <id> --output seed.extxyz --images 9
+```
+
+Every run writes a manifest (including `implementation_sha256`, see
+[Development](#development)) and a `network.json` reaction network.
+`runs/README.md` records which on-disk runs count as evidence — a `network.json`
+merely *existing* does not mean the run finished.
+
+### Watching a live run
+
+```bash
+python scripts/prrs_watch.py runs/my_run
+```
+
+A read-only terminal UI: it tails each trial's `observations.jsonl`
+incrementally, polls `network.json`, and draws the evolving potential-energy
+landscape directly in the terminal (true colour). It never writes to `runs/`;
+full-resolution PNGs go to `.scratch/prrs_watch/<run>/`.
 
 ---
 
-# License
+## Repository layout
+
+```
+src/prrs/                 search core — 19 modules, ≈12k lines
+  config.py               all protocol parameters + validation; invalid configs rejected before launch
+  internal.py             primitive internals, exact rigid-fragment rotation, continuation displacements
+  chemistry.py            the three identity layers, automorphism groups, symmetry-aware RMSD
+  canonical.py            certified canonical labelling by individualization–refinement
+  perturbations.py        six perturbation families, symmetry quotient, layered direction budget
+  network.py              registry: admission, conformer reservoirs, domain gates
+  state.py                active-subset graph encoding, Kabsch RMSD, response classification
+  reliability.py          per-force-call fail-closed gating
+  runner.py               one trial: delivery, mode-resolved quench, Hessian/min checks, saddle descent
+  search.py               budget scheduling, amplitude refinement, TS pool, run manifest
+  completeness.py         conditional completeness certificates for basin membership
+  product.py              connect-mode product target: records distances only, never routes
+  schema.py               explicit network.json schema (schema 2)
+  calculators.py          calculator factory
+  openmm_backend.py       tested openmm-ml/MACE primitives
+  torch_guard.py          single audited wrapper around torch.load
+  validation.py           independent cross-check path (ase.vibrations) — never imported by the search
+tests/                    31 files, 349 test functions
+benchmarks/               the benchmark suite — one directory per reaction system (criteria + grader)
+docs/                     working records: handoff, acceptance docs, plans, experiment logs
+scripts/                  provenance, implementation hash, live run observer
+runs/                     experiment outputs — runs/README.md says which count as evidence
+models/                   MACE-OFF24_medium.model (the frozen P0–P3 fixture model)
+env/                      science-environment baseline: BASELINE.md, conda spec, pip freeze
+```
+
+---
+
+## Development
+
+```bash
+make help      # what each target does
+make check     # fmt-check + lint + test + digest, in that order — the full gate
+make digest    # golden-sample regression gate
+make hash      # the implementation_sha256 a run manifest would record
+```
+
+- **pytest asks whether the code is correct; digest asks a different question** —
+  whether the code still produces the same numbers as the runs already on disk
+  (332 files / 2136 frames, with every difference classified as
+  `graph_invariant` / `parity_only` / `key_only`). **Zero diff is the only
+  accepted evidence of a zero-behaviour change.** Intentional changes are passed
+  with `--allow parity_only` etc. — but an allowance confirms the *shape* of a
+  difference, not that the new values are correct; that needs chemical judgement.
+- **`implementation_sha256`** (`make hash`) is the provenance anchor of every run
+  manifest: a content hash of `src/prrs/*.py`, independent of VCS state. Never
+  copied by hand; the fingerprint of record is tracked in `docs/HANDOFF.md` and
+  `env/BASELINE.md`.
+- Last recorded full gate: **476 passed, 1 skipped, digest zero-diff**
+  (2026-09-26).
+
+### Project norms
+
+These are working rules, not suggestions; results produced in violation of them
+have been voided before.
+
+- **Acceptance criteria are frozen before the data exists** and never edited in
+  place afterwards; a change is an explicit revision recording the old text, the
+  reason, and which data had been seen when the revision was made.
+- **Interventions are named separately**, so an improvement can be attributed to
+  one change at a time.
+- **Incomplete ≠ failed.** The denominator is the number of *initiated* trials;
+  incompletes and crashes are recorded as such, with causes
+  (`scripts/scan_status.sh` distinguishes the three states mechanically).
+- **Fail closed.** When something cannot be determined it is rejected with a
+  stated reason — never replaced by a default value.
+- **Gates are not moved because they block a wanted result.** First quantify
+  what the gate blocks.
+- **Measure before inferring.** Recorded refutations are assets, not
+  embarrassments (`docs/HANDOFF.md` §6).
+
+---
+
+## Documentation
+
+| | |
+|---|---|
+| [docs/README.md](docs/README.md) | document index — what is current, what is only a record |
+| [docs/HANDOFF.md](docs/HANDOFF.md) | handoff overview; frozen conclusions live here |
+| [docs/DECISIONS_PENDING.md](docs/DECISIONS_PENDING.md) | open items only |
+| [docs/PRRS_STATUS.md](docs/PRRS_STATUS.md) | implementation status, measured claim by claim |
+| [docs/onboarding/README.md](docs/onboarding/README.md) | newcomer guide |
+| [benchmarks/README.md](benchmarks/README.md) | benchmark suite rules and queue |
+| [env/BASELINE.md](env/BASELINE.md) | environment baseline and fingerprint history |
+| [docs/PLAN_2026-09-28.md](docs/PLAN_2026-09-28.md) | current plan — connect-mode two-layer bridge |
+
+Active work as of 2026-09-28: the **connect-mode bridge plan** (given known
+reactant and product, find the channels between them) — code draft in
+`PLAN_2026-09-28.py` at the repo root, awaiting staged merge into `src/prrs`;
+the **first-entry committor** machinery (main line A) completed and confirmed
+2026-09-26; a static performance review (`docs/REVIEW_2026-09-28.md`,
+PERF-01…28) awaiting measurement-first triage.
+
+The original method note is
+[`mlp_native_perturbation_response_reaction_search.md`](mlp_native_perturbation_response_reaction_search.md).
+
+---
+
+## License
 
 This project is licensed under the **GNU Affero General Public License v3.0 only**
-(`SPDX: AGPL-3.0-only`). The full license text is in [LICENSE](LICENSE).
+(`SPDX: AGPL-3.0-only`). The full text is in [LICENSE](LICENSE).
 
-In short: you may use, study, share, and modify this code, but any derivative work —
-whether distributed or offered over a network — must be released under the same
-license, with complete corresponding source. "Only" means the code is licensed under
-AGPL-3.0 exactly, and not automatically under future GPL/AGPL versions.
+In short: you may use, study, share, and modify this code, but any derivative
+work — whether distributed or offered over a network — must be released under
+the same license, with complete corresponding source. "Only" means the code is
+licensed under AGPL-3.0 exactly, and not automatically under future GPL/AGPL
+versions.
