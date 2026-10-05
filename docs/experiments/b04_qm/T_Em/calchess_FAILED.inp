@@ -1,0 +1,4 @@
+! ExtOpt OptTS
+%method ProgExt "/home/ruigengji/MLPATH/scripts/mace_engrad.sh" end
+%geom Calc_Hess true MaxIter 200 end
+* xyzfile -1 1 g.xyz

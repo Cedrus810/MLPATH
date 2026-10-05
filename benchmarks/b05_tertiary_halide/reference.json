@@ -1,0 +1,29 @@
+{
+  "literature_unverified_here": {
+    "note": "NOTHING in this object was computed or reproduced in this project, and no number is quoted for it. Gas-phase hydroxide with a tertiary alkyl halide is a studied competition, but this file records only the QUALITATIVE expectation, because quoting a barrier from memory is worse than quoting nothing: it would be unfalsifiable and unattributable at once. If a number is wanted here later it has to arrive with a citation and, preferably, a calculation in docs/experiments/.",
+    "qualitative_expectation": "With a strong base and a tertiary substrate, elimination is expected to dominate substitution; back-side attack at a tertiary carbon is sterically hindered. In the gas phase, with no solvent to stabilise a carbocation, the stepwise ionisation route is expected to be far more costly than it is in polar protic solvent.",
+    "status": "PREDICTION this benchmark can falsify, not an input. Per ../README.md rule 5 no part of it appears in CRITERIA.md."
+  },
+  "textbook_labels": {
+    "substitution": "SN1 / SN2",
+    "elimination": "E1 / E2",
+    "claim": "The textbook says tert-butyl chloride ionises (SN1/E1, stepwise, via a carbocation) rather than being attacked directly (SN2/E2, concerted).",
+    "status": "This is exactly the statement ../TAXONOMY.md refuses to put in the premise. A carbocation intermediate is a MECHANISTIC claim; on the potential-energy surface the only measurable question is whether the channel has a confirmed minimum between reactants and products. Both answers pass; failing to answer is the only failure."
+  },
+  "what_this_grid_reports": {
+    "substitution_channel": "is there a confirm_minimum-passing minimum between the reactant complex and the substitution products",
+    "elimination_channel": "the same question, independently, on the elimination channel",
+    "competition": "both channels are reported from ONE run on ONE substrate, because they compete for it. Reporting them from two runs would turn the real question into two single-choice questions -- ../TAXONOMY.md B."
+  },
+  "measured_here": {
+    "status": "nothing yet -- no probe has been run on this grid",
+    "placeholder_for": [
+      "preflight.md once the gates have run",
+      "a probe run, in the shape of ../b04_sn2_chloride/PROBE_2026-09-04.md"
+    ]
+  },
+  "inherited_context": {
+    "model_error_on_the_neighbouring_grid": "POLAR-1 on b04's ionic SN2 central barrier: +2.09 kcal/mol against wB97M-V/def2-TZVPD//r2SCAN-3c (../b04_sn2_chloride/model.json). That is ONE anion and ONE reaction; see model.json's unverified_for_this_grid before carrying it here.",
+    "qm_protocol_available": "r2SCAN-3c geometry+frequencies then wB97M-V/def2-TZVPD single point, executed twice on this project's own systems (docs/experiments/sn2_qm/, docs/experiments/b04_qm/), including a bidirectional IRC. So the P4+ verification protocol is available for this grid without new tooling."
+  }
+}

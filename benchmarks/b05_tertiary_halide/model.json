@@ -1,0 +1,27 @@
+{
+  "status": "frozen_candidate",
+  "chosen": "MACE-POLAR-1-M",
+  "note": "Same checkpoint as b04, and deliberately the same file rather than a copy: b04's model.json carries the full candidate comparison, the QM reference protocol and the per-atom charge measurements, and duplicating them here would let the two drift. Read ../b04_sn2_chloride/model.json for the basis; this file records only what is specific to b05.",
+  "path": "/home/ruigengji/MLP/mace/MACE-POLAR-1-M.model",
+  "sha256": "fab8b8713c832f31a2a853aaa22fd638be8a369cbf5095e6b3e982a18d10e93a",
+  "checkpoint_class": "PolarMACE",
+  "mace_model_type": "PolarMACE",
+  "calculator_factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+  "why_no_factory_of_its_own": "The factory exists because prrs.calculators.mace_factory does not pass model_type and would load PolarMACE as a plain MACE -- computing the wrong thing WITHOUT RAISING. That is a property of the checkpoint class, not of the grid, so b05 reaches the same function through the same --calculator hook instead of growing a second copy of it.",
+  "why_this_one_for_b05": "Default from P4 onward (user, 2026-09-04), and the ionic half of the two-reaction comparison that decided it was measured on exactly this kind of system: charge -1, a leaving halide, a heavy-atom reaction coordinate.",
+  "unverified_for_this_grid": {
+    "hydroxide": "POLAR-1's ionic validation is one number on ONE anion: Cl- + CH3Cl, central barrier +2.09 kcal/mol against wB97M-V/def2-TZVPD. NOTHING here establishes it on hydroxide, on a C-H abstraction, or on an alkene product. Preflight measures that the model responds to charge on this structure; that is a sanity check, not accuracy. Any energetic statement from this grid inherits this line.",
+    "training_set": "UNVERIFIED -- not readable from the checkpoint. Unchanged from b04: this is the open question about POLAR-1's provenance, and it is a reason criteria may not rest on its energetics.",
+    "three_fragment_products": "The elimination channel's product set has THREE fragments (alkene + water + halide). No model in this project has been checked on a three-fragment dissociated state, and a charge-aware model has an obvious way to be wrong there: the -1 has to end up on the chloride rather than smeared across the set. Preflight gate 8 measures where the charge goes."
+  },
+  "excluded": [
+    {
+      "name": "MACE-OFF24_medium",
+      "why": "Bit-identical energies for total charge 0, -1 and +1 (PRRS_STATUS.md 2.5). This system is an anion throughout."
+    },
+    {
+      "name": "MACE-omol-0-extra-large-4M",
+      "why": "Kept as a second reading only, as in b04: +10.46 kcal/mol on the ionic SN2 barrier against POLAR-1's +2.09. Not the grid's model."
+    }
+  ]
+}

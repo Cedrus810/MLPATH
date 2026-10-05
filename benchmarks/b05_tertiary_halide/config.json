@@ -1,0 +1,240 @@
+// NOT FROZEN. Draft, in the same sense as b04's: it exists so preflight has something
+// concrete to test against, and freezing it is the user's act, at the same time as
+// CRITERIA.md. A frozen criterion against an unfrozen config means nothing.
+//
+// Every field is b04's value verbatim except TWO -- tracked_coordinates and
+// saddle_search_max_rise_eV -- so the two grids stay comparable and any difference in
+// outcome is attributable to the chemistry rather than to a knob. Two more fields are
+// listed below although they are UNCHANGED, because "we kept it" is a decision here and
+// the reason is a measurement.
+//
+// tracked_coordinates -- SEVEN, not three, because this grid has two channels and both
+//   must be readable off a trajectory by name. q_substitution = r(C-Cl) - r(C-O) and
+//   q_elimination = r(C_beta-H) - r(O-H) are the two progress variables; their signs say
+//   which channel a frame is on, and r(C-C) says whether an alkene is forming. Naming
+//   them is not the same as expecting them: a trajectory that moves neither is a
+//   perfectly good elastic result, and a trajectory that moves both is the information
+//   this grid exists to collect.
+//
+// saddle_search_max_rise_eV = 10.0 -- the probe-phase, NON-BINDING value, not a
+//   criterion. b04 measured what happens with 1.5: the ceiling refused the seed at step
+//   0 (max_rise 1.5479) and the reaction's own saddle was invisible. Carrying 1.5 here
+//   would be repeating a measurement whose answer is already known. The real ceiling is
+//   an OUTPUT of the B block (DECISIONS_PENDING 4a) and this grid contributes to it.
+//
+// families -- stretch/compress/kick/bend, as b04. torsion is left OUT on purpose: the
+//   only torsions here are the three methyl rotors, and they are symmetry rotors, so a
+//   120 degree turn maps the structure onto a symmetry copy of itself. Ethanol measured
+//   the cost of not knowing that -- 15 of 24 trials spent on a rotor that could not
+//   reach anything (PRRS_STATUS.md 1.2). They stay reachable through the rotor
+//   degradation path, which is where a methyl-rotation saddle would still show up.
+//
+// pair_cutoff_A = 4.0 -- UNCHANGED from b04. A draft of this grid raised it to 4.6 so
+//   the base could sit further out. Measured on the corrected geometry, with the cutoff
+//   as the ONLY variable: 152 candidates -> 24 selected at 4.0, and 191 -> 24 at 4.6.
+//   Both are capped at max_directions, so the cutoff changes coverage (16% -> 13%) and
+//   changes nothing about what gets selected. An earlier version of this comment said
+//   raising it took gate 6 from PASS to FAIL; that conflated the cutoff change with the
+//   methyl-polar-angle fix made in the same step, and the PASS belonged to the broken
+//   geometry. Reach cannot be bought with the cutoff -- but neither is the cutoff what
+//   lost it. See ../../docs/DECISIONS_PENDING.md, the direction-contract ruling.
+// direction_mode = "sampled" —— 显式写出（用户裁决 2026-09-09）。探针期就是抽样，
+//   因此这一格的每一条负结论在探针阶段一律 `unanswered`，不得读成"协同"。
+//
+//   **正式运行是否改 exhaustive，等首次探针给出成本后再决定，现在不预支。**
+//   实测代价：源结构一处的完全枚举是 **504 个 coarse trial**（152 个方向 × 各自的幅度，
+//   对 sampled 的 24 方向 / 86 trial），更深的微态还要加。而 16 原子的 s/trial 尚未测过 ——
+//   b04 是 6 原子 39.5 s/trial，**不外推**。先用 sampled 量成本，再决定值不值这个价。
+
+{
+  "active_atoms": null,
+  "analytic_hessian_check": 0.01,
+  "analytic_hessian_check_directions": 3,
+  "automorphism_limit": 20000,
+  "basin_energy_eV": 0.05,
+  "basin_rmsd_A": 0.15,
+  "bend_amplitudes_rad": [
+    0.09,
+    0.17,
+    0.35
+  ],
+  "bond_hysteresis": 0.08,
+  "bond_scale": 1.2,
+  "boundary_continuation_descend_saddles": true,
+  "boundary_continuation_enabled": true,
+  "boundary_continuation_max_steps": 8,
+  "boundary_continuation_per_run": 4,
+  "boundary_continuation_seeds": 2,
+  "boundary_continuation_step_A": 0.05,
+  "charge_sensitive": true,
+  "chemical_max_nodes": 8,
+  "chemical_trials_per_node": 96,
+  "closed_shell_only": false,
+  "collateral_bond_A": 0.05,
+  "collateral_gate": true,
+  "conformer_max_per_node": 8,
+  "conformer_temperature_K": 300.0,
+  "conformer_trials_per_microstate": 32,
+  "direction_mode": "sampled",
+  "direction_quota_fraction": 0.5,
+  "families": [
+    "stretch",
+    "compress",
+    "kick",
+    "bend"
+  ],
+  "free_alignment_samples": 24,
+  "geometry_amplitudes_A": [
+    0.1,
+    0.3,
+    0.6,
+    1.0
+  ],
+  "hbond_acceptor_A": 2.5,
+  "hbond_angle_deg": 120.0,
+  "hessian_source": "auto",
+  "internal_mode_recheck": true,
+  "internal_mode_recheck_step_scale": 2.0,
+  "irc_enabled": true,
+  "irc_max_per_run": 16,
+  "irc_relay_hops": 3,
+  "irc_step_A": 0.15,
+  "kick_energies_eV": [
+    0.1,
+    0.5,
+    1.0
+  ],
+  "max_depth": 1,
+  "max_directions": 24,
+  "max_energy_rise_eV_atom": 20.0,
+  "max_force_eV_A": 100.0,
+  "max_nve_drift_eV_atom": 0.1,
+  "max_trials": 96,
+  "max_uncertainty_eV_A": null,
+  "min_directions_per_family": 2,
+  "min_distance_ratio": 0.45,
+  "min_mode_backtracks": 8,
+  "min_mode_fmax_eV_A": 0.01,
+  "min_mode_max_steps": 200,
+  "min_mode_overlap": 0.5,
+  "min_mode_refresh": 5,
+  "min_mode_step_A": 0.05,
+  "min_pair_hops": 4,
+  "minimum_check": "hessian",
+  "minimum_check_displacement_A": 0.05,
+  "minimum_check_eigenvalue_tol": 0.001,
+  "minimum_check_probes": 2,
+  "minimum_check_step_A": 0.01,
+  "multiplicity": 1,
+  "pair_cutoff_A": 4.0,
+  "parity_tolerance": 0.01,
+  "pulse_forces_eV_A": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "pulse_steps": 20,
+  "quench_fmax_eV_A": 0.01,
+  "quench_steps": 500,
+  "refinement_steps": 3,
+  "reservoir_weight_diversity": 1.0,
+  "reservoir_weight_energy": 1.0,
+  "reservoir_weight_response": 1.0,
+  "response_band_A": [
+    0.01,
+    0.1
+  ],
+  "response_band_enabled": true,
+  "response_descent_enabled": false,
+  "response_descent_max_steps": 40,
+  "response_descent_step": 0.2,
+  "response_descent_tol": 0.001,
+  "response_samples": 5,
+  "response_significance": 3.0,
+  "response_steps": 200,
+  "saddle_search_enabled": true,
+  "saddle_search_max_rise_eV": 10.0,
+  "saddle_search_per_run": 8,
+  "saddle_search_seeds": 2,
+  "sample_interval": 5,
+  "seed": 42,
+  "soft_mode_curvature_floor_eV_rad2": 0.01,
+  "soft_mode_curvature_max_eV_rad2": 50.0,
+  "soft_mode_scan_points": 12,
+  "soft_mode_step_rad": 0.02,
+  "soft_polish_rounds": 6,
+  "soft_polish_steps": 6,
+  "temperature_K": 0.0,
+  "timestep_fs": 0.25,
+  "torsion_amplitudes_rad": [
+    0.52,
+    1.05,
+    2.09
+  ],
+  "torsion_symmetry_margin_rad": 0.2,
+  "torsion_tolerance_rad": 0.0175,
+  "total_charge": -1,
+  "tracked_coordinates": [
+    {
+      "indices": [
+        0,
+        1
+      ],
+      "kind": "bond",
+      "name": "r_C_Cl_leaving"
+    },
+    {
+      "indices": [
+        14,
+        0
+      ],
+      "kind": "bond",
+      "name": "r_O_C_substitution"
+    },
+    {
+      "indices": [
+        0,
+        2
+      ],
+      "kind": "bond",
+      "name": "r_C_C_forming_alkene"
+    },
+    {
+      "indices": [
+        2,
+        4
+      ],
+      "kind": "bond",
+      "name": "r_C_H_beta"
+    },
+    {
+      "indices": [
+        14,
+        4
+      ],
+      "kind": "bond",
+      "name": "r_O_H_beta"
+    },
+    {
+      "indices": [
+        0,
+        1,
+        0,
+        14
+      ],
+      "kind": "bond_difference",
+      "name": "q_substitution"
+    },
+    {
+      "indices": [
+        2,
+        4,
+        14,
+        4
+      ],
+      "kind": "bond_difference",
+      "name": "q_elimination"
+    }
+  ],
+  "trivial_floor_fraction": 0.5
+}

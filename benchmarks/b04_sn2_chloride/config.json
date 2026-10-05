@@ -1,7 +1,25 @@
-// NOT FROZEN. This is a draft: it is the configuration b04 would run with once the
-// three gaps in README.md are closed, and it exists so preflight has something concrete
-// to test against. Freezing it is the user's act, and it happens at the same time as
-// CRITERIA.md -- a frozen criterion against an unfrozen config means nothing.
+// FROZEN 2026-09-13 (user), at the same time as CRITERIA.md -- a frozen criterion
+// against an unfrozen config means nothing, which is what this line used to say was
+// still outstanding. From here the VALUES are not changed; a change goes through
+// CRITERIA.md's revision record and says which data it was made after.
+//
+// One key was ADDED at freezing rather than changed: spectral_rank_modes = 4. The field
+// did not exist when this file was written, and benchmarks/README.md requires this file
+// to be the COMPLETE SearchConfig dict -- leaving it out would have frozen a record that
+// silently omits the knob deciding which directions the budget is spent on. It is at its
+// default, and its justification is a measurement (config.RATIONALE, and
+// docs/experiments/spectral_proposal_probe.py: on this very grid the direction that
+// reacted ranks 1 of 28 under it, at overlap 0.9651 against 0.6893 for the next).
+//
+// probe1-4 all predate this freeze. They are probes, not acceptance runs, and freezing
+// does not retroactively make them one.
+//
+// ~~"the configuration b04 would run with once the three gaps in README.md are
+// closed"~~ -- that line is retracted (2026-09-09). The three gaps ARE closed and this
+// file has run three times: runs/b04_probe, runs/b04_probe2_openceiling and
+// runs/b04_probe3_rigidbond. It is no longer a hypothetical; it is the record of how
+// b04 was searched, and the two edits at the bottom of this header exist to stop it
+// contradicting that record.
 //
 // closed_shell_only: RETRACTED 2026-09-04. This file used to say the flag must stay
 // True because "a benchmark may not switch the domain gate off". That was written in a
@@ -15,6 +33,24 @@
 //
 // Making chemistry.VALENCE charge-aware is still worth doing -- it would make the gate
 // MEAN something for anions instead of being switched off -- but it no longer blocks b04.
+// 2026-09-09，队列第 2 项（用户裁决）：这份文件对齐**实际被接受的那次运行**，
+// 不再让冻结文本与历史事实相左。两处改动，各自的理由不同：
+//
+// direction_mode = "sampled" —— **这是 probe1/2/3 的历史事实，不得追认成 exhaustive。**
+//   三次探针都在缺省的抽样预算下跑的，基覆盖 14/28 = 50%（`cap_bound false`，
+//   截断者是 direction_quota_fraction）。把它写出来是为了让每一条负结论都带着
+//   它该带的限定：`sampled` 下的 null 一律 `unanswered`，见 CRITERIA.md。
+//
+// saddle_search_max_rise_eV: 1.5 -> 10.0 —— 对齐实际接受的运行。1.5 **已知会在
+//   step 0 拒绝种子**（实测 max_rise 1.5479 与 1.6821 两个种子都在它之上），
+//   所以原样冻结等于冻结一个已证明失效的值。
+//
+//   **10.0 是非 binding 的探针包络，不是最终生产上限。** 它的作用是"别挡路"，
+//   而真正的上限按 DECISIONS_PENDING 4a 是 B 组跑完之后的**输出**：现有数据点 n = 2，
+//   且实测显示种子质量与能量高低**不同向**（重叠 0.986 的那个种子 max_rise 反而更高）。
+//   **4a 日后冻结那个值时不回写这份历史配置** —— 这份文件记的是 b04 怎么跑的，
+//   不是生产默认值该是多少。
+
 {
   "active_atoms": null,
   "analytic_hessian_check": 0.01,
@@ -44,6 +80,7 @@
   "conformer_max_per_node": 8,
   "conformer_temperature_K": 300.0,
   "conformer_trials_per_microstate": 32,
+  "direction_mode": "sampled",
   "direction_quota_fraction": 0.5,
   "families": [
     "stretch",
@@ -121,7 +158,7 @@
   "response_significance": 3.0,
   "response_steps": 200,
   "saddle_search_enabled": true,
-  "saddle_search_max_rise_eV": 1.5,
+  "saddle_search_max_rise_eV": 10.0,
   "saddle_search_per_run": 8,
   "saddle_search_seeds": 2,
   "sample_interval": 5,
@@ -132,6 +169,7 @@
   "soft_mode_step_rad": 0.02,
   "soft_polish_rounds": 6,
   "soft_polish_steps": 6,
+  "spectral_rank_modes": 4,
   "temperature_K": 0.0,
   "timestep_fs": 0.25,
   "torsion_amplitudes_rad": [

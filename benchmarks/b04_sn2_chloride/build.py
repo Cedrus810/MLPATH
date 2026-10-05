@@ -65,7 +65,7 @@ def main(argv):
     print(f"total charge     {atoms.info['charge']}   multiplicity {atoms.info['spin']}")
     print(f"r(C-Cl) leaving  {atoms.get_distance(carbon, leaving):.4f} A")
     print(f"r(C...Cl-) nuc   {atoms.get_distance(carbon, nucleophile):.4f} A")
-    print(f"fragments        2 (the search must be able to reach 1)")
+    print("fragments        2 (the search must be able to reach 1)")
     if np.linalg.norm(atoms.positions[nucleophile] - atoms.positions[carbon]) > 4.0:
         raise SystemExit("nucleophile is outside pair_cutoff_A = 4.0; no probe would be proposed")
     if len(argv) > 1:
