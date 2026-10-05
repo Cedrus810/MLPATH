@@ -109,6 +109,54 @@ def test_graph_hysteresis_and_finite_scope():
         validate_atoms(a)
 
 
+def _pairwise_edges(atoms, scale=1.2, previous=None, hysteresis=0.08, active=None):
+    """encode's edge rule as the per-pair loop it was written as before PERF-22."""
+    from ase.data import covalent_radii
+    from prrs.state import resolve_active
+
+    index = resolve_active(atoms, active)
+    radii = covalent_radii[atoms.numbers]
+    edges = set()
+    for i in range(len(index)):
+        for j in range(i + 1, len(index)):
+            a, b = pair = (int(index[i]), int(index[j]))
+            factor = 1.0
+            if previous is not None:
+                factor += hysteresis if pair in previous else -hysteresis
+            distance = np.linalg.norm(atoms.positions[a] - atoms.positions[b])
+            if distance < scale * (radii[a] + radii[b]) * factor:
+                edges.add(pair)
+    return edges
+
+
+def test_vectorised_encode_is_the_pairwise_rule_in_the_same_order():
+    """PERF-22: one pair on each side of the hysteresis band, a reversed pair and a pair
+    outside the active subset in `previous`; edges and their iteration order unchanged."""
+    from ase.build import molecule
+
+    atoms = molecule("CH3CH2OH")
+    cutoff = 1.2 * 2 * 0.76  # C-C
+    unit = atoms.positions[1] - atoms.positions[0]
+    unit /= np.linalg.norm(unit)
+    stretched = atoms.copy()
+    stretched.positions[1] = atoms.positions[0] + unit * cutoff * 0.99  # inside 1, outside 1-h
+    loose = atoms.copy()
+    loose.positions[1] = atoms.positions[0] + unit * cutoff * 1.05  # outside 1, inside 1+h
+    cases = [
+        (stretched, None, None),
+        (stretched, {(1, 0)}, None),  # reversed: never asked for, so (0, 1) gets 1 - h
+        (loose, {(0, 1), (3, 8)}, None),
+        (loose, {(0, 1), (2, 3)}, [0, 1, 2, 4, 5, 6, 7, 8]),  # (2, 3) is outside the subset
+    ]
+    for structure, previous, active in cases:
+        found = encode(structure, 1.2, previous, 0.08, active=active).edges
+        assert list(found) == list(_pairwise_edges(structure, 1.2, previous, 0.08, active))
+    assert (0, 1) in encode(stretched).edges
+    assert (0, 1) not in encode(stretched, previous={(1, 0)}).edges
+    assert (0, 1) in encode(loose, previous={(0, 1)}).edges
+    assert (0, 1) not in encode(loose).edges
+
+
 def test_uncertainty_is_not_silently_zero():
     a = demo_atoms()
     a.calc = GuardedCalculator(DoubleWell(), SearchConfig(max_uncertainty_eV_A=0.1))

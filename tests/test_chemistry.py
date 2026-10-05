@@ -156,6 +156,48 @@ def test_methyl_rotamers_are_not_new_conformers():
     assert same_chemistry(atoms, turned)
 
 
+def test_symmetric_rmsd_is_the_relabelled_aligned_rmsd_without_copies(monkeypatch):
+    """PERF-03a: each term is aligned_rmsd of a relabelled copy of b, bit for bit, but no
+    copy is made -- one Atoms copy per group element was half the cost on |Aut| = 1296."""
+    from prrs.chemistry import automorphisms, symmetric_rmsd
+    from prrs.state import aligned_rmsd
+
+    atoms = molecule("CH3CH2OH")
+    permutations_, _ = automorphisms(atoms)
+    rng = np.random.default_rng(3)
+    other = atoms.copy()
+    other.positions += rng.normal(scale=0.2, size=other.positions.shape)
+    active = [0, 1, 2, 4, 5, 6, 7, 8]  # hydroxyl H left out
+    subset, _ = automorphisms(atoms, active=active)
+
+    def relabelled_minimum(group, subset_atoms):
+        index = sorted(subset_atoms) if subset_atoms else list(range(len(atoms)))
+        best = float("inf")
+        for permutation in group:
+            relabelled = other.copy()
+            positions = relabelled.positions.copy()
+            positions[index] = other.positions[permutation]
+            relabelled.set_positions(positions)
+            best = min(best, aligned_rmsd(atoms, relabelled, subset_atoms))
+        return best
+
+    expected = [relabelled_minimum(permutations_, None), relabelled_minimum(subset, active)]
+    copies = []
+    original_copy = Atoms.copy
+
+    def counting_copy(self):
+        copies.append(None)
+        return original_copy(self)
+
+    monkeypatch.setattr(Atoms, "copy", counting_copy)
+    found = [
+        symmetric_rmsd(atoms, other, permutations_),
+        symmetric_rmsd(atoms, other, subset, active),
+    ]
+    assert found == expected  # exact: same arithmetic, not approximately the same
+    assert copies == []
+
+
 def test_symmetric_rmsd_still_separates_real_conformers():
     """Symmetry must not be used to merge anti with gauche."""
     from prrs.chemistry import automorphisms, symmetric_rmsd

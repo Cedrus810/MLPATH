@@ -157,6 +157,31 @@ def test_certificate_succeeds_when_the_answer_is_known(basin_minimum):
     assert "DRAFT" in text and record["verdict"] in text
 
 
+def test_audit_builds_one_calculator(basin_minimum):
+    """PERF-02: a checkpoint factory reloads the model per call, so the audit must call
+    it once, not once per cover point for the energy and again for the quench."""
+    calls = []
+
+    def counting_factory():
+        calls.append(None)
+        return TripleWell()
+
+    record = audit_basin(
+        basin_minimum,
+        counting_factory,
+        CONFIG,
+        CERT_BASIS,
+        radius=0.15,
+        delta=0.02,
+        energy_ceiling_X=0.15,
+        gap_w=0.10,
+        lipschitz_upper=true_lipschitz(0.9, 1.5),
+    )
+    assert record["samples"] > 2
+    assert len(calls) == 1
+    assert record["verdict"] == "conditions_met", record["conditions"]
+
+
 def test_enlarged_delta_is_refused_even_though_every_sample_returns(basin_minimum):
     """The plan's mutation check: sparse cover must not pass by luck.
 

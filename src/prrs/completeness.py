@@ -163,12 +163,20 @@ def audit_basin(
     d = basis.shape[0]
     points = cover(minimum.get_positions().ravel(), basis, radius, delta)
 
+    # One calculator for the whole audit, the way search.py holds one for a run: a
+    # checkpoint factory reloads the model on every call, and a per-point call made the
+    # b04 audit (619 points) load it about 1237 times for no change in any number.
+    calculator = factory()
+
+    def shared():
+        return calculator
+
     table = []
     energies, gradients, distances = [], [], []
     for point in points:
         atoms = minimum.copy()
         atoms.set_positions(np.asarray(point).reshape(atoms.positions.shape))
-        atoms.calc = factory()
+        atoms.calc = calculator
         energies.append(float(atoms.get_potential_energy()))
         gradients.append(atoms.get_forces().ravel().copy())
         centre = minimum.get_positions().ravel()
@@ -180,7 +188,7 @@ def audit_basin(
         if distance < gap_w:
             table.append({"in": "core", "member": True, "distance": distance})
             continue
-        outcome = membership(point, factory, config, minimum, config.basin_rmsd_A)
+        outcome = membership(point, shared, config, minimum, config.basin_rmsd_A)
         table.append(
             {
                 "in": "annulus" if distance < radius - 1e-12 else "boundary_shell",

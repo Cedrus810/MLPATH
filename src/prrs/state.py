@@ -85,15 +85,21 @@ def encode(atoms, scale=1.2, previous=None, hysteresis=0.08, active=None):
     cutoff = scale * (radii[:, None] + radii[None, :])
     weights = 1.0 / (1.0 + np.exp(np.clip(12 * (distances / cutoff - 1), -60, 60)))
     np.fill_diagonal(weights, 0.0)
-    edges = set()
-    for i in range(len(index)):
-        for j in range(i + 1, len(index)):
-            pair = (int(index[i]), int(index[j]))
-            factor = 1.0
-            if previous is not None:
-                factor += hysteresis if pair in previous else -hysteresis
-            if distances[i, j] < cutoff[i, j] * factor:
-                edges.add(pair)
+    # Vectorised pair test. The factor is 1 + h for a pair in `previous` and 1 - h for
+    # one that is not, the same doubles the per-pair loop computed, and np.nonzero walks
+    # the upper triangle row-major -- the loop's order -- so even the set's insertion
+    # order, and with it the iteration order every consumer sees, is unchanged.
+    factor = np.ones_like(cutoff)
+    if previous is not None:
+        factor[:] = 1.0 - hysteresis
+        slot = {int(atom): k for k, atom in enumerate(index)}
+        for pair in previous:
+            i, j = slot.get(int(pair[0])), slot.get(int(pair[1]))
+            # the loop asked `(index[i], index[j]) in previous` with i < j only
+            if i is not None and j is not None and i < j:
+                factor[i, j] = 1.0 + hysteresis
+    rows, cols = np.nonzero(np.triu(distances < cutoff * factor, k=1))
+    edges = set(zip(index[rows].tolist(), index[cols].tolist()))
     return Graph(edges, weights, distances, index)
 
 
@@ -104,6 +110,15 @@ def aligned_rmsd(a, b, active=None):
     index = resolve_active(a, active)
     x = a.positions[index] - a.positions[index].mean(axis=0)
     y = b.positions[index] - b.positions[index].mean(axis=0)
+    return centred_kabsch_rmsd(x, y)
+
+
+def centred_kabsch_rmsd(x, y):
+    """The Kabsch step of `aligned_rmsd` on two already-centred (n, 3) arrays.
+
+    Split out so `chemistry.symmetric_rmsd` can loop over a group on bare arrays and
+    still run the same arithmetic, bit for bit, as the Atoms-level function.
+    """
     u, _, vt = np.linalg.svd(x.T @ y)
     correction = np.eye(3)
     correction[-1, -1] = np.linalg.det(u @ vt)
