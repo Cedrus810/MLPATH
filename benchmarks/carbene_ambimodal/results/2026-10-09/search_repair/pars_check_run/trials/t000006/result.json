@@ -1,0 +1,187 @@
+{
+  "attempt_id": "t000006",
+  "probe": {
+    "family": "kick",
+    "indices": [
+      0,
+      1
+    ],
+    "sign": 1,
+    "amplitude": 1.0,
+    "seed": 3233101629,
+    "priority": 1,
+    "priority_reason": null,
+    "unit": "eV",
+    "kind": "bond",
+    "mode": "kick"
+  },
+  "status": "completed",
+  "classification": "elastic",
+  "fingerprint": {
+    "broken": [],
+    "formed": [],
+    "active_subset": [
+      0,
+      1
+    ],
+    "delta_coordination": [
+      -1.0333748661328634e-05,
+      -1.0333748661328634e-05
+    ],
+    "active_atoms": [],
+    "aligned_rmsd_A": 4.9207478463819676e-05,
+    "energy_change_eV": 4.303962288059382e-08,
+    "components_before": 1,
+    "components_after": 1
+  },
+  "failure": null,
+  "trajectory": "trials/t000006/response.traj",
+  "observations": "trials/t000006/observations.jsonl",
+  "endpoint": "trials/t000006/endpoint.extxyz",
+  "uncertainty_status": "unavailable",
+  "max_uncertainty_eV_A": null,
+  "max_nve_drift_eV_atom": 6.514874841156981e-06,
+  "pulse_work_eV": 0.0,
+  "tail_persistence_steps": 20,
+  "probe_delivered": {
+    "requested": 1.0,
+    "achieved": 1.0000000000000002,
+    "unit": "eV",
+    "realization": "internal_coordinate_impulse"
+  },
+  "injected_kinetic_eV": 1.0000000000000002,
+  "geometry_energy_change_eV": 0.0,
+  "raw_endpoint": "trials/t000006/raw_endpoint.extxyz",
+  "quench_converged": true,
+  "quench": {
+    "fmax_eV_A": 0.001,
+    "rounds": [
+      {
+        "tolerance_rad": 0.0175,
+        "modes": [],
+        "converged": true,
+        "moved": false,
+        "movements": [],
+        "energy_evaluations": 0
+      }
+    ],
+    "converged": true,
+    "steps": 22,
+    "force_converged": true,
+    "polish_contraction": {
+      "contracting": false,
+      "coordinate": null,
+      "offsets": [],
+      "decay_per_round": null,
+      "transient": [],
+      "verdict": "too_few_moving_rounds"
+    }
+  },
+  "source": "c0000",
+  "source_microstate": "c0000/m0000",
+  "target": "c0000",
+  "target_microstate": "c0000/m0000",
+  "stage": "coarse",
+  "refinement_parents": null,
+  "admission": "existing_microstate",
+  "minimum_confirmation": {
+    "method": "hessian",
+    "provenance": {
+      "source": "fd",
+      "step_A": 0.01,
+      "force_evaluations": 12,
+      "meaning": "central differences; truncation error is O(step^2)",
+      "analytic_unavailable": "backend exposes no analytic Hessian"
+    },
+    "eigenvalue_tol": 0.001,
+    "lowest_eigenvalues": [
+      -1.717176291670363e-36,
+      0.0,
+      0.0,
+      4.4956258962685137e-36,
+      6.885306715709796e-36,
+      1.4796020010701618
+    ],
+    "negative_eigenvalues": [],
+    "saddle_order": 0,
+    "trivial_mode_floor": [
+      {
+        "kind": "translation",
+        "measured": -1.7235712729217513e-33,
+        "gradient_expectation": 0.0,
+        "residual": -1.7235712729217513e-33
+      },
+      {
+        "kind": "translation",
+        "measured": 3.548732522575274e-21,
+        "gradient_expectation": 0.0,
+        "residual": 3.548732522575274e-21
+      },
+      {
+        "kind": "rotation",
+        "measured": 0.00017269612644174245,
+        "gradient_expectation": 0.00012134885723440257,
+        "residual": 5.134726920733989e-05
+      },
+      {
+        "kind": "translation",
+        "measured": 3.548732522575274e-21,
+        "gradient_expectation": 0.0,
+        "residual": 3.548732522575274e-21
+      },
+      {
+        "kind": "rotation",
+        "measured": 0.00017269612644174245,
+        "gradient_expectation": 0.00012134885723440257,
+        "residual": 5.134726920733989e-05
+      }
+    ],
+    "trivial_mode_floor_worst_residual": 5.134726920733989e-05,
+    "imaginary_wavenumbers_icm": [],
+    "units": "eV/(Angstrom^2 amu)",
+    "meaning": "rigid-body modes projected out; negative curvature means saddle",
+    "floor_gate": "necessary_condition_only",
+    "floor_gate_meaning": "rigid-body residual bounds only errors that break translational or rotational invariance; it says nothing about the internal subspace",
+    "internal_mode_recheck": {
+      "performed": true,
+      "agree": true,
+      "resolution_stable": true,
+      "fits_h2_law": true,
+      "resolution_diagnosis": "stable",
+      "modes": [
+        {
+          "index": 5,
+          "eigenvalue": 1.4796020010701618,
+          "rigid_body_overlap": 0.0,
+          "subspace": "internal",
+          "steps_A": [
+            0.005,
+            0.01,
+            0.02
+          ],
+          "curvature_by_step": [
+            1.4794049858869769,
+            1.47943065896269,
+            1.479533351265669
+          ],
+          "extrapolated_to_zero_step": 1.4793964281950513,
+          "h2_coefficient": 0.3423076765364253,
+          "fits_h2_law": true,
+          "compared_against": "assembly_step",
+          "reference_curvature": 1.47943065896269,
+          "classification_agrees": true,
+          "classification_steady_across_step": true
+        }
+      ],
+      "gate_step_A": 0.01,
+      "hessian_source": "fd",
+      "boundary_mode_index": 5,
+      "internal_modes_available": 1,
+      "force_evaluations": 6,
+      "fits_h2_law_meaning": "the ladder is a quadratic in h, so the extrapolate is meaningful. NOT evidence that the surface is smooth: a gaussian narrower than the probe fits the same law to within half a percent over a twenty-fivefold span",
+      "meaning": "agree gates matrix assembly against a truncation-extrapolated direct product; resolution_diagnosis is reported only, and says just whether the classification held across the ladder -- nothing here can decide why it moved"
+    }
+  },
+  "admission_detail": null,
+  "transition_class": "conformational_transition"
+}

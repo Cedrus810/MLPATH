@@ -1,0 +1,9 @@
+raw endpoint E -16767.0153 fmax 4.8468
+  atom  3 O  |F| 4.8468
+  atom 15 C  |F| 3.2198
+  atom  2 C  |F| 2.6671
+  atom 13 C  |F| 2.4347
+  atom  0 C  |F| 1.9014
+  atom  5 C  |F| 1.7257
+FIRE: converged True steps 834 E -16770.2700 dE -3.2547 eV RMSD 0.458 A  C:-Ca 1.52 C:-Cb 1.48 Ca-Cb 1.52 C:-O_ald 3.12
+BFGS: converged True steps 139 E -16770.2737 dE -3.2584 eV RMSD 0.469 A  C:-Ca 1.52 C:-Cb 1.48 Ca-Cb 1.52 C:-O_ald 3.13

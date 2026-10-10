@@ -1,0 +1,15 @@
+DFT TS-CCl2                  C23-C20 2.179  C23-C16 2.717  C23-C17 3.730
+DFT TS-CCl2-C4               C23-C20 2.305  C23-C16 2.741  C23-C17 4.229
+fromDFT_TS-CCl2              CONVERGED  imag [-230]  C23-C20 2.160  C23-C16 2.729  C23-C17 4.099  RMSD to DFT TS-CCl2 0.971 / TS-CCl2-C4 0.486  -> TS-CCl2-C4
+fromDFT_TS-CCl2-C4           CONVERGED  imag [-4]  C23-C20 2.932  C23-C16 3.194  C23-C17 4.864  RMSD to DFT TS-CCl2 0.856 / TS-CCl2-C4 0.226  -> TS-CCl2-C4
+fromScanProximal_d2.5        CONVERGED  imag []  C23-C20 2.985  C23-C16 3.209  C23-C17 4.082  RMSD to DFT TS-CCl2 0.241 / TS-CCl2-C4 0.831  -> TS-CCl2
+fromScanProximal_d2.6        CONVERGED  imag []  C23-C20 2.985  C23-C16 3.208  C23-C17 4.082  RMSD to DFT TS-CCl2 0.241 / TS-CCl2-C4 0.831  -> TS-CCl2
+
+between candidates: symmetry-aware RMSD (A), energy difference (kcal/mol)
+  fromDFT_TS-CCl2              fromDFT_TS-CCl2-C4           0.541   -0.699
+  fromDFT_TS-CCl2              fromScanProximal_d2.5        0.994   -0.858
+  fromDFT_TS-CCl2              fromScanProximal_d2.6        0.994   -0.858
+  fromDFT_TS-CCl2-C4           fromScanProximal_d2.5        0.880   -0.159
+  fromDFT_TS-CCl2-C4           fromScanProximal_d2.6        0.880   -0.160
+  fromScanProximal_d2.5        fromScanProximal_d2.6        0.001   -0.001
+[{"label": "fromDFT_TS-CCl2", "status": "CONVERGED", "imaginary_cm": [-229.9912501912987], "E_eV": -35638.39357836693, "C23_C20": 2.159925016191907, "C23_C16": 2.728744488776729, "C23_C17": 4.098559768291541, "rmsd_to_dft": {"TS-CCl2": 0.9714242735646474, "TS-CCl2-C4": 0.4855782514781129}, "closest_dft": "TS-CCl2-C4"}, {"label": "fromDFT_TS-CCl2-C4", "status": "CONVERGED", "imaginary_cm": [-3.940351032294352], "E_eV": -35638.42387592771, "C23_C20": 2.9318937635823463, "C23_C16": 3.194295562352769, "C23_C17": 4.864073318649135, "rmsd_to_dft": {"TS-CCl2": 0.8564467395786902, "TS-CCl2-C4": 0.22618586053795184}, "closest_dft": "TS-CCl2-C4"}, {"label": "fromScanProximal_d2.5", "status": "CONVERGED", "imaginary_cm": [], "E_eV": -35638.43077259178, "C23_C20": 2.9849040432394496, "C23_C16": 3.208534681360013, "C23_C17": 4.08210030798941, "rmsd_to_dft": {"TS-CCl2": 0.24108081330428052, "TS-CCl2-C4": 0.8314425612962609}, "closest_dft": "TS-CCl2"}, {"label": "fromScanProximal_d2.6", "status": "CONVERGED", "imaginary_cm": [], "E_eV": -35638.43079466032, "C23_C20": 2.985457731531785, "C23_C16": 3.2081370518441066, "C23_C17": 4.081760201329074, "rmsd_to_dft": {"TS-CCl2": 0.2412641903636545, "TS-CCl2-C4": 0.830894374145}, "closest_dft": "TS-CCl2"}]

@@ -1,0 +1,5 @@
+3
+Properties=species:S:1:pos:R:3 name=CCl2 section=carbenes charge=0 spin=1 G_hartree=-958.411455 pbc="F F F"
+C        0.00000000       0.83122900       0.00000000
+Cl       1.39334000      -0.14668900       0.00000000
+Cl      -1.39334000      -0.14668500       0.00000000

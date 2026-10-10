@@ -1,0 +1,1516 @@
+15:59:03 root CUDA version: 12.9, CUDA device: 0
+15:59:03 root Using head Default out of  ['Default']
+15:59:03 root Default dtype float64 does not match model dtype float32, converting models to float64.
+15:59:27 prrs.runner source relaxed and confirmed at -16769.0931 eV
+15:59:38 prrs.search search b09_compress_coverage: source admitted as c0000, max_trials=336, direction_mode=exhaustive
+17:44:47 prrs.search ts0000 found by quench_stalled at -16769.0709 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+18:04:43 prrs.search ts0001 found by quench_stalled at -16769.0701 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([{'hop': 0, 'saddle_order': 1, 'icm': [-54.5946957915741], 'travel_overlap': -0.9241379219611133, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}],)
+18:15:14 prrs.search ts0002 found by quench_stalled at -16769.0728 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([{'hop': 0, 'saddle_order': 1, 'icm': [-87.91572279571375], 'travel_overlap': -0.9848988395389515, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}, {'hop': 1, 'saddle_order': 1, 'icm': [-35.916782343817], 'travel_overlap': -0.8973398724033209, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}],)
+18:59:55 prrs.search ts0003 found by quench_stalled at -16769.0863 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+19:15:54 prrs.search ts0004 found by quench_stalled at -16769.0887 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+19:22:20 prrs.search ts0005 found by quench_stalled at -16769.0869 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+19:38:08 prrs.search ts0006 found by quench_stalled at -16769.0898 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+19:49:42 prrs.search ts0007 found by quench_stalled at -16769.0874 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+19:59:52 prrs.search ts0008 found by quench_stalled at -16769.0880 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+20:06:06 prrs.search ts0009 found by quench_stalled at -16769.0864 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+20:14:25 prrs.search ts0010 found by quench_stalled at -16769.0875 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+20:25:58 prrs.search ts0011 found by quench_stalled at -16769.0896 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+20:35:55 prrs.search ts0012 found by quench_stalled at -16769.0893 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+20:41:34 prrs.search ts0013 found by quench_stalled at -16769.0879 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+20:50:03 prrs.search ts0014 found by quench_stalled at -16769.0883 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+21:13:28 prrs.search ts0015 found by quench_stalled at -16769.0894 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+21:19:52 prrs.search ts0016 found by quench_stalled at -16769.0877 eV (from c0000/m0000)
+21:25:40 prrs.search ts0017 found by quench_stalled at -16769.0897 eV (from c0000/m0000)
+21:35:09 prrs.search ts0018 found by quench_stalled at -16769.0705 eV (from c0000/m0000)
+21:40:37 prrs.search ts0019 found by quench_stalled at -16769.0895 eV (from c0000/m0000)
+21:48:17 prrs.search ts0020 found by quench_stalled at -16769.0890 eV (from c0000/m0000)
+21:55:57 prrs.search ts0021 found by quench_stalled at -16769.0896 eV (from c0000/m0000)
+22:06:41 prrs.search ts0022 found by quench_stalled at -16769.0714 eV (from c0000/m0000)
+22:20:25 prrs.search ts0023 found by quench_stalled at -16769.0902 eV (from c0000/m0000)
+22:28:12 prrs.search ts0024 found by quench_stalled at -16769.0897 eV (from c0000/m0000)
+23:03:38 prrs.search ts0025 found by quench_stalled at -16769.0909 eV (from c0000/m0000)
+23:13:31 prrs.search ts0026 found by quench_stalled at -16769.0919 eV (from c0000/m0000)
+23:21:52 prrs.search ts0027 found by quench_stalled at -16769.0912 eV (from c0000/m0000)
+23:30:12 prrs.search ts0028 found by quench_stalled at -16769.0906 eV (from c0000/m0000)
+23:38:09 prrs.search ts0029 found by quench_stalled at -16769.0904 eV (from c0000/m0000)
+23:46:29 prrs.search ts0030 found by quench_stalled at -16769.0926 eV (from c0000/m0000)
+23:54:01 prrs.search ts0031 found by quench_stalled at -16769.0915 eV (from c0000/m0000)
+00:01:35 prrs.search ts0032 found by quench_stalled at -16769.0917 eV (from c0000/m0000)
+00:21:19 prrs.search ts0033 found by quench_stalled at -16769.0916 eV (from c0000/m0000)
+01:43:56 prrs.search ts0034 found by quench_stalled at -16769.0926 eV (from c0000/m0000)
+02:34:21 prrs.search ts0035 found by quench_stalled at -16769.0923 eV (from c0000/m0000)
+02:48:30 prrs.search ts0036 found by quench_stalled at -16769.0927 eV (from c0000/m0000)
+04:41:46 prrs.search scanning compress (2, 13) sign -1 on c0000/m0000
+04:41:46 prrs.search scanning compress (0, 4) sign -1 on c0000/m0000
+04:41:46 prrs.search bracket [0.3000, 0.6000] high_kind=confirmed on c0000/m0000
+04:41:46 prrs.search scanning compress (3, 13) sign -1 on c0000/m0000
+04:41:46 prrs.search bracket [0.6000, 1.0000] high_kind=confirmed on c0000/m0000
+04:41:46 prrs.search scanning compress (2, 15) sign -1 on c0000/m0000
+04:41:46 prrs.search bracket [0.6000, 1.0000] high_kind=confirmed on c0000/m0000
+04:41:46 prrs.search scanning compress (1, 9) sign -1 on c0000/m0000
+04:41:46 prrs.search bracket [0.3000, 0.6000] high_kind=confirmed on c0000/m0000
+04:41:46 prrs.search scanning compress (7, 28) sign -1 on c0000/m0000
+04:41:46 prrs.search bracket [0.6000, 1.0000] high_kind=confirmed on c0000/m0000
+04:41:46 prrs.search scanning compress (1, 4) sign -1 on c0000/m0000
+04:41:46 prrs.search bracket [0.6000, 1.0000] high_kind=confirmed on c0000/m0000
+04:41:47 prrs.search scanning compress (4, 13) sign -1 on c0000/m0000
+04:41:47 prrs.search scanning compress (1, 11) sign -1 on c0000/m0000
+04:41:47 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+05:25:14 prrs.search scanning compress (12, 19) sign -1 on c0000/m0000
+05:25:14 prrs.search scanning compress (7, 27) sign -1 on c0000/m0000
+05:25:14 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([{'hop': 0, 'saddle_order': 1, 'icm': [-42.11746715673989], 'travel_overlap': -0.9152635244376233, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+05:50:10 prrs.search scanning compress (0, 9) sign -1 on c0000/m0000
+05:50:10 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([{'hop': 0, 'saddle_order': 1, 'icm': [-89.53119545487394], 'travel_overlap': -0.985834598990053, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}, {'hop': 1, 'saddle_order': 1, 'icm': [-41.15766545661956], 'travel_overlap': -0.8786104981618906, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([{'hop': 0, 'saddle_order': 1, 'icm': [-89.60919045624485], 'travel_overlap': -0.9859421532847237, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}, {'hop': 1, 'saddle_order': 1, 'icm': [-40.38405600516675], 'travel_overlap': 0.8729212740614621, 'overlap_meaning': 'mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed'}],)
+06:11:26 prrs.search scanning compress (2, 19) sign -1 on c0000/m0000
+06:11:26 prrs.search scanning compress (3, 15) sign -1 on c0000/m0000
+06:11:26 prrs.search scanning compress (3, 16) sign -1 on c0000/m0000
+06:11:26 prrs.search scanning compress (0, 7) sign -1 on c0000/m0000
+06:11:26 prrs.search scanning compress (4, 19) sign -1 on c0000/m0000
+06:11:26 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2512, in run
+    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2381, in finish_scan
+    scan["boundary_continuation"] = continue_boundary(node, state, observed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1834, in continue_boundary
+    arrived, walk = continue_across_boundary(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2502, in continue_across_boundary
+    agreed, sides = arrival_through_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2327, in arrival_through_saddle
+    landed, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)
+06:49:47 prrs.search scanning compress (1, 12) sign -1 on c0000/m0000
+06:49:47 prrs.search scanning compress (4, 15) sign -1 on c0000/m0000
+06:49:47 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:15 prrs.search scanning compress (3, 26) sign -1 on c0000/m0000
+06:50:15 prrs.search scanning compress (7, 14) sign -1 on c0000/m0000
+06:50:15 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:29 prrs.search scanning compress (6, 26) sign -1 on c0000/m0000
+06:50:29 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (7, 13) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (6, 16) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (2, 18) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (9, 19) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (3, 18) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (12, 15) sign -1 on c0000/m0000
+06:50:43 prrs.search scanning compress (10, 19) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:43 prrs.search scanning compress (5, 16) sign -1 on c0000/m0000
+06:50:43 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (0, 11) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (3, 20) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (5, 26) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (9, 15) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (2, 16) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (3, 19) sign -1 on c0000/m0000
+06:50:44 prrs.search scanning compress (2, 24) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (2, 20) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (1, 7) sign -1 on c0000/m0000
+06:50:44 prrs.search scanning compress (2, 26) sign -1 on c0000/m0000
+06:50:44 prrs.search scanning compress (11, 13) sign -1 on c0000/m0000
+06:50:44 prrs.search scanning compress (7, 16) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:44 prrs.search scanning compress (3, 25) sign -1 on c0000/m0000
+06:50:44 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:45 prrs.search scanning compress (11, 19) sign -1 on c0000/m0000
+06:50:45 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:45 prrs.search scanning compress (12, 24) sign -1 on c0000/m0000
+06:50:45 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:45 prrs.search scanning compress (11, 15) sign -1 on c0000/m0000
+06:50:45 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:45 prrs.search scanning compress (7, 26) sign -1 on c0000/m0000
+06:50:45 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:45 prrs.search scanning compress (2, 25) sign -1 on c0000/m0000
+06:50:45 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:45 prrs.search scanning compress (5, 25) sign -1 on c0000/m0000
+06:50:45 prrs.search bracket [0.3000, 0.6000] high_kind=boundary_unattributed on c0000/m0000
+06:50:46 prrs.search scanning compress (13, 25) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (14, 22) sign -1 on c0000/m0000
+06:50:46 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+06:50:46 prrs.search scanning compress (21, 22) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (17, 22) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (19, 25) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (15, 26) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (17, 23) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (24, 26) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (4, 8) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (18, 27) sign -1 on c0000/m0000
+06:50:46 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+06:50:46 prrs.search scanning compress (8, 9) sign -1 on c0000/m0000
+06:50:46 prrs.search scanning compress (4, 7) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (17, 24) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (0, 26) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (17, 18) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (7, 9) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (14, 24) sign -1 on c0000/m0000
+06:50:47 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+06:50:47 prrs.search scanning compress (16, 19) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (13, 23) sign -1 on c0000/m0000
+06:50:47 prrs.search bracket [0.6000, 1.0000] high_kind=boundary_unattributed on c0000/m0000
+06:50:47 prrs.search scanning compress (7, 11) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (8, 10) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (22, 26) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (16, 28) sign -1 on c0000/m0000
+06:50:47 prrs.search scanning compress (26, 28) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (15, 21) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (17, 28) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (1, 19) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (5, 9) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (17, 19) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (19, 28) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (17, 25) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (27, 28) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (4, 6) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (3, 12) sign -1 on c0000/m0000
+06:50:48 prrs.search scanning compress (1, 27) sign -1 on c0000/m0000
+06:50:48 prrs.search search b09_compress_coverage: trial_budget after 336 attempts, 1 nodes, 0 channels
+{
+  "output": "/home/ruigengji/MLPATH/runs/b09_compress_coverage",
+  "status": "completed",
+  "chemical_nodes": 1,
+  "microstates": 3,
+  "reactions": 0,
+  "ts_candidates": 37,
+  "attempts": 336,
+  "outcome_counts": {
+    "completed": 273,
+    "quench_failed": 26,
+    "ts_candidate": 37
+  }
+}

@@ -1,0 +1,65 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+____ test_an_almost_torsional_eigenvector_does_not_supply_a_fake_soft_mode _____
+
+    def test_an_almost_torsional_eigenvector_does_not_supply_a_fake_soft_mode():
+        eps = 1e-6
+        vectors = np.array(
+            [[np.sqrt(1 - eps**2), -eps, 0], [eps, np.sqrt(1 - eps**2), 0], [0, 0, 1]]
+        )
+        values = np.array([0.01, 10.0, 1.0])
+        modes = _restricted_soft_modes(values, vectors, np.array([[1.0, 0, 0]]), 2)
+        # Normalizing the projected first eigenvector would choose y and falsely keep
+        # its 0.01 eigenvalue. In the restricted Hessian z is softest and y costs ~10.
+>       assert modes[0][0] == pytest.approx(1.0)
+E       assert 0.01 == 1.0 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 0.01
+E         Expected: 1.0 ± 1.0e-06
+
+tests/test_restricted_modes.py:18: AssertionError
+___________ test_dependent_exclusions_remove_only_their_actual_span ____________
+
+    def test_dependent_exclusions_remove_only_their_actual_span():
+        values = np.array([0.01, 1.0, 2.0])
+        excluded = np.array([[1.0, 0, 0], [2.0, 0, 0]])
+        modes = _restricted_soft_modes(values, np.eye(3), excluded, 4)
+>       assert len(modes) == 2
+E       assert 1 == 2
+E        +  where 1 = len(((2.0, array([0., 0., 1.])),))
+
+tests/test_restricted_modes.py:27: AssertionError
+_______ test_restricted_modes_are_eigenvectors_of_the_projected_operator _______
+
+    def test_restricted_modes_are_eigenvectors_of_the_projected_operator():
+        rng = np.random.default_rng(17)
+        vectors, _ = np.linalg.qr(rng.normal(size=(6, 6)))
+        values = np.arange(1.0, 7.0)
+        excluded = rng.normal(size=(2, 6))
+        modes = _restricted_soft_modes(values, vectors, excluded, 3)
+        q, _ = np.linalg.qr(excluded.T)
+        projection = np.eye(6) - q @ q.T
+        hessian = (vectors * values) @ vectors.T
+        assert len(modes) == 3
+        for value, mode in modes:
+>           assert projection @ hessian @ projection @ mode == pytest.approx(
+                value * mode, abs=1e-12
+            )
+E           AssertionError: assert array([-1.712... -0.25598338]) == approx([-0.70...14 ± 1.0e-12])
+E             
+E             comparison failed. Mismatched elements: 6 / 6:
+E             Max absolute difference: 1.2115775433442233
+E             Max relative difference: 0.9684197987984839
+E             Index | Obtained            | Expected                       
+E             (0,)  | -1.7120236554117338 | -0.7016989213920978 ± 1.0e-12  
+E             (1,)  | 0.8391829570131916  | 0.41990823516954895 ± 1.0e-12  ...
+E             
+E             ...Full output truncated (4 lines hidden), use '-vv' to show
+
+tests/test_restricted_modes.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_restricted_modes.py::test_an_almost_torsional_eigenvector_does_not_supply_a_fake_soft_mode
+FAILED tests/test_restricted_modes.py::test_dependent_exclusions_remove_only_their_actual_span
+FAILED tests/test_restricted_modes.py::test_restricted_modes_are_eigenvectors_of_the_projected_operator
+3 failed, 1 passed in 0.70s

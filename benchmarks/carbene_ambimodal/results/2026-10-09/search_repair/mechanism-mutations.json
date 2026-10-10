@@ -1,0 +1,23 @@
+[
+  {
+    "mutation": "interleaved",
+    "exit_code": 1,
+    "summary": "3 failed, 4 deselected in 3.80s",
+    "log": "mutations/interleaved.log",
+    "log_original": "/tmp/mlpath-mechanism-mutation-jg_sh296/result.log"
+  },
+  {
+    "mutation": "normalized_scraps",
+    "exit_code": 1,
+    "summary": "3 failed, 1 passed in 0.70s",
+    "log": "mutations/normalized_scraps.log",
+    "log_original": "/tmp/mlpath-mechanism-mutation-fw15z96k/result.log"
+  },
+  {
+    "mutation": "unconstrained_ring",
+    "exit_code": 1,
+    "summary": "3 failed, 2 deselected in 0.76s",
+    "log": "mutations/unconstrained_ring.log",
+    "log_original": "/tmp/mlpath-mechanism-mutation-aqsc825r/result.log"
+  }
+]

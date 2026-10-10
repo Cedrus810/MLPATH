@@ -1,0 +1,4 @@
+2
+Properties=species:S:1:pos:R:3:momenta:R:3:forces:R:3 charge=0 spin=1 quench="_JSON {\"fmax_eV_A\": 0.001, \"rounds\": [{\"tolerance_rad\": 0.0175, \"modes\": [], \"converged\": true, \"moved\": false, \"movements\": [], \"energy_evaluations\": 0}], \"converged\": true, \"steps\": 0, \"force_converged\": true, \"polish_contraction\": {\"contracting\": false, \"coordinate\": null, \"offsets\": [], \"decay_per_round\": null, \"transient\": [], \"verdict\": \"too_few_moving_rounds\"}}" energy=0.024479726880443857 pbc="F F F"
+C       -0.63973983       0.00000000       0.00000000      -2.38988160       0.00000000       0.00000000       0.57230622       0.00000000       0.00000000
+C        0.63973983       0.00000000       0.00000000       2.38988160       0.00000000       0.00000000      -0.57230622      -0.00000000      -0.00000000

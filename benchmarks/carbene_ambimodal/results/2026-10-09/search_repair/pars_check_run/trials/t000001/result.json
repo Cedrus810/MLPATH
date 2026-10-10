@@ -1,0 +1,212 @@
+{
+  "attempt_id": "t000001",
+  "probe": {
+    "family": "stretch",
+    "indices": [
+      0,
+      1
+    ],
+    "sign": 1,
+    "amplitude": 0.3,
+    "seed": 354329030,
+    "priority": 1,
+    "priority_reason": null,
+    "unit": "Angstrom",
+    "kind": "bond",
+    "mode": "displace"
+  },
+  "status": "completed",
+  "classification": "elastic",
+  "fingerprint": {
+    "broken": [],
+    "formed": [],
+    "active_subset": [
+      0,
+      1
+    ],
+    "delta_coordination": [
+      1.0112950230345419e-05,
+      1.0112950230345419e-05
+    ],
+    "active_atoms": [],
+    "aligned_rmsd_A": 4.818593974076357e-05,
+    "energy_change_eV": 4.128458212181628e-08,
+    "components_before": 1,
+    "components_after": 1
+  },
+  "failure": null,
+  "trajectory": "trials/t000001/response.traj",
+  "observations": "trials/t000001/observations.jsonl",
+  "endpoint": "trials/t000001/endpoint.extxyz",
+  "uncertainty_status": "unavailable",
+  "max_uncertainty_eV_A": null,
+  "max_nve_drift_eV_atom": 6.799903418119868e-09,
+  "pulse_work_eV": 0.0,
+  "tail_persistence_steps": 20,
+  "probe_delivered": {
+    "requested": 0.3,
+    "achieved": 0.30000000000000004,
+    "unit": "Angstrom",
+    "realization": "rigid_translation",
+    "target_error": 5.551115123125783e-17,
+    "collateral": {
+      "max_bond_change_A": 0.0,
+      "worst_bond": null,
+      "max_nontarget_angle_change_rad": 0.0,
+      "worst_angle": null,
+      "max_nontarget_torsion_change_rad": 0.0,
+      "worst_torsion": null,
+      "closest_distance_ratio": 0.9868421052631579,
+      "closest_pair": [
+        0,
+        1
+      ],
+      "fragments_before": 1,
+      "fragments_after": 1,
+      "gated": [
+        "max_bond_change_A",
+        "closest_distance_ratio",
+        "fragments_after"
+      ],
+      "reported_only": [
+        "max_nontarget_angle_change_rad",
+        "max_nontarget_torsion_change_rad"
+      ]
+    }
+  },
+  "injected_kinetic_eV": 0.0,
+  "geometry_energy_change_eV": 0.22499999999999998,
+  "raw_endpoint": "trials/t000001/raw_endpoint.extxyz",
+  "quench_converged": true,
+  "quench": {
+    "fmax_eV_A": 0.001,
+    "rounds": [
+      {
+        "tolerance_rad": 0.0175,
+        "modes": [],
+        "converged": true,
+        "moved": false,
+        "movements": [],
+        "energy_evaluations": 0
+      }
+    ],
+    "converged": true,
+    "steps": 39,
+    "force_converged": true,
+    "polish_contraction": {
+      "contracting": false,
+      "coordinate": null,
+      "offsets": [],
+      "decay_per_round": null,
+      "transient": [],
+      "verdict": "too_few_moving_rounds"
+    }
+  },
+  "source": "c0000",
+  "source_microstate": "c0000/m0000",
+  "target": "c0000",
+  "target_microstate": "c0000/m0000",
+  "stage": "coarse",
+  "refinement_parents": null,
+  "admission": "existing_microstate",
+  "minimum_confirmation": {
+    "method": "hessian",
+    "provenance": {
+      "source": "fd",
+      "step_A": 0.01,
+      "force_evaluations": 12,
+      "meaning": "central differences; truncation error is O(step^2)",
+      "analytic_unavailable": "backend exposes no analytic Hessian"
+    },
+    "eigenvalue_tol": 0.001,
+    "lowest_eigenvalues": [
+      -1.542026213387256e-16,
+      -2.0211979313634473e-36,
+      -1.3452866596952084e-36,
+      7.411703979142644e-34,
+      1.397986861456772e-16,
+      1.4810435426553488
+    ],
+    "negative_eigenvalues": [],
+    "saddle_order": 0,
+    "trivial_mode_floor": [
+      {
+        "kind": "translation",
+        "measured": -1.775456424164561e-33,
+        "gradient_expectation": 0.0,
+        "residual": -1.775456424164561e-33
+      },
+      {
+        "kind": "translation",
+        "measured": -3.164637904059901e-22,
+        "gradient_expectation": 0.0,
+        "residual": -3.164637904059901e-22
+      },
+      {
+        "kind": "rotation",
+        "measured": -6.748451584677535e-05,
+        "gradient_expectation": -0.00011890685596875234,
+        "residual": 5.142234012197699e-05
+      },
+      {
+        "kind": "translation",
+        "measured": -3.164637904059901e-22,
+        "gradient_expectation": 0.0,
+        "residual": -3.164637904059901e-22
+      },
+      {
+        "kind": "rotation",
+        "measured": -6.748451584677535e-05,
+        "gradient_expectation": -0.00011890685596875234,
+        "residual": 5.142234012197699e-05
+      }
+    ],
+    "trivial_mode_floor_worst_residual": 5.142234012197699e-05,
+    "imaginary_wavenumbers_icm": [],
+    "units": "eV/(Angstrom^2 amu)",
+    "meaning": "rigid-body modes projected out; negative curvature means saddle",
+    "floor_gate": "necessary_condition_only",
+    "floor_gate_meaning": "rigid-body residual bounds only errors that break translational or rotational invariance; it says nothing about the internal subspace",
+    "internal_mode_recheck": {
+      "performed": true,
+      "agree": true,
+      "resolution_stable": true,
+      "fits_h2_law": true,
+      "resolution_diagnosis": "stable",
+      "modes": [
+        {
+          "index": 5,
+          "eigenvalue": 1.4810435426553488,
+          "rigid_body_overlap": 2.482534153247273e-16,
+          "subspace": "internal",
+          "steps_A": [
+            0.005,
+            0.01,
+            0.02
+          ],
+          "curvature_by_step": [
+            1.4808465274721754,
+            1.4808722005478883,
+            1.480974892850861
+          ],
+          "extrapolated_to_zero_step": 1.4808379697802503,
+          "h2_coefficient": 0.3423076765188681,
+          "fits_h2_law": true,
+          "compared_against": "assembly_step",
+          "reference_curvature": 1.4808722005478883,
+          "classification_agrees": true,
+          "classification_steady_across_step": true
+        }
+      ],
+      "gate_step_A": 0.01,
+      "hessian_source": "fd",
+      "boundary_mode_index": 5,
+      "internal_modes_available": 1,
+      "force_evaluations": 6,
+      "fits_h2_law_meaning": "the ladder is a quadratic in h, so the extrapolate is meaningful. NOT evidence that the surface is smooth: a gaussian narrower than the probe fits the same law to within half a percent over a twenty-fivefold span",
+      "meaning": "agree gates matrix assembly against a truncation-extrapolated direct product; resolution_diagnosis is reported only, and says just whether the classification held across the ladder -- nothing here can decide why it moved"
+    }
+  },
+  "admission_detail": null,
+  "transition_class": "conformational_transition"
+}

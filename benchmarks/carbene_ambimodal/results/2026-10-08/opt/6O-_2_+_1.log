@@ -1,0 +1,127 @@
+19:39:23 root CUDA version: 12.9, CUDA device: 0
+19:39:23 root Using head Default out of  ['Default']
+19:39:23 root Default dtype float64 does not match model dtype float32, converting models to float64.
+19:39:23 geometric.nifty > ===== Optimization Info: ====
+
+19:39:23 geometric.nifty > Job type: Energy minimization
+
+19:39:23 geometric.nifty > Maximum number of optimization cycles: 300
+
+19:39:23 geometric.nifty > Initial / maximum trust radius (Angstrom): 0.100 / 0.300
+
+19:39:23 geometric.nifty > Convergence Criteria:
+
+19:39:23 geometric.nifty > Will converge when all 5 criteria are reached:
+
+19:39:23 geometric.nifty >  |Delta-E| < 1.00e-06
+
+19:39:23 geometric.nifty >  RMS-Grad  < 3.00e-04
+
+19:39:23 geometric.nifty >  Max-Grad  < 4.50e-04
+
+19:39:23 geometric.nifty >  RMS-Disp  < 1.20e-03
+
+19:39:23 geometric.nifty >  Max-Disp  < 1.80e-03
+
+19:39:23 geometric.nifty > === End Optimization Info ===
+
+19:39:24 geometric.nifty Step    0 : Gradient = 1.604e-03/5.194e-03 (rms/max) Energy = -616.2959861329
+
+19:39:24 geometric.nifty Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.91665e-01 5.00004e-01 1.03817e+00
+
+19:39:24 geometric.nifty Step    1 : Displace = [0m1.275e-02[0m/[0m2.598e-02[0m (rms/max) Trust = 1.000e-01 (=) Grad = [0m6.773e-04[0m/[0m1.634e-03[0m (rms/max) E (change) = -616.2960993185 ([0m-1.132e-04[0m) Quality = [0m0.860[0m
+
+19:39:24 geometric.nifty Hessian Eigenvalues: 1.78629e-02 2.30000e-02 2.30000e-02 ... 4.91222e-01 5.07535e-01 1.04735e+00
+
+19:39:25 geometric.nifty Step    2 : Displace = [0m1.846e-02[0m/[0m4.368e-02[0m (rms/max) Trust = 1.414e-01 ([92m+[0m) Grad = [0m1.336e-03[0m/[0m4.522e-03[0m (rms/max) E (change) = -616.2960597710 ([91m+3.955e-05[0m) Quality = [91m-0.438[0m
+
+19:39:25 geometric.nifty Hessian Eigenvalues: 1.66910e-02 2.30000e-02 2.30000e-02 ... 4.98296e-01 6.20204e-01 1.04463e+00
+
+19:39:26 geometric.nifty Step    3 : Displace = [0m7.020e-03[0m/[0m2.444e-02[0m (rms/max) Trust = 9.229e-03 ([91m-[0m) Grad = [92m2.976e-04[0m/[0m7.511e-04[0m (rms/max) E (change) = -616.2961495082 ([0m-8.974e-05[0m) Quality = [0m0.910[0m
+
+19:39:26 geometric.nifty Hessian Eigenvalues: 1.66944e-02 2.24610e-02 2.30000e-02 ... 4.95166e-01 7.00397e-01 1.04175e+00
+
+19:39:26 geometric.nifty Step    4 : Displace = [0m1.328e-02[0m/[0m2.465e-02[0m (rms/max) Trust = 1.305e-02 ([92m+[0m) Grad = [0m3.039e-04[0m/[0m8.300e-04[0m (rms/max) E (change) = -616.2961495106 ([92m-2.416e-09[0m) Quality = [0m0.000[0m
+
+19:39:26 geometric.nifty Hessian Eigenvalues: 1.49713e-02 2.24126e-02 2.30001e-02 ... 4.95732e-01 6.83498e-01 1.04697e+00
+
+19:39:26 geometric.nifty Step    5 : Displace = [0m6.418e-03[0m/[0m1.411e-02[0m (rms/max) Trust = 6.526e-03 ([91m-[0m) Grad = [92m1.332e-04[0m/[92m4.024e-04[0m (rms/max) E (change) = -616.2961696970 ([0m-2.019e-05[0m) Quality = [0m1.072[0m
+
+19:39:26 geometric.nifty Hessian Eigenvalues: 1.31880e-02 2.23647e-02 2.29991e-02 ... 4.96421e-01 6.84068e-01 1.04546e+00
+
+19:39:27 geometric.nifty Step    6 : Displace = [0m5.010e-03[0m/[0m1.145e-02[0m (rms/max) Trust = 9.229e-03 ([92m+[0m) Grad = [92m1.287e-04[0m/[92m3.402e-04[0m (rms/max) E (change) = -616.2961791573 ([0m-9.460e-06[0m) Quality = [0m1.651[0m
+
+19:39:27 geometric.nifty Hessian Eigenvalues: 3.36304e-03 2.23757e-02 2.30033e-02 ... 4.98258e-01 6.84643e-01 1.04853e+00
+
+19:39:27 geometric.nifty Step    7 : Displace = [0m1.387e-02[0m/[0m3.400e-02[0m (rms/max) Trust = 1.305e-02 ([92m+[0m) Grad = [92m1.552e-04[0m/[92m3.859e-04[0m (rms/max) E (change) = -616.2961953049 ([0m-1.615e-05[0m) Quality = [0m1.269[0m
+
+19:39:27 geometric.nifty Hessian Eigenvalues: 2.34215e-03 2.23198e-02 2.30054e-02 ... 4.99165e-01 6.84570e-01 1.04846e+00
+
+19:39:27 geometric.nifty Step    8 : Displace = [0m6.655e-03[0m/[0m1.674e-02[0m (rms/max) Trust = 1.846e-02 ([92m+[0m) Grad = [92m1.099e-04[0m/[92m3.990e-04[0m (rms/max) E (change) = -616.2962001413 ([0m-4.836e-06[0m) Quality = [0m1.357[0m
+
+19:39:27 geometric.nifty Hessian Eigenvalues: 2.11301e-03 2.10632e-02 2.29411e-02 ... 4.94572e-01 6.83801e-01 1.04829e+00
+
+19:39:27 geometric.nifty Step    9 : Displace = [0m3.180e-03[0m/[0m7.610e-03[0m (rms/max) Trust = 2.610e-02 ([92m+[0m) Grad = [92m5.959e-05[0m/[92m2.430e-04[0m (rms/max) E (change) = -616.2962021099 ([0m-1.969e-06[0m) Quality = [0m1.291[0m
+
+19:39:27 geometric.nifty Hessian Eigenvalues: 2.19200e-03 1.43111e-02 2.28103e-02 ... 4.93553e-01 6.84099e-01 1.04889e+00
+
+19:39:27 geometric.nifty Step   10 : Displace = [0m1.368e-03[0m/[0m2.665e-03[0m (rms/max) Trust = 3.692e-02 ([92m+[0m) Grad = [92m4.208e-05[0m/[92m1.039e-04[0m (rms/max) E (change) = -616.2962029031 ([92m-7.932e-07[0m) Quality = [0m1.458[0m
+
+19:39:27 geometric.nifty Hessian Eigenvalues: 2.18395e-03 6.40376e-03 2.26128e-02 ... 4.98473e-01 6.84722e-01 1.04856e+00
+
+19:39:28 geometric.nifty Step   11 : Displace = [0m1.749e-03[0m/[0m5.142e-03[0m (rms/max) Trust = 5.221e-02 ([92m+[0m) Grad = [92m4.492e-05[0m/[92m1.209e-04[0m (rms/max) E (change) = -616.2962035766 ([92m-6.735e-07[0m) Quality = [0m1.387[0m
+
+19:39:28 geometric.nifty Hessian Eigenvalues: 2.08194e-03 4.02668e-03 2.24144e-02 ... 5.00393e-01 6.84298e-01 1.04859e+00
+
+19:39:28 geometric.nifty Step   12 : Displace = [0m1.530e-03[0m/[0m4.699e-03[0m (rms/max) Trust = 7.383e-02 ([92m+[0m) Grad = [92m4.618e-05[0m/[92m1.551e-04[0m (rms/max) E (change) = -616.2962040092 ([92m-4.326e-07[0m) Quality = [0m1.417[0m
+
+19:39:28 geometric.nifty Hessian Eigenvalues: 1.86314e-03 3.26377e-03 2.13943e-02 ... 4.95497e-01 6.84027e-01 1.04908e+00
+
+19:39:28 geometric.nifty Step   13 : Displace = [0m1.257e-03[0m/[0m3.454e-03[0m (rms/max) Trust = 1.044e-01 ([92m+[0m) Grad = [92m3.529e-05[0m/[92m1.236e-04[0m (rms/max) E (change) = -616.2962043073 ([92m-2.981e-07[0m) Quality = [0m1.378[0m
+
+19:39:28 geometric.nifty Hessian Eigenvalues: 1.67398e-03 3.10550e-03 1.70477e-02 ... 4.92925e-01 6.84365e-01 1.04886e+00
+
+19:39:28 geometric.nifty Step   14 : Displace = [92m7.641e-04[0m/[92m1.587e-03[0m (rms/max) Trust = 1.477e-01 ([92m+[0m) Grad = [92m2.147e-05[0m/[92m4.931e-05[0m (rms/max) E (change) = -616.2962044773 ([92m-1.699e-07[0m) Quality = [0m1.381[0m
+
+19:39:28 geometric.nifty Hessian Eigenvalues: 1.67398e-03 3.10550e-03 1.70477e-02 ... 4.92925e-01 6.84365e-01 1.04886e+00
+
+19:39:28 geometric.nifty Converged! =D
+
+{
+  "status": "CONVERGED",
+  "optimizer": "geomeTRIC",
+  "geometric_version": "1.1.1",
+  "versions": {
+    "ase": "3.29.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "implementation_sha256": {
+    "geometric_backend.py": "0507373d39df987591e9f00b3ae48784ca2bbec822f6a44a9ba4cdd10681141d",
+    "geometric_cli.py": "dac9925f3d6acf04738f67da29cb49acb79921bfd6a96e12baf0bd93193778c9",
+    "openmm_backend.py": "aa0932b19068c98a1ff3ae7e10c8f7bb5eee2700bdb2c2542122ae12cea63b14"
+  },
+  "config": {
+    "transition": false,
+    "maxiter": 300,
+    "coordsys": "tric",
+    "convergence_set": "GAU"
+  },
+  "input_structure_sha256": "268224ca3ec429cff32a188d37f308c77f77a5af743da5bdb8f0e75e6cb48958",
+  "backend": {
+    "engine": "ase",
+    "factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+    "kwargs": {},
+    "local_file_sha256": {},
+    "input_file_sha256": "317dccfc11ec669db7acaabd7d324dbe2699a3fd511c3fc2b5d618c433b72da0"
+  },
+  "stationary_point_certified": false,
+  "connectivity_verified": false,
+  "output": "/home/ruigengji/MLPATH/benchmarks/carbene_ambimodal/results/2026-10-08/opt/6O-_2_+_1",
+  "iterations": 14,
+  "force_evaluations": 15,
+  "geometry": "geometry.extxyz",
+  "trajectory": "optimization.extxyz",
+  "energy_eV": -16770.274061967004,
+  "fmax_eV_A": 0.002535842738732917
+}

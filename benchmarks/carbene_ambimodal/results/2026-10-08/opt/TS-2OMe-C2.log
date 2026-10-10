@@ -1,0 +1,540 @@
+19:37:29 root CUDA version: 12.9, CUDA device: 0
+19:37:29 root Using head Default out of  ['Default']
+19:37:29 root Default dtype float64 does not match model dtype float32, converting models to float64.
+19:37:29 geometric.nifty > ===== Optimization Info: ====
+
+19:37:29 geometric.nifty > Job type: Transition state optimization
+
+19:37:29 geometric.nifty > Maximum number of optimization cycles: 300
+
+19:37:29 geometric.nifty > Initial / maximum trust radius (Angstrom): 0.010 / 0.030
+
+19:37:29 geometric.nifty > Convergence Criteria:
+
+19:37:29 geometric.nifty > Will converge when all 5 criteria are reached:
+
+19:37:29 geometric.nifty >  |Delta-E| < 1.00e-06
+
+19:37:29 geometric.nifty >  RMS-Grad  < 3.00e-04
+
+19:37:29 geometric.nifty >  Max-Grad  < 4.50e-04
+
+19:37:29 geometric.nifty >  RMS-Disp  < 1.20e-03
+
+19:37:29 geometric.nifty >  Max-Disp  < 1.80e-03
+
+19:37:29 geometric.nifty > === End Optimization Info ===
+
+19:37:30 geometric.nifty Valid Hessian data not found, calculating from scratch.
+
+19:37:30 geometric.nifty Calculating Cartesian Hessian using finite difference on Cartesian gradients (174 grads total)
+
+19:37:30 geometric.nifty 0 / 174 gradient calculations complete
+
+19:37:30 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:31 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:32 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty 10 / 174 gradient calculations complete
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:33 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty 20 / 174 gradient calculations complete
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:34 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty 30 / 174 gradient calculations complete
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty 40 / 174 gradient calculations complete
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty 50 / 174 gradient calculations complete
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty 60 / 174 gradient calculations complete
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty 70 / 174 gradient calculations complete
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty 80 / 174 gradient calculations complete
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty 90 / 174 gradient calculations complete
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty 100 / 174 gradient calculations complete
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty 110 / 174 gradient calculations complete
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty 120 / 174 gradient calculations complete
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty 130 / 174 gradient calculations complete
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty 140 / 174 gradient calculations complete
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty 150 / 174 gradient calculations complete
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty 160 / 174 gradient calculations complete
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty 170 / 174 gradient calculations complete
+
+19:37:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:37:54 geometric.nifty 174 / 174 gradient calculations complete
+
+19:37:54 geometric.nifty >> Initial Cartesian Hessian Eigenvalues
+
+19:37:54 geometric.nifty Hessian Eigenvalues:  -1.208e-01 -8.756e-05 -1.914e-05 -1.306e-07  3.772e-08  2.189e-07  7.811e-07
+
+19:37:54 geometric.nifty  3.148e-04  4.569e-04  9.802e-04  1.321e-03  1.883e-03    .....    9.078e-01  1.124e+00  1.715e+00
+
+19:37:54 geometric.nifty Step    0 : Gradient = 2.827e-03/6.501e-03 (rms/max) Energy = -616.2086850352
+
+19:37:55 geometric.nifty Hessian Eigenvalues:  -5.298e-02 -5.210e-06 -3.947e-06 -4.321e-11 -3.122e-12  1.716e-12  2.364e-06
+
+19:37:55 geometric.nifty  8.678e-04  1.062e-03  2.867e-03  3.283e-03  4.147e-03    .....    5.146e-01  6.458e-01  8.929e-01
+
+19:37:55 geometric.nifty Step    1 : Displace = [0m1.025e-02[0m/[0m2.063e-02[0m (rms/max) Trust = 1.000e-02 (=) Grad = [0m1.252e-03[0m/[0m4.344e-03[0m (rms/max) E (change) = -616.2090129471 ([0m-3.279e-04[0m) Quality = [0m0.999[0m
+
+19:37:55 geometric.nifty Hessian Eigenvalues:  -5.320e-02 -5.199e-06 -3.956e-06 -4.286e-11  1.657e-12  2.895e-12  2.364e-06
+
+19:37:55 geometric.nifty  8.681e-04  1.064e-03  2.862e-03  3.288e-03  4.092e-03    .....    5.146e-01  6.460e-01  8.928e-01
+
+19:37:55 geometric.nifty Step    2 : Displace = [0m1.450e-02[0m/[0m4.027e-02[0m (rms/max) Trust = 1.414e-02 ([92m+[0m) Grad = [0m5.734e-04[0m/[0m2.011e-03[0m (rms/max) E (change) = -616.2092794371 ([0m-2.665e-04[0m) Quality = [0m0.995[0m
+
+19:37:55 geometric.nifty Hessian Eigenvalues:  -5.318e-02 -5.265e-06 -4.005e-06 -8.576e-12  1.509e-12  7.251e-11  2.363e-06
+
+19:37:55 geometric.nifty  8.680e-04  1.065e-03  2.857e-03  3.299e-03  3.979e-03    .....    5.146e-01  6.460e-01  8.928e-01
+
+19:37:55 geometric.nifty Step    3 : Displace = [0m2.186e-02[0m/[0m6.117e-02[0m (rms/max) Trust = 2.000e-02 ([92m+[0m) Grad = [92m2.475e-04[0m/[0m6.230e-04[0m (rms/max) E (change) = -616.2095345183 ([0m-2.551e-04[0m) Quality = [0m0.977[0m
+
+19:37:55 geometric.nifty Hessian Eigenvalues:  -5.318e-02 -5.750e-06 -4.251e-06  1.435e-12  2.062e-11  6.657e-11  2.347e-06
+
+19:37:55 geometric.nifty  8.693e-04  1.066e-03  2.860e-03  3.314e-03  4.373e-03    .....    5.146e-01  6.461e-01  8.928e-01
+
+19:37:55 geometric.nifty Step    4 : Displace = [0m2.869e-02[0m/[0m8.344e-02[0m (rms/max) Trust = 2.828e-02 ([92m+[0m) Grad = [92m8.548e-05[0m/[92m3.082e-04[0m (rms/max) E (change) = -616.2096582800 ([0m-1.238e-04[0m) Quality = [0m0.942[0m
+
+19:37:56 geometric.nifty Hessian Eigenvalues:  -5.318e-02 -1.084e-04 -4.609e-06  1.848e-12  6.039e-11  1.357e-10  2.272e-06
+
+19:37:56 geometric.nifty  8.786e-04  1.096e-03  2.835e-03  3.307e-03  4.589e-03    .....    5.146e-01  6.461e-01  8.928e-01
+
+19:37:56 geometric.nifty Step    5 : Displace = [0m2.566e-02[0m/[0m5.538e-02[0m (rms/max) Trust = 3.000e-02 ([92m+[0m) Grad = [0m4.031e-04[0m/[0m1.358e-03[0m (rms/max) E (change) = -616.2096983276 ([0m-4.005e-05[0m) Quality = [0m0.102[0m
+
+19:37:56 geometric.nifty Poor-quality step dominated by net translation/rotation detected; 
+19:37:56 geometric.nifty will project out net forces and torques past this point.
+
+19:37:56 geometric.nifty Hessian Eigenvalues:  -5.317e-02 -5.446e-06 -1.783e-06  1.632e-12  5.837e-11  9.844e-09  3.774e-06
+
+19:37:56 geometric.nifty  8.793e-04  1.097e-03  2.840e-03  3.308e-03  4.595e-03    .....    5.147e-01  6.461e-01  8.928e-01
+
+19:37:56 geometric.nifty Step    6 : Displace = [0m1.284e-02[0m/[0m4.138e-02[0m (rms/max) Trust = 1.283e-02 ([91m-[0m) Grad = [92m8.330e-05[0m/[92m2.621e-04[0m (rms/max) E (change) = -616.2097609013 ([0m-6.257e-05[0m) Quality = [0m0.963[0m
+
+19:37:56 geometric.nifty Hessian Eigenvalues:  -5.345e-02 -4.368e-06 -1.985e-10  1.944e-13  3.276e-10  2.768e-06  1.251e-04
+
+19:37:56 geometric.nifty  8.160e-04  1.028e-03  2.913e-03  3.407e-03  5.885e-03    .....    5.149e-01  6.462e-01  8.928e-01
+
+19:37:56 geometric.nifty Step    7 : Displace = [0m1.977e-02[0m/[0m3.937e-02[0m (rms/max) Trust = 1.814e-02 ([92m+[0m) Grad = [92m4.427e-05[0m/[92m1.269e-04[0m (rms/max) E (change) = -616.2097590395 ([91m+1.862e-06[0m) Quality = [91m-0.230[0m
+
+19:37:56 geometric.nifty [93mRejecting step - quality is lower than 0.0[0m
+
+19:37:56 geometric.nifty Hessian Eigenvalues:  -5.345e-02 -4.368e-06 -1.985e-10  1.944e-13  3.276e-10  2.768e-06  1.251e-04
+
+19:37:56 geometric.nifty  8.160e-04  1.028e-03  2.913e-03  3.407e-03  5.885e-03    .....    5.149e-01  6.462e-01  8.928e-01
+
+19:37:56 geometric.nifty Step    8 : Displace = [0m9.690e-03[0m/[0m2.021e-02[0m (rms/max) Trust = 9.072e-03 ([1;91mx[0m) Grad = [92m2.997e-05[0m/[92m8.849e-05[0m (rms/max) E (change) = -616.2097653043 ([0m-4.403e-06[0m) Quality = [0m0.739[0m
+
+19:37:56 geometric.nifty Hessian Eigenvalues:  -5.349e-02 -4.368e-06 -1.103e-10 -2.996e-12  3.823e-10  2.809e-06  1.685e-04
+
+19:37:56 geometric.nifty  8.726e-04  1.102e-03  3.065e-03  3.392e-03  5.930e-03    .....    5.149e-01  6.464e-01  8.928e-01
+
+19:37:57 geometric.nifty Step    9 : Displace = [0m3.306e-03[0m/[0m9.228e-03[0m (rms/max) Trust = 9.072e-03 (=) Grad = [92m1.195e-05[0m/[92m3.973e-05[0m (rms/max) E (change) = -616.2097655465 ([92m-2.421e-07[0m) Quality = [0m0.562[0m
+
+19:37:57 geometric.nifty Hessian Eigenvalues:  -5.353e-02 -4.368e-06 -1.105e-10 -3.087e-12  3.823e-10  2.807e-06  1.685e-04
+
+19:37:57 geometric.nifty  9.093e-04  1.256e-03  3.058e-03  3.400e-03  5.930e-03    .....    5.149e-01  6.466e-01  8.928e-01
+
+19:37:57 geometric.nifty Step   10 : Displace = [92m9.394e-04[0m/[0m2.748e-03[0m (rms/max) Trust = 9.072e-03 (=) Grad = [92m5.455e-07[0m/[92m1.491e-06[0m (rms/max) E (change) = -616.2097655882 ([92m-4.178e-08[0m) Quality = [0m0.783[0m
+
+19:37:57 geometric.nifty Hessian Eigenvalues:  -5.352e-02 -4.368e-06 -1.110e-10 -3.088e-12  3.816e-10  2.807e-06  1.686e-04
+
+19:37:57 geometric.nifty  8.945e-04  1.241e-03  3.059e-03  3.402e-03  5.931e-03    .....    5.149e-01  6.466e-01  8.928e-01
+
+19:37:57 geometric.nifty Step   11 : Displace = [92m2.606e-05[0m/[92m5.877e-05[0m (rms/max) Trust = 1.283e-02 ([92m+[0m) Grad = [92m5.754e-08[0m/[92m1.754e-07[0m (rms/max) E (change) = -616.2097655896 ([92m-1.407e-09[0m) Quality = [91m-57.012[0m
+
+19:37:57 geometric.nifty Hessian Eigenvalues:  -5.352e-02 -4.368e-06 -1.110e-10 -3.088e-12  3.816e-10  2.807e-06  1.686e-04
+
+19:37:57 geometric.nifty  8.945e-04  1.241e-03  3.059e-03  3.402e-03  5.931e-03    .....    5.149e-01  6.466e-01  8.928e-01
+
+19:37:57 geometric.nifty Converged! =D
+
+{
+  "status": "CONVERGED",
+  "optimizer": "geomeTRIC",
+  "geometric_version": "1.1.1",
+  "versions": {
+    "ase": "3.29.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "implementation_sha256": {
+    "geometric_backend.py": "0507373d39df987591e9f00b3ae48784ca2bbec822f6a44a9ba4cdd10681141d",
+    "geometric_cli.py": "dac9925f3d6acf04738f67da29cb49acb79921bfd6a96e12baf0bd93193778c9",
+    "openmm_backend.py": "aa0932b19068c98a1ff3ae7e10c8f7bb5eee2700bdb2c2542122ae12cea63b14"
+  },
+  "config": {
+    "transition": true,
+    "maxiter": 300,
+    "coordsys": "tric",
+    "convergence_set": "GAU"
+  },
+  "input_structure_sha256": "bea03ca3f03e74a7571acef8da17c8acfff201dc9a3e9a8b9495a763c9cdd3d1",
+  "backend": {
+    "engine": "ase",
+    "factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+    "kwargs": {},
+    "local_file_sha256": {},
+    "input_file_sha256": "5ad7a09d3e05822e1b38a17ce7449124925651f793756c0e55d8e6cba60a1abc"
+  },
+  "stationary_point_certified": false,
+  "connectivity_verified": false,
+  "output": "/home/ruigengji/MLPATH/benchmarks/carbene_ambimodal/results/2026-10-08/opt/TS-2OMe-C2",
+  "iterations": 11,
+  "force_evaluations": 186,
+  "geometry": "geometry.extxyz",
+  "trajectory": "optimization.extxyz",
+  "energy_eV": -16767.92194000968,
+  "fmax_eV_A": 9.021815831901015e-06
+}

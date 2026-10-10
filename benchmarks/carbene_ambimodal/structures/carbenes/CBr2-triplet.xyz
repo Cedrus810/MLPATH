@@ -1,0 +1,5 @@
+3
+Properties=species:S:1:pos:R:3 name=CBr2-triplet section=carbenes charge=0 spin=3 G_hartree=-5186.379494 pbc="F F F"
+C        0.00000000       0.71043600       0.00000000
+Br       1.65540500      -0.05991100       0.00000000
+Br      -1.65540500      -0.06187800       0.00000000

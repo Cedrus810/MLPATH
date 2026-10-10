@@ -1,0 +1,38 @@
+{
+  "status": "CONVERGED",
+  "optimizer": "geomeTRIC",
+  "geometric_version": "1.1.1",
+  "versions": {
+    "ase": "3.29.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "implementation_sha256": {
+    "geometric_backend.py": "0507373d39df987591e9f00b3ae48784ca2bbec822f6a44a9ba4cdd10681141d",
+    "geometric_cli.py": "dac9925f3d6acf04738f67da29cb49acb79921bfd6a96e12baf0bd93193778c9",
+    "openmm_backend.py": "aa0932b19068c98a1ff3ae7e10c8f7bb5eee2700bdb2c2542122ae12cea63b14"
+  },
+  "config": {
+    "transition": false,
+    "maxiter": 300,
+    "coordsys": "tric",
+    "convergence_set": "GAU"
+  },
+  "input_structure_sha256": "f2de9a63899203ba7eb70c5b9ed36400a330ab93febe44f9d336ec0e3a37c834",
+  "backend": {
+    "engine": "ase",
+    "factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+    "kwargs": {},
+    "local_file_sha256": {},
+    "input_file_sha256": "1eabb5bb543da37e29feaa9b4df7104d2e3494b6e9718b6320bb624d5bd960e1"
+  },
+  "stationary_point_certified": false,
+  "connectivity_verified": false,
+  "output": "/home/ruigengji/MLPATH/benchmarks/carbene_ambimodal/results/2026-10-08/opt/1-Cyclohexene-1-carboxaldehyde_6O",
+  "iterations": 10,
+  "force_evaluations": 11,
+  "geometry": "geometry.extxyz",
+  "trajectory": "optimization.extxyz",
+  "energy_eV": -9468.207798305386,
+  "fmax_eV_A": 0.0026161848453984293
+}

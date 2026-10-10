@@ -1,0 +1,87 @@
+19:39:05 root CUDA version: 12.9, CUDA device: 0
+19:39:05 root Using head Default out of  ['Default']
+19:39:05 root Default dtype float64 does not match model dtype float32, converting models to float64.
+19:39:07 geometric.nifty > ===== Optimization Info: ====
+
+19:39:07 geometric.nifty > Job type: Energy minimization
+
+19:39:07 geometric.nifty > Maximum number of optimization cycles: 300
+
+19:39:07 geometric.nifty > Initial / maximum trust radius (Angstrom): 0.100 / 0.300
+
+19:39:07 geometric.nifty > Convergence Criteria:
+
+19:39:07 geometric.nifty > Will converge when all 5 criteria are reached:
+
+19:39:07 geometric.nifty >  |Delta-E| < 1.00e-06
+
+19:39:07 geometric.nifty >  RMS-Grad  < 3.00e-04
+
+19:39:07 geometric.nifty >  Max-Grad  < 4.50e-04
+
+19:39:07 geometric.nifty >  RMS-Disp  < 1.20e-03
+
+19:39:07 geometric.nifty >  Max-Disp  < 1.80e-03
+
+19:39:07 geometric.nifty > === End Optimization Info ===
+
+19:39:08 geometric.nifty Step    0 : Gradient = 4.057e-03/9.281e-03 (rms/max) Energy = -268.2996796784
+
+19:39:08 geometric.nifty Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.06148e-01 6.31253e-01 6.58308e-01
+
+19:39:08 geometric.nifty Step    1 : Displace = [0m1.010e-02[0m/[0m1.387e-02[0m (rms/max) Trust = 1.000e-01 (=) Grad = [0m1.306e-03[0m/[0m3.173e-03[0m (rms/max) E (change) = -268.2997877580 ([0m-1.081e-04[0m) Quality = [0m1.017[0m
+
+19:39:08 geometric.nifty Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.53557e-01 4.81870e-01 6.50380e-01
+
+19:39:09 geometric.nifty Step    2 : Displace = [0m1.214e-02[0m/[0m1.909e-02[0m (rms/max) Trust = 1.414e-01 ([92m+[0m) Grad = [0m1.079e-03[0m/[0m2.689e-03[0m (rms/max) E (change) = -268.2997944182 ([0m-6.660e-06[0m) Quality = [0m0.157[0m
+
+19:39:09 geometric.nifty Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.54247e-01 6.06451e-01 8.01260e-01
+
+19:39:09 geometric.nifty Step    3 : Displace = [0m5.988e-03[0m/[0m8.516e-03[0m (rms/max) Trust = 6.071e-03 ([91m-[0m) Grad = [92m1.928e-04[0m/[0m4.522e-04[0m (rms/max) E (change) = -268.2998125918 ([0m-1.817e-05[0m) Quality = [0m1.019[0m
+
+19:39:09 geometric.nifty Hessian Eigenvalues: 2.29999e-02 2.30000e-02 2.30001e-02 ... 4.54799e-01 6.23741e-01 7.48552e-01
+
+19:39:09 geometric.nifty Step    4 : Displace = [92m3.661e-04[0m/[92m7.128e-04[0m (rms/max) Trust = 8.586e-03 ([92m+[0m) Grad = [92m8.438e-05[0m/[92m1.939e-04[0m (rms/max) E (change) = -268.2998128093 ([92m-2.175e-07[0m) Quality = [0m1.248[0m
+
+19:39:09 geometric.nifty Hessian Eigenvalues: 2.29999e-02 2.30000e-02 2.30001e-02 ... 4.54799e-01 6.23741e-01 7.48552e-01
+
+19:39:09 geometric.nifty Converged! =D
+
+{
+  "status": "CONVERGED",
+  "optimizer": "geomeTRIC",
+  "geometric_version": "1.1.1",
+  "versions": {
+    "ase": "3.29.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "implementation_sha256": {
+    "geometric_backend.py": "0507373d39df987591e9f00b3ae48784ca2bbec822f6a44a9ba4cdd10681141d",
+    "geometric_cli.py": "dac9925f3d6acf04738f67da29cb49acb79921bfd6a96e12baf0bd93193778c9",
+    "openmm_backend.py": "aa0932b19068c98a1ff3ae7e10c8f7bb5eee2700bdb2c2542122ae12cea63b14"
+  },
+  "config": {
+    "transition": false,
+    "maxiter": 300,
+    "coordsys": "tric",
+    "convergence_set": "GAU"
+  },
+  "input_structure_sha256": "55c0e60fa2cefa6f49642037c5feca2949766dc9e830232ce1b03c921c10c2be",
+  "backend": {
+    "engine": "ase",
+    "factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+    "kwargs": {},
+    "local_file_sha256": {},
+    "input_file_sha256": "01380d6a7d4dbdd77c796f159a8cbc9bb7db313d5e7b5503ea1ddcd4abc71849"
+  },
+  "stationary_point_certified": false,
+  "connectivity_verified": false,
+  "output": "/home/ruigengji/MLPATH/benchmarks/carbene_ambimodal/results/2026-10-08/opt/Dimethoxycarbene",
+  "iterations": 4,
+  "force_evaluations": 5,
+  "geometry": "geometry.extxyz",
+  "trajectory": "optimization.extxyz",
+  "energy_eV": -7300.809836079625,
+  "fmax_eV_A": 0.00997231611538262
+}

@@ -1,0 +1,46 @@
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+symmetry-aware RMSD (Cl swap, mirror), A
+  DFT TS-CCl2              DFT TS-CCl2-C4           0.754
+  DFT TS-CCl2              P1 opt from TS-CCl2      0.971
+  DFT TS-CCl2              P1 opt from TS-CCl2-C4   0.856
+  DFT TS-CCl2-C4           P1 opt from TS-CCl2      0.486
+  DFT TS-CCl2-C4           P1 opt from TS-CCl2-C4   0.226
+  P1 opt from TS-CCl2      P1 opt from TS-CCl2-C4   0.541
+proximal  d 3.00  E -35638.43028  C23-C16 3.207  C23-C17 4.106  steps 79  conv True
+proximal  d 2.90  E -35638.42797  C23-C16 3.136  C23-C17 4.061  steps 16  conv True
+proximal  d 2.80  E -35638.42103  C23-C16 3.122  C23-C17 4.050  steps 44  conv True
+proximal  d 2.70  E -35638.40582  C23-C16 3.051  C23-C17 4.002  steps 15  conv True
+proximal  d 2.60  E -35638.38553  C23-C16 3.020  C23-C17 3.929  steps 43  conv True
+proximal  d 2.50  E -35638.35922  C23-C16 2.950  C23-C17 3.831  steps 43  conv True
+proximal  d 2.40  E -35638.41977  C23-C16 2.932  C23-C17 4.277  steps 188  conv True
+proximal  d 2.30  E -35638.40717  C23-C16 2.857  C23-C17 4.215  steps 15  conv True
+proximal  d 2.20  E -35638.39407  C23-C16 2.764  C23-C17 4.138  steps 24  conv True
+proximal  d 2.10  E -35638.39739  C23-C16 2.678  C23-C17 4.050  steps 59  conv True
+proximal  d 2.00  E -35638.42505  C23-C16 2.598  C23-C17 3.988  steps 19  conv True
+proximal  d 1.90  E -35638.58068  C23-C16 2.622  C23-C17 3.734  steps 84  conv True
+distal    d 3.00  E -35638.45196  C23-C16 2.955  C23-C17 4.299  steps 166  conv True
+distal    d 2.90  E -35638.44391  C23-C16 2.903  C23-C17 4.270  steps 28  conv True
+distal    d 2.80  E -35638.42967  C23-C16 2.869  C23-C17 4.262  steps 33  conv True
+distal    d 2.70  E -35638.41154  C23-C16 2.904  C23-C17 4.376  steps 73  conv True
+distal    d 2.60  E -35638.38806  C23-C16 2.854  C23-C17 4.345  steps 34  conv True
+distal    d 2.50  E -35638.36804  C23-C16 2.911  C23-C17 4.487  steps 81  conv True
+distal    d 2.40  E -35638.33412  C23-C16 2.842  C23-C17 4.426  steps 26  conv True
+distal    d 2.30  E -35638.28845  C23-C16 2.785  C23-C17 4.341  steps 67  conv True
+distal    d 2.20  E -35638.39700  C23-C16 2.766  C23-C17 4.121  steps 181  conv True
+distal    d 2.10  E -35638.40267  C23-C16 2.678  C23-C17 4.050  steps 22  conv True
+distal    d 2.00  E -35638.43351  C23-C16 2.599  C23-C17 3.987  steps 19  conv True
+distal    d 1.90  E -35638.58647  C23-C16 2.621  C23-C17 3.752  steps 119  conv True
+
+relaxed-scan energies, kcal/mol relative to each branch's d = 3.0 A point
+  d 3.00   proximal    0.00 (C23-C17 4.11)   distal    0.00 (C23-C17 4.30)   distal-proximal  -0.50
+  d 2.90   proximal    0.05 (C23-C17 4.06)   distal    0.19 (C23-C17 4.27)   distal-proximal  -0.37
+  d 2.80   proximal    0.21 (C23-C17 4.05)   distal    0.51 (C23-C17 4.26)   distal-proximal  -0.20
+  d 2.70   proximal    0.56 (C23-C17 4.00)   distal    0.93 (C23-C17 4.38)   distal-proximal  -0.13
+  d 2.60   proximal    1.03 (C23-C17 3.93)   distal    1.47 (C23-C17 4.34)   distal-proximal  -0.06
+  d 2.50   proximal    1.64 (C23-C17 3.83)   distal    1.94 (C23-C17 4.49)   distal-proximal  -0.20
+  d 2.40   proximal    0.24 (C23-C17 4.28)   distal    2.72 (C23-C17 4.43)   distal-proximal   1.98
+  d 2.30   proximal    0.53 (C23-C17 4.22)   distal    3.77 (C23-C17 4.34)   distal-proximal   2.74
+  d 2.20   proximal    0.84 (C23-C17 4.14)   distal    1.27 (C23-C17 4.12)   distal-proximal  -0.07
+  d 2.10   proximal    0.76 (C23-C17 4.05)   distal    1.14 (C23-C17 4.05)   distal-proximal  -0.12
+  d 2.00   proximal    0.12 (C23-C17 3.99)   distal    0.43 (C23-C17 3.99)   distal-proximal  -0.20
+  d 1.90   proximal   -3.47 (C23-C17 3.73)   distal   -3.10 (C23-C17 3.75)   distal-proximal  -0.13

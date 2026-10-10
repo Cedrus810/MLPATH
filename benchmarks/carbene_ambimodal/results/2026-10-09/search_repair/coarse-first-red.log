@@ -1,0 +1,90 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_exact_coarse_budget_covers_every_direction_before_refinement[max_trials] _
+
+tmp_path = PosixPath('/tmp/pytest-of-kasuga/pytest-1088/test_exact_coarse_budget_cover0')
+budget = 'max_trials'
+
+    @pytest.mark.parametrize(
+        "budget", ["max_trials", "chemical_trials_per_node", "conformer_trials_per_microstate"]
+    )
+    def test_exact_coarse_budget_covers_every_direction_before_refinement(tmp_path, budget):
+        config, needed = _protocol()
+        config = replace(config, **{budget: needed})
+        network = ReactionSearch(double_well_factory, config).run(demo_atoms(), tmp_path)
+        records = _attempts(tmp_path)
+        assert len(records) == needed
+>       assert {record["stage"] for record in records} == {"coarse"}
+E       AssertionError: assert {'coarse', 'refine'} == {'coarse'}
+E         
+E         Extra items in the left set:
+E         'refine'
+E         Use -v to get more diff
+
+tests/test_coarse_first.py:50: AssertionError
+_ test_exact_coarse_budget_covers_every_direction_before_refinement[chemical_trials_per_node] _
+
+tmp_path = PosixPath('/tmp/pytest-of-kasuga/pytest-1088/test_exact_coarse_budget_cover1')
+budget = 'chemical_trials_per_node'
+
+    @pytest.mark.parametrize(
+        "budget", ["max_trials", "chemical_trials_per_node", "conformer_trials_per_microstate"]
+    )
+    def test_exact_coarse_budget_covers_every_direction_before_refinement(tmp_path, budget):
+        config, needed = _protocol()
+        config = replace(config, **{budget: needed})
+        network = ReactionSearch(double_well_factory, config).run(demo_atoms(), tmp_path)
+        records = _attempts(tmp_path)
+        assert len(records) == needed
+>       assert {record["stage"] for record in records} == {"coarse"}
+E       AssertionError: assert {'coarse', 'refine'} == {'coarse'}
+E         
+E         Extra items in the left set:
+E         'refine'
+E         Use -v to get more diff
+
+tests/test_coarse_first.py:50: AssertionError
+_ test_exact_coarse_budget_covers_every_direction_before_refinement[conformer_trials_per_microstate] _
+
+tmp_path = PosixPath('/tmp/pytest-of-kasuga/pytest-1088/test_exact_coarse_budget_cover2')
+budget = 'conformer_trials_per_microstate'
+
+    @pytest.mark.parametrize(
+        "budget", ["max_trials", "chemical_trials_per_node", "conformer_trials_per_microstate"]
+    )
+    def test_exact_coarse_budget_covers_every_direction_before_refinement(tmp_path, budget):
+        config, needed = _protocol()
+        config = replace(config, **{budget: needed})
+        network = ReactionSearch(double_well_factory, config).run(demo_atoms(), tmp_path)
+        records = _attempts(tmp_path)
+        assert len(records) == needed
+>       assert {record["stage"] for record in records} == {"coarse"}
+E       AssertionError: assert {'coarse', 'refine'} == {'coarse'}
+E         
+E         Extra items in the left set:
+E         'refine'
+E         Use -v to get more diff
+
+tests/test_coarse_first.py:50: AssertionError
+___ test_spare_budget_refines_after_all_coarse_and_keeps_bracket_provenance ____
+
+tmp_path = PosixPath('/tmp/pytest-of-kasuga/pytest-1088/test_spare_budget_refines_afte0')
+
+    def test_spare_budget_refines_after_all_coarse_and_keeps_bracket_provenance(tmp_path):
+        config, needed = _protocol()
+        config = replace(config, max_trials=needed + 2)
+        network = ReactionSearch(double_well_factory, config).run(demo_atoms(), tmp_path)
+        records = _attempts(tmp_path)
+>       assert [record["stage"] for record in records[:needed]] == ["coarse"] * needed
+E       AssertionError: assert ['coarse', 'c...'refine', ...] == ['coarse', 'c...'coarse', ...]
+E         
+E         At index 4 diff: 'refine' != 'coarse'
+E         Use -v to get more diff
+
+tests/test_coarse_first.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_coarse_first.py::test_exact_coarse_budget_covers_every_direction_before_refinement[max_trials]
+FAILED tests/test_coarse_first.py::test_exact_coarse_budget_covers_every_direction_before_refinement[chemical_trials_per_node]
+FAILED tests/test_coarse_first.py::test_exact_coarse_budget_covers_every_direction_before_refinement[conformer_trials_per_microstate]
+FAILED tests/test_coarse_first.py::test_spare_budget_refines_after_all_coarse_and_keeps_bracket_provenance
+4 failed in 5.09s

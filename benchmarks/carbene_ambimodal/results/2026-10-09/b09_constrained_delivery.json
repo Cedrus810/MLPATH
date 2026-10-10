@@ -1,0 +1,140 @@
+{
+  "scope": "Pure geometry only; no POLAR-1 energy or dynamics evaluated. Gate threshold unchanged.",
+  "probes": [
+    {
+      "attempt": "t000001",
+      "probe": {
+        "family": "stretch",
+        "indices": [
+          14,
+          16
+        ],
+        "sign": 1,
+        "amplitude": 0.3,
+        "seed": 2866176089,
+        "priority": 1,
+        "priority_reason": null,
+        "unit": "Angstrom",
+        "kind": "bond",
+        "mode": "displace"
+      },
+      "original_failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [16, 20] by 0.052 A, above 0.05 A"
+      },
+      "new_max_bond_change_A": 2.220446049250313e-16,
+      "target_error": 1.6653345369377348e-16,
+      "gate": "passed",
+      "seconds": 3.702214290970005
+    },
+    {
+      "attempt": "t000002",
+      "probe": {
+        "family": "stretch",
+        "indices": [
+          14,
+          16
+        ],
+        "sign": 1,
+        "amplitude": 0.6,
+        "seed": 2866176089,
+        "priority": 1,
+        "priority_reason": null,
+        "unit": "Angstrom",
+        "kind": "bond",
+        "mode": "displace"
+      },
+      "original_failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [16, 20] by 0.091 A, above 0.05 A"
+      },
+      "new_max_bond_change_A": 2.220446049250313e-16,
+      "target_error": 1.1102230246251565e-16,
+      "gate": "passed",
+      "seconds": 3.561192497960292
+    },
+    {
+      "attempt": "t000003",
+      "probe": {
+        "family": "stretch",
+        "indices": [
+          14,
+          16
+        ],
+        "sign": 1,
+        "amplitude": 1.0,
+        "seed": 2866176089,
+        "priority": 1,
+        "priority_reason": null,
+        "unit": "Angstrom",
+        "kind": "bond",
+        "mode": "displace"
+      },
+      "original_failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [16, 20] by 0.119 A, above 0.05 A"
+      },
+      "new_max_bond_change_A": 6.661338147750939e-16,
+      "target_error": 4.440892098500626e-16,
+      "gate": "passed",
+      "seconds": 3.8170002170372754
+    },
+    {
+      "attempt": "t000018",
+      "probe": {
+        "family": "bend",
+        "indices": [
+          16,
+          14,
+          13
+        ],
+        "sign": 1,
+        "amplitude": 0.17,
+        "seed": 3043922528,
+        "priority": 1,
+        "priority_reason": null,
+        "unit": "radian",
+        "kind": "angle",
+        "mode": "displace"
+      },
+      "original_failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [14, 27] by 0.056 A, above 0.05 A"
+      },
+      "new_max_bond_change_A": 4.440892098500626e-16,
+      "target_error": 8.326672684688674e-17,
+      "gate": "passed",
+      "seconds": 3.587679569958709
+    },
+    {
+      "attempt": "t000019",
+      "probe": {
+        "family": "bend",
+        "indices": [
+          16,
+          14,
+          13
+        ],
+        "sign": 1,
+        "amplitude": 0.35,
+        "seed": 3043922528,
+        "priority": 1,
+        "priority_reason": null,
+        "unit": "radian",
+        "kind": "angle",
+        "mode": "displace"
+      },
+      "original_failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [14, 27] by 0.118 A, above 0.05 A"
+      },
+      "new_max_bond_change_A": 1.1102230246251565e-15,
+      "target_error": 1.1102230246251565e-16,
+      "gate": "passed",
+      "seconds": 3.699137179995887
+    }
+  ],
+  "implementation_sha256": "d6a6986e147aa853574597dd10f463c2c286162491cf62949b67f960aba70128",
+  "source_geometry_sha256": "b2ec8a80d51f0af6b1b07452ba777ebe57f0281a52cba7e6d1811f7942fa263b",
+  "original_attempts_sha256": "511a97c3eed23e1a4e31b4f672b2c0c419bd67cd6d472d547fa72595f0f82c7e"
+}

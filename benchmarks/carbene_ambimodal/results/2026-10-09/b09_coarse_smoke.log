@@ -1,0 +1,40 @@
+15:40:57 root CUDA version: 12.9, CUDA device: 0
+15:40:57 root Using head Default out of  ['Default']
+15:40:57 root Default dtype float64 does not match model dtype float32, converting models to float64.
+15:41:22 prrs.runner source relaxed and confirmed at -16769.0931 eV
+15:41:33 prrs.search search b09_coarse_smoke: source admitted as c0000, max_trials=1408, direction_mode=exhaustive
+15:49:30 prrs.search ts0000 found by quench_stalled at -16769.0922 eV (from c0000/m0000)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 703, in format
+    record.message = record.getMessage()
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/logging/__init__.py", line 392, in getMessage
+    msg = msg % self.args
+          ~~~~^~~~~~~~~~~
+TypeError: %d format: a real number is required, not list
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ruigengji/MLPATH/src/prrs/__main__.py", line 3, in <module>
+    raise SystemExit(main())
+  File "/home/ruigengji/MLPATH/src/prrs/cli.py", line 210, in main
+    ).run(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 2502, in run
+    coarse.append(execute(node, state, probe, "coarse"))
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1973, in execute
+    ts_entry = register_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1443, in register_saddle
+    connect_saddle(ts_entry, structure, mode, node, attempt_id, seed)
+  File "/home/ruigengji/MLPATH/src/prrs/search.py", line 1486, in connect_saddle
+    endpoint, checked, relays = descend_saddle(
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2279, in descend_saddle
+    log.info("descent settled after %d relay(s)", relays)
+Message: 'descent settled after %d relay(s)'
+Arguments: ([],)

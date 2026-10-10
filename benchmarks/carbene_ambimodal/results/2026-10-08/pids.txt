@@ -1,0 +1,9 @@
+# 2026-10-08 19:20:46 183 carbene_ambimodal evaluate (all 61)
+948622
+# 2026-10-08 19:32:16 183 b08/b09 POLAR-1 geomeTRIC re-optimisation
+948933
+949440
+# 2026-10-08 20:44:19 183 runs/b09_smoke0 PRRS smoke (timeout 1200)
+949899
+# 2026-10-08 20:53:42 183 runs/b09_probe1 PRRS probe (max_trials 96)
+950185

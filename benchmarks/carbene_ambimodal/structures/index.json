@@ -1,0 +1,551 @@
+[
+ {
+  "name": "CBr2",
+  "section": "carbenes",
+  "file": "structures/carbenes/CBr2.xyz",
+  "n_atoms": 3,
+  "formula": "CBr2",
+  "spin": 1,
+  "G_hartree": -5186.400416
+ },
+ {
+  "name": "CBr2-triplet",
+  "section": "carbenes",
+  "file": "structures/carbenes/CBr2-triplet.xyz",
+  "n_atoms": 3,
+  "formula": "CBr2",
+  "spin": 3,
+  "G_hartree": -5186.379494
+ },
+ {
+  "name": "CF2",
+  "section": "carbenes",
+  "file": "structures/carbenes/CF2.xyz",
+  "n_atoms": 3,
+  "formula": "CF2",
+  "spin": 1,
+  "G_hartree": -237.736343
+ },
+ {
+  "name": "CF2-triplet",
+  "section": "carbenes",
+  "file": "structures/carbenes/CF2-triplet.xyz",
+  "n_atoms": 3,
+  "formula": "CF2",
+  "spin": 3,
+  "G_hartree": -237.652786
+ },
+ {
+  "name": "CCl2",
+  "section": "carbenes",
+  "file": "structures/carbenes/CCl2.xyz",
+  "n_atoms": 3,
+  "formula": "CCl2",
+  "spin": 1,
+  "G_hartree": -958.411455
+ },
+ {
+  "name": "CCl2-triplet",
+  "section": "carbenes",
+  "file": "structures/carbenes/CCl2-triplet.xyz",
+  "n_atoms": 3,
+  "formula": "CCl2",
+  "spin": 3,
+  "G_hartree": -958.383811
+ },
+ {
+  "name": "CI2",
+  "section": "carbenes",
+  "file": "structures/carbenes/CI2.xyz",
+  "n_atoms": 3,
+  "formula": "CI2",
+  "spin": 1,
+  "G_hartree": -633.266136
+ },
+ {
+  "name": "CI2-triplet",
+  "section": "carbenes",
+  "file": "structures/carbenes/CI2-triplet.xyz",
+  "n_atoms": 3,
+  "formula": "CI2",
+  "spin": 3,
+  "G_hartree": -633.254359
+ },
+ {
+  "name": "Dimethoxycarbene",
+  "section": "carbenes",
+  "file": "structures/carbenes/Dimethoxycarbene.xyz",
+  "n_atoms": 11,
+  "formula": "C3H6O2",
+  "spin": 1,
+  "G_hartree": -268.237892
+ },
+ {
+  "name": "Dimethoxycarbene",
+  "section": "carbenes",
+  "file": "structures/carbenes/Dimethoxycarbene_2.xyz",
+  "n_atoms": 11,
+  "formula": "C3H6O2",
+  "spin": 1,
+  "G_hartree": -268.138715
+ },
+ {
+  "name": "1,2-bis(methylene)cycloheptane 7C",
+  "section": "olefins",
+  "file": "structures/olefins/1_2-bis_methylene_cycloheptane_7C.xyz",
+  "n_atoms": 23,
+  "formula": "C9H14",
+  "spin": 1,
+  "G_hartree": -351.142801
+ },
+ {
+  "name": "1,2-bis(methylene)cyclopentane 5C",
+  "section": "olefins",
+  "file": "structures/olefins/1_2-bis_methylene_cyclopentane_5C.xyz",
+  "n_atoms": 17,
+  "formula": "C7H10",
+  "spin": 1,
+  "G_hartree": -272.581831
+ },
+ {
+  "name": "1,2-bis(methylene)cyclooctane 8C",
+  "section": "olefins",
+  "file": "structures/olefins/1_2-bis_methylene_cyclooctane_8C.xyz",
+  "n_atoms": 26,
+  "formula": "C10H16",
+  "spin": 1,
+  "G_hartree": -390.418119
+ },
+ {
+  "name": "Cyclohexadiene 6R",
+  "section": "olefins",
+  "file": "structures/olefins/Cyclohexadiene_6R.xyz",
+  "n_atoms": 14,
+  "formula": "C6H8",
+  "spin": 1,
+  "G_hartree": -233.305077
+ },
+ {
+  "name": "1-Cyclohexene-1-carboxaldehyde 6O",
+  "section": "olefins",
+  "file": "structures/olefins/1-Cyclohexene-1-carboxaldehyde_6O.xyz",
+  "n_atoms": 18,
+  "formula": "C7H10O",
+  "spin": 1,
+  "G_hartree": -347.841498
+ },
+ {
+  "name": "1-Cyclopentene-1-carboxaldehyde 5O",
+  "section": "olefins",
+  "file": "structures/olefins/1-Cyclopentene-1-carboxaldehyde_5O.xyz",
+  "n_atoms": 15,
+  "formula": "C6H8O",
+  "spin": 1,
+  "G_hartree": -308.551204
+ },
+ {
+  "name": "1-Cycloheptene-1-carboxaldehyde 7O",
+  "section": "olefins",
+  "file": "structures/olefins/1-Cycloheptene-1-carboxaldehyde_7O.xyz",
+  "n_atoms": 21,
+  "formula": "C8H12O",
+  "spin": 1,
+  "G_hartree": -387.117351
+ },
+ {
+  "name": "6J",
+  "section": "olefins",
+  "file": "structures/olefins/6J.xyz",
+  "n_atoms": 24,
+  "formula": "C9H14O",
+  "spin": 1,
+  "G_hartree": -426.414922
+ },
+ {
+  "name": "Hexatriene",
+  "section": "olefins",
+  "file": "structures/olefins/Hexatriene.xyz",
+  "n_atoms": 14,
+  "formula": "C6H8",
+  "spin": 1,
+  "G_hartree": -233.279971
+ },
+ {
+  "name": "Butadiene",
+  "section": "olefins",
+  "file": "structures/olefins/Butadiene.xyz",
+  "n_atoms": 10,
+  "formula": "C4H6",
+  "spin": 1,
+  "G_hartree": -155.914331
+ },
+ {
+  "name": "TS1",
+  "section": "ts",
+  "file": "structures/ts/TS1.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "G_hartree": -5537.531488
+ },
+ {
+  "name": "TS1-h2",
+  "section": "ts",
+  "file": "structures/ts/TS1-h2.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "G_hartree": -5537.530795
+ },
+ {
+  "name": "TS1-h3",
+  "section": "ts",
+  "file": "structures/ts/TS1-h3.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "G_hartree": -5537.531219
+ },
+ {
+  "name": "TS2",
+  "section": "ts",
+  "file": "structures/ts/TS2.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "G_hartree": -5537.541702
+ },
+ {
+  "name": "TS-CF2",
+  "section": "ts",
+  "file": "structures/ts/TS-CF2.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14F2",
+  "spin": 1,
+  "G_hartree": -588.857906
+ },
+ {
+  "name": "TS-CCl2",
+  "section": "ts",
+  "file": "structures/ts/TS-CCl2.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Cl2",
+  "spin": 1,
+  "G_hartree": -1309.538836
+ },
+ {
+  "name": "TS-CCl2-C4",
+  "section": "ts",
+  "file": "structures/ts/TS-CCl2-C4.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Cl2",
+  "spin": 1,
+  "G_hartree": -1309.539801
+ },
+ {
+  "name": "TS-CI2",
+  "section": "ts",
+  "file": "structures/ts/TS-CI2.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14I2",
+  "spin": 1,
+  "G_hartree": -984.398336
+ },
+ {
+  "name": "TS-2OMe",
+  "section": "ts",
+  "file": "structures/ts/TS-2OMe.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "G_hartree": -616.036788
+ },
+ {
+  "name": "TS-2OMe-cis",
+  "section": "ts",
+  "file": "structures/ts/TS-2OMe-cis.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "G_hartree": -616.034279
+ },
+ {
+  "name": "TS-2OMe-C2",
+  "section": "ts",
+  "file": "structures/ts/TS-2OMe-C2.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "G_hartree": -616.013003
+ },
+ {
+  "name": "TS-2OMe-2",
+  "section": "ts",
+  "file": "structures/ts/TS-2OMe-2.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "G_hartree": -616.047851
+ },
+ {
+  "name": "TS1-Triplet",
+  "section": "ts",
+  "file": "structures/ts/TS1-Triplet.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "G_hartree": -5537.513066
+ },
+ {
+  "name": "TS2-Triplet",
+  "section": "ts",
+  "file": "structures/ts/TS2-Triplet.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "G_hartree": -5537.533341
+ },
+ {
+  "name": "TS-64-42",
+  "section": "ts",
+  "file": "structures/ts/TS-64-42.xyz",
+  "n_atoms": 24,
+  "formula": "C10H14",
+  "spin": 1,
+  "G_hartree": -389.143536
+ },
+ {
+  "name": "TS-5C-h1",
+  "section": "ts",
+  "file": "structures/ts/TS-5C-h1.xyz",
+  "n_atoms": 20,
+  "formula": "C8H10Br2",
+  "spin": 1,
+  "G_hartree": -5458.969948
+ },
+ {
+  "name": "TS-5C-h2",
+  "section": "ts",
+  "file": "structures/ts/TS-5C-h2.xyz",
+  "n_atoms": 20,
+  "formula": "C8H10Br2",
+  "spin": 1,
+  "G_hartree": -5458.970795
+ },
+ {
+  "name": "TS-8C",
+  "section": "ts",
+  "file": "structures/ts/TS-8C.xyz",
+  "n_atoms": 29,
+  "formula": "C11H16Br2",
+  "spin": 1,
+  "G_hartree": -5576.807065
+ },
+ {
+  "name": "TS-6r-h1",
+  "section": "ts",
+  "file": "structures/ts/TS-6r-h1.xyz",
+  "n_atoms": 17,
+  "formula": "C7H8Br2",
+  "spin": 1,
+  "G_hartree": -5419.689874
+ },
+ {
+  "name": "TS-6r-h2",
+  "section": "ts",
+  "file": "structures/ts/TS-6r-h2.xyz",
+  "n_atoms": 17,
+  "formula": "C7H8Br2",
+  "spin": 1,
+  "G_hartree": -5419.6944
+ },
+ {
+  "name": "TS-5O",
+  "section": "ts",
+  "file": "structures/ts/TS-5O.xyz",
+  "n_atoms": 26,
+  "formula": "C9H14O3",
+  "spin": 1,
+  "G_hartree": -576.755225
+ },
+ {
+  "name": "TS-7O",
+  "section": "ts",
+  "file": "structures/ts/TS-7O.xyz",
+  "n_atoms": 32,
+  "formula": "C11H18O3",
+  "spin": 1,
+  "G_hartree": -655.318935
+ },
+ {
+  "name": "TS-6J",
+  "section": "ts",
+  "file": "structures/ts/TS-6J.xyz",
+  "n_atoms": 35,
+  "formula": "C12H20O3",
+  "spin": 1,
+  "G_hartree": -694.618616
+ },
+ {
+  "name": "TS1-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS1-svp.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "imaginary_cm": -101.18
+ },
+ {
+  "name": "TS-CF2-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-CF2-svp.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14F2",
+  "spin": 1,
+  "imaginary_cm": -312.03
+ },
+ {
+  "name": "TS-CCl2-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-CCl2-svp.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Cl2",
+  "spin": 1,
+  "imaginary_cm": -135.94
+ },
+ {
+  "name": "TS-CI2-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-CI2-svp.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14I2",
+  "spin": 1,
+  "imaginary_cm": -13.79
+ },
+ {
+  "name": "TS-2OMe-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-2OMe-svp.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "imaginary_cm": -375.4
+ },
+ {
+  "name": "TS-64-42-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-64-42-svp.xyz",
+  "n_atoms": 24,
+  "formula": "C10H14",
+  "spin": 1,
+  "imaginary_cm": -522.55
+ },
+ {
+  "name": "TS-5C-h1-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-5C-h1-svp.xyz",
+  "n_atoms": 20,
+  "formula": "C8H10Br2",
+  "spin": 1,
+  "imaginary_cm": -15.67
+ },
+ {
+  "name": "TS-8C-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-8C-svp.xyz",
+  "n_atoms": 29,
+  "formula": "C11H16Br2",
+  "spin": 1,
+  "imaginary_cm": -11.89
+ },
+ {
+  "name": "TS-6r-h1-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-6r-h1-svp.xyz",
+  "n_atoms": 17,
+  "formula": "C7H8Br2",
+  "spin": 1,
+  "imaginary_cm": -122.08
+ },
+ {
+  "name": "TS-5O",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-5O.xyz",
+  "n_atoms": 26,
+  "formula": "C9H14O3",
+  "spin": 1,
+  "imaginary_cm": -398.9
+ },
+ {
+  "name": "TS-7O",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-7O.xyz",
+  "n_atoms": 32,
+  "formula": "C11H18O3",
+  "spin": 1,
+  "imaginary_cm": -363.2
+ },
+ {
+  "name": "TS-6J-svp",
+  "section": "ts_qcmd",
+  "file": "structures/ts_qcmd/TS-6J-svp.xyz",
+  "n_atoms": 35,
+  "formula": "C12H20O3",
+  "spin": 1,
+  "imaginary_cm": -372.71
+ },
+ {
+  "name": "7C-(2 + 1)",
+  "section": "products",
+  "file": "structures/products/7C-_2_+_1.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "G_hartree": -5537.633574
+ },
+ {
+  "name": "7C-(4 + 1)",
+  "section": "products",
+  "file": "structures/products/7C-_4_+_1.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "G_hartree": -5537.676149
+ },
+ {
+  "name": "6O-(2 + 1)",
+  "section": "products",
+  "file": "structures/products/6O-_2_+_1.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "G_hartree": -616.095322
+ },
+ {
+  "name": "6O-(4 + 1)",
+  "section": "products",
+  "file": "structures/products/6O-_4_+_1.xyz",
+  "n_atoms": 29,
+  "formula": "C10H16O3",
+  "spin": 1,
+  "G_hartree": -616.119927
+ },
+ {
+  "name": "IM1-Triplet",
+  "section": "products",
+  "file": "structures/products/IM1-Triplet.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "G_hartree": -5537.573679
+ },
+ {
+  "name": "7C-(4 + 1)-Triplet",
+  "section": "products",
+  "file": "structures/products/7C-_4_+_1_-Triplet.xyz",
+  "n_atoms": 26,
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "G_hartree": -5537.567423
+ }
+]

@@ -1,0 +1,79 @@
+atoms: {'carbene': 2, 'Ca': 13, 'Cb': 15, 'O_ald': 1}  source markers {'C:-Ca': 3.605, 'C:-Cb': 3.124, 'C:-O_ald': 4.123}
+DFT TS-2OMe        C:-Ca 2.676  C:-Cb 2.038  C:-O_ald 3.303
+DFT TS-2OMe-cis    C:-Ca 2.617  C:-Cb 1.951  C:-O_ald 4.301
+DFT TS-2OMe-C2     C:-Ca 1.814  C:-Cb 2.317  C:-O_ald 3.266
+DFT TS-2OMe-2      C:-Ca 2.294  C:-Cb 1.474  C:-O_ald 2.840
+
+336 trials; closest carbene approach over all trajectories:
+  C:-Ca: 2.605 A  (t000003 compress:2-13 1.0)
+  C:-Cb: 2.124 A  (t000015 compress:2-15 1.0)
+  C:-O_ald: 3.182 A  (t000027 compress:1-4 1.0)
+
+bond changes:
+  t000006 compress:0-4     0.6 completed     rearrangement  formed [] broken []
+  t000011 compress:3-13    1.0 completed     rearrangement  formed [] broken []
+  t000015 compress:2-15    1.0 completed     rearrangement  formed [] broken []
+  t000018 compress:1-9     0.6 completed     rearrangement  formed [] broken []
+  t000019 compress:1-9     1.0 completed     rearrangement  formed [] broken []
+  t000023 compress:7-28    1.0 completed     rearrangement  formed [] broken []
+  t000027 compress:1-4     1.0 completed     rearrangement  formed [] broken []
+  t000035 compress:1-11    1.0 ts_candidate  rearrangement  formed [] broken []
+  t000043 compress:7-27    1.0 ts_candidate  rearrangement  formed [] broken []
+  t000047 compress:0-9     1.0 ts_candidate  rearrangement  formed [] broken []
+  t000123 compress:0-11    1.0 ts_candidate  rearrangement  formed [] broken []
+  t000139 compress:2-16    1.0 ts_candidate  rearrangement  formed [] broken []
+  t000167 compress:7-16    1.0 completed     rearrangement  formed [] broken []
+
+watched directions (carbene C -> Ca / Cb / aldehyde O):
+  t000000 compress:2-13    0.1 completed     C:-Ca 3.50  C:-Cb 3.03  C:-O_ald 4.04
+  t000001 compress:2-13    0.3 completed     C:-Ca 3.30  C:-Cb 2.85  C:-O_ald 3.88
+  t000002 compress:2-13    0.6 completed     C:-Ca 3.00  C:-Cb 2.57  C:-O_ald 3.65
+  t000003 compress:2-13    1.0 quench_failed C:-Ca 2.60  C:-Cb 2.22  C:-O_ald 3.36
+  t000012 compress:2-15    0.1 completed     C:-Ca 3.51  C:-Cb 3.02  C:-O_ald 4.05
+  t000013 compress:2-15    0.3 completed     C:-Ca 3.33  C:-Cb 2.82  C:-O_ald 3.91
+  t000014 compress:2-15    0.6 completed     C:-Ca 3.05  C:-Cb 2.52  C:-O_ald 3.71
+  t000015 compress:2-15    1.0 completed     C:-Ca 2.70  C:-Cb 2.12  C:-O_ald 3.47
+
+TS candidates:
+  ts0000 compress:1-11    1.0 imag [-94]  dE   +22.2 meV  C:-Ca 3.44  C:-Cb 3.31  C:-O_ald 3.99  RMSD src 0.22  0.38 / 0.63 / 0.78 / 0.68 -> TS-2OMe
+  ts0001 compress:7-27    1.0 imag [-106]  dE   +23.0 meV  C:-Ca 3.43  C:-Cb 3.30  C:-O_ald 4.02  RMSD src 0.22  0.38 / 0.62 / 0.77 / 0.68 -> TS-2OMe
+  ts0002 compress:0-9     1.0 imag [-118]  dE   +20.2 meV  C:-Ca 3.44  C:-Cb 3.36  C:-O_ald 4.03  RMSD src 0.23  0.40 / 0.64 / 0.77 / 0.70 -> TS-2OMe
+  ts0003 compress:4-19    1.0 imag [-60]  dE    +6.8 meV  C:-Ca 3.54  C:-Cb 3.06  C:-O_ald 4.07  RMSD src 0.08  0.33 / 0.57 / 0.77 / 0.65 -> TS-2OMe
+  ts0004 compress:4-15    0.6 imag [-20]  dE    +4.4 meV  C:-Ca 3.55  C:-Cb 3.08  C:-O_ald 4.10  RMSD src 0.06  0.32 / 0.56 / 0.77 / 0.66 -> TS-2OMe
+  ts0005 compress:4-15    1.0 imag [-51]  dE    +6.2 meV  C:-Ca 3.54  C:-Cb 3.06  C:-O_ald 4.07  RMSD src 0.08  0.32 / 0.56 / 0.77 / 0.65 -> TS-2OMe
+  ts0006 compress:7-14    0.6 imag [-23]  dE    +3.3 meV  C:-Ca 3.56  C:-Cb 3.08  C:-O_ald 4.10  RMSD src 0.05  0.33 / 0.57 / 0.77 / 0.66 -> TS-2OMe
+  ts0007 compress:6-26    0.6 imag [-35]  dE    +5.7 meV  C:-Ca 3.54  C:-Cb 3.06  C:-O_ald 4.10  RMSD src 0.07  0.32 / 0.56 / 0.77 / 0.65 -> TS-2OMe
+  ts0008 compress:7-13    0.6 imag [-21]  dE    +5.1 meV  C:-Ca 3.55  C:-Cb 3.05  C:-O_ald 4.08  RMSD src 0.07  0.32 / 0.56 / 0.77 / 0.64 -> TS-2OMe
+  ts0009 compress:7-13    1.0 imag [-73]  dE    +6.7 meV  C:-Ca 3.55  C:-Cb 3.05  C:-O_ald 4.08  RMSD src 0.08  0.33 / 0.57 / 0.77 / 0.65 -> TS-2OMe
+  ts0010 compress:6-16    0.6 imag [-37]  dE    +5.6 meV  C:-Ca 3.55  C:-Cb 3.05  C:-O_ald 4.10  RMSD src 0.07  0.33 / 0.56 / 0.77 / 0.65 -> TS-2OMe
+  ts0011 compress:2-18    0.6 imag [-29]  dE    +3.5 meV  C:-Ca 3.56  C:-Cb 3.08  C:-O_ald 4.11  RMSD src 0.05  0.33 / 0.57 / 0.77 / 0.66 -> TS-2OMe
+  ts0012 compress:9-19    0.6 imag [-19]  dE    +3.8 meV  C:-Ca 3.55  C:-Cb 3.09  C:-O_ald 4.11  RMSD src 0.06  0.33 / 0.57 / 0.77 / 0.66 -> TS-2OMe
+  ts0013 compress:9-19    1.0 imag [-20]  dE    +5.2 meV  C:-Ca 3.53  C:-Cb 3.08  C:-O_ald 4.06  RMSD src 0.08  0.32 / 0.57 / 0.77 / 0.65 -> TS-2OMe
+  ts0014 compress:3-18    0.6 imag [-30]  dE    +4.8 meV  C:-Ca 3.56  C:-Cb 3.05  C:-O_ald 4.09  RMSD src 0.07  0.32 / 0.56 / 0.77 / 0.65 -> TS-2OMe
+  ts0015 compress:10-19   0.6 imag [-21]  dE    +3.7 meV  C:-Ca 3.56  C:-Cb 3.09  C:-O_ald 4.12  RMSD src 0.05  0.34 / 0.57 / 0.77 / 0.66 -> TS-2OMe
+  ts0016 compress:10-19   1.0 imag [-76]  dE    +5.4 meV  C:-Ca 3.57  C:-Cb 3.07  C:-O_ald 4.12  RMSD src 0.06  0.34 / 0.57 / 0.77 / 0.66 -> TS-2OMe
+  ts0017 compress:5-16    0.6 imag [-38]  dE    +3.4 meV  C:-Ca 3.57  C:-Cb 3.08  C:-O_ald 4.13  RMSD src 0.05  0.34 / 0.57 / 0.77 / 0.67 -> TS-2OMe
+  ts0018 compress:0-11    1.0 imag [-97]  dE   +22.6 meV  C:-Ca 3.50  C:-Cb 3.39  C:-O_ald 4.13  RMSD src 0.21  0.40 / 0.63 / 0.78 / 0.72 -> TS-2OMe
+  ts0019 compress:3-20    0.6 imag [-53]  dE    +3.6 meV  C:-Ca 3.58  C:-Cb 3.07  C:-O_ald 4.13  RMSD src 0.05  0.34 / 0.57 / 0.77 / 0.67 -> TS-2OMe
+  ts0020 compress:5-26    0.6 imag [-34]  dE    +4.1 meV  C:-Ca 3.56  C:-Cb 3.06  C:-O_ald 4.13  RMSD src 0.05  0.34 / 0.57 / 0.77 / 0.66 -> TS-2OMe
+  ts0021 compress:9-15    0.6 imag [-17]  dE    +3.5 meV  C:-Ca 3.56  C:-Cb 3.08  C:-O_ald 4.14  RMSD src 0.05  0.34 / 0.57 / 0.77 / 0.67 -> TS-2OMe
+  ts0022 compress:2-16    1.0 imag [-82]  dE   +21.7 meV  C:-Ca 3.49  C:-Cb 3.36  C:-O_ald 4.12  RMSD src 0.20  0.40 / 0.63 / 0.78 / 0.71 -> TS-2OMe
+  ts0023 compress:2-24    0.6 imag [-70]  dE    +2.9 meV  C:-Ca 3.59  C:-Cb 3.07  C:-O_ald 4.14  RMSD src 0.05  0.35 / 0.57 / 0.77 / 0.67 -> TS-2OMe
+  ts0024 compress:2-20    0.6 imag [-37]  dE    +3.4 meV  C:-Ca 3.58  C:-Cb 3.08  C:-O_ald 4.16  RMSD src 0.05  0.35 / 0.57 / 0.77 / 0.68 -> TS-2OMe
+  ts0025 compress:7-16    0.6 imag [-87]  dE    +2.2 meV  C:-Ca 3.61  C:-Cb 3.07  C:-O_ald 4.19  RMSD src 0.07  0.37 / 0.58 / 0.77 / 0.68 -> TS-2OMe
+  ts0026 compress:3-25    0.6 imag [-91]  dE    +1.2 meV  C:-Ca 3.62  C:-Cb 3.08  C:-O_ald 4.19  RMSD src 0.06  0.37 / 0.58 / 0.77 / 0.69 -> TS-2OMe
+  ts0027 compress:11-19   0.6 imag [-85]  dE    +1.9 meV  C:-Ca 3.62  C:-Cb 3.08  C:-O_ald 4.20  RMSD src 0.06  0.37 / 0.58 / 0.77 / 0.69 -> TS-2OMe
+  ts0028 compress:12-24   0.6 imag [-76]  dE    +2.5 meV  C:-Ca 3.62  C:-Cb 3.09  C:-O_ald 4.22  RMSD src 0.06  0.37 / 0.58 / 0.77 / 0.69 -> TS-2OMe
+  ts0029 compress:11-15   0.6 imag [-65]  dE    +2.7 meV  C:-Ca 3.61  C:-Cb 3.10  C:-O_ald 4.22  RMSD src 0.06  0.37 / 0.58 / 0.77 / 0.70 -> TS-2OMe
+  ts0030 compress:7-26    0.6 imag [-92]  dE    +0.4 meV  C:-Ca 3.63  C:-Cb 3.09  C:-O_ald 4.23  RMSD src 0.08  0.38 / 0.59 / 0.77 / 0.70 -> TS-2OMe
+  ts0031 compress:2-25    0.6 imag [-77]  dE    +1.6 meV  C:-Ca 3.63  C:-Cb 3.10  C:-O_ald 4.24  RMSD src 0.07  0.39 / 0.59 / 0.78 / 0.70 -> TS-2OMe
+  ts0032 compress:5-25    0.6 imag [-87]  dE    +1.4 meV  C:-Ca 3.62  C:-Cb 3.07  C:-O_ald 4.19  RMSD src 0.07  0.37 / 0.58 / 0.77 / 0.68 -> TS-2OMe
+  ts0033 compress:14-22   1.0 imag [-38]  dE    +1.5 meV  C:-Ca 3.60  C:-Cb 3.10  C:-O_ald 4.14  RMSD src 0.03  0.36 / 0.58 / 0.78 / 0.68 -> TS-2OMe
+  ts0034 compress:18-27   1.0 imag [-19]  dE    +0.5 meV  C:-Ca 3.61  C:-Cb 3.10  C:-O_ald 4.17  RMSD src 0.04  0.37 / 0.58 / 0.78 / 0.69 -> TS-2OMe
+  ts0035 compress:14-24   1.0 imag [-77]  dE    +0.8 meV  C:-Ca 3.63  C:-Cb 3.07  C:-O_ald 4.18  RMSD src 0.07  0.37 / 0.58 / 0.77 / 0.68 -> TS-2OMe
+  ts0036 compress:13-23   1.0 imag [-30]  dE    +0.4 meV  C:-Ca 3.63  C:-Cb 3.10  C:-O_ald 4.16  RMSD src 0.04  0.37 / 0.58 / 0.78 / 0.69 -> TS-2OMe
+
+microstates:
+  c0000_m0000 dE    +0.0 meV  RMSD src 0.00  C:-Ca 3.60  C:-Cb 3.12  C:-O_ald 4.12
+  c0000_m0001 dE    +5.4 meV  RMSD src 0.11  C:-Ca 3.50  C:-Cb 3.11  C:-O_ald 4.03
+  c0000_m0002 dE  -214.2 meV  RMSD src 0.29  C:-Ca 3.58  C:-Cb 3.19  C:-O_ald 4.23

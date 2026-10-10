@@ -1,0 +1,20 @@
+20:45:18 root CUDA version: 12.9, CUDA device: 0
+20:45:18 root Using head Default out of  ['Default']
+20:45:18 root Default dtype float64 does not match model dtype float32, converting models to float64.
+20:45:43 prrs.runner source relaxed and confirmed at -16769.0931 eV
+20:45:53 prrs.search search b09_smoke0: source admitted as c0000, max_trials=4, direction_mode=sampled
+20:48:09 prrs.search scanning stretch (14, 16) sign +1 on c0000/m0000
+20:48:09 prrs.search search b09_smoke0: trial_budget after 4 attempts, 1 nodes, 0 channels
+{
+  "output": "/home/ruigengji/MLPATH/runs/b09_smoke0",
+  "status": "completed",
+  "chemical_nodes": 1,
+  "microstates": 1,
+  "reactions": 0,
+  "ts_candidates": 0,
+  "attempts": 4,
+  "outcome_counts": {
+    "completed": 1,
+    "rejected": 3
+  }
+}

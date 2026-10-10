@@ -1,0 +1,5 @@
+3
+Properties=species:S:1:pos:R:3 name=CF2-triplet section=carbenes charge=0 spin=3 G_hartree=-237.652786 pbc="F F F"
+C        0.00000000       0.49997700       0.00000000
+F        1.12620200      -0.16666000       0.00000000
+F       -1.12620200      -0.16665900       0.00000000

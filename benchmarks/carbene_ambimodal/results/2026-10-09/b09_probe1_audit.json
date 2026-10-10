@@ -1,0 +1,639 @@
+{
+  "date": "2026-10-09",
+  "run": "/home/ruigengji/MLPATH/runs/b09_probe1",
+  "runtime_host_recorded": "kasuga02",
+  "recorded_implementation_sha256": "cb45c8f1a0386495a35c1f57d989bab44ff2f9fdc33d291d34470d16e813f0ca",
+  "current_implementation_sha256": "cb45c8f1a0386495a35c1f57d989bab44ff2f9fdc33d291d34470d16e813f0ca",
+  "source_files_sha256": {
+    "config.json": "63aad2a8731c17265c53aec325e02c37d024a4555ae356dfe433e4186da74569",
+    "network.json": "4314df7fb758f4039db2626db8f79bff77ff502aba428674f264aa42f00e7f89",
+    "attempts.jsonl": "511a97c3eed23e1a4e31b4f672b2c0c419bd67cd6d472d547fa72595f0f82c7e",
+    "input.extxyz": "88c6837a1454e5337aa697e64d842a8081853b73108c8ae8c52e9d0a623f9c24"
+  },
+  "status": "completed",
+  "termination": "configured_scope_exhausted",
+  "termination_detail": {
+    "trials_spent": 32,
+    "max_trials": 96,
+    "directions_dropped_by": {
+      "conformer_trials_per_microstate": 17
+    },
+    "meaning": "termination names the trial budget only. A nonempty directions_dropped_by means selected directions never ran for some OTHER budget, so the proposals were not exhausted and no negative result may be read as 'everything was tried'"
+  },
+  "reaction_count": 0,
+  "chemical_node_count": 1,
+  "outcomes": {
+    "completed": 16,
+    "rejected": 5,
+    "ts_candidate": 10,
+    "quench_failed": 1
+  },
+  "stages": {
+    "coarse": 23,
+    "refine": 9
+  },
+  "ranking": "spectral overlap with 4 soft internal mode(s) (analytic; 3 torsional direction(s) removed)",
+  "ranking_scores": "Not saved in the historical run; no Hessian recomputation performed.",
+  "proposal_families": {
+    "stretch": {
+      "candidates": 28,
+      "quota": 14,
+      "selected": 6,
+      "priority_candidates": 0
+    },
+    "compress": {
+      "candidates": 84,
+      "quota": 42,
+      "selected": 6,
+      "priority_candidates": 0
+    },
+    "kick": {
+      "candidates": 224,
+      "quota": 112,
+      "selected": 6,
+      "priority_candidates": 0
+    },
+    "bend": {
+      "candidates": 96,
+      "quota": 48,
+      "selected": 6,
+      "priority_candidates": 0
+    }
+  },
+  "selected_ids": [
+    "stretch:14-16:+",
+    "compress:5-16:-",
+    "kick:5-16:-",
+    "bend:16-14-13:+",
+    "stretch:14-17:+",
+    "compress:4-15:-",
+    "kick:5-16:+",
+    "bend:16-14-13:-",
+    "stretch:18-20:+",
+    "compress:1-4:-",
+    "kick:4-15:+",
+    "bend:20-18-15:+",
+    "stretch:5-7:+",
+    "compress:9-15:-",
+    "kick:4-15:-",
+    "bend:20-18-15:-",
+    "stretch:16-20:+",
+    "compress:3-18:-",
+    "kick:1-4:+",
+    "bend:13-14-17:-",
+    "stretch:0-13:+",
+    "compress:3-15:-",
+    "kick:1-4:-",
+    "bend:13-14-17:+"
+  ],
+  "executed_ids": [
+    "bend:16-14-13:+",
+    "compress:4-15:-",
+    "compress:5-16:-",
+    "kick:5-16:+",
+    "kick:5-16:-",
+    "stretch:14-16:+",
+    "stretch:14-17:+"
+  ],
+  "target_direction_audit": {
+    "compress:2-13:-": "candidate_not_selected",
+    "kick:2-13:-": "candidate_not_selected",
+    "kick:2-13:+": "candidate_not_selected",
+    "compress:2-15:-": "candidate_not_selected",
+    "kick:2-15:-": "candidate_not_selected",
+    "kick:2-15:+": "candidate_not_selected"
+  },
+  "source_distances_A": {
+    "Ccarb_Ca": 3.60451702515791,
+    "Ccarb_Cb": 3.123786980714989,
+    "Ccarb_Oald": 4.122614771773584
+  },
+  "largest_injected_kinetic_eV": 1.0,
+  "rejections": [
+    {
+      "attempt": "t000001",
+      "failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [16, 20] by 0.052 A, above 0.05 A"
+      }
+    },
+    {
+      "attempt": "t000002",
+      "failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [16, 20] by 0.091 A, above 0.05 A"
+      }
+    },
+    {
+      "attempt": "t000003",
+      "failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [16, 20] by 0.119 A, above 0.05 A"
+      }
+    },
+    {
+      "attempt": "t000018",
+      "failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [14, 27] by 0.056 A, above 0.05 A"
+      }
+    },
+    {
+      "attempt": "t000019",
+      "failure": {
+        "code": "collateral_bond",
+        "message": "probe changed bond [14, 27] by 0.118 A, above 0.05 A"
+      }
+    }
+  ],
+  "ts_candidates": [
+    {
+      "id": "ts0000",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -38.42065657933876
+      ],
+      "rise_meV": 3.3691796197672375,
+      "heavy_rmsd_A": 0.04615411338616179,
+      "r_Ccarb_Ca_A": 3.569758722138852,
+      "r_Ccarb_Cb_A": 3.081916541187971,
+      "r_Ccarb_Oald_A": 4.127121582286822,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -90.31286808796264
+              ],
+              "travel_overlap": 0.8410603216454304,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        },
+        {
+          "sign": -1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        }
+      ]
+    },
+    {
+      "id": "ts0001",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -21.561859383680595
+      ],
+      "rise_meV": 3.6899634833389428,
+      "heavy_rmsd_A": 0.04843527417563657,
+      "r_Ccarb_Ca_A": 3.5699870412721166,
+      "r_Ccarb_Cb_A": 3.085427474754768,
+      "r_Ccarb_Oald_A": 4.147131847270621,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -65.27398573228345
+              ],
+              "travel_overlap": -0.6190073010529733,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached_after_polish"
+        },
+        {
+          "sign": -1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        }
+      ]
+    },
+    {
+      "id": "ts0002",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -18.985645329738716
+      ],
+      "rise_meV": 3.407207412237767,
+      "heavy_rmsd_A": 0.04467552011817254,
+      "r_Ccarb_Ca_A": 3.567831800603575,
+      "r_Ccarb_Cb_A": 3.0822841462541155,
+      "r_Ccarb_Oald_A": 4.149672767606906,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        },
+        {
+          "sign": -1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -55.73914647761925
+              ],
+              "travel_overlap": -0.6953341031452422,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            },
+            {
+              "hop": 1,
+              "saddle_order": 1,
+              "icm": [
+                -100.95121614361103
+              ],
+              "travel_overlap": -0.7517139064417746,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        }
+      ]
+    },
+    {
+      "id": "ts0003",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -27.266608934475745
+      ],
+      "rise_meV": 1.6188247536774725,
+      "heavy_rmsd_A": 0.05079837156598523,
+      "r_Ccarb_Ca_A": 3.5977091473660514,
+      "r_Ccarb_Cb_A": 3.082682571555456,
+      "r_Ccarb_Oald_A": 4.13884652426715,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        },
+        {
+          "sign": -1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -71.3977878010458
+              ],
+              "travel_overlap": -0.7780923248793923,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        }
+      ]
+    },
+    {
+      "id": "ts0004",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -49.07726157071822
+      ],
+      "rise_meV": 1.940400408784626,
+      "heavy_rmsd_A": 0.05335382881193484,
+      "r_Ccarb_Ca_A": 3.6009336494562536,
+      "r_Ccarb_Cb_A": 3.083376217840214,
+      "r_Ccarb_Oald_A": 4.143600576337418,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        },
+        {
+          "sign": -1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -94.32994813210465
+              ],
+              "travel_overlap": 0.9217482766931737,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        }
+      ]
+    },
+    {
+      "id": "ts0005",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -19.942181357815848
+      ],
+      "rise_meV": 1.3229179348854814,
+      "heavy_rmsd_A": 0.04881558077019716,
+      "r_Ccarb_Ca_A": 3.600661030437861,
+      "r_Ccarb_Cb_A": 3.084520089999764,
+      "r_Ccarb_Oald_A": 4.143070369914755,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        },
+        {
+          "sign": -1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -59.88291759003485
+              ],
+              "travel_overlap": -0.755050877290251,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            },
+            {
+              "hop": 1,
+              "saddle_order": 1,
+              "icm": [
+                -102.84875935967868
+              ],
+              "travel_overlap": -0.9413672822038902,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        }
+      ]
+    },
+    {
+      "id": "ts0006",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -17.93698233734306
+      ],
+      "rise_meV": 1.1423230353102554,
+      "heavy_rmsd_A": 0.04741125104171606,
+      "r_Ccarb_Ca_A": 3.6032651952556356,
+      "r_Ccarb_Cb_A": 3.0871291299509966,
+      "r_Ccarb_Oald_A": 4.143676917430135,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        },
+        {
+          "sign": -1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -56.462623846638245
+              ],
+              "travel_overlap": -0.7579806941205356,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            },
+            {
+              "hop": 1,
+              "saddle_order": 1,
+              "icm": [
+                -99.99068333881017
+              ],
+              "travel_overlap": -0.9539953933186579,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        }
+      ]
+    },
+    {
+      "id": "ts0007",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -19.93335358513592
+      ],
+      "rise_meV": 4.373700965516036,
+      "heavy_rmsd_A": 0.06446951748091724,
+      "r_Ccarb_Ca_A": 3.5475864585955983,
+      "r_Ccarb_Cb_A": 3.081047919541513,
+      "r_Ccarb_Oald_A": 4.100493098739723,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -63.64790838960893
+              ],
+              "travel_overlap": -0.6303472951295406,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            },
+            {
+              "hop": 1,
+              "saddle_order": 1,
+              "icm": [
+                -101.54097436844725
+              ],
+              "travel_overlap": -0.793319024878535,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        },
+        {
+          "sign": -1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        }
+      ]
+    },
+    {
+      "id": "ts0008",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -50.64276581228145
+      ],
+      "rise_meV": 6.2350443040486425,
+      "heavy_rmsd_A": 0.07718729893547736,
+      "r_Ccarb_Ca_A": 3.5408392465842224,
+      "r_Ccarb_Cb_A": 3.05516204266554,
+      "r_Ccarb_Oald_A": 4.066794374868676,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -90.94042985572614
+              ],
+              "travel_overlap": -0.9408562095516777,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        },
+        {
+          "sign": -1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        }
+      ]
+    },
+    {
+      "id": "ts0009",
+      "status": "unrefined first-order saddle candidate",
+      "imaginary_wavenumbers_icm": [
+        -17.798260465216668
+      ],
+      "rise_meV": 4.133356356760487,
+      "heavy_rmsd_A": 0.059574090219823524,
+      "r_Ccarb_Ca_A": 3.5525484204560493,
+      "r_Ccarb_Cb_A": 3.0802824085078737,
+      "r_Ccarb_Oald_A": 4.113014879276189,
+      "connects": [
+        {
+          "sign": 1,
+          "relays": [
+            {
+              "hop": 0,
+              "saddle_order": 1,
+              "icm": [
+                -58.535435211984556
+              ],
+              "travel_overlap": -0.6557131620250816,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            },
+            {
+              "hop": 1,
+              "saddle_order": 1,
+              "icm": [
+                -99.1278502423252
+              ],
+              "travel_overlap": -0.750107078401997,
+              "overlap_meaning": "mass-weighted overlap between the relayed mode and the displacement that reached this saddle; null means the travel had no internal component and no orientation was claimed"
+            }
+          ],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "quench_failed",
+          "reason": "fmax_not_reached"
+        },
+        {
+          "sign": -1,
+          "relays": [],
+          "relay_meaning": "each hop is a local descent from one saddle; a chain of them is weaker connectivity evidence than a single step",
+          "status": "existing_microstate",
+          "chemical_node": "c0000",
+          "microstate": "c0000/m0000",
+          "energy_eV": -16769.093095921413
+        }
+      ]
+    }
+  ],
+  "enumeration": {
+    "directions": 432,
+    "coarse_trials": 1408,
+    "refinement_loose_upper_bound": 2928,
+    "source_trial_budget_upper_bound": 4336,
+    "control24_coarse_trials": 84,
+    "control24_trial_budget_upper_bound": 264,
+    "scope": "One source proposal with the current primitive basis/grid only; gates, deeper states and scientific acceptance remain separate."
+  },
+  "prepared_config_differences": {
+    "config_control24.json": {
+      "max_trials": {
+        "before": 96,
+        "after": 264
+      },
+      "chemical_trials_per_node": {
+        "before": 96,
+        "after": 264
+      },
+      "conformer_trials_per_microstate": {
+        "before": 32,
+        "after": 264
+      }
+    },
+    "config_exhaustive.json": {
+      "direction_mode": {
+        "before": "sampled",
+        "after": "exhaustive"
+      },
+      "max_trials": {
+        "before": 96,
+        "after": 4336
+      },
+      "chemical_trials_per_node": {
+        "before": 96,
+        "after": 4336
+      },
+      "conformer_trials_per_microstate": {
+        "before": 32,
+        "after": 4336
+      }
+    }
+  }
+}

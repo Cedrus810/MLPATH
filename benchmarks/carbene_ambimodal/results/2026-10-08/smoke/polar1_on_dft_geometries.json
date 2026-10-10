@@ -1,0 +1,38 @@
+[
+ {
+  "name": "CBr2",
+  "section": "carbenes",
+  "formula": "CBr2",
+  "spin": 1,
+  "E_mlp_eV": -141118.7301685556,
+  "fmax_mlp_eV_A": 0.11540367471189615,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.14834019878017693,
+   1.4330638629613488,
+   1.7344112357453667
+  ],
+  "E_dft_hartree": -5186.375079,
+  "nu_dft_cm": null,
+  "seconds": 4.4
+ },
+ {
+  "name": "TS1",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150678.18679251423,
+  "fmax_mlp_eV_A": 0.24065293571428562,
+  "imaginary_mlp_cm": [
+   -20.900736409099636
+  ],
+  "lowest_eigenvalues": [
+   -0.0016064344878212098,
+   0.0016174550252681648,
+   0.00640509514990734
+  ],
+  "E_dft_hartree": -5537.701682,
+  "nu_dft_cm": -117.0,
+  "seconds": 14.7
+ }
+]

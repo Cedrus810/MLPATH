@@ -1,0 +1,96 @@
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+soft modes: 4 (analytic; 3 torsional direction(s) removed)
+  eigenvalue +0.00093  non-torsional fraction kept 0.999
+  eigenvalue +0.00615  non-torsional fraction kept 0.999
+  eigenvalue +0.00828  non-torsional fraction kept 0.994
+  eigenvalue +0.01273  non-torsional fraction kept 0.999
+
+run selected 24; old score reproduces it: True
+old selection ∩ run 24/24
+
+old score: selected 24
+  compress: 84 candidates, 6 selected
+      1 compress:5-16:-        0.442  *
+      2 compress:4-15:-        0.358  *
+      3 compress:1-4:-         0.313  *
+      4 compress:9-15:-        0.300  *
+      5 compress:3-18:-        0.283  *
+      6 compress:3-15:-        0.273  *
+      7 compress:0-9:-         0.272
+      8 compress:0-4:-         0.257
+    watch compress:2-15:-        rank 21/84 score 0.186
+    watch compress:2-13:-        rank 39/84 score 0.114
+  kick: 224 candidates, 6 selected
+      1 kick:5-16:-            0.442  *
+      2 kick:5-16:+            0.442  *
+      3 kick:4-15:-            0.358  *
+      4 kick:4-15:+            0.358  *
+      5 kick:1-4:-             0.313  *
+      6 kick:1-4:+             0.313  *
+      7 kick:9-15:-            0.300
+      8 kick:9-15:+            0.300
+    watch kick:2-15:+            rank 42/224 score 0.186
+    watch kick:2-15:-            rank 41/224 score 0.186
+    watch kick:2-13:+            rank 78/224 score 0.114
+  stretch: 28 candidates, 6 selected
+      1 stretch:14-16:+        0.023  *
+      2 stretch:14-17:+        0.012  *
+      3 stretch:18-20:+        0.004  *
+      4 stretch:5-7:+          0.003  *
+      5 stretch:16-20:+        0.003  *
+      6 stretch:0-13:+         0.003  *
+      7 stretch:5-8:+          0.002
+      8 stretch:4-9:+          0.002
+  bend: 96 candidates, 6 selected
+      1 bend:16-14-13:-        0.061  *
+      2 bend:16-14-13:+        0.061  *
+      3 bend:20-18-15:-        0.039  *
+      4 bend:20-18-15:+        0.039  *
+      5 bend:13-14-17:-        0.025  *
+      6 bend:13-14-17:+        0.025  *
+      7 bend:13-15-18:-        0.024
+      8 bend:13-15-18:+        0.024
+
+new score: selected 24
+  compress: 84 candidates, 6 selected
+      1 compress:5-25:-        0.829  *
+      2 compress:3-25:-        0.786  *
+      3 compress:7-26:-        0.770  *
+      4 compress:7-16:-        0.766  *
+      5 compress:11-19:-       0.752  *
+      6 compress:2-24:-        0.747  *
+      7 compress:12-24:-       0.728
+      8 compress:2-25:-        0.726
+    watch compress:2-15:-        rank 36/84 score 0.515
+    watch compress:2-13:-        rank 47/84 score 0.419
+  kick: 224 candidates, 6 selected
+      1 kick:5-16:-            0.442  *
+      2 kick:5-16:+            0.442  *
+      3 kick:4-15:-            0.358  *
+      4 kick:4-15:+            0.358  *
+      5 kick:1-4:-             0.313  *
+      6 kick:1-4:+             0.313  *
+      7 kick:9-15:-            0.300
+      8 kick:9-15:+            0.300
+    watch kick:2-15:+            rank 42/224 score 0.186
+    watch kick:2-15:-            rank 41/224 score 0.186
+    watch kick:2-13:+            rank 78/224 score 0.114
+  stretch: 28 candidates, 6 selected
+      1 stretch:2-4:+          0.454  *
+      2 stretch:3-5:+          0.309  *
+      3 stretch:0-1:+          0.153  *
+      4 stretch:5-8:+          0.126  *
+      5 stretch:9-12:+         0.106  *
+      6 stretch:9-10:+         0.098  *
+      7 stretch:14-17:+        0.097
+      8 stretch:5-7:+          0.089
+  bend: 96 candidates, 6 selected
+      1 bend:4-9-11:-          0.788  *
+      2 bend:4-9-11:+          0.788  *
+      3 bend:26-16-14:-        0.760  *
+      4 bend:26-16-14:+        0.760  *
+      5 bend:20-18-24:-        0.756  *
+      6 bend:20-18-24:+        0.756  *
+      7 bend:6-5-3:-           0.750
+      8 bend:6-5-3:+           0.750
+{"old_selected": ["stretch:14-16:+", "compress:5-16:-", "kick:5-16:-", "bend:16-14-13:+", "stretch:14-17:+", "compress:4-15:-", "kick:5-16:+", "bend:16-14-13:-", "stretch:18-20:+", "compress:1-4:-", "kick:4-15:-", "bend:20-18-15:+", "stretch:5-7:+", "compress:9-15:-", "kick:4-15:+", "bend:20-18-15:-", "stretch:16-20:+", "compress:3-18:-", "kick:1-4:+", "bend:13-14-17:+", "stretch:0-13:+", "compress:3-15:-", "kick:1-4:-", "bend:13-14-17:-"], "new_selected": ["stretch:2-4:+", "compress:5-25:-", "kick:5-16:-", "bend:4-9-11:-", "stretch:3-5:+", "compress:3-25:-", "kick:5-16:+", "bend:4-9-11:+", "stretch:0-1:+", "compress:7-26:-", "kick:4-15:-", "bend:26-16-14:+", "stretch:5-8:+", "compress:7-16:-", "kick:4-15:+", "bend:26-16-14:-", "stretch:9-12:+", "compress:11-19:-", "kick:1-4:+", "bend:20-18-24:-", "stretch:9-10:+", "compress:2-24:-", "kick:1-4:-", "bend:20-18-24:+"]}

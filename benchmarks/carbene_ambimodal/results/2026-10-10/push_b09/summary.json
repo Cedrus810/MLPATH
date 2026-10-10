@@ -1,0 +1,198 @@
+[
+ {
+  "trial": "p000",
+  "probe": "compress:2-15:-1 1.2",
+  "status": "completed",
+  "classification": "rearrangement",
+  "formed": [],
+  "broken": [],
+  "failure": null,
+  "closest": {
+   "Ca": 2.5255519779910403,
+   "Cb": 1.9237869807149888,
+   "O_ald": 3.3612880078203986
+  },
+  "minimum": false,
+  "saddle_order": 1,
+  "dE_meV": 21.967878674331587,
+  "end_markers": {
+   "C:-Ca": 3.4313393098302365,
+   "C:-Cb": 3.2910817455377654,
+   "C:-O_ald": 3.9741556251430303
+  },
+  "rmsd_to_source": 0.21199588031473163,
+  "heavy_rmsd_to_dft": {
+   "TS-2OMe": 0.3747214902059135,
+   "TS-2OMe-cis": 0.6216625610004839,
+   "TS-2OMe-C2": 0.7750913692168391,
+   "TS-2OMe-2": 0.677338625304487
+  }
+ },
+ {
+  "trial": "p001",
+  "probe": "compress:2-15:-1 1.5",
+  "status": "quench_failed",
+  "classification": null,
+  "formed": null,
+  "broken": null,
+  "failure": {
+   "code": "quench_nonconverged",
+   "message": "fmax_not_reached"
+  },
+  "closest": {
+   "Ca": 1.4653572934496901,
+   "Cb": 1.4414640826595297,
+   "O_ald": 2.7870680000721944
+  }
+ },
+ {
+  "trial": "p002",
+  "probe": "kick:2-15:-1 0.5",
+  "status": "completed",
+  "classification": "elastic",
+  "formed": [],
+  "broken": [],
+  "failure": null,
+  "closest": {
+   "Ca": 3.1591126157910097,
+   "Cb": 2.5700235703627277,
+   "O_ald": 3.869627032048678
+  },
+  "minimum": false,
+  "saddle_order": 1,
+  "dE_meV": -0.17043438128894195,
+  "end_markers": {
+   "C:-Ca": 3.631157088331245,
+   "C:-Cb": 3.08427663769784,
+   "C:-O_ald": 4.152149203435528
+  },
+  "rmsd_to_source": 0.057158837793529704,
+  "heavy_rmsd_to_dft": {
+   "TS-2OMe": 0.3769528146496237,
+   "TS-2OMe-cis": 0.5851330218500687,
+   "TS-2OMe-C2": 0.7842258880566189,
+   "TS-2OMe-2": 0.6904417382621725
+  }
+ },
+ {
+  "trial": "p003",
+  "probe": "kick:2-15:-1 1.0",
+  "status": "completed",
+  "classification": "elastic",
+  "formed": [],
+  "broken": [],
+  "failure": null,
+  "closest": {
+   "Ca": 2.9879500731525983,
+   "Cb": 2.362646824685329,
+   "O_ald": 3.772107971731527
+  },
+  "minimum": false,
+  "saddle_order": 1,
+  "dE_meV": -1.150196861999575,
+  "end_markers": {
+   "C:-Ca": 3.6773745624718455,
+   "C:-Cb": 3.101792920024576,
+   "C:-O_ald": 4.20128236177056
+  },
+  "rmsd_to_source": 0.08786460551600425,
+  "heavy_rmsd_to_dft": {
+   "TS-2OMe": 0.4001047335912062,
+   "TS-2OMe-cis": 0.5969245559728837,
+   "TS-2OMe-C2": 0.7880848475245751,
+   "TS-2OMe-2": 0.7043549554554825
+  }
+ },
+ {
+  "trial": "p004",
+  "probe": "compress:2-13:-1 1.2",
+  "status": "quench_failed",
+  "classification": null,
+  "formed": null,
+  "broken": null,
+  "failure": {
+   "code": "quench_nonconverged",
+   "message": "fmax_not_reached"
+  },
+  "closest": {
+   "Ca": 2.40451702515791,
+   "Cb": 2.0537975658307137,
+   "O_ald": 3.216857423741958
+  }
+ },
+ {
+  "trial": "p005",
+  "probe": "compress:2-13:-1 1.5",
+  "status": "rejected",
+  "classification": "unphysical",
+  "formed": null,
+  "broken": null,
+  "failure": {
+   "code": "collateral_fragmentation",
+   "message": "probe changed the fragment count from 2 to 1"
+  },
+  "closest": {
+   "Ca": 3.60451702515791,
+   "Cb": 3.123786980714989,
+   "O_ald": 4.122614771773584
+  }
+ },
+ {
+  "trial": "p006",
+  "probe": "kick:2-13:-1 0.5",
+  "status": "completed",
+  "classification": "elastic",
+  "formed": [],
+  "broken": [],
+  "failure": null,
+  "closest": {
+   "Ca": 3.0894178639278285,
+   "Cb": 2.704087235968592,
+   "O_ald": 3.8541921760513898
+  },
+  "minimum": true,
+  "saddle_order": 0,
+  "dE_meV": 1.5999931783881038,
+  "end_markers": {
+   "C:-Ca": 3.5727881902766816,
+   "C:-Cb": 3.1337801225505215,
+   "C:-O_ald": 4.100579862693076
+  },
+  "rmsd_to_source": 0.02879502108915715,
+  "heavy_rmsd_to_dft": {
+   "TS-2OMe": 0.3514869011101829,
+   "TS-2OMe-cis": 0.5798866120284495,
+   "TS-2OMe-C2": 0.7808757186910678,
+   "TS-2OMe-2": 0.6776393106344191
+  }
+ },
+ {
+  "trial": "p007",
+  "probe": "kick:2-13:-1 1.0",
+  "status": "completed",
+  "classification": "elastic",
+  "formed": [],
+  "broken": [],
+  "failure": null,
+  "closest": {
+   "Ca": 2.9050373078367757,
+   "Cb": 2.5686030995174427,
+   "O_ald": 3.7624129349519326
+  },
+  "minimum": true,
+  "saddle_order": 0,
+  "dE_meV": 2.060698730929289,
+  "end_markers": {
+   "C:-Ca": 3.5704925816529656,
+   "C:-Cb": 3.1433096820770303,
+   "C:-O_ald": 4.099915077607819
+  },
+  "rmsd_to_source": 0.03449733723462476,
+  "heavy_rmsd_to_dft": {
+   "TS-2OMe": 0.3523316300963422,
+   "TS-2OMe-cis": 0.5814247847199656,
+   "TS-2OMe-C2": 0.7810201890657096,
+   "TS-2OMe-2": 0.6785816405032894
+  }
+ }
+]

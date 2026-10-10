@@ -1,0 +1,4 @@
+  File "<string>", line 19
+    print(f"{k:28s} {st:10s} imag {[round(v) for v in _wavenumbers(sp)]}  E {a.get_potential_energy():.5f}  C23-C20 {m[\"C23_C20\"]:.3f} C23-C16 {m[\"C23_C16\"]:.3f} C23-C17 {m[\"C23_C17\"]:.3f}  rmsd->DFT TS-CCl2 {rmsd_up_to_symmetry(ref[\"DFT TS-CCl2\"],a):.3f}  ->DFT TS-CCl2-C4 {rmsd_up_to_symmetry(ref[\"DFT TS-CCl2-C4\"],a):.3f}")
+                                                                                                                        ^
+SyntaxError: unexpected character after line continuation character

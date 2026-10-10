@@ -1,0 +1,1199 @@
+[
+ {
+  "name": "CBr2",
+  "section": "carbenes",
+  "formula": "CBr2",
+  "spin": 1,
+  "E_mlp_eV": -141118.7301685556,
+  "fmax_mlp_eV_A": 0.11540367471189615,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.14834019878017693,
+   1.4330638629613488,
+   1.7344112357453667
+  ],
+  "E_dft_hartree": -5186.375079,
+  "nu_dft_cm": null,
+  "seconds": 3.9
+ },
+ {
+  "name": "CBr2-triplet",
+  "section": "carbenes",
+  "formula": "CBr2",
+  "spin": 3,
+  "E_mlp_eV": -141118.02771059086,
+  "fmax_mlp_eV_A": 0.1742693866826452,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.12622499284591332,
+   0.9332844829924294,
+   3.0631013858981597
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 2.5
+ },
+ {
+  "name": "CF2",
+  "section": "carbenes",
+  "formula": "CF2",
+  "spin": 1,
+  "E_mlp_eV": -6469.647984599257,
+  "fmax_mlp_eV_A": 0.5545064256164584,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   1.7119670959415412,
+   5.2143614888357135,
+   6.021105933565097
+  ],
+  "E_dft_hartree": -237.719428,
+  "nu_dft_cm": null,
+  "seconds": 2.0
+ },
+ {
+  "name": "CF2-triplet",
+  "section": "carbenes",
+  "formula": "CF2",
+  "spin": 3,
+  "E_mlp_eV": -6467.126928929475,
+  "fmax_mlp_eV_A": 0.25938417488737275,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.9888673575028256,
+   5.017218430298566,
+   6.707327110840898
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 1.7
+ },
+ {
+  "name": "CCl2",
+  "section": "carbenes",
+  "formula": "CCl2",
+  "spin": 1,
+  "E_mlp_eV": -26078.948902463555,
+  "fmax_mlp_eV_A": 0.2343100508960159,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.43507518657506267,
+   2.0926586324334617,
+   2.3935672281073246
+  ],
+  "E_dft_hartree": -958.389406,
+  "nu_dft_cm": null,
+  "seconds": 1.7
+ },
+ {
+  "name": "CCl2-triplet",
+  "section": "carbenes",
+  "formula": "CCl2",
+  "spin": 3,
+  "E_mlp_eV": -26077.983261637106,
+  "fmax_mlp_eV_A": 0.07354018451905504,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.3250411978792968,
+   1.6144309030730961,
+   4.1175141894743525
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 1.5
+ },
+ {
+  "name": "CI2",
+  "section": "carbenes",
+  "formula": "CI2",
+  "spin": 1,
+  "E_mlp_eV": -17234.779303472485,
+  "fmax_mlp_eV_A": 0.06422453769501216,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.06814873824144423,
+   0.9860943826364947,
+   1.4824421242800299
+  ],
+  "E_dft_hartree": -633.238705,
+  "nu_dft_cm": null,
+  "seconds": 1.7
+ },
+ {
+  "name": "CI2-triplet",
+  "section": "carbenes",
+  "formula": "CI2",
+  "spin": 3,
+  "E_mlp_eV": -17234.41208181491,
+  "fmax_mlp_eV_A": 0.41260906826544297,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.05960492764170709,
+   0.5439543352312821,
+   2.5043483682367818
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 1.7
+ },
+ {
+  "name": "Dimethoxycarbene",
+  "section": "carbenes",
+  "formula": "C3H6O2",
+  "spin": 1,
+  "E_mlp_eV": -7300.806213403897,
+  "fmax_mlp_eV_A": 0.4772651982706905,
+  "imaginary_mlp_cm": [
+   -10.155996203050222
+  ],
+  "lowest_eigenvalues": [
+   -0.000379301799051943,
+   0.12053133852749992,
+   0.17033181682507534
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 5.3
+ },
+ {
+  "name": "Dimethoxycarbene",
+  "section": "carbenes",
+  "formula": "C3H6O2",
+  "spin": 1,
+  "E_mlp_eV": -7300.352220930177,
+  "fmax_mlp_eV_A": 3.1635458744621943,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.035969210310336404,
+   0.10342406794910619,
+   0.13402655953909973
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 4.3
+ },
+ {
+  "name": "1,2-bis(methylene)cycloheptane 7C",
+  "section": "olefins",
+  "formula": "C9H14",
+  "spin": 1,
+  "E_mlp_eV": -9559.28846140613,
+  "fmax_mlp_eV_A": 0.12862720655381774,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.021306767989061375,
+   0.07019905312589272,
+   0.17207914775226987
+  ],
+  "E_dft_hartree": -351.319127,
+  "nu_dft_cm": null,
+  "seconds": 11.6
+ },
+ {
+  "name": "1,2-bis(methylene)cyclopentane 5C",
+  "section": "olefins",
+  "formula": "C7H10",
+  "spin": 1,
+  "E_mlp_eV": -7420.191989363995,
+  "fmax_mlp_eV_A": 0.10270696154375905,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.013925717237927482,
+   0.14271986235039644,
+   0.3663623433909221
+  ],
+  "E_dft_hartree": -272.700995,
+  "nu_dft_cm": null,
+  "seconds": 6.1
+ },
+ {
+  "name": "1,2-bis(methylene)cyclooctane 8C",
+  "section": "olefins",
+  "formula": "C10H16",
+  "spin": 1,
+  "E_mlp_eV": -10628.698403237027,
+  "fmax_mlp_eV_A": 0.12011392912401628,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.024687495695505143,
+   0.07226804054551138,
+   0.11945043571322908
+  ],
+  "E_dft_hartree": -390.622667,
+  "nu_dft_cm": null,
+  "seconds": 11.7
+ },
+ {
+  "name": "Cyclohexadiene 6R",
+  "section": "olefins",
+  "formula": "C6H8",
+  "spin": 1,
+  "E_mlp_eV": -6350.810345807,
+  "fmax_mlp_eV_A": 0.11599769483664454,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.13562683064169076,
+   0.34279933409374835,
+   0.8360463258244405
+  ],
+  "E_dft_hartree": -233.399931,
+  "nu_dft_cm": null,
+  "seconds": 4.8
+ },
+ {
+  "name": "1-Cyclohexene-1-carboxaldehyde 6O",
+  "section": "olefins",
+  "formula": "C7H10O",
+  "spin": 1,
+  "E_mlp_eV": -9468.206607342858,
+  "fmax_mlp_eV_A": 0.1123109650592617,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.018663767888612105,
+   0.052241418664909306,
+   0.1761480180265425
+  ],
+  "E_dft_hartree": -347.953958,
+  "nu_dft_cm": null,
+  "seconds": 6.6
+ },
+ {
+  "name": "1-Cyclopentene-1-carboxaldehyde 5O",
+  "section": "olefins",
+  "formula": "C6H8O",
+  "spin": 1,
+  "E_mlp_eV": -8398.423131963547,
+  "fmax_mlp_eV_A": 0.1189079138678478,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.02036341794623537,
+   0.0726811441029116,
+   0.15375232238673525
+  ],
+  "E_dft_hartree": -308.635888,
+  "nu_dft_cm": null,
+  "seconds": 5.1
+ },
+ {
+  "name": "1-Cycloheptene-1-carboxaldehyde 7O",
+  "section": "olefins",
+  "formula": "C8H12O",
+  "spin": 1,
+  "E_mlp_eV": -10537.57922524521,
+  "fmax_mlp_eV_A": 0.08594356533983213,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.011830431435716793,
+   0.050592294678935834,
+   0.09701285129242128
+  ],
+  "E_dft_hartree": -387.256558,
+  "nu_dft_cm": null,
+  "seconds": 8.2
+ },
+ {
+  "name": "6J",
+  "section": "olefins",
+  "formula": "C9H14O",
+  "spin": 1,
+  "E_mlp_eV": -11607.406034778533,
+  "fmax_mlp_eV_A": 0.10842621662304154,
+  "imaginary_mlp_cm": [
+   -30.792872644577912
+  ],
+  "lowest_eigenvalues": [
+   -0.003486906118138154,
+   0.004419477883355955,
+   0.044127972104618794
+  ],
+  "E_dft_hartree": -426.576223,
+  "nu_dft_cm": null,
+  "seconds": 9.7
+ },
+ {
+  "name": "Hexatriene",
+  "section": "olefins",
+  "formula": "C6H8",
+  "spin": 1,
+  "E_mlp_eV": -6349.917686603464,
+  "fmax_mlp_eV_A": 0.21913740866342563,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.062156826761560945,
+   0.07220404437815382,
+   0.10683938974444056
+  ],
+  "E_dft_hartree": -233.369129,
+  "nu_dft_cm": null,
+  "seconds": 4.8
+ },
+ {
+  "name": "Butadiene",
+  "section": "olefins",
+  "formula": "C4H6",
+  "spin": 1,
+  "E_mlp_eV": -4243.961761502615,
+  "fmax_mlp_eV_A": 0.1456090570411215,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.10601632722696597,
+   0.3385062696306646,
+   0.9910605770422731
+  ],
+  "E_dft_hartree": -155.973629,
+  "nu_dft_cm": null,
+  "seconds": 3.7
+ },
+ {
+  "name": "TS1",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150678.18679251423,
+  "fmax_mlp_eV_A": 0.2406529357129313,
+  "imaginary_mlp_cm": [
+   -20.900736408558444
+  ],
+  "lowest_eigenvalues": [
+   -0.0016064344877380176,
+   0.0016174550252864982,
+   0.006405095149903337
+  ],
+  "E_dft_hartree": -5537.701682,
+  "nu_dft_cm": -117.0,
+  "seconds": 11.7,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -3.8779206135978526,
+  "dE_dft_kcal": -4.691260827479394
+ },
+ {
+  "name": "TS1-h2",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150678.1507523418,
+  "fmax_mlp_eV_A": 0.4146900301578242,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0011064591269725553,
+   0.005117393828959142,
+   0.013916510267687945
+  ],
+  "E_dft_hartree": -5537.702295,
+  "nu_dft_cm": -97.43,
+  "seconds": 11.7,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -3.046814487637771,
+  "dE_dft_kcal": -5.075924135140306
+ },
+ {
+  "name": "TS1-h3",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150678.20495523437,
+  "fmax_mlp_eV_A": 0.2978897166866256,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0009544283048884666,
+   0.008120449703187637,
+   0.011867609718528595
+  ],
+  "E_dft_hartree": -5537.701869,
+  "nu_dft_cm": -89.25,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -4.2967628931555435,
+  "dE_dft_kcal": -4.808605099463184
+ },
+ {
+  "name": "TS2",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150678.80643379144,
+  "fmax_mlp_eV_A": 1.6418072170264917,
+  "imaginary_mlp_cm": [
+   -17.931449506331095
+  ],
+  "lowest_eigenvalues": [
+   -0.0011824169265885437,
+   0.009249698591859002,
+   0.022866399250010813
+  ],
+  "E_dft_hartree": -5537.718321,
+  "nu_dft_cm": -38.23,
+  "seconds": 11.7,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -18.16718802951462,
+  "dE_dft_kcal": -15.132390965613732
+ },
+ {
+  "name": "TS-CF2",
+  "section": "ts",
+  "formula": "C10H14F2",
+  "spin": 1,
+  "E_mlp_eV": -16028.713382006179,
+  "fmax_mlp_eV_A": 0.3991224249639407,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.002302001074292165,
+   0.005608608898200535,
+   0.03095214237959603
+  ],
+  "E_dft_hartree": -589.038722,
+  "nu_dft_cm": -312.03,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CF2"
+  ],
+  "dE_mlp_kcal": 5.1439780607993955,
+  "dE_dft_kcal": -0.10479408217877864
+ },
+ {
+  "name": "TS-CCl2",
+  "section": "ts",
+  "formula": "C10H14Cl2",
+  "spin": 1,
+  "E_mlp_eV": -35638.172153904816,
+  "fmax_mlp_eV_A": 0.6213739547898645,
+  "imaginary_mlp_cm": [
+   -259.4261655449406
+  ],
+  "lowest_eigenvalues": [
+   -0.24749555082721705,
+   8.408287199280457e-05,
+   0.007193835313716704
+  ],
+  "E_dft_hartree": -1309.71375,
+  "nu_dft_cm": -158.47,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CCl2"
+  ],
+  "dE_mlp_kcal": 1.5037775249329677,
+  "dE_dft_kcal": -3.2737169257967094
+ },
+ {
+  "name": "TS-CCl2-C4",
+  "section": "ts",
+  "formula": "C10H14Cl2",
+  "spin": 1,
+  "E_mlp_eV": -35638.27778021419,
+  "fmax_mlp_eV_A": 0.6749481199991647,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0011415454794174319,
+   0.009760672694123873,
+   0.012590754389842156
+  ],
+  "E_dft_hartree": -1309.713956,
+  "nu_dft_cm": -110.39,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CCl2"
+  ],
+  "dE_mlp_kcal": -0.9320230525375569,
+  "dE_dft_kcal": -3.402983877542379
+ },
+ {
+  "name": "TS-CI2",
+  "section": "ts",
+  "formula": "C10H14I2",
+  "spin": 1,
+  "E_mlp_eV": -26794.24604077244,
+  "fmax_mlp_eV_A": 0.1780360460902581,
+  "imaginary_mlp_cm": [
+   -65.94269696786724
+  ],
+  "lowest_eigenvalues": [
+   -0.015990912739381642,
+   0.001183381906434903,
+   0.006319779193307406
+  ],
+  "E_dft_hartree": -984.565865,
+  "nu_dft_cm": -121.88,
+  "seconds": 11.7,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CI2"
+  ],
+  "dE_mlp_kcal": -4.111139806778647,
+  "dE_dft_kcal": -5.040783604685027
+ },
+ {
+  "name": "TS-2OMe",
+  "section": "ts",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16768.610631246058,
+  "fmax_mlp_eV_A": 0.5777816903748386,
+  "imaginary_mlp_cm": [
+   -356.13464750034535
+  ],
+  "lowest_eigenvalues": [
+   -0.46641047691160525,
+   0.003792012621828696,
+   0.013013039617352931
+  ],
+  "E_dft_hartree": -616.228695,
+  "nu_dft_cm": -385.66,
+  "seconds": 13.9
+ },
+ {
+  "name": "TS-2OMe-cis",
+  "section": "ts",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16768.439273513177,
+  "fmax_mlp_eV_A": 0.5143959371807183,
+  "imaginary_mlp_cm": [
+   -518.1070772603478
+  ],
+  "lowest_eigenvalues": [
+   -0.9871403227856821,
+   0.0029521590120411842,
+   0.007240878374016506
+  ],
+  "E_dft_hartree": -616.225863,
+  "nu_dft_cm": -407.09,
+  "seconds": 13.9
+ },
+ {
+  "name": "TS-2OMe-C2",
+  "section": "ts",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16767.892536624215,
+  "fmax_mlp_eV_A": 0.33429129084909254,
+  "imaginary_mlp_cm": [
+   -527.6090098444259
+  ],
+  "lowest_eigenvalues": [
+   -1.0236800732269926,
+   0.008975197631917274,
+   0.020881974115187246
+  ],
+  "E_dft_hartree": -616.20404,
+  "nu_dft_cm": -518.24,
+  "seconds": 13.9
+ },
+ {
+  "name": "TS-2OMe-2",
+  "section": "ts",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16768.936101614167,
+  "fmax_mlp_eV_A": 0.5412919885535218,
+  "imaginary_mlp_cm": [
+   -88.70946204304883
+  ],
+  "lowest_eigenvalues": [
+   -0.028938747741539175,
+   0.010932394703616847,
+   0.02599007718569977
+  ],
+  "E_dft_hartree": -616.244082,
+  "nu_dft_cm": -102.87,
+  "seconds": 13.8
+ },
+ {
+  "name": "TS1-Triplet",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "E_mlp_eV": -150677.42255041638,
+  "fmax_mlp_eV_A": 0.49069438083106076,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0008640050510962059,
+   0.002357042925841903,
+   0.003965197100136302
+  ],
+  "E_dft_hartree": -5537.680343,
+  "nu_dft_cm": -148.41,
+  "seconds": 11.7,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": 13.745920967534747,
+  "dE_dft_kcal": 8.699163838142649
+ },
+ {
+  "name": "TS2-Triplet",
+  "section": "ts",
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "E_mlp_eV": -150677.96610767595,
+  "fmax_mlp_eV_A": 0.6446816609203899,
+  "imaginary_mlp_cm": [
+   -1006.8208789868627
+  ],
+  "lowest_eigenvalues": [
+   -3.727728458831142,
+   0.008091862270964664,
+   0.010638108328768886
+  ],
+  "E_dft_hartree": -5537.705228,
+  "nu_dft_cm": -715.21,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": 1.2111926923731489,
+  "dE_dft_kcal": -6.91640942222992
+ },
+ {
+  "name": "TS-64-42",
+  "section": "ts",
+  "formula": "C10H14",
+  "spin": 1,
+  "E_mlp_eV": -10592.88627001647,
+  "fmax_mlp_eV_A": 0.5814996530995125,
+  "imaginary_mlp_cm": [
+   -754.206412053606
+  ],
+  "lowest_eigenvalues": [
+   -2.0918006017528823,
+   0.00539080763303068,
+   0.015220590741746606
+  ],
+  "E_dft_hartree": -389.316397,
+  "nu_dft_cm": -526.72,
+  "seconds": 9.9
+ },
+ {
+  "name": "TS-5C-h1",
+  "section": "ts",
+  "formula": "C8H10Br2",
+  "spin": 1,
+  "E_mlp_eV": -148539.0913045564,
+  "fmax_mlp_eV_A": 0.1814940749581409,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.002390263271038336,
+   0.008215530822273144,
+   0.011423634018175281
+  ],
+  "E_dft_hartree": -5459.08393,
+  "nu_dft_cm": -34.84,
+  "seconds": 7.7,
+  "reactants": [
+   "1,2-bis(methylene)cyclopentane 5C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -3.9006141374514693,
+  "dE_dft_kcal": -4.929714427282715
+ },
+ {
+  "name": "TS-5C-h2",
+  "section": "ts",
+  "formula": "C8H10Br2",
+  "spin": 1,
+  "E_mlp_eV": -148539.10722229973,
+  "fmax_mlp_eV_A": 0.2710099368429313,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0017112121428372504,
+   0.0061684683687959225,
+   0.01599354426925853
+  ],
+  "E_dft_hartree": -5459.084651,
+  "nu_dft_cm": -56.19,
+  "seconds": 7.7,
+  "reactants": [
+   "1,2-bis(methylene)cyclopentane 5C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -4.267686021411742,
+  "dE_dft_kcal": -5.38214875824988
+ },
+ {
+  "name": "TS-8C",
+  "section": "ts",
+  "formula": "C11H16Br2",
+  "spin": 1,
+  "E_mlp_eV": -151747.61090812937,
+  "fmax_mlp_eV_A": 0.2069205786776828,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0022391142179659,
+   0.0038221744125126887,
+   0.006519533126860216
+  ],
+  "E_dft_hartree": -5577.005943,
+  "nu_dft_cm": -51.71,
+  "seconds": 13.8,
+  "reactants": [
+   "1,2-bis(methylene)cyclooctane 8C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -4.204775845291329,
+  "dE_dft_kcal": -5.143695158446558
+ },
+ {
+  "name": "TS-6r-h1",
+  "section": "ts",
+  "formula": "C7H8Br2",
+  "spin": 1,
+  "E_mlp_eV": -147469.6392963005,
+  "fmax_mlp_eV_A": 0.3966963291933938,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.002810268639704127,
+   0.01728560481282744,
+   0.04015084924928213
+  ],
+  "E_dft_hartree": -5419.779263,
+  "nu_dft_cm": -122.15,
+  "seconds": 5.8,
+  "reactants": [
+   "Cyclohexadiene 6R",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -2.2779656206585064,
+  "dE_dft_kcal": -2.668797792961192
+ },
+ {
+  "name": "TS-6r-h2",
+  "section": "ts",
+  "formula": "C7H8Br2",
+  "spin": 1,
+  "E_mlp_eV": -147469.71697209633,
+  "fmax_mlp_eV_A": 0.17750300709240374,
+  "imaginary_mlp_cm": [
+   -10.34799851831453
+  ],
+  "lowest_eigenvalues": [
+   -0.0003937790062467392,
+   0.002680259648664438,
+   0.00829367107273721
+  ],
+  "E_dft_hartree": -5419.780684,
+  "nu_dft_cm": -17.65,
+  "seconds": 5.9,
+  "reactants": [
+   "Cyclohexadiene 6R",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -4.069212038669999,
+  "dE_dft_kcal": -3.5604887554754154
+ },
+ {
+  "name": "TS-5O",
+  "section": "ts",
+  "formula": "C9H14O3",
+  "spin": 1,
+  "E_mlp_eV": -15699.060951718191,
+  "fmax_mlp_eV_A": 0.5959832150226935,
+  "imaginary_mlp_cm": [
+   -356.11390614540244
+  ],
+  "lowest_eigenvalues": [
+   -0.4663561508098842,
+   0.004925904357044565,
+   0.01821070579500517
+  ],
+  "E_dft_hartree": -576.919498,
+  "nu_dft_cm": -408.55,
+  "seconds": 11.8
+ },
+ {
+  "name": "TS-7O",
+  "section": "ts",
+  "formula": "C11H18O3",
+  "spin": 1,
+  "E_mlp_eV": -17838.156490295012,
+  "fmax_mlp_eV_A": 0.5442409342133515,
+  "imaginary_mlp_cm": [
+   -382.3811312894833
+  ],
+  "lowest_eigenvalues": [
+   -0.5376909791936783,
+   0.001645465947443049,
+   0.01375093246162744
+  ],
+  "E_dft_hartree": -655.538813,
+  "nu_dft_cm": -373.94,
+  "seconds": 16.0
+ },
+ {
+  "name": "TS-6J",
+  "section": "ts",
+  "formula": "C12H20O3",
+  "spin": 1,
+  "E_mlp_eV": -18908.092745309412,
+  "fmax_mlp_eV_A": 0.5565641416336125,
+  "imaginary_mlp_cm": [
+   -369.90337731991644
+  ],
+  "lowest_eigenvalues": [
+   -0.5031719653716524,
+   0.002752361335067336,
+   0.007897827701139854
+  ],
+  "E_dft_hartree": -694.86125,
+  "nu_dft_cm": -387.7,
+  "seconds": 19.1
+ },
+ {
+  "name": "TS1-svp",
+  "section": "ts_qcmd",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150678.1646892763,
+  "fmax_mlp_eV_A": 0.5012461896504709,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.006366049645999492,
+   0.009347407797533238,
+   0.01720285222275163
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 11.7
+ },
+ {
+  "name": "TS-CF2-svp",
+  "section": "ts_qcmd",
+  "formula": "C10H14F2",
+  "spin": 1,
+  "E_mlp_eV": -16028.686921882825,
+  "fmax_mlp_eV_A": 0.5561428951064215,
+  "imaginary_mlp_cm": [
+   -69.15046658252281,
+   -33.06785704301645
+  ],
+  "lowest_eigenvalues": [
+   -0.017584501962419744,
+   -0.004021165481349425,
+   0.020020765797854428
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 11.8
+ },
+ {
+  "name": "TS-CCl2-svp",
+  "section": "ts_qcmd",
+  "formula": "C10H14Cl2",
+  "spin": 1,
+  "E_mlp_eV": -35638.206013754214,
+  "fmax_mlp_eV_A": 0.7112806592800046,
+  "imaginary_mlp_cm": [
+   -130.30583610009026
+  ],
+  "lowest_eigenvalues": [
+   -0.06244067328593508,
+   0.010999846717770682,
+   0.016605027825926353
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 11.8
+ },
+ {
+  "name": "TS-CI2-svp",
+  "section": "ts_qcmd",
+  "formula": "C10H14I2",
+  "spin": 1,
+  "E_mlp_eV": -26794.22250411917,
+  "fmax_mlp_eV_A": 0.44471154522139855,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.001421443266954522,
+   0.0075631010803743435,
+   0.012265085398444342
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 11.7
+ },
+ {
+  "name": "TS-2OMe-svp",
+  "section": "ts_qcmd",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16768.593450596476,
+  "fmax_mlp_eV_A": 0.6554582613482927,
+  "imaginary_mlp_cm": [
+   -259.8630490334203
+  ],
+  "lowest_eigenvalues": [
+   -0.24832983648338317,
+   0.008147917480454325,
+   0.023989281248064372
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 13.9
+ },
+ {
+  "name": "TS-64-42-svp",
+  "section": "ts_qcmd",
+  "formula": "C10H14",
+  "spin": 1,
+  "E_mlp_eV": -10592.855483636835,
+  "fmax_mlp_eV_A": 0.6919905705348647,
+  "imaginary_mlp_cm": [
+   -732.693396455448
+  ],
+  "lowest_eigenvalues": [
+   -1.9741693169442207,
+   0.021641104786099926,
+   0.03724406133203575
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 9.8
+ },
+ {
+  "name": "TS-5C-h1-svp",
+  "section": "ts_qcmd",
+  "formula": "C8H10Br2",
+  "spin": 1,
+  "E_mlp_eV": -148539.07718003626,
+  "fmax_mlp_eV_A": 0.43865612811756755,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.006839192203345612,
+   0.011874517982900968,
+   0.014393491487030351
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 7.7
+ },
+ {
+  "name": "TS-8C-svp",
+  "section": "ts_qcmd",
+  "formula": "C11H16Br2",
+  "spin": 1,
+  "E_mlp_eV": -151747.58240762464,
+  "fmax_mlp_eV_A": 0.5323720339290791,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.004742232725876167,
+   0.008051684526142997,
+   0.01509629504518497
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 13.8
+ },
+ {
+  "name": "TS-6r-h1-svp",
+  "section": "ts_qcmd",
+  "formula": "C7H8Br2",
+  "spin": 1,
+  "E_mlp_eV": -147469.6331452373,
+  "fmax_mlp_eV_A": 0.5213047512733245,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.012519899288843271,
+   0.014078696061359215,
+   0.041081725653729265
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 5.8
+ },
+ {
+  "name": "TS-5O",
+  "section": "ts_qcmd",
+  "formula": "C9H14O3",
+  "spin": 1,
+  "E_mlp_eV": -15699.04662589072,
+  "fmax_mlp_eV_A": 0.6538884007876575,
+  "imaginary_mlp_cm": [
+   -274.6939283245583
+  ],
+  "lowest_eigenvalues": [
+   -0.277484010769113,
+   0.008728213096998408,
+   0.02944277820419972
+  ],
+  "E_dft_hartree": -576.919498,
+  "nu_dft_cm": -408.55,
+  "seconds": 11.8
+ },
+ {
+  "name": "TS-7O",
+  "section": "ts_qcmd",
+  "formula": "C11H18O3",
+  "spin": 1,
+  "E_mlp_eV": -17838.135035009134,
+  "fmax_mlp_eV_A": 0.6418766204035283,
+  "imaginary_mlp_cm": [
+   -304.40849645310385
+  ],
+  "lowest_eigenvalues": [
+   -0.34076374535218706,
+   0.006306823521686965,
+   0.02385305889202285
+  ],
+  "E_dft_hartree": -655.538813,
+  "nu_dft_cm": -373.94,
+  "seconds": 16.1
+ },
+ {
+  "name": "TS-6J-svp",
+  "section": "ts_qcmd",
+  "formula": "C12H20O3",
+  "spin": 1,
+  "E_mlp_eV": -18908.074187831862,
+  "fmax_mlp_eV_A": 0.6376399469523397,
+  "imaginary_mlp_cm": [
+   -273.7536893232058
+  ],
+  "lowest_eigenvalues": [
+   -0.2755876836358215,
+   0.0058089264060342755,
+   0.015934038569454915
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 19.2
+ },
+ {
+  "name": "7C-(2 + 1)",
+  "section": "products",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150681.09671420176,
+  "fmax_mlp_eV_A": 0.26073343900832874,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.006533468709275641,
+   0.023099442071711777,
+   0.040774231580322326
+  ],
+  "E_dft_hartree": -5537.811852,
+  "nu_dft_cm": null,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -70.98230936519164,
+  "dE_dft_kcal": -73.82397957801264
+ },
+ {
+  "name": "7C-(4 + 1)",
+  "section": "products",
+  "formula": "C10H14Br2",
+  "spin": 1,
+  "E_mlp_eV": -150682.36935039036,
+  "fmax_mlp_eV_A": 0.21678482178122632,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.0018758685294409535,
+   0.02053183009023338,
+   0.023337456692857174
+  ],
+  "E_dft_hartree": -5537.855935,
+  "nu_dft_cm": null,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -100.32999727897611,
+  "dE_dft_kcal": -101.48647972021229
+ },
+ {
+  "name": "6O-(2 + 1)",
+  "section": "products",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16770.268120515328,
+  "fmax_mlp_eV_A": 0.26709812183662035,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.018735302213410826,
+   0.02912029932834964,
+   0.034741060242040565
+  ],
+  "E_dft_hartree": -616.291674,
+  "nu_dft_cm": null,
+  "seconds": 14.0
+ },
+ {
+  "name": "6O-(4 + 1)",
+  "section": "products",
+  "formula": "C10H16O3",
+  "spin": 1,
+  "E_mlp_eV": -16771.100112810913,
+  "fmax_mlp_eV_A": 0.21639875017037447,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.011631580017814454,
+   0.015054073064688056,
+   0.03260988487325325
+  ],
+  "E_dft_hartree": -616.318938,
+  "nu_dft_cm": null,
+  "seconds": 13.8
+ },
+ {
+  "name": "IM1-Triplet",
+  "section": "products",
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "E_mlp_eV": -150679.31710082619,
+  "fmax_mlp_eV_A": 0.40286218662132417,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.003627684000004566,
+   0.007375128344186895,
+   0.009314650883109876
+  ],
+  "E_dft_hartree": null,
+  "nu_dft_cm": null,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -29.94344969626898
+ },
+ {
+  "name": "7C-(4 + 1)-Triplet",
+  "section": "products",
+  "formula": "C10H14Br2",
+  "spin": 3,
+  "E_mlp_eV": -150679.19655192347,
+  "fmax_mlp_eV_A": 0.3825407922152685,
+  "imaginary_mlp_cm": [],
+  "lowest_eigenvalues": [
+   0.009406174037477991,
+   0.013417532035991643,
+   0.03494378314083516
+  ],
+  "E_dft_hartree": -5537.742925,
+  "nu_dft_cm": null,
+  "seconds": 11.8,
+  "reactants": [
+   "1,2-bis(methylene)cycloheptane 7C",
+   "CBr2"
+  ],
+  "dE_mlp_kcal": -27.16352593875292,
+  "dE_dft_kcal": -30.571634063452755
+ }
+]

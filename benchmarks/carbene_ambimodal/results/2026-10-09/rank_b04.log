@@ -1,0 +1,62 @@
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+soft modes: 4 (analytic; 0 torsional direction(s) removed)
+  eigenvalue +0.01856  non-torsional fraction kept 1.000
+  eigenvalue +0.01867  non-torsional fraction kept 1.000
+  eigenvalue +0.03921  non-torsional fraction kept 1.000
+  eigenvalue +1.56969  non-torsional fraction kept 1.000
+
+run selected 23; old score reproduces it: False
+old selection ∩ run 9/23
+
+old score: selected 14
+  compress: 4 candidates, 2 selected
+      1 compress:0-5:-         0.689  *
+      2 compress:2-5:-         0.256  *
+      3 compress:3-5:-         0.231
+      4 compress:4-5:-         0.212
+  kick: 16 candidates, 8 selected
+      1 kick:0-1:-             0.965  *
+      2 kick:0-1:+             0.965  *
+      3 kick:0-5:-             0.689  *
+      4 kick:0-5:+             0.689  *
+      5 kick:2-5:-             0.256  *
+      6 kick:2-5:+             0.256  *
+      7 kick:3-5:-             0.231  *
+      8 kick:3-5:+             0.231  *
+  stretch: 4 candidates, 2 selected
+      1 stretch:0-1:+          0.965  *
+      2 stretch:0-2:+          0.003  *
+      3 stretch:0-3:+          0.003
+      4 stretch:0-4:+          0.003
+  bend: 4 candidates, 2 selected
+      1 bend:1-0-2:-           0.086  *
+      2 bend:1-0-2:+           0.086  *
+      3 bend:2-0-3:-           0.059
+      4 bend:2-0-3:+           0.059
+
+new score: selected 14
+  compress: 4 candidates, 2 selected
+      1 compress:0-5:-         1.000  *
+      2 compress:4-5:-         0.994  *
+      3 compress:3-5:-         0.994
+      4 compress:2-5:-         0.994
+  kick: 16 candidates, 8 selected
+      1 kick:0-1:-             0.965  *
+      2 kick:0-1:+             0.965  *
+      3 kick:0-5:-             0.689  *
+      4 kick:0-5:+             0.689  *
+      5 kick:2-5:-             0.256  *
+      6 kick:2-5:+             0.256  *
+      7 kick:3-5:-             0.231  *
+      8 kick:3-5:+             0.231  *
+  stretch: 4 candidates, 2 selected
+      1 stretch:0-1:+          0.990  *
+      2 stretch:0-2:+          0.184  *
+      3 stretch:0-3:+          0.167
+      4 stretch:0-4:+          0.153
+  bend: 4 candidates, 2 selected
+      1 bend:1-0-2:-           0.842  *
+      2 bend:1-0-2:+           0.842  *
+      3 bend:2-0-3:-           0.168
+      4 bend:2-0-3:+           0.168
+{"old_selected": ["stretch:0-1:+", "compress:0-5:-", "kick:0-1:-", "bend:1-0-2:+", "stretch:0-2:+", "compress:2-5:-", "kick:0-1:+", "bend:1-0-2:-", "kick:0-5:+", "kick:0-5:-", "kick:2-5:-", "kick:2-5:+", "kick:3-5:+", "kick:3-5:-"], "new_selected": ["stretch:0-1:+", "compress:0-5:-", "kick:0-1:-", "bend:1-0-2:+", "stretch:0-2:+", "compress:4-5:-", "kick:0-1:+", "bend:1-0-2:-", "kick:0-5:+", "kick:0-5:-", "kick:2-5:-", "kick:2-5:+", "kick:3-5:+", "kick:3-5:-"]}

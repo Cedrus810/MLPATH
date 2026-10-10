@@ -1,0 +1,171 @@
+diff --git a/src/prrs/internal.py b/src/prrs/internal.py
+index 355ce6f..bb69d9a 100644
+--- a/src/prrs/internal.py
++++ b/src/prrs/internal.py
+@@ -185,6 +185,84 @@ def gradient(positions, kind, indices):
+     return result
+ 
+ 
++def _bond_jacobian(positions, bonds):
++    rows = np.zeros((len(bonds), positions.size))
++    lengths = np.zeros(len(bonds))
++    for row, (a, b) in enumerate(bonds):
++        axis = positions[b] - positions[a]
++        lengths[row] = np.linalg.norm(axis)
++        if lengths[row] < 1e-12:
++            raise ValueError("Cannot preserve a zero-length bond")
++        axis /= lengths[row]
++        rows[row, 3 * a : 3 * a + 3] = -axis
++        rows[row, 3 * b : 3 * b + 3] = axis
++    return rows, lengths
++
++
++def _constrained_correction(positions, masses, kind, indices, bonds, residual):
++    """Minimum mass-weighted movement satisfying the linearized coordinates."""
++    rows, _ = _bond_jacobian(positions, bonds)
++    jacobian = np.vstack([gradient(positions, kind, indices).ravel(), rows])
++    inverse_mass = 1 / np.repeat(masses, 3)
++    metric = (jacobian * inverse_mass) @ jacobian.T
++    multipliers = np.linalg.lstsq(metric, residual, rcond=1e-12)[0]
++    return (inverse_mass * (jacobian.T @ multipliers)).reshape(positions.shape)
++
++
++def constrained_direction(positions, masses, kind, indices, bonds):
++    """Cartesian tangent per unit target change with all other bonds held fixed."""
++    target = frozenset(indices) if kind == "bond" else None
++    bonds = [pair for pair in sorted(bonds) if frozenset(pair) != target]
++    residual = np.zeros(1 + len(bonds))
++    residual[0] = 1
++    return _constrained_correction(positions, masses, kind, indices, bonds, residual)
++
++
++def constrained_displace(atoms, kind, indices, delta, bonds, tolerance=1e-9):
++    """Continue one coordinate while restoring every non-target bond each step.
++
++    This is a geometric delivery contract, not a relaxed or force-minimized path.
++    The ordinary clash, fragment and energy gates still judge the delivered probe.
++    An incompatible constraint set fails rather than silently tearing another bond.
++    """
++    indices = _check(kind, indices, len(atoms))
++    start = coordinate(atoms.positions, kind, indices)
++    if kind == "bond" and start + delta <= 0:
++        raise ValueError("Bond displacement targets a nonpositive length")
++    if kind == "angle" and not 0 < start + delta < np.pi:
++        raise ValueError("Angle displacement targets an angle outside (0, pi)")
++    target = frozenset(indices) if kind == "bond" else None
++    bonds = [pair for pair in sorted(bonds) if frozenset(pair) != target]
++    _, lengths = _bond_jacobian(atoms.positions, bonds)
++    masses = atoms.get_masses()
++    centre = atoms.get_center_of_mass()
++    steps = max(1, int(np.ceil(abs(delta) / MAX_STEP[kind])))
++    for step in range(1, steps + 1):
++        destination = start + delta * step / steps
++        for _ in range(40):
++            _, current_lengths = _bond_jacobian(atoms.positions, bonds)
++            error = destination - coordinate(atoms.positions, kind, indices)
++            if PERIODIC[kind]:
++                error = _wrap(error)
++            residual = np.r_[error, lengths - current_lengths]
++            if np.max(np.abs(residual)) < tolerance:
++                break
++            correction = _constrained_correction(
++                atoms.positions, masses, kind, indices, bonds, residual
++            )
++            # Bound Newton steps as well as the target increments: a near-singular
++            # constraint Jacobian must not produce an unbounded atomic displacement.
++            largest = float(np.linalg.norm(correction, axis=1).max())
++            if largest > 0.1:
++                correction *= 0.1 / largest
++            atoms.set_positions(atoms.positions + correction)
++        else:
++            raise ValueError("Bond-preserving probe delivery did not converge")
++    atoms.set_positions(atoms.positions + centre - atoms.get_center_of_mass())
++    achieved = coordinate(atoms.positions, kind, indices) - start
++    return atoms, float(_wrap(achieved) if PERIODIC[kind] else achieved)
++
++
+ def displace(atoms, kind, indices, delta, in_place=True, tolerance=1e-9, max_iterations=None):
+     """Move by delta along one internal coordinate, preserving the center of mass.
+ 
+diff --git a/src/prrs/runner.py b/src/prrs/runner.py
+index 6c1293e..f93a972 100755
+--- a/src/prrs/runner.py
++++ b/src/prrs/runner.py
+@@ -812,6 +812,25 @@ def curvature_spectrum(candidate, factory, config, source="auto"):
+     return eigenvalues[order], vectors[:, order], floor, provenance
+ 
+ 
++def _restricted_soft_modes(eigenvalues, vectors, excluded, limit):
++    """Diagonalize the Hessian in the complement of the excluded row span.
++
++    Projecting each old eigenvector and renormalizing it preserves neither its
++    eigenvalue nor the spectral order: a tiny remainder of a soft torsion can be
++    stiff. SVD also avoids QR's extra columns when exclusions are dependent.
++    """
++    _, singular, right = np.linalg.svd(excluded, full_matrices=True)
++    tolerance = max(excluded.shape) * np.finfo(float).eps * singular[0] if len(singular) else 0
++    rank = int(np.count_nonzero(singular > tolerance))
++    basis = right[rank:].T
++    if basis.shape[1] == 0:
++        return ()
++    overlap = basis.T @ vectors
++    reduced = (overlap * eigenvalues) @ overlap.T
++    values, modes = np.linalg.eigh((reduced + reduced.T) / 2)
++    return tuple((float(value), basis @ modes[:, k]) for k, value in enumerate(values[:limit]))
++
++
+ def soft_internal_modes(candidate, factory, config):
+     """The softest directions at a minimum that are neither rigid-body nor torsional.
+ 
+@@ -838,6 +857,10 @@ def soft_internal_modes(candidate, factory, config):
+     direction at 0.6893 and of everything else at 0.2558 or below. In the run itself that
+     direction came out first from the seeded shuffle, with no mechanism putting it there.
+ 
++    The Hessian is diagonalized again in the complement of both excluded subspaces.
++    Projecting individual modes and normalizing the remainder does not preserve
++    their eigenvalues or order, especially for an almost entirely torsional mode.
++
+     Vectors are returned MASS-WEIGHTED and unit norm, because that is the metric the
+     Hessian's eigenvectors are orthogonal in and the one a displacement has to be stated
+     in to be compared with them. Returns (modes, note); modes is empty and note says why
+@@ -854,7 +877,7 @@ def soft_internal_modes(candidate, factory, config):
+         return (), f"{type(exc).__name__}: {exc}"
+ 
+     from .canonical import canonical_form
+-    from . import internal
++    from .perturbations import delivered_direction
+ 
+     trivial = _trivial_modes(candidate.positions, candidate.get_masses())
+     graph = encode(candidate, config.bond_scale, active=config.active_atoms)
+@@ -864,26 +887,14 @@ def soft_internal_modes(candidate, factory, config):
+     genuine, rotors = rotatable_torsions(graph, labels, orbits)
+     columns = []
+     for torsion in list(genuine) + list(rotors):
+-        gradient = internal.gradient(candidate.positions, "dihedral", torsion.indices)
+-        vector = (gradient / np.sqrt(candidate.get_masses())[:, None]).reshape(-1)
++        vector = delivered_direction(
++            candidate, "torsion", torsion.indices, config.bond_scale, config.active_atoms, graph
++        )
+         norm = float(np.linalg.norm(vector))
+         if norm > 1e-30:
+             columns.append(vector / norm)
+-    torsional = np.linalg.qr(np.array(columns).T)[0] if columns else None
+-
+-    modes = []
+-    for column in range(vectors.shape[1]):
+-        if len(modes) >= config.spectral_rank_modes:
+-            break
+-        mode = vectors[:, column]
+-        if float(np.linalg.norm(trivial @ mode)) > 0.5:
+-            continue  # a rigid-body mode wearing a zero eigenvalue
+-        if torsional is not None:
+-            mode = mode - torsional @ (torsional.T @ mode)
+-        survival = float(np.linalg.norm(mode))
+-        if survival < 1e-8:
+-            continue  # entirely torsional: the direction this projection exists to drop
+-        modes.append((float(eigenvalues[column]), mode / survival))
++    excluded = np.vstack([trivial, *columns]) if columns else trivial
++    modes = _restricted_soft_modes(eigenvalues, vectors, excluded, config.spectral_rank_modes)
+     note = (
+         f"{provenance.get('source')}; {len(columns)} torsional direction(s) removed"
+         if modes

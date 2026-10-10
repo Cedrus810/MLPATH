@@ -1,0 +1,448 @@
+> ===== Optimization Info: ====
+
+> Job type: Transition state optimization
+
+> Maximum number of optimization cycles: 300
+
+> Initial / maximum trust radius (Angstrom): 0.010 / 0.030
+
+> Convergence Criteria:
+
+> Will converge when all 5 criteria are reached:
+
+>  |Delta-E| < 1.00e-06
+
+>  RMS-Grad  < 3.00e-04
+
+>  Max-Grad  < 4.50e-04
+
+>  RMS-Disp  < 1.20e-03
+
+>  Max-Disp  < 1.80e-03
+
+> === End Optimization Info ===
+
+Valid Hessian data not found, calculating from scratch.
+
+Calculating Cartesian Hessian using finite difference on Cartesian gradients (156 grads total)
+
+0 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+10 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+20 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+30 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+40 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+50 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+60 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+70 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+80 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+90 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+100 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+110 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+120 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+130 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+140 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+150 / 156 gradient calculations complete
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+copy_scratch not implemented for this engine
+
+156 / 156 gradient calculations complete
+
+>> Initial Cartesian Hessian Eigenvalues
+
+Hessian Eigenvalues:  -1.002e-04 -8.631e-05 -4.300e-08  3.859e-09  1.375e-07  3.542e-06  1.506e-04
+
+ 2.383e-04  8.051e-04  1.673e-03  2.140e-03  3.445e-03    .....    9.713e-01  1.345e+00  1.408e+00
+
+Step    0 : Gradient = 1.328e-03/4.807e-03 (rms/max) Energy = -1309.6865116581
+
+Hessian Eigenvalues:  -7.358e-04 -6.247e-04 -1.692e-07  1.347e-08  2.549e-07  1.947e-05  6.548e-04
+
+ 1.284e-03  3.514e-03  4.170e-03  4.627e-03  6.870e-03    .....    4.267e-01  6.060e-01  6.310e-01
+
+Step    1 : Displace = [0m1.021e-02[0m/[0m2.588e-02[0m (rms/max) Trust = 1.000e-02 (=) Grad = [0m1.253e-03[0m/[0m4.656e-03[0m (rms/max) E (change) = -1309.6868567196 ([0m-3.451e-04[0m) Quality = [0m0.995[0m
+
+Hessian Eigenvalues:  -6.248e-04 -1.484e-04 -1.692e-07  1.348e-08  2.550e-07  2.063e-05  6.559e-04
+
+ 1.284e-03  3.513e-03  4.170e-03  4.623e-03  6.870e-03    .....    4.265e-01  6.059e-01  6.310e-01
+
+Step    2 : Displace = [0m1.548e-02[0m/[0m3.984e-02[0m (rms/max) Trust = 1.414e-02 ([92m+[0m) Grad = [0m1.111e-03[0m/[0m4.195e-03[0m (rms/max) E (change) = -1309.6873078732 ([0m-4.512e-04[0m) Quality = [0m0.985[0m
+
+Hessian Eigenvalues:  -5.697e-04 -1.587e-04 -1.692e-07  1.349e-08  2.550e-07  2.670e-05  6.989e-04
+
+ 1.283e-03  3.514e-03  4.169e-03  4.618e-03  6.868e-03    .....    4.263e-01  6.057e-01  6.310e-01
+
+Step    3 : Displace = [0m1.912e-02[0m/[0m4.878e-02[0m (rms/max) Trust = 2.000e-02 ([92m+[0m) Grad = [0m8.609e-04[0m/[0m3.222e-03[0m (rms/max) E (change) = -1309.6877213594 ([0m-4.135e-04[0m) Quality = [0m0.995[0m
+
+Hessian Eigenvalues:  -8.260e-04 -1.316e-04 -1.692e-07  1.350e-08  2.551e-07  3.611e-05  7.784e-04
+
+ 1.282e-03  3.517e-03  4.168e-03  4.610e-03  6.867e-03    .....    4.263e-01  6.058e-01  6.310e-01
+
+Step    4 : Displace = [0m2.843e-02[0m/[0m7.023e-02[0m (rms/max) Trust = 2.828e-02 ([92m+[0m) Grad = [0m3.790e-04[0m/[0m1.259e-03[0m (rms/max) E (change) = -1309.6880597542 ([0m-3.384e-04[0m) Quality = [0m0.962[0m
+
+Hessian Eigenvalues:  -1.076e-03 -1.234e-04 -1.691e-07  1.350e-08  2.551e-07  3.990e-05  8.147e-04
+
+ 1.280e-03  3.517e-03  4.164e-03  4.577e-03  6.868e-03    .....    4.263e-01  6.060e-01  6.310e-01
+
+Step    5 : Displace = [0m3.167e-02[0m/[0m6.217e-02[0m (rms/max) Trust = 3.000e-02 ([92m+[0m) Grad = [92m8.522e-05[0m/[92m2.342e-04[0m (rms/max) E (change) = -1309.6881609066 ([0m-1.012e-04[0m) Quality = [0m0.916[0m
+
+Hessian Eigenvalues:  -1.000e-03 -7.982e-05 -1.691e-07  1.352e-08  2.552e-07  1.036e-04  1.066e-03
+
+ 1.538e-03  3.468e-03  4.147e-03  4.422e-03  6.871e-03    .....    4.262e-01  6.060e-01  6.310e-01
+
+Step    6 : Displace = [0m2.097e-02[0m/[0m5.850e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.996e-05[0m/[92m7.200e-05[0m (rms/max) E (change) = -1309.6881743937 ([0m-1.349e-05[0m) Quality = [0m0.910[0m
+
+Hessian Eigenvalues:  -9.950e-04 -8.006e-05 -1.690e-07  1.353e-08  2.553e-07  1.497e-04  1.082e-03
+
+ 1.538e-03  3.431e-03  4.149e-03  4.388e-03  6.871e-03    .....    4.262e-01  6.060e-01  6.310e-01
+
+Step    7 : Displace = [0m3.197e-03[0m/[0m9.500e-03[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m7.902e-06[0m/[92m2.303e-05[0m (rms/max) E (change) = -1309.6881749251 ([92m-5.315e-07[0m) Quality = [0m0.882[0m
+
+Hessian Eigenvalues:  -1.009e-03 -8.008e-05 -1.680e-07  1.357e-08  2.555e-07  1.178e-04  1.088e-03
+
+ 1.577e-03  3.432e-03  4.147e-03  4.376e-03  6.871e-03    .....    4.262e-01  6.059e-01  6.310e-01
+
+Step    8 : Displace = [0m1.487e-03[0m/[0m3.918e-03[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.452e-06[0m/[92m9.313e-06[0m (rms/max) E (change) = -1309.6881750433 ([92m-1.182e-07[0m) Quality = [0m0.941[0m
+
+Hessian Eigenvalues:  -9.944e-04 -8.051e-05 -1.680e-07  1.357e-08  2.554e-07  8.871e-05  1.112e-03
+
+ 1.583e-03  3.433e-03  4.150e-03  4.379e-03  6.872e-03    .....    4.262e-01  6.059e-01  6.310e-01
+
+Step    9 : Displace = [92m6.626e-04[0m/[0m2.528e-03[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.906e-06[0m/[92m8.693e-06[0m (rms/max) E (change) = -1309.6881750895 ([92m-4.618e-08[0m) Quality = [0m0.953[0m
+
+Hessian Eigenvalues:  -9.855e-04 -8.316e-05 -1.690e-07  1.355e-08  2.560e-07  4.781e-05  1.117e-03
+
+ 1.596e-03  3.434e-03  4.151e-03  4.380e-03  6.871e-03    .....    4.262e-01  6.059e-01  6.310e-01
+
+Step   10 : Displace = [92m4.321e-04[0m/[92m1.051e-03[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m1.762e-06[0m/[92m6.026e-06[0m (rms/max) E (change) = -1309.6881751078 ([92m-1.830e-08[0m) Quality = [0m0.969[0m
+
+Hessian Eigenvalues:  -9.855e-04 -8.316e-05 -1.690e-07  1.355e-08  2.560e-07  4.781e-05  1.117e-03
+
+ 1.596e-03  3.434e-03  4.151e-03  4.380e-03  6.871e-03    .....    4.262e-01  6.059e-01  6.310e-01
+
+Converged! =D
+

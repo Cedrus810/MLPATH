@@ -1,0 +1,11 @@
+{
+  "run": "pars_check_run",
+  "checked_attempts": 12,
+  "default_filter_traces": 0,
+  "explicit_dissociation_filter_traces": [
+    "t000002",
+    "t000003"
+  ],
+  "scope": "Synthetic C2 dissociation only; producer/consumer file contract check, not molecular validation.",
+  "run_original": "/tmp/mlpath-coarse-first-pars-36bganvj/run"
+}

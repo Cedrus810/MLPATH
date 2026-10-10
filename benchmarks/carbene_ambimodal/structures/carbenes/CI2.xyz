@@ -1,0 +1,5 @@
+3
+Properties=species:S:1:pos:R:3 name=CI2 section=carbenes charge=0 spin=1 G_hartree=-633.266136 pbc="F F F"
+C        0.00000000       1.09104300       0.00000000
+I        1.72226400      -0.06176500       0.00000000
+I       -1.72226400      -0.06175000       0.00000000

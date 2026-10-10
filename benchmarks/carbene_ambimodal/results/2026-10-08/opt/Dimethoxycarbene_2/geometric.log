@@ -1,0 +1,54 @@
+> ===== Optimization Info: ====
+
+> Job type: Energy minimization
+
+> Maximum number of optimization cycles: 300
+
+> Initial / maximum trust radius (Angstrom): 0.100 / 0.300
+
+> Convergence Criteria:
+
+> Will converge when all 5 criteria are reached:
+
+>  |Delta-E| < 1.00e-06
+
+>  RMS-Grad  < 3.00e-04
+
+>  Max-Grad  < 4.50e-04
+
+>  RMS-Disp  < 1.20e-03
+
+>  Max-Disp  < 1.80e-03
+
+> === End Optimization Info ===
+
+Step    0 : Gradient = 3.068e-02/6.152e-02 (rms/max) Energy = -268.2829957627
+
+Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.23245e-01 5.55345e-01 5.82247e-01
+
+Step    1 : Displace = [0m9.369e-02[0m/[0m1.481e-01[0m (rms/max) Trust = 1.000e-01 (=) Grad = [0m1.554e-02[0m/[0m3.070e-02[0m (rms/max) E (change) = -268.2961945191 ([0m-1.320e-02[0m) Quality = [0m0.900[0m
+
+Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.38722e-01 5.61048e-01 5.84366e-01
+
+Step    2 : Displace = [0m5.626e-02[0m/[0m9.996e-02[0m (rms/max) Trust = 1.414e-01 ([92m+[0m) Grad = [0m4.160e-03[0m/[0m9.585e-03[0m (rms/max) E (change) = -268.2995324881 ([0m-3.338e-03[0m) Quality = [0m0.760[0m
+
+Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.64549e-01 5.71917e-01 6.40578e-01
+
+Step    3 : Displace = [0m1.521e-02[0m/[0m2.508e-02[0m (rms/max) Trust = 2.000e-01 ([92m+[0m) Grad = [0m6.547e-04[0m/[0m1.277e-03[0m (rms/max) E (change) = -268.2997955249 ([0m-2.630e-04[0m) Quality = [0m0.913[0m
+
+Hessian Eigenvalues: 2.30000e-02 2.30000e-02 2.30000e-02 ... 4.77626e-01 5.61226e-01 7.14001e-01
+
+Step    4 : Displace = [0m4.794e-03[0m/[0m7.600e-03[0m (rms/max) Trust = 2.828e-01 ([92m+[0m) Grad = [92m2.401e-04[0m/[92m4.497e-04[0m (rms/max) E (change) = -268.2998003957 ([0m-4.871e-06[0m) Quality = [0m0.829[0m
+
+Hessian Eigenvalues: 2.29982e-02 2.30000e-02 2.30000e-02 ... 4.77902e-01 5.47018e-01 7.78718e-01
+
+Step    5 : Displace = [0m1.713e-03[0m/[0m2.654e-03[0m (rms/max) Trust = 3.000e-01 ([92m+[0m) Grad = [92m8.732e-05[0m/[92m1.495e-04[0m (rms/max) E (change) = -268.2998013304 ([92m-9.347e-07[0m) Quality = [0m1.052[0m
+
+Hessian Eigenvalues: 2.29909e-02 2.30000e-02 2.30000e-02 ... 4.73867e-01 5.60272e-01 7.20891e-01
+
+Step    6 : Displace = [92m8.504e-04[0m/[92m1.420e-03[0m (rms/max) Trust = 3.000e-01 (=) Grad = [92m2.750e-05[0m/[92m4.951e-05[0m (rms/max) E (change) = -268.2998014096 ([92m-7.914e-08[0m) Quality = [0m0.782[0m
+
+Hessian Eigenvalues: 2.29909e-02 2.30000e-02 2.30000e-02 ... 4.73867e-01 5.60272e-01 7.20891e-01
+
+Converged! =D
+

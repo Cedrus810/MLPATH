@@ -1,0 +1,25 @@
+atoms: {'carbene': 2, 'Ca': 13, 'Cb': 15, 'O_ald': 1}
+DFT TS-2OMe        C:-Ca 2.676  C:-Cb 2.038  C:-O_ald 3.303
+DFT TS-2OMe-cis    C:-Ca 2.617  C:-Cb 1.951  C:-O_ald 4.301
+DFT TS-2OMe-C2     C:-Ca 1.814  C:-Cb 2.317  C:-O_ald 3.266
+DFT TS-2OMe-2      C:-Ca 2.294  C:-Cb 1.474  C:-O_ald 2.840
+DFT-DFT heavy-atom RMSD (A)
+  TS-2OMe        TS-2OMe-cis    0.483
+  TS-2OMe        TS-2OMe-C2     0.705
+  TS-2OMe        TS-2OMe-2      0.506
+  TS-2OMe-cis    TS-2OMe-C2     0.773
+  TS-2OMe-cis    TS-2OMe-2      0.680
+  TS-2OMe-C2     TS-2OMe-2      0.799
+fromTS-2OMe      CONVERGED  imag [-492]  C:-Ca 2.678  C:-Cb 1.979  C:-O_ald 3.220  RMSD TS-2OMe 0.066 / TS-2OMe-cis 0.487 / TS-2OMe-C2 0.708 / TS-2OMe-2 0.512  -> TS-2OMe
+fromTS-2OMe-cis  CONVERGED  imag [-539]  C:-Ca 2.526  C:-Cb 1.898  C:-O_ald 4.108  RMSD TS-2OMe 0.465 / TS-2OMe-cis 0.111 / TS-2OMe-C2 0.788 / TS-2OMe-2 0.643  -> TS-2OMe-cis
+fromTS-2OMe-C2   CONVERGED  imag [-547]  C:-Ca 1.819  C:-Cb 2.270  C:-O_ald 3.161  RMSD TS-2OMe 0.684 / TS-2OMe-cis 0.774 / TS-2OMe-C2 0.051 / TS-2OMe-2 0.770  -> TS-2OMe-C2
+fromTS-2OMe-2    CONVERGED  imag [-106]  C:-Ca 2.191  C:-Cb 1.465  C:-O_ald 2.786  RMSD TS-2OMe 0.507 / TS-2OMe-cis 0.706 / TS-2OMe-C2 0.808 / TS-2OMe-2 0.127  -> TS-2OMe-2
+
+between candidates: heavy-atom RMSD (A)
+  fromTS-2OMe      fromTS-2OMe-cis  0.475
+  fromTS-2OMe      fromTS-2OMe-C2   0.687
+  fromTS-2OMe      fromTS-2OMe-2    0.512
+  fromTS-2OMe-cis  fromTS-2OMe-C2   0.786
+  fromTS-2OMe-cis  fromTS-2OMe-2    0.665
+  fromTS-2OMe-C2   fromTS-2OMe-2    0.779
+[{"label": "fromTS-2OMe", "status": "CONVERGED", "imaginary_cm": [-492.29478282778734], "E_eV": -16768.616494206795, "markers": {"C:-Ca": 2.678182242767995, "C:-Cb": 1.9785302187249856, "C:-O_ald": 3.2196689853843092}, "heavy_rmsd_to_dft": {"TS-2OMe": 0.06586293708028942, "TS-2OMe-cis": 0.4865698283040681, "TS-2OMe-C2": 0.7078874690268276, "TS-2OMe-2": 0.5117926122033052}, "closest_dft": "TS-2OMe"}, {"label": "fromTS-2OMe-cis", "status": "CONVERGED", "imaginary_cm": [-539.4245927698591], "E_eV": -16768.4506582029, "markers": {"C:-Ca": 2.5262702603593845, "C:-Cb": 1.8979723084664875, "C:-O_ald": 4.107679851232196}, "heavy_rmsd_to_dft": {"TS-2OMe": 0.465079680218534, "TS-2OMe-cis": 0.11141179391014877, "TS-2OMe-C2": 0.7882172798757864, "TS-2OMe-2": 0.6433662180783516}, "closest_dft": "TS-2OMe-cis"}, {"label": "fromTS-2OMe-C2", "status": "CONVERGED", "imaginary_cm": [-546.5707806383459], "E_eV": -16767.92194000903, "markers": {"C:-Ca": 1.8194119612371644, "C:-Cb": 2.270235711965437, "C:-O_ald": 3.160569319014979}, "heavy_rmsd_to_dft": {"TS-2OMe": 0.6840635764062684, "TS-2OMe-cis": 0.7742228519075909, "TS-2OMe-C2": 0.050814566070062475, "TS-2OMe-2": 0.769727374115964}, "closest_dft": "TS-2OMe-C2"}, {"label": "fromTS-2OMe-2", "status": "CONVERGED", "imaginary_cm": [-106.35966411639286], "E_eV": -16768.987341886863, "markers": {"C:-Ca": 2.191399148427801, "C:-Cb": 1.4654828265778095, "C:-O_ald": 2.7855239084780394}, "heavy_rmsd_to_dft": {"TS-2OMe": 0.507268953076029, "TS-2OMe-cis": 0.7062175890604598, "TS-2OMe-C2": 0.8079749894769266, "TS-2OMe-2": 0.1272330303565334}, "closest_dft": "TS-2OMe-2"}]

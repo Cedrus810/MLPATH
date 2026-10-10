@@ -1,0 +1,5 @@
+3
+Properties=species:S:1:pos:R:3 name=CCl2-triplet section=carbenes charge=0 spin=3 G_hartree=-958.383811 pbc="F F F"
+C        0.00000000       0.61716400       0.00000000
+Cl       1.49926800      -0.10891700       0.00000000
+Cl      -1.49926800      -0.10890500       0.00000000

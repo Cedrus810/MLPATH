@@ -1,0 +1,910 @@
+19:35:33 root CUDA version: 12.9, CUDA device: 0
+19:35:33 root Using head Default out of  ['Default']
+19:35:33 root Default dtype float64 does not match model dtype float32, converting models to float64.
+19:35:34 geometric.nifty > ===== Optimization Info: ====
+
+19:35:34 geometric.nifty > Job type: Transition state optimization
+
+19:35:34 geometric.nifty > Maximum number of optimization cycles: 300
+
+19:35:34 geometric.nifty > Initial / maximum trust radius (Angstrom): 0.010 / 0.030
+
+19:35:34 geometric.nifty > Convergence Criteria:
+
+19:35:34 geometric.nifty > Will converge when all 5 criteria are reached:
+
+19:35:34 geometric.nifty >  |Delta-E| < 1.00e-06
+
+19:35:34 geometric.nifty >  RMS-Grad  < 3.00e-04
+
+19:35:34 geometric.nifty >  Max-Grad  < 4.50e-04
+
+19:35:34 geometric.nifty >  RMS-Disp  < 1.20e-03
+
+19:35:34 geometric.nifty >  Max-Disp  < 1.80e-03
+
+19:35:34 geometric.nifty > === End Optimization Info ===
+
+19:35:35 geometric.nifty Valid Hessian data not found, calculating from scratch.
+
+19:35:35 geometric.nifty Calculating Cartesian Hessian using finite difference on Cartesian gradients (156 grads total)
+
+19:35:35 geometric.nifty 0 / 156 gradient calculations complete
+
+19:35:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:35 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:36 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty 10 / 156 gradient calculations complete
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:37 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty 20 / 156 gradient calculations complete
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:38 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:39 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty 30 / 156 gradient calculations complete
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:40 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty 40 / 156 gradient calculations complete
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:41 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty 50 / 156 gradient calculations complete
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:42 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:43 geometric.nifty 60 / 156 gradient calculations complete
+
+19:35:43 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:44 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty 70 / 156 gradient calculations complete
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:45 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty 80 / 156 gradient calculations complete
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:46 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty 90 / 156 gradient calculations complete
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:47 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:48 geometric.nifty 100 / 156 gradient calculations complete
+
+19:35:48 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:49 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty 110 / 156 gradient calculations complete
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:50 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty 120 / 156 gradient calculations complete
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:51 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty 130 / 156 gradient calculations complete
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:52 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:53 geometric.nifty 140 / 156 gradient calculations complete
+
+19:35:53 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:54 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty 150 / 156 gradient calculations complete
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty copy_scratch not implemented for this engine
+
+19:35:55 geometric.nifty 156 / 156 gradient calculations complete
+
+19:35:56 geometric.nifty >> Initial Cartesian Hessian Eigenvalues
+
+19:35:56 geometric.nifty Hessian Eigenvalues:  -2.383e-04 -1.035e-04 -7.107e-08  3.397e-08  9.575e-08  5.030e-05  1.731e-04
+
+19:35:56 geometric.nifty  6.688e-04  1.022e-03  1.836e-03  3.065e-03  3.384e-03    .....    9.776e-01  1.247e+00  1.373e+00
+
+19:35:56 geometric.nifty Step    0 : Gradient = 3.927e-03/1.313e-02 (rms/max) Energy = -1309.6825519306
+
+19:35:56 geometric.nifty Hessian Eigenvalues:  -1.631e-03 -1.278e-03 -1.294e-07 -3.262e-08  1.296e-07  6.546e-06  4.611e-04
+
+19:35:56 geometric.nifty  2.976e-03  3.423e-03  4.135e-03  4.881e-03  6.574e-03    .....    4.132e-01  5.698e-01  6.161e-01
+
+19:35:56 geometric.nifty Step    1 : Displace = [0m9.664e-03[0m/[0m2.203e-02[0m (rms/max) Trust = 1.000e-02 (=) Grad = [0m3.282e-03[0m/[0m1.157e-02[0m (rms/max) E (change) = -1309.6833157347 ([0m-7.638e-04[0m) Quality = [0m0.996[0m
+
+19:35:56 geometric.nifty Hessian Eigenvalues:  -2.398e-03 -1.278e-03 -1.284e-07 -3.218e-08  1.314e-07  1.596e-05  4.692e-04
+
+19:35:56 geometric.nifty  2.979e-03  3.425e-03  4.137e-03  4.936e-03  6.573e-03    .....    4.132e-01  5.706e-01  6.161e-01
+
+19:35:56 geometric.nifty Step    2 : Displace = [0m1.411e-02[0m/[0m3.445e-02[0m (rms/max) Trust = 1.414e-02 ([92m+[0m) Grad = [0m2.841e-03[0m/[0m1.048e-02[0m (rms/max) E (change) = -1309.6842359872 ([0m-9.203e-04[0m) Quality = [0m0.991[0m
+
+19:35:56 geometric.nifty Hessian Eigenvalues:  -3.128e-03 -1.277e-03 -1.283e-07 -3.209e-08  1.318e-07  2.256e-05  4.750e-04
+
+19:35:56 geometric.nifty  2.985e-03  3.427e-03  4.141e-03  5.010e-03  6.570e-03    .....    4.132e-01  5.711e-01  6.161e-01
+
+19:35:56 geometric.nifty Step    3 : Displace = [0m2.076e-02[0m/[0m5.371e-02[0m (rms/max) Trust = 2.000e-02 ([92m+[0m) Grad = [0m2.437e-03[0m/[0m9.463e-03[0m (rms/max) E (change) = -1309.6852992349 ([0m-1.063e-03[0m) Quality = [0m0.982[0m
+
+19:35:56 geometric.nifty Hessian Eigenvalues:  -1.297e-03 -9.838e-04 -1.284e-07 -3.216e-08  1.314e-07  1.722e-05  4.671e-04
+
+19:35:56 geometric.nifty  2.992e-03  3.426e-03  4.142e-03  5.025e-03  6.557e-03    .....    4.132e-01  5.711e-01  6.161e-01
+
+19:35:57 geometric.nifty Step    4 : Displace = [0m2.881e-02[0m/[0m7.914e-02[0m (rms/max) Trust = 2.828e-02 ([92m+[0m) Grad = [0m1.781e-03[0m/[0m7.141e-03[0m (rms/max) E (change) = -1309.6865402326 ([0m-1.241e-03[0m) Quality = [0m0.951[0m
+
+19:35:57 geometric.nifty Hessian Eigenvalues:  -1.215e-03 -6.797e-04 -1.281e-07 -3.194e-08  1.326e-07  6.635e-05  4.661e-04
+
+19:35:57 geometric.nifty  3.006e-03  3.432e-03  4.146e-03  5.112e-03  6.459e-03    .....    4.131e-01  5.708e-01  6.159e-01
+
+19:35:57 geometric.nifty Step    5 : Displace = [0m2.864e-02[0m/[0m7.548e-02[0m (rms/max) Trust = 3.000e-02 ([92m+[0m) Grad = [0m1.231e-03[0m/[0m4.690e-03[0m (rms/max) E (change) = -1309.6873514351 ([0m-8.112e-04[0m) Quality = [0m0.955[0m
+
+19:35:57 geometric.nifty Hessian Eigenvalues:  -8.132e-04 -4.474e-04 -1.280e-07 -3.191e-08  1.327e-07  1.015e-04  6.488e-04
+
+19:35:57 geometric.nifty  2.991e-03  3.434e-03  4.146e-03  5.113e-03  6.584e-03    .....    4.131e-01  5.708e-01  6.159e-01
+
+19:35:57 geometric.nifty Step    6 : Displace = [0m2.855e-02[0m/[0m7.754e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [0m6.732e-04[0m/[0m2.110e-03[0m (rms/max) E (change) = -1309.6878157169 ([0m-4.643e-04[0m) Quality = [0m0.945[0m
+
+19:35:57 geometric.nifty Hessian Eigenvalues:  -1.308e-03 -4.419e-04 -1.280e-07 -3.191e-08  1.327e-07  1.105e-04  6.776e-04
+
+19:35:57 geometric.nifty  2.956e-03  3.436e-03  4.147e-03  5.124e-03  6.554e-03    .....    4.131e-01  5.709e-01  6.159e-01
+
+19:35:58 geometric.nifty Step    7 : Displace = [0m2.836e-02[0m/[0m5.673e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.964e-04[0m/[0m7.696e-04[0m (rms/max) E (change) = -1309.6879690210 ([0m-1.533e-04[0m) Quality = [0m0.923[0m
+
+19:35:58 geometric.nifty Hessian Eigenvalues:  -8.427e-04 -4.571e-04 -1.280e-07 -3.191e-08  1.327e-07  1.238e-04  7.437e-04
+
+19:35:58 geometric.nifty  2.795e-03  3.453e-03  4.147e-03  5.105e-03  6.601e-03    .....    4.131e-01  5.710e-01  6.159e-01
+
+19:35:58 geometric.nifty Step    8 : Displace = [0m3.078e-02[0m/[0m6.087e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.460e-04[0m/[0m6.207e-04[0m (rms/max) E (change) = -1309.6880298283 ([0m-6.081e-05[0m) Quality = [0m0.742[0m
+
+19:35:58 geometric.nifty Hessian Eigenvalues:  -7.299e-04 -1.282e-07 -3.198e-08  1.326e-07  2.395e-05  1.165e-04  4.518e-04
+
+19:35:58 geometric.nifty  2.837e-03  3.472e-03  4.147e-03  5.117e-03  6.577e-03    .....    4.132e-01  5.710e-01  6.159e-01
+
+19:35:58 geometric.nifty Step    9 : Displace = [0m3.055e-02[0m/[0m1.056e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [0m7.468e-04[0m/[0m1.900e-03[0m (rms/max) E (change) = -1309.6880556715 ([0m-2.584e-05[0m) Quality = [0m0.426[0m
+
+19:35:58 geometric.nifty Hessian Eigenvalues:  -5.126e-04 -3.227e-05 -1.279e-07 -3.183e-08  1.328e-07  1.049e-04  3.326e-04
+
+19:35:58 geometric.nifty  2.844e-03  3.475e-03  4.148e-03  5.132e-03  6.577e-03    .....    4.132e-01  5.710e-01  6.160e-01
+
+19:35:58 geometric.nifty Step   10 : Displace = [0m1.530e-02[0m/[0m4.106e-02[0m (rms/max) Trust = 1.500e-02 ([91m-[0m) Grad = [92m1.930e-04[0m/[0m6.350e-04[0m (rms/max) E (change) = -1309.6880488807 ([0m+6.791e-06[0m) Quality = [0m0.786[0m
+
+19:35:58 geometric.nifty Hessian Eigenvalues:  -1.021e-03 -6.093e-05 -1.279e-07 -3.174e-08  1.330e-07  1.161e-04  3.390e-04
+
+19:35:58 geometric.nifty  2.854e-03  3.490e-03  4.148e-03  5.135e-03  6.587e-03    .....    4.132e-01  5.711e-01  6.160e-01
+
+19:35:59 geometric.nifty Step   11 : Displace = [0m1.910e-02[0m/[0m3.426e-02[0m (rms/max) Trust = 2.121e-02 ([92m+[0m) Grad = [0m6.032e-04[0m/[0m1.705e-03[0m (rms/max) E (change) = -1309.6880534080 ([0m-4.527e-06[0m) Quality = [0m0.070[0m
+
+19:35:59 geometric.nifty Poor-quality step dominated by net translation/rotation detected; 
+19:35:59 geometric.nifty will project out net forces and torques past this point.
+
+19:35:59 geometric.nifty Hessian Eigenvalues:  -7.937e-04 -1.920e-04 -1.278e-07 -3.174e-08  1.330e-07  2.093e-04  4.049e-04
+
+19:35:59 geometric.nifty  2.897e-03  3.495e-03  4.149e-03  5.155e-03  6.613e-03    .....    4.133e-01  5.711e-01  6.160e-01
+
+19:35:59 geometric.nifty Step   12 : Displace = [0m9.599e-03[0m/[0m2.379e-02[0m (rms/max) Trust = 9.552e-03 ([91m-[0m) Grad = [92m1.136e-04[0m/[92m3.334e-04[0m (rms/max) E (change) = -1309.6880568748 ([0m-3.467e-06[0m) Quality = [0m0.563[0m
+
+19:35:59 geometric.nifty Hessian Eigenvalues:  -3.072e-03 -1.286e-07 -3.199e-08  1.329e-07  1.026e-05  2.224e-04  4.820e-04
+
+19:35:59 geometric.nifty  2.976e-03  3.486e-03  4.147e-03  5.374e-03  6.688e-03    .....    4.135e-01  5.712e-01  6.160e-01
+
+19:35:59 geometric.nifty Step   13 : Displace = [0m9.889e-03[0m/[0m1.965e-02[0m (rms/max) Trust = 9.552e-03 (=) Grad = [92m1.713e-04[0m/[0m4.720e-04[0m (rms/max) E (change) = -1309.6880440824 ([0m+1.279e-05[0m) Quality = [0m0.296[0m
+
+19:35:59 geometric.nifty Hessian Eigenvalues:  -1.106e-03 -1.087e-04 -1.278e-07 -3.175e-08  1.331e-07  7.098e-05  5.032e-04
+
+19:35:59 geometric.nifty  3.213e-03  3.656e-03  4.136e-03  5.349e-03  6.671e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:00 geometric.nifty Step   14 : Displace = [0m4.729e-03[0m/[0m1.420e-02[0m (rms/max) Trust = 4.776e-03 ([91m-[0m) Grad = [92m8.805e-05[0m/[92m2.365e-04[0m (rms/max) E (change) = -1309.6880520405 ([0m-7.958e-06[0m) Quality = [0m0.964[0m
+
+19:36:00 geometric.nifty Hessian Eigenvalues:  -6.261e-04 -7.093e-06 -1.279e-07 -3.165e-08  1.347e-07  3.992e-05  5.009e-04
+
+19:36:00 geometric.nifty  3.180e-03  3.647e-03  4.136e-03  5.375e-03  6.671e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:00 geometric.nifty Step   15 : Displace = [0m6.840e-03[0m/[0m2.456e-02[0m (rms/max) Trust = 6.754e-03 ([92m+[0m) Grad = [92m1.015e-04[0m/[92m2.651e-04[0m (rms/max) E (change) = -1309.6880411702 ([0m+1.087e-05[0m) Quality = [0m0.919[0m
+
+19:36:00 geometric.nifty Hessian Eigenvalues:  -3.185e-04 -7.884e-06 -1.281e-07 -3.169e-08  1.336e-07  4.350e-05  4.789e-04
+
+19:36:00 geometric.nifty  3.151e-03  3.638e-03  4.136e-03  5.379e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:00 geometric.nifty Step   16 : Displace = [0m9.938e-03[0m/[0m3.491e-02[0m (rms/max) Trust = 9.552e-03 ([92m+[0m) Grad = [92m6.545e-05[0m/[92m1.380e-04[0m (rms/max) E (change) = -1309.6880244694 ([0m+1.670e-05[0m) Quality = [0m0.988[0m
+
+19:36:00 geometric.nifty Hessian Eigenvalues:  -2.462e-04 -1.284e-07 -3.254e-08  1.309e-07  4.383e-06  5.137e-05  4.308e-04
+
+19:36:00 geometric.nifty  3.083e-03  3.630e-03  4.135e-03  5.380e-03  6.671e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:01 geometric.nifty Step   17 : Displace = [0m1.397e-02[0m/[0m5.149e-02[0m (rms/max) Trust = 1.351e-02 ([92m+[0m) Grad = [92m6.938e-05[0m/[92m1.892e-04[0m (rms/max) E (change) = -1309.6880037667 ([0m+2.070e-05[0m) Quality = [0m0.971[0m
+
+19:36:01 geometric.nifty Hessian Eigenvalues:  -2.442e-04 -1.283e-07 -3.207e-08  1.325e-07  8.390e-06  6.181e-05  3.523e-04
+
+19:36:01 geometric.nifty  3.032e-03  3.624e-03  4.135e-03  5.368e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:01 geometric.nifty Step   18 : Displace = [0m1.912e-02[0m/[0m6.997e-02[0m (rms/max) Trust = 1.910e-02 ([92m+[0m) Grad = [92m7.223e-05[0m/[92m2.446e-04[0m (rms/max) E (change) = -1309.6879778914 ([0m+2.588e-05[0m) Quality = [0m0.974[0m
+
+19:36:01 geometric.nifty Hessian Eigenvalues:  -1.627e-04 -1.280e-07 -3.190e-08  1.326e-07  1.346e-05  6.176e-05  2.491e-04
+
+19:36:01 geometric.nifty  3.015e-03  3.624e-03  4.135e-03  5.360e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:01 geometric.nifty Step   19 : Displace = [0m2.699e-02[0m/[0m1.064e-01[0m (rms/max) Trust = 2.702e-02 ([92m+[0m) Grad = [92m1.641e-04[0m/[92m4.459e-04[0m (rms/max) E (change) = -1309.6879465599 ([0m+3.133e-05[0m) Quality = [0m0.996[0m
+
+19:36:01 geometric.nifty Hessian Eigenvalues:  -1.651e-04 -1.280e-07 -3.188e-08  1.327e-07  1.604e-05  6.905e-05  2.388e-04
+
+19:36:01 geometric.nifty  3.017e-03  3.623e-03  4.136e-03  5.351e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:01 geometric.nifty Step   20 : Displace = [0m3.010e-02[0m/[0m1.161e-01[0m (rms/max) Trust = 3.000e-02 ([92m+[0m) Grad = [92m1.239e-04[0m/[92m3.935e-04[0m (rms/max) E (change) = -1309.6879134499 ([0m+3.311e-05[0m) Quality = [0m0.922[0m
+
+19:36:01 geometric.nifty Hessian Eigenvalues:  -3.979e-05 -1.278e-07 -3.186e-08  1.327e-07  1.229e-05  8.408e-05  1.351e-04
+
+19:36:01 geometric.nifty  3.028e-03  3.624e-03  4.136e-03  5.350e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:02 geometric.nifty Step   21 : Displace = [0m2.799e-02[0m/[0m8.480e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [0m3.668e-04[0m/[0m9.714e-04[0m (rms/max) E (change) = -1309.6879338258 ([0m-2.038e-05[0m) Quality = [0m0.663[0m
+
+19:36:02 geometric.nifty Hessian Eigenvalues:  -1.226e-04 -3.473e-06 -1.265e-07 -3.162e-08  1.331e-07  8.481e-05  1.563e-04
+
+19:36:02 geometric.nifty  3.118e-03  3.626e-03  4.138e-03  5.345e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:02 geometric.nifty Step   22 : Displace = [0m3.295e-02[0m/[0m1.294e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.541e-04[0m/[0m8.091e-04[0m (rms/max) E (change) = -1309.6879743887 ([0m-4.056e-05[0m) Quality = [0m0.875[0m
+
+19:36:02 geometric.nifty Hessian Eigenvalues:  -1.064e-04 -1.276e-07 -3.166e-08  1.329e-07  6.242e-06  8.256e-05  1.456e-04
+
+19:36:02 geometric.nifty  3.108e-03  3.625e-03  4.137e-03  5.346e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:02 geometric.nifty Step   23 : Displace = [0m3.040e-02[0m/[0m1.150e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m9.608e-05[0m/[92m3.028e-04[0m (rms/max) E (change) = -1309.6879445955 ([0m+2.979e-05[0m) Quality = [0m0.935[0m
+
+19:36:02 geometric.nifty Hessian Eigenvalues:  -1.365e-04 -1.269e-07 -3.164e-08  1.330e-07  3.725e-05  9.170e-05  1.290e-04
+
+19:36:02 geometric.nifty  3.103e-03  3.622e-03  4.137e-03  5.339e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:02 geometric.nifty Step   24 : Displace = [0m2.978e-02[0m/[0m1.184e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m1.440e-04[0m/[92m4.408e-04[0m (rms/max) E (change) = -1309.6879119075 ([0m+3.269e-05[0m) Quality = [0m0.874[0m
+
+19:36:02 geometric.nifty Hessian Eigenvalues:  -2.467e-05 -1.320e-07 -3.174e-08  1.331e-07  4.291e-05  6.373e-05  9.428e-05
+
+19:36:02 geometric.nifty  3.102e-03  3.622e-03  4.137e-03  5.337e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:03 geometric.nifty Step   25 : Displace = [0m2.815e-02[0m/[0m1.084e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m1.954e-04[0m/[0m6.121e-04[0m (rms/max) E (change) = -1309.6878831228 ([0m+2.878e-05[0m) Quality = [0m0.790[0m
+
+19:36:03 geometric.nifty Hessian Eigenvalues:  -1.003e-05 -1.297e-07 -2.724e-08  1.408e-07  4.996e-05  6.817e-05  1.043e-04
+
+19:36:03 geometric.nifty  3.107e-03  3.622e-03  4.137e-03  5.338e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:03 geometric.nifty Step   26 : Displace = [0m2.957e-02[0m/[0m1.134e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m1.638e-04[0m/[0m5.116e-04[0m (rms/max) E (change) = -1309.6879138070 ([0m-3.068e-05[0m) Quality = [0m0.885[0m
+
+19:36:03 geometric.nifty Hessian Eigenvalues:  -1.616e-07 -4.900e-08  1.126e-07  1.952e-05  4.370e-05  6.527e-05  9.919e-05
+
+19:36:03 geometric.nifty  3.107e-03  3.622e-03  4.137e-03  5.338e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:03 geometric.nifty Step   27 : Displace = [0m3.049e-02[0m/[0m1.177e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m7.490e-05[0m/[92m2.121e-04[0m (rms/max) E (change) = -1309.6879485722 ([0m-3.477e-05[0m) Quality = [0m0.955[0m
+
+19:36:03 geometric.nifty Hessian Eigenvalues:  -3.437e-05 -4.828e-08  1.138e-07  1.281e-05  5.126e-05  6.637e-05  9.734e-05
+
+19:36:03 geometric.nifty  3.112e-03  3.624e-03  4.137e-03  5.338e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:03 geometric.nifty Step   28 : Displace = [0m8.269e-03[0m/[0m3.014e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m1.660e-04[0m/[0m4.563e-04[0m (rms/max) E (change) = -1309.6879357008 ([91m+1.287e-05[0m) Quality = [91m-2.233[0m
+
+19:36:03 geometric.nifty [93mRejecting step - quality is lower than 0.0[0m
+
+19:36:03 geometric.nifty Hessian Eigenvalues:  -3.437e-05 -4.828e-08  1.138e-07  1.281e-05  5.126e-05  6.637e-05  9.734e-05
+
+19:36:03 geometric.nifty  3.112e-03  3.624e-03  4.137e-03  5.338e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:04 geometric.nifty Step   29 : Displace = [0m3.948e-03[0m/[0m1.605e-02[0m (rms/max) Trust = 4.134e-03 ([1;91mx[0m) Grad = [92m7.554e-05[0m/[92m2.382e-04[0m (rms/max) E (change) = -1309.6879451800 ([0m+3.392e-06[0m) Quality = [0m0.880[0m
+
+19:36:04 geometric.nifty Hessian Eigenvalues:  -1.749e-05 -3.472e-08  1.331e-07  8.774e-06  5.262e-05  6.668e-05  9.631e-05
+
+19:36:04 geometric.nifty  3.112e-03  3.623e-03  4.137e-03  5.337e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:04 geometric.nifty Step   30 : Displace = [0m6.076e-03[0m/[0m2.265e-02[0m (rms/max) Trust = 5.847e-03 ([92m+[0m) Grad = [92m5.252e-05[0m/[92m1.651e-04[0m (rms/max) E (change) = -1309.6879404600 ([0m+4.720e-06[0m) Quality = [0m0.883[0m
+
+19:36:04 geometric.nifty Hessian Eigenvalues:  -2.961e-06 -3.417e-08  1.327e-07  3.192e-06  5.266e-05  6.958e-05  1.102e-04
+
+19:36:04 geometric.nifty  3.106e-03  3.620e-03  4.137e-03  5.337e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:04 geometric.nifty Step   31 : Displace = [0m8.126e-03[0m/[0m3.200e-02[0m (rms/max) Trust = 8.269e-03 ([92m+[0m) Grad = [92m4.581e-05[0m/[92m1.414e-04[0m (rms/max) E (change) = -1309.6879321666 ([0m+8.293e-06[0m) Quality = [0m0.944[0m
+
+19:36:04 geometric.nifty Hessian Eigenvalues:  -2.105e-05 -2.998e-08  1.332e-07  1.804e-05  5.584e-05  6.658e-05  7.542e-05
+
+19:36:04 geometric.nifty  3.096e-03  3.616e-03  4.136e-03  5.337e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:04 geometric.nifty Step   32 : Displace = [0m1.152e-02[0m/[0m2.235e-02[0m (rms/max) Trust = 1.169e-02 ([92m+[0m) Grad = [92m1.610e-04[0m/[0m5.761e-04[0m (rms/max) E (change) = -1309.6879188459 ([0m+1.332e-05[0m) Quality = [0m0.916[0m
+
+19:36:04 geometric.nifty Hessian Eigenvalues:  -6.153e-06 -1.287e-07  1.149e-07  1.590e-05  4.706e-05  6.084e-05  7.170e-05
+
+19:36:04 geometric.nifty  3.097e-03  3.616e-03  4.136e-03  5.337e-03  6.673e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:05 geometric.nifty Step   33 : Displace = [0m1.595e-02[0m/[0m6.534e-02[0m (rms/max) Trust = 1.654e-02 ([92m+[0m) Grad = [92m1.129e-04[0m/[92m3.618e-04[0m (rms/max) E (change) = -1309.6879381099 ([0m-1.926e-05[0m) Quality = [0m0.864[0m
+
+19:36:05 geometric.nifty Hessian Eigenvalues:  -3.023e-05 -4.121e-08  1.252e-07  1.507e-05  3.912e-05  6.598e-05  9.648e-05
+
+19:36:05 geometric.nifty  3.093e-03  3.614e-03  4.136e-03  5.337e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:05 geometric.nifty Step   34 : Displace = [0m2.405e-02[0m/[0m9.546e-02[0m (rms/max) Trust = 2.339e-02 ([92m+[0m) Grad = [92m1.207e-04[0m/[92m3.923e-04[0m (rms/max) E (change) = -1309.6879659834 ([0m-2.787e-05[0m) Quality = [0m0.869[0m
+
+19:36:05 geometric.nifty Hessian Eigenvalues:  -9.546e-05  7.619e-08  3.171e-07  1.826e-05  3.866e-05  6.812e-05  1.046e-04
+
+19:36:05 geometric.nifty  3.088e-03  3.611e-03  4.136e-03  5.334e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:05 geometric.nifty Step   35 : Displace = [0m3.065e-02[0m/[0m1.193e-01[0m (rms/max) Trust = 3.000e-02 ([92m+[0m) Grad = [92m9.867e-05[0m/[92m2.809e-04[0m (rms/max) E (change) = -1309.6879365309 ([0m+2.945e-05[0m) Quality = [0m0.950[0m
+
+19:36:05 geometric.nifty Hessian Eigenvalues:  -6.265e-05  7.655e-08  3.550e-07  3.977e-06  3.680e-05  6.812e-05  1.074e-04
+
+19:36:05 geometric.nifty  3.087e-03  3.610e-03  4.136e-03  5.335e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:05 geometric.nifty Step   36 : Displace = [0m3.047e-02[0m/[0m1.192e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m7.332e-05[0m/[92m2.171e-04[0m (rms/max) E (change) = -1309.6879067739 ([0m+2.976e-05[0m) Quality = [0m0.943[0m
+
+19:36:05 geometric.nifty Hessian Eigenvalues:  -3.407e-05  6.594e-08  2.858e-07  1.413e-05  3.402e-05  6.891e-05  1.082e-04
+
+19:36:05 geometric.nifty  3.090e-03  3.611e-03  4.136e-03  5.335e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:06 geometric.nifty Step   37 : Displace = [0m2.711e-02[0m/[0m1.115e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m7.914e-05[0m/[92m2.276e-04[0m (rms/max) E (change) = -1309.6879342255 ([0m-2.745e-05[0m) Quality = [0m0.917[0m
+
+19:36:06 geometric.nifty Hessian Eigenvalues:  -1.129e-05  6.591e-08  1.426e-07  1.042e-06  3.520e-05  6.871e-05  1.071e-04
+
+19:36:06 geometric.nifty  3.090e-03  3.611e-03  4.136e-03  5.335e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:06 geometric.nifty Step   38 : Displace = [0m3.026e-02[0m/[0m1.222e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m7.718e-05[0m/[92m2.087e-04[0m (rms/max) E (change) = -1309.6879059146 ([0m+2.831e-05[0m) Quality = [0m0.997[0m
+
+19:36:06 geometric.nifty Hessian Eigenvalues:  -1.143e-05  1.020e-07  2.159e-07  2.289e-05  4.094e-05  6.787e-05  1.055e-04
+
+19:36:06 geometric.nifty  3.089e-03  3.610e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:06 geometric.nifty Step   39 : Displace = [0m2.871e-02[0m/[0m1.128e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m7.086e-05[0m/[92m1.771e-04[0m (rms/max) E (change) = -1309.6879356023 ([0m-2.969e-05[0m) Quality = [0m0.995[0m
+
+19:36:06 geometric.nifty Hessian Eigenvalues:  -6.431e-06  1.029e-07  6.107e-07  1.320e-05  3.743e-05  6.800e-05  1.056e-04
+
+19:36:06 geometric.nifty  3.090e-03  3.610e-03  4.136e-03  5.338e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:06 geometric.nifty Step   40 : Displace = [0m2.741e-02[0m/[0m1.078e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m6.345e-05[0m/[92m1.998e-04[0m (rms/max) E (change) = -1309.6879658079 ([0m-3.021e-05[0m) Quality = [0m0.938[0m
+
+19:36:06 geometric.nifty Hessian Eigenvalues:  -1.025e-04  1.048e-07  9.997e-07  3.468e-05  4.167e-05  6.801e-05  1.060e-04
+
+19:36:06 geometric.nifty  3.090e-03  3.610e-03  4.136e-03  5.338e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:07 geometric.nifty Step   41 : Displace = [0m2.969e-02[0m/[0m1.168e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m4.498e-05[0m/[92m1.240e-04[0m (rms/max) E (change) = -1309.6879333215 ([0m+3.249e-05[0m) Quality = [0m0.992[0m
+
+19:36:07 geometric.nifty Hessian Eigenvalues:  -7.961e-05  1.043e-07  7.222e-07  2.307e-05  3.538e-05  6.800e-05  1.060e-04
+
+19:36:07 geometric.nifty  3.090e-03  3.610e-03  4.136e-03  5.337e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:07 geometric.nifty Step   42 : Displace = [0m3.099e-02[0m/[0m1.237e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.490e-05[0m/[92m1.148e-04[0m (rms/max) E (change) = -1309.6879007403 ([0m+3.258e-05[0m) Quality = [0m0.934[0m
+
+19:36:07 geometric.nifty Hessian Eigenvalues:  -3.295e-05  1.040e-07  1.894e-06  1.100e-05  3.615e-05  6.807e-05  1.061e-04
+
+19:36:07 geometric.nifty  3.091e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:07 geometric.nifty Step   43 : Displace = [0m2.959e-02[0m/[0m1.216e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m4.844e-05[0m/[92m1.400e-04[0m (rms/max) E (change) = -1309.6879314785 ([0m-3.074e-05[0m) Quality = [0m0.790[0m
+
+19:36:07 geometric.nifty Hessian Eigenvalues:  -1.299e-05  9.450e-08  1.189e-06  2.188e-06  3.650e-05  6.804e-05  1.061e-04
+
+19:36:07 geometric.nifty  3.091e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:07 geometric.nifty Step   44 : Displace = [0m3.177e-02[0m/[0m1.281e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m4.685e-05[0m/[92m1.418e-04[0m (rms/max) E (change) = -1309.6878993948 ([0m+3.208e-05[0m) Quality = [0m0.997[0m
+
+19:36:07 geometric.nifty Hessian Eigenvalues:  -9.940e-06  1.011e-07  1.482e-06  7.246e-06  3.826e-05  6.877e-05  1.067e-04
+
+19:36:07 geometric.nifty  3.091e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:07 geometric.nifty Step   45 : Displace = [0m2.903e-02[0m/[0m1.136e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.850e-05[0m/[92m1.280e-04[0m (rms/max) E (change) = -1309.6879298353 ([0m-3.044e-05[0m) Quality = [0m0.974[0m
+
+19:36:07 geometric.nifty Hessian Eigenvalues:  -5.587e-06  1.018e-07  2.176e-06  5.065e-06  3.863e-05  6.873e-05  1.067e-04
+
+19:36:07 geometric.nifty  3.091e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:08 geometric.nifty Step   46 : Displace = [0m2.971e-02[0m/[0m1.196e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.658e-05[0m/[92m9.382e-05[0m (rms/max) E (change) = -1309.6879621076 ([0m-3.227e-05[0m) Quality = [0m0.976[0m
+
+19:36:08 geometric.nifty Hessian Eigenvalues:  -2.188e-05  1.029e-07  2.176e-06  1.731e-05  3.864e-05  6.872e-05  1.066e-04
+
+19:36:08 geometric.nifty  3.091e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:08 geometric.nifty Step   47 : Displace = [0m3.002e-02[0m/[0m1.190e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.054e-05[0m/[92m8.859e-05[0m (rms/max) E (change) = -1309.6879296427 ([0m+3.246e-05[0m) Quality = [0m0.976[0m
+
+19:36:08 geometric.nifty Hessian Eigenvalues:  -1.676e-05  1.027e-07  2.176e-06  1.242e-05  3.865e-05  6.872e-05  1.066e-04
+
+19:36:08 geometric.nifty  3.091e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:08 geometric.nifty Step   48 : Displace = [0m3.003e-02[0m/[0m1.180e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.227e-05[0m/[92m9.423e-05[0m (rms/max) E (change) = -1309.6878984400 ([0m+3.120e-05[0m) Quality = [0m0.973[0m
+
+19:36:08 geometric.nifty Hessian Eigenvalues:  -3.900e-06  1.058e-07  2.030e-06  2.219e-06  3.865e-05  6.871e-05  1.066e-04
+
+19:36:08 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:08 geometric.nifty Step   49 : Displace = [0m1.724e-02[0m/[0m6.912e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m4.010e-05[0m/[92m1.258e-04[0m (rms/max) E (change) = -1309.6878784224 ([0m+2.002e-05[0m) Quality = [0m0.860[0m
+
+19:36:08 geometric.nifty Hessian Eigenvalues:  -1.486e-05  1.087e-07  2.175e-06  1.503e-05  3.865e-05  6.872e-05  1.065e-04
+
+19:36:08 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:09 geometric.nifty Step   50 : Displace = [0m8.873e-03[0m/[0m3.441e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.059e-05[0m/[92m1.071e-04[0m (rms/max) E (change) = -1309.6878893043 ([0m-1.088e-05[0m) Quality = [0m0.949[0m
+
+19:36:09 geometric.nifty Hessian Eigenvalues:  -1.027e-05  1.082e-07  2.176e-06  1.075e-05  3.867e-05  6.871e-05  1.065e-04
+
+19:36:09 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:09 geometric.nifty Step   51 : Displace = [0m7.389e-03[0m/[0m2.976e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.646e-05[0m/[92m9.742e-05[0m (rms/max) E (change) = -1309.6878975595 ([0m-8.255e-06[0m) Quality = [0m0.919[0m
+
+19:36:09 geometric.nifty Hessian Eigenvalues:  -5.856e-06  1.068e-07  2.150e-06  6.274e-06  3.876e-05  6.871e-05  1.065e-04
+
+19:36:09 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:09 geometric.nifty Step   52 : Displace = [0m9.056e-03[0m/[0m3.528e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.788e-05[0m/[92m8.581e-05[0m (rms/max) E (change) = -1309.6879078168 ([0m-1.026e-05[0m) Quality = [0m0.928[0m
+
+19:36:09 geometric.nifty Hessian Eigenvalues:  -3.255e-06  1.065e-07  2.260e-06  3.527e-06  3.879e-05  6.870e-05  1.064e-04
+
+19:36:09 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:09 geometric.nifty Step   53 : Displace = [0m1.081e-02[0m/[0m4.351e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m4.129e-05[0m/[92m1.129e-04[0m (rms/max) E (change) = -1309.6879193286 ([0m-1.151e-05[0m) Quality = [0m0.949[0m
+
+19:36:09 geometric.nifty Hessian Eigenvalues:  -2.543e-06  1.021e-07  1.589e-06  3.399e-06  3.891e-05  6.872e-05  1.065e-04
+
+19:36:09 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:09 geometric.nifty Step   54 : Displace = [0m2.676e-02[0m/[0m1.047e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.694e-05[0m/[92m1.253e-04[0m (rms/max) E (change) = -1309.6879482080 ([0m-2.888e-05[0m) Quality = [0m0.996[0m
+
+19:36:09 geometric.nifty Hessian Eigenvalues:  -1.341e-05  1.122e-07  2.258e-06  1.191e-05  3.981e-05  6.885e-05  1.067e-04
+
+19:36:09 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:09 geometric.nifty Step   55 : Displace = [0m1.353e-02[0m/[0m5.357e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.743e-05[0m/[92m1.101e-04[0m (rms/max) E (change) = -1309.6879330047 ([0m+1.520e-05[0m) Quality = [0m0.935[0m
+
+19:36:09 geometric.nifty Hessian Eigenvalues:  -7.297e-06  1.127e-07  2.912e-06  6.085e-06  3.975e-05  6.885e-05  1.067e-04
+
+19:36:09 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:10 geometric.nifty Step   56 : Displace = [0m2.382e-02[0m/[0m9.242e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.904e-05[0m/[92m1.063e-04[0m (rms/max) E (change) = -1309.6879081768 ([0m+2.483e-05[0m) Quality = [0m0.908[0m
+
+19:36:10 geometric.nifty Hessian Eigenvalues:  -6.079e-06  1.130e-07  1.747e-06  6.026e-06  4.067e-05  6.901e-05  1.069e-04
+
+19:36:10 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:10 geometric.nifty Step   57 : Displace = [0m1.508e-02[0m/[0m6.116e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.489e-05[0m/[92m1.040e-04[0m (rms/max) E (change) = -1309.6878920104 ([0m+1.617e-05[0m) Quality = [0m0.819[0m
+
+19:36:10 geometric.nifty Hessian Eigenvalues:  -9.846e-06  1.138e-07  3.574e-06  9.367e-06  4.116e-05  6.906e-05  1.069e-04
+
+19:36:10 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:10 geometric.nifty Step   58 : Displace = [0m4.504e-03[0m/[0m1.822e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.815e-05[0m/[92m8.058e-05[0m (rms/max) E (change) = -1309.6878973605 ([0m-5.350e-06[0m) Quality = [0m0.944[0m
+
+19:36:10 geometric.nifty Hessian Eigenvalues:  -3.091e-06  1.117e-07  2.304e-06  4.342e-06  4.102e-05  6.906e-05  1.069e-04
+
+19:36:10 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:10 geometric.nifty Step   59 : Displace = [0m7.112e-03[0m/[0m2.507e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m4.259e-05[0m/[92m1.240e-04[0m (rms/max) E (change) = -1309.6878901733 ([0m+7.187e-06[0m) Quality = [0m0.973[0m
+
+19:36:10 geometric.nifty Hessian Eigenvalues:  -2.487e-06  1.174e-07  1.826e-06  4.238e-06  4.131e-05  6.917e-05  1.070e-04
+
+19:36:10 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:10 geometric.nifty Step   60 : Displace = [0m1.707e-02[0m/[0m6.575e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m5.097e-05[0m/[92m1.381e-04[0m (rms/max) E (change) = -1309.6879072073 ([0m-1.703e-05[0m) Quality = [0m0.926[0m
+
+19:36:10 geometric.nifty Hessian Eigenvalues:  -1.042e-05  1.199e-07  4.189e-06  1.061e-05  4.141e-05  6.919e-05  1.070e-04
+
+19:36:10 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:10 geometric.nifty Step   61 : Displace = [0m1.178e-02[0m/[0m4.651e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.574e-05[0m/[92m1.033e-04[0m (rms/max) E (change) = -1309.6879197309 ([0m-1.252e-05[0m) Quality = [0m0.945[0m
+
+19:36:10 geometric.nifty Hessian Eigenvalues:  -3.319e-06  1.226e-07  1.871e-06  5.586e-06  4.163e-05  6.937e-05  1.071e-04
+
+19:36:10 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:11 geometric.nifty Step   62 : Displace = [0m1.784e-03[0m/[0m6.703e-03[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.889e-05[0m/[92m9.078e-05[0m (rms/max) E (change) = -1309.6879217053 ([0m-1.974e-06[0m) Quality = [0m0.862[0m
+
+19:36:11 geometric.nifty Hessian Eigenvalues:  -5.686e-07 -1.373e-08  1.671e-07  4.963e-06  4.162e-05  6.939e-05  1.071e-04
+
+19:36:11 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:11 geometric.nifty Step   63 : Displace = [0m2.996e-02[0m/[0m1.182e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.110e-05[0m/[92m1.035e-04[0m (rms/max) E (change) = -1309.6878902097 ([0m+3.150e-05[0m) Quality = [0m0.988[0m
+
+19:36:11 geometric.nifty Hessian Eigenvalues:  -2.687e-05  1.102e-07  3.115e-06  3.941e-05  4.397e-05  6.951e-05  1.077e-04
+
+19:36:11 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:11 geometric.nifty Step   64 : Displace = [0m2.912e-02[0m/[0m1.152e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.973e-05[0m/[92m1.049e-04[0m (rms/max) E (change) = -1309.6879211013 ([0m-3.089e-05[0m) Quality = [0m0.979[0m
+
+19:36:11 geometric.nifty Hessian Eigenvalues:  -2.001e-05  1.102e-07  3.115e-06  3.579e-05  4.146e-05  6.951e-05  1.075e-04
+
+19:36:11 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:11 geometric.nifty Step   65 : Displace = [0m2.968e-02[0m/[0m1.182e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.819e-05[0m/[92m9.227e-05[0m (rms/max) E (change) = -1309.6879531047 ([0m-3.200e-05[0m) Quality = [0m0.939[0m
+
+19:36:11 geometric.nifty Hessian Eigenvalues:  -3.664e-05  1.103e-07  3.107e-06  3.153e-05  4.138e-05  6.949e-05  1.074e-04
+
+19:36:11 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:12 geometric.nifty Step   66 : Displace = [0m2.917e-02[0m/[0m1.162e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.469e-05[0m/[92m9.318e-05[0m (rms/max) E (change) = -1309.6879216596 ([0m+3.145e-05[0m) Quality = [0m0.969[0m
+
+19:36:12 geometric.nifty Hessian Eigenvalues:  -2.638e-05  1.102e-07  3.063e-06  2.012e-05  4.127e-05  6.948e-05  1.074e-04
+
+19:36:12 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:12 geometric.nifty Step   67 : Displace = [0m2.983e-02[0m/[0m1.185e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.208e-05[0m/[92m1.023e-04[0m (rms/max) E (change) = -1309.6878902924 ([0m+3.137e-05[0m) Quality = [0m0.957[0m
+
+19:36:12 geometric.nifty Hessian Eigenvalues:  -1.632e-05  1.109e-07  3.063e-06  1.606e-05  4.132e-05  6.949e-05  1.074e-04
+
+19:36:12 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:12 geometric.nifty Step   68 : Displace = [0m2.718e-02[0m/[0m1.090e-01[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.116e-05[0m/[92m1.020e-04[0m (rms/max) E (change) = -1309.6879186680 ([0m-2.838e-05[0m) Quality = [0m0.942[0m
+
+19:36:12 geometric.nifty Hessian Eigenvalues:  -8.650e-06  1.107e-07  3.151e-06  9.304e-06  4.123e-05  6.949e-05  1.074e-04
+
+19:36:12 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:12 geometric.nifty Step   69 : Displace = [0m1.894e-02[0m/[0m7.582e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.065e-05[0m/[92m9.154e-05[0m (rms/max) E (change) = -1309.6879379026 ([0m-1.923e-05[0m) Quality = [0m0.986[0m
+
+19:36:12 geometric.nifty Hessian Eigenvalues:  -5.316e-06  1.121e-07  3.155e-06  5.298e-06  4.119e-05  6.952e-05  1.074e-04
+
+19:36:12 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:12 geometric.nifty Step   70 : Displace = [0m1.209e-02[0m/[0m4.879e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.940e-05[0m/[92m1.009e-04[0m (rms/max) E (change) = -1309.6879259576 ([0m+1.195e-05[0m) Quality = [0m0.936[0m
+
+19:36:12 geometric.nifty Hessian Eigenvalues:  -5.260e-06  1.123e-07  3.098e-06  5.271e-06  4.119e-05  6.952e-05  1.074e-04
+
+19:36:12 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:13 geometric.nifty Step   71 : Displace = [0m1.084e-02[0m/[0m4.346e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.071e-05[0m/[92m1.029e-04[0m (rms/max) E (change) = -1309.6879151452 ([0m+1.081e-05[0m) Quality = [0m0.935[0m
+
+19:36:13 geometric.nifty Hessian Eigenvalues:  -2.937e-06  1.110e-07  2.560e-06  3.498e-06  4.117e-05  6.952e-05  1.074e-04
+
+19:36:13 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:13 geometric.nifty Step   72 : Displace = [0m1.072e-02[0m/[0m4.214e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.797e-05[0m/[92m1.061e-04[0m (rms/max) E (change) = -1309.6879044698 ([0m+1.068e-05[0m) Quality = [0m0.936[0m
+
+19:36:13 geometric.nifty Hessian Eigenvalues:  -6.469e-07  1.232e-07  5.753e-07  3.238e-06  4.116e-05  6.951e-05  1.074e-04
+
+19:36:13 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:13 geometric.nifty Step   73 : Displace = [0m5.262e-03[0m/[0m2.124e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.780e-05[0m/[92m1.008e-04[0m (rms/max) E (change) = -1309.6879094621 ([0m-4.992e-06[0m) Quality = [0m0.906[0m
+
+19:36:13 geometric.nifty Hessian Eigenvalues:  -7.450e-07  1.312e-07  6.814e-07  3.236e-06  4.116e-05  6.951e-05  1.074e-04
+
+19:36:13 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:13 geometric.nifty Step   74 : Displace = [0m5.793e-03[0m/[0m2.245e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.824e-05[0m/[92m1.026e-04[0m (rms/max) E (change) = -1309.6879038879 ([0m+5.574e-06[0m) Quality = [0m0.895[0m
+
+19:36:13 geometric.nifty Hessian Eigenvalues:  -1.277e-06  1.364e-07  1.157e-06  3.252e-06  4.115e-05  6.952e-05  1.074e-04
+
+19:36:13 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:13 geometric.nifty Step   75 : Displace = [0m8.017e-03[0m/[0m3.191e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m2.804e-05[0m/[92m1.003e-04[0m (rms/max) E (change) = -1309.6879118285 ([0m-7.941e-06[0m) Quality = [0m0.942[0m
+
+19:36:13 geometric.nifty Hessian Eigenvalues:  -1.052e-06  1.364e-07  9.748e-07  3.211e-06  4.114e-05  6.952e-05  1.074e-04
+
+19:36:13 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:13 geometric.nifty Step   76 : Displace = [0m7.310e-03[0m/[0m2.888e-02[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.000e-05[0m/[92m9.849e-05[0m (rms/max) E (change) = -1309.6879188806 ([0m-7.052e-06[0m) Quality = [0m0.926[0m
+
+19:36:13 geometric.nifty Hessian Eigenvalues:  -3.617e-07  1.356e-07  2.704e-07  3.195e-06  4.114e-05  6.953e-05  1.074e-04
+
+19:36:13 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:14 geometric.nifty Step   77 : Displace = [0m1.503e-03[0m/[0m4.578e-03[0m (rms/max) Trust = 3.000e-02 (=) Grad = [92m3.649e-05[0m/[92m1.121e-04[0m (rms/max) E (change) = -1309.6879202636 ([0m-1.383e-06[0m) Quality = [0m0.288[0m
+
+19:36:14 geometric.nifty Hessian Eigenvalues:  -2.098e-06  1.383e-07  1.887e-06  3.401e-06  4.115e-05  6.955e-05  1.074e-04
+
+19:36:14 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:14 geometric.nifty Step   78 : Displace = [92m8.078e-04[0m/[0m2.275e-03[0m (rms/max) Trust = 7.513e-04 ([91m-[0m) Grad = [92m2.733e-05[0m/[92m1.027e-04[0m (rms/max) E (change) = -1309.6879205021 ([92m-2.385e-07[0m) Quality = [91m-2.650[0m
+
+19:36:14 geometric.nifty [93mNot rejecting step - energy change meets convergence criteria[0m
+
+19:36:14 geometric.nifty Hessian Eigenvalues:  -6.914e-06  1.386e-07  2.438e-06  6.937e-06  4.202e-05  6.995e-05  1.075e-04
+
+19:36:14 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:14 geometric.nifty Step   79 : Displace = [92m3.960e-04[0m/[92m1.518e-03[0m (rms/max) Trust = 3.756e-04 ([91m-[0m) Grad = [92m2.565e-05[0m/[92m1.004e-04[0m (rms/max) E (change) = -1309.6879208491 ([92m-3.470e-07[0m) Quality = [0m0.943[0m
+
+19:36:14 geometric.nifty Hessian Eigenvalues:  -6.914e-06  1.386e-07  2.438e-06  6.937e-06  4.202e-05  6.995e-05  1.075e-04
+
+19:36:14 geometric.nifty  3.092e-03  3.611e-03  4.136e-03  5.339e-03  6.674e-03    .....    4.138e-01  5.712e-01  6.161e-01
+
+19:36:14 geometric.nifty Converged! =D
+
+{
+  "status": "CONVERGED",
+  "optimizer": "geomeTRIC",
+  "geometric_version": "1.1.1",
+  "versions": {
+    "ase": "3.29.0",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "implementation_sha256": {
+    "geometric_backend.py": "0507373d39df987591e9f00b3ae48784ca2bbec822f6a44a9ba4cdd10681141d",
+    "geometric_cli.py": "dac9925f3d6acf04738f67da29cb49acb79921bfd6a96e12baf0bd93193778c9",
+    "openmm_backend.py": "aa0932b19068c98a1ff3ae7e10c8f7bb5eee2700bdb2c2542122ae12cea63b14"
+  },
+  "config": {
+    "transition": true,
+    "maxiter": 300,
+    "coordsys": "tric",
+    "convergence_set": "GAU"
+  },
+  "input_structure_sha256": "15de3b589695e1fd3e07dd883b129ebd5ab855528f52fe38edd772fdc9c01f05",
+  "backend": {
+    "engine": "ase",
+    "factory": "benchmarks.b04_sn2_chloride.calculator:polar1",
+    "kwargs": {},
+    "local_file_sha256": {},
+    "input_file_sha256": "9df4bb2396ac3de180d911f0ccdbfb5fb4f73aa001fe496f53b515327efc74d0"
+  },
+  "stationary_point_certified": false,
+  "connectivity_verified": false,
+  "output": "/home/ruigengji/MLPATH/benchmarks/carbene_ambimodal/results/2026-10-08/opt/TS-CCl2-C4",
+  "iterations": 79,
+  "force_evaluations": 236,
+  "geometry": "geometry.extxyz",
+  "trajectory": "optimization.extxyz",
+  "energy_eV": -35638.423875928616,
+  "fmax_eV_A": 0.005162581203705178
+}

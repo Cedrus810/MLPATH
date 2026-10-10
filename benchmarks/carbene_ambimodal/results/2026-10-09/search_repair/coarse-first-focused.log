@@ -1,0 +1,160 @@
+.............................................F                           [100%]
+=================================== FAILURES ===================================
+_______ test_killed_and_resumed_on_the_relay_is_byte_identical[connect] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-kasuga/pytest-1090/test_killed_and_resumed_on_the1')
+connect = True
+
+    @pytest.mark.parametrize("connect", [False, True], ids=["discover", "connect"])
+    def test_killed_and_resumed_on_the_relay_is_byte_identical(tmp_path, connect):
+        """Killed at trial 36. In connect mode the reactant took 32 trials and the second
+        I-a choice -- the d = 2 microstate out of [4, 2, 4, 4], not the first-queued -- was
+        made at 32, so the kill lands after a real choice with the queue still waiting; the
+        queue persists in insertion order and the rule is deterministic on it."""
+        import json
+        import subprocess
+        import sys
+        from pathlib import Path
+    
+        from ase.io import read, write
+    
+        root = Path(__file__).resolve().parents[1]
+        write(str(tmp_path / "product.extxyz"), _product())
+        product = read(str(tmp_path / "product.extxyz"))
+        settings = dict(BASE, connect_queue_priority=connect, connect_direction_priority=connect)
+        config = SearchConfig(**settings)
+        full = ReactionSearch(proton_relay_factory, config).run(
+            proton_relay_atoms((0, 0, 0)), tmp_path / "full", product=product
+        )
+        assert full["status"] == "completed"
+        if connect:
+            assert len(full["connect_queue_order"]) >= 2
+    
+        script = tmp_path / "child.py"
+        script.write_text(CHILD.format(root=str(root), config=settings), encoding="utf-8")
+        killed = tmp_path / "killed"
+        subprocess.run(
+            [sys.executable, str(script), str(killed), str(tmp_path / "product.extxyz"), "36"],
+            check=False,
+            capture_output=True,
+        )
+        mid = json.loads((killed / "network.json").read_text(encoding="utf-8-sig"))
+        assert mid["status"] == "running"
+        assert mid.get("queue"), "the kill must happen with the queue still populated"
+        if connect:
+            assert len(mid.get("connect_queue_order", [])) >= 2, "and after I-a has chosen"
+    
+>       resumed = ReactionSearch(proton_relay_factory, config).run(
+            proton_relay_atoms((0, 0, 0)), killed, resume=True, product=product
+        )
+
+tests/test_resume_unscanned.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/prrs/search.py:951: in run
+    _rebuild_for_resume(output, cfg, structure_hash(atoms), product_hash, calculator)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output = PosixPath('/tmp/pytest-of-kasuga/pytest-1090/test_killed_and_resumed_on_the1/killed')
+cfg = SearchConfig(seed=7, max_trials=50, max_depth=3, chemical_max_nodes=16, chemical_trials_per_node=96, conformer_max_per...orce_eV_A=100.0, max_energy_rise_eV_atom=20.0, max_nve_drift_eV_atom=0.1, max_uncertainty_eV_A=None, active_atoms=None)
+input_sha256 = 'c3fd5940526052628a2e8643f8415194e6cc42239dc916b21ba25547ea69c2e6'
+product_sha256 = '8feebc1c489eb806dacc0719096df0c6a5e831e03d5efaa3144895de79959197'
+calculator = {'factory': {'module': 'prrs.calculators', 'qualname': 'proton_relay_factory', 'source_sha256': '244e0a8bf94662f950080...7f71cab0955b78847', ...}, 'metadata': {'factory': 'python_callable'}, 'local_file_sha256': {}, 'verifiable': True, ...}
+
+    def _rebuild_for_resume(output, cfg, input_sha256, product_sha256=None, calculator=None):
+        """Reconstruct a dead run's state from disk (PLAN items 6.2-6.5).
+    
+        A process kill leaves network.json at status "running". Its consistent boundary is
+        `resume_point.json`, written just before each microstate leaves the queue: the
+        network as published at that moment plus the counters that live only in memory.
+        Everything after it is in flight and is ROLLED BACK -- attempt rows past the
+        snapshot's count, their trial and committor directories, and the climbs,
+        continuations, descents and ts files the snapshot does not know -- because the
+        rerun of that microstate would otherwise duplicate or collide with them. Deletion
+        is the one place this touches already-written data, so it is named in resume.json
+        -- a separate file, deliberately NOT inside network.json, or the acceptance
+        criterion (resumed run byte-identical to an uninterrupted one) could not even be
+        stated.
+    
+        Refuses (never guesses) when: the network is not mid-run, there is no resume point,
+        the config differs, the input structure differs, the product differs (or one side
+        has a product and the other does not), the implementation fingerprint
+        differs (a resume across implementations is a mixed batch -- this project retired
+        one of those already), or a queued pair is missing from the rebuilt registry. Every
+        refusal but the last happens BEFORE the rollback, so such a refused resume has
+        deleted nothing.
+    
+        Notes
+        -----
+        [1] The manifest recorded `input_structure_sha256` from the start, and nothing read
+            it back: the same config resumed on a different geometry passed every check and
+            continued one run's evidence from another run's structure.
+        [2] Why a snapshot, and why at the microstate boundary. The rollback used to take
+            network.json as it stood and keep every attempt it referenced. But publish()
+            runs after EVERY trial, so a reaction or ts candidate found mid-scan is on disk
+            before its scan is; those rows survived, the rows around them did not, the
+            rebuilt record list had holes, and the next trial id collided with a kept
+            directory (killed after 4 trials of the double-well demo: FileExistsError on
+            t000002). And the queue on disk never holds the microstate being searched --
+            it was popped before its first trial -- so that microstate's remaining
+            directions were silently dropped. The one moment the in-memory state is
+            entirely on disk, queue included, is just before the pop; restarting the
+            microstate there costs its trials and is the only restart that replays the
+            same direction seed. Counters come from the snapshot, not from counting
+            `paths/`: climb and continuation directories are written before their scan is
+            published, so counting them spent budget on discarded work.
+        [3] The direction schedules are rebuilt from the scan records, and a direction that
+            was selected and then never offered -- the loop stopped at a budget before its
+            batch -- has no scan record: its reason lived only in memory, and every resumed
+            run reported it as "unknown" (found 2026-09-28 on the relay testbed, where
+            conformer_trials_per_microstate stops a reactant's last direction; the
+            double-well resume tests never reach that budget). The resume point now carries
+            those reasons, and the proposal of a schedule that never offered anything, in
+            resume_point.json -- outside network.json, so no run's published record moves.
+        """
+        network_path = output / "network.json"
+        if not network_path.exists():
+            raise FileNotFoundError(f"resume needs {network_path}")
+        status = json.loads(network_path.read_text(encoding="utf-8-sig")).get("status")
+        if status != "running":
+            raise ValueError(
+                f"resume needs a mid-run network (status 'running'); this one is {status!r}"
+            )
+        point_path = output / "resume_point.json"
+        if not point_path.exists():
+            raise ValueError(
+                "resume refused: no resume_point.json -- the run died before its first "
+                "microstate was searched, or was written by an implementation without one"
+            )
+        manifest = json.loads((output / "config.json").read_text(encoding="utf-8-sig"))
+        # JSON round-trips tuples as lists, so compare through the same serialisation
+        # rather than letting the container types veto an identical config
+        if json.loads(json.dumps(cfg.to_dict())) != manifest.get("config"):
+            raise ValueError("resume refused: config.json differs from the supplied config")
+        # [1] fail closed: a manifest without the hash cannot vouch for the input either
+        if manifest.get("input_structure_sha256") != input_sha256:
+            raise ValueError(
+                "resume refused: input_structure_sha256 differs from the supplied structure"
+            )
+        # A product is part of what the run was asked (PLAN_2026-09-28 G1): resuming with a
+        # different one, or with one the run never had, or without the one it had, would
+        # stitch distances to two different endpoints into one network. None == None is the
+        # discover case and passes.
+        if manifest.get("product_structure_sha256") != product_sha256:
+            raise ValueError(
+                "resume refused: product_structure_sha256 differs from the supplied product"
+            )
+        source_hash = hashlib.sha256()
+        for path in sorted(Path(__file__).parent.glob("*.py")):
+            source_hash.update(path.name.encode())
+            source_hash.update(path.read_bytes())
+        if manifest.get("implementation_sha256") != source_hash.hexdigest():
+>           raise ValueError(
+                "resume refused: implementation_sha256 differs from the tree -- a resume "
+                "across implementations is a mixed batch"
+            )
+E           ValueError: resume refused: implementation_sha256 differs from the tree -- a resume across implementations is a mixed batch
+
+src/prrs/search.py:410: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_resume_unscanned.py::test_killed_and_resumed_on_the_relay_is_byte_identical[connect]
+1 failed, 45 passed in 148.55s (0:02:28)

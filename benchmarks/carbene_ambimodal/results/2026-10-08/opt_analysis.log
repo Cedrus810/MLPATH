@@ -1,0 +1,32 @@
+1-Cyclohexene-1-carboxaldehyde_6O    CONVERGED  imag []  fmax 0.0026  rmsd_dft 0.018  C0... [(1.206, 1, 'O'), (1.485, 2, 'C'), (2.431, 4, 'C'), (2.562, 3, 'C'), (3.846, 7, 'C')]
+1_2-bis_methylene_cycloheptane_7C    CONVERGED  imag []  fmax 0.0052  rmsd_dft 0.006  C0... [(1.528, 1, 'C'), (1.534, 3, 'C'), (2.568, 15, 'C'), (2.582, 2, 'C'), (3.019, 16, 'C')]
+6O-_2_+_1                            CONVERGED  imag []  fmax 0.0025  rmsd_dft 0.047  C2... [(1.381, 3, 'O'), (1.381, 4, 'O'), (1.483, 15, 'C'), (1.52, 13, 'C'), (2.335, 5, 'C')]
+6O-_4_+_1                            CONVERGED  imag []  fmax 0.0037  rmsd_dft 0.049  C2... [(1.392, 3, 'O'), (1.392, 4, 'O'), (1.421, 1, 'O'), (1.543, 15, 'C'), (2.247, 0, 'C')]
+CCl2                                 CONVERGED  imag []  fmax 0.0004  rmsd_dft 0.007  C0... []
+Dimethoxycarbene                     CONVERGED  imag [-81]  fmax 0.0100  rmsd_dft 0.005  C0... [(1.31, 2, 'O'), (1.324, 1, 'O'), (2.314, 7, 'C'), (2.407, 3, 'C')]
+Dimethoxycarbene_2                   CONVERGED  imag [-81]  fmax 0.0025  rmsd_dft 0.130  C0... [(1.31, 2, 'O'), (1.325, 1, 'O'), (2.314, 7, 'C'), (2.407, 3, 'C')]
+TS-2OMe                              CONVERGED  imag [-492]  fmax 0.0010  rmsd_dft 0.111  C2... [(1.303, 4, 'O'), (1.307, 3, 'O'), (1.979, 15, 'C'), (2.347, 9, 'C'), (2.388, 5, 'C')]
+TS-2OMe-2                            CONVERGED  imag [-106]  fmax 0.0016  rmsd_dft 0.180  C2... [(1.293, 4, 'O'), (1.32, 3, 'O'), (1.465, 15, 'C'), (2.191, 13, 'C'), (2.391, 5, 'C')]
+TS-2OMe-C2                           CONVERGED  imag [-547]  fmax 0.0004  rmsd_dft 0.067  C2... [(1.33, 4, 'O'), (1.356, 3, 'O'), (1.819, 13, 'C'), (2.27, 15, 'C'), (2.358, 5, 'C')]
+TS-2OMe-cis                          CONVERGED  imag [-539]  fmax 0.0002  rmsd_dft 0.115  C2... [(1.307, 3, 'O'), (1.322, 4, 'O'), (1.898, 15, 'C'), (2.345, 9, 'C'), (2.387, 5, 'C')]
+TS-CCl2                              CONVERGED  imag [-230]  fmax 0.0012  rmsd_dft 1.019  C23... [(2.16, 20, 'C'), (2.729, 16, 'C'), (3.469, 4, 'C'), (3.49, 15, 'C'), (4.099, 17, 'C')]
+TS-CCl2-C4                           CONVERGED  imag [-4]  fmax 0.0052  rmsd_dft 0.226  C23... [(2.932, 20, 'C'), (3.194, 16, 'C'), (3.506, 4, 'C'), (4.016, 15, 'C'), (4.515, 3, 'C')]
+
+energies relative to optimised olefin + carbene (POLAR-1, gas, kcal/mol)
+6O-_2_+_1            b09    -28.97
+6O-_4_+_1            b09    -48.15
+TS-2OMe              b09      9.25
+TS-2OMe-2            b09      0.70
+TS-2OMe-C2           b09     25.27
+TS-2OMe-cis          b09     13.07
+TS-CCl2              b08     -3.54
+TS-CCl2-C4           b08     -4.24
+
+RMSD between saddles that must be distinct points (A)
+TS-2OMe        TS-2OMe-2      0.850
+TS-2OMe        TS-2OMe-C2     1.208
+TS-2OMe        TS-2OMe-cis    0.565
+TS-2OMe-2      TS-2OMe-C2     1.271
+TS-2OMe-2      TS-2OMe-cis    0.992
+TS-2OMe-C2     TS-2OMe-cis    1.251
+TS-CCl2        TS-CCl2-C4     0.704

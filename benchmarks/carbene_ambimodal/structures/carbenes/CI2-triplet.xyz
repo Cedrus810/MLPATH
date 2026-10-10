@@ -1,0 +1,5 @@
+3
+Properties=species:S:1:pos:R:3 name=CI2-triplet section=carbenes charge=0 spin=3 G_hartree=-633.254359 pbc="F F F"
+C        0.00000000       0.76687800       0.00000000
+I        1.85174200      -0.04340700       0.00000000
+I       -1.85174200      -0.04340900       0.00000000

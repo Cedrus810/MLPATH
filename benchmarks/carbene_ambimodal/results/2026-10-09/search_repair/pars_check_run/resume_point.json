@@ -1,0 +1,87 @@
+{
+  "attempts": 0,
+  "saddle_searches": 0,
+  "continuations": 0,
+  "network": {
+    "schema_version": 2,
+    "withheld_candidates": [],
+    "status": "running",
+    "chemical_nodes": [
+      {
+        "id": "c0000",
+        "chemical_key": "fcc671678639ec61f28b07c2c1a9efe43a26adad0fef5e6bad6f2f72c8c237b8",
+        "depth": 0,
+        "discovered_by": null,
+        "fragments": [
+          "C2"
+        ],
+        "key_components": {
+          "graph_hash": "fb26f0c375c5a7a3",
+          "fragments": [
+            "C2"
+          ],
+          "tetrahedral_parity": [],
+          "locked_bond_parity": null,
+          "stereo_unresolved": "no_assignment_satisfies_valences",
+          "charge_sensitive": false,
+          "configuration_protocol": "lewis-neutral-closed-shell/2026-09-04",
+          "note": "conformation deliberately excluded; only configurational stereochemistry contributes",
+          "automorphisms": {
+            "enumerated": true,
+            "count": 2,
+            "complete_candidates": 2,
+            "colour_class_sizes": [
+              2
+            ],
+            "search_nodes": 3,
+            "budget_unit": "search_nodes",
+            "limit": 20000
+          }
+        },
+        "trials_spent": 0,
+        "reservoir": {
+          "capacity": 8,
+          "occupied": 1,
+          "evicted": []
+        },
+        "microstates": [
+          {
+            "id": "c0000/m0000",
+            "structure": "chemical/c0000_m0000.extxyz",
+            "energy_eV": 7.888609052210118e-32,
+            "discovered_by": null,
+            "trials_spent": 0,
+            "torsions_rad": {},
+            "free_bonds": [],
+            "outcomes": {},
+            "reservoir_score": 3.0
+          }
+        ],
+        "conformer_transitions": []
+      }
+    ],
+    "reactions": [],
+    "reaction_channels": [],
+    "ts_candidates": [],
+    "ts_connected_channels": [],
+    "amplitude_scans": [],
+    "window_semantics": {
+      "rule": "finite_horizon_response_then_quench",
+      "response_steps": 20,
+      "timestep_fs": 0.1,
+      "response_time_fs": 2.0,
+      "horizon_stability": "not_measured",
+      "static_basin_boundary": false,
+      "meaning": "amplitude windows depend on the response horizon, thermal seed and quench; neither a static basin boundary nor a committor"
+    },
+    "attempts": 0,
+    "interpretation": "Observed connectivity candidates between chemical macrostates; no TS, barrier or rate inferred",
+    "queue": [
+      [
+        "c0000",
+        "c0000/m0000"
+      ]
+    ]
+  },
+  "unscanned_directions": {}
+}

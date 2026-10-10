@@ -1,0 +1,2443 @@
+Ambimodal (2 + 1)/(4 + 1) pseudopericyclic
+transition states in reactions between
+dihalocarbenes and olefins
+
+Tongkun Wang,1 Xiao-Song Xue1*
+
+1State Key Laboratory of Fluorine and Nitrogen Chemistry and Advanced Materials
+
+and Shanghai-Hong Kong Joint Laboratory in Chemical Synthesis, Shanghai Institute
+of Organic Chemistry, University of Chinese Academy of Sciences, Chinese Academy
+of Science, 345 Lingling Road, Shanghai 200032, China
+
+
+
+
+                                        1
+                                               Table of contents
+Computational methods.......................................................................................................4
+
+Supporting Tables and figures .............................................................................................5
+
+      Table S1: Gibbs free energy differences between triplet and singlet carbenes.......................5
+
+      Figure S1: IRC of TS1 and structures of connected key points ...........................................5
+
+      Figure S2: HOMO of TS1...............................................................................................5
+
+      Figure S3: Quasi-classical simulations from VTS1 and a triplet pathway ............................6
+
+      Figure S4: The (4 + 1)/(2 + 1) data point against a linear correlation ...................................7
+
+      Figure S5: The impact of altering dienes in cycloadditions with dibromocarbene .................8
+
+      Figure S6: Possible TSs competing with TS1....................................................................9
+
+      Figure S7: Possible TSs competing with TS-2OMe...........................................................9
+
+      Figure S8: IRC, time-gap and BGAN-EPS on trajectories from TS-2OMe ........................10
+
+      Figure S9: PIO analysis of TS-2OMe ............................................................................11
+
+      Figure S10: The impact of altering olefin in cycloaddition with dimethoxycarbene ............12
+
+      Figure            S11:            Pericyclic              reaction            between               hexatriene              and
+
+butadiene...............................................12
+
+      Table S2: Energetics and imaginary modes of transition states .........................................14
+
+      Table S3: Energetics of optimized structures ..................................................................15
+
+Structural information ......................................................................................................16
+
+      Carbenes ....................................................................................................................16
+
+      Olefins .......................................................................................................................18
+
+
+
+                                                                  2
+      Transition states.........................................................................................................23
+
+      Transition states (quasi-classical simulation) ..............................................................38
+
+      Products.....................................................................................................................47
+
+References .........................................................................................................................52
+
+
+
+
+                                                                  3
+Computational methods
+
+Optimization and energy profile calculations. DFT calculations were performed on Gaussian 161.
+M06-2X exchange-correlation functional2 and def2-TZVP basis set3, 4 with chlorobenzene (PhCl)
+or toluene as solvent was used for geometry optimization and normal mode analysis, Gibbs free
+energy calculation and PIO analysis. The solvent model is represented by the self-consistent reaction
+field (SCRF) using the SMD Model5. Wavefunction stability tests were performed for all transition
+states to rule out the possibility of open-shell singlet pathways. The temperature for thermochemical
+correction and entropy contribution to Gibbs free energy were set to 298 K (involving dihalocarbene)
+or 384 K (involving dimethoxycarbene). All carbenes studied in this work exhibit stable singlet
+ground states, which are more stable than their corresponding triplet states (Table S1).
+Quasi-classical simulations. We run quasi-classical simulations at the M06-2X/def2-SVP-
+SMD(PhCl/toluene) level of theory from TSs optimized at the same level, using the Progdyn code
+developed by Singleton and coworkers.6, 7 For some TSs that have diminishing imaginary
+frequencies, e.g. TS-CI2-svp and TS-8C-svp, keyword “maxstep=2” was applied for convergence.
+Temperature was set to 298 K (involving dihalocarbene) or 384 K (involving dimethoxycarbene)
+for simulations with a time-step of 1.0 fs. Trajectories were terminated when the forming bond
+lengths are either lower than 1.6 Å or longer than 3.0 Å, or the simulation time is over 500 fs.
+Variational transition state (VTS) search. Variational transition state8, 9 (VTS) search was
+performed on KiSThelP for TS1.10 9 points in total (including the structure of TS1) were extracted
+from IRC of and near TS1, setting the step size keyword to 5 for the direction to product, and to 20
+for the direction to initial vdW complex structure. The calculation was performed at the “variational
+transition state kinetic level” on KisThelP.
+Bidirectional generative adversarial network for entropic path sampling (BGAN-EPS).
+Entropic path sampling (EPS) was performed using a bidirectional generative adversarial network
+(BGAN) method developed by Yang et al.11, 12 Training procedures took 50 epochs. Reversal
+trajectories (propagating from TS structures to initial vdW structures) were truncated for smooth
+sampling around TS structures. For dibromocarbene and diene, 96 trajectories were used for both
+(2 + 1) and (4 + 1) in the bond length range of [3.0 Å, 1.7 Å] and [3.5 Å, 1.7 Å] calculated at 298
+K. Ensembles of sampling were set to 13 or 18. For dimethoxycarbene and cycloalkenyl aldehyde,
+only (2 + 1) was analyzed because (4 + 1) does not have enough trajectory. The bond length range
+is [2.7 Å, 1.7 Å], separated into 8 ensembles. Electronic energies, EE, were extracted from
+trajectories and averaged in the same range and interval of entropies.
+Orbital analysis and visualizations of structures. Intrinsic bond orbital (IBO) analysis was
+performed using IBOview13 at the PBE14/def2-SVP level. IBO is a straightforward method of
+connecting conceptual electron transfer to visualized orbital overlapping along reaction coordinate
+of interest. We targeted IBOs along forming bonds to understand interaction schemes and contrast
+different pathways. Principal interacting orbital (PIO) analysis was performed using the code
+developed in Lin’s group.15, 16 Wavefunction information were calculated with the NBO7 setting.
+We observed symmetries of PIO on each fragment, which can help to judge whether forming a bond
+between certain atoms is symmetrically allowed or prohibited. Contributions of PIOs reflect on
+strength of interactions between fragments defined, therefore may denote the tendency of bonding.
+Electron populations help to identify electrophile and nucleophile. Visualization of MO and PIO
+was performed on Avogadro.17 3D pictures of structures were drawn using CYLview.18
+                                                 4
+Supporting Tables and figures
+
+Table S1: Gibbs free energy differences between triplet and singlet states of carbenes studied
+         Carbene                 CBr2                 CF2                CCl2                 CI2             C(OMe)2
+      aΔG
+            Triplet-Singlet
+                                 13.1                52.4                17.3                 7.4                 62.2
+        (kcal/mol)
+aΔG
+      Triplet-Singlet = GTriplet – GSinglet, the Gibbs free energy difference between triplet and singlet states of carbene.
+
+
+
+
+   As shown in Table S1, the singlet states of dihalocarbenes are stabilized by conjugation between
+the halogen lone pairs and the vacant p-orbital of the carbene center. This conjugative stabilization
+diminishes from F to I, leading to a corresponding decrease in the ΔGTriplet-Singlet value from
+difluorocarbene to diiodocarbene. In dimethoxycarbene, the two methoxy groups provide even
+stronger lone-pair conjugation, resulting in the greatest singlet stabilization among all carbenes
+examined in this study.
+
+
+
+
+                                                                          TS + 6
+
+
+
+
+Figure S1: IRC of TS1 and structures of connected key points.
+
+
+
+
+                   HOMO of TS1                    View 1                                     View 2
+
+Figure S2: HOMO of TS1 calculated at the M06-2X-def2-TZVP-SMD(PhCl) level of theory. The isosurface value
+is set to 0.015.
+
+
+                                                                5
+   A
+         G (kcal/mol)
+
+                                   Br
+                                         C
+                                        Br
+                            TS1-Triplet                                                           Br
+                               18.9                                                           C
+                                                                                                  Br
+     Triplet
+      13.1                                                                        TS2-Triplet
+                                                                                     6.2
+
+
+
+    Singlet
+       0
+    Br        Br
+          C
+
+                                                                                                            (4 + 1)-Triplet
+                                                         IM-Triplet                                              -15.2
+                                                           -19.1
+
+                                                                    Br                                                    Br
+                                                                                                                         Br
+                                                                    Br
+   B
+
+                   CBr2
+                  8%
+                                        Br
+                                              C                                          Br
+                                                                                              +                 Br   +         Br
+
+               Recrossing                    Br                                         Br                      Br             Br
+
+
+                                 VTS1             Ntraj = 100       MD ratio 26%                        58%               2%
+                                                                    Exp. ratio (0.19)                  (0.81)
+
+Figure S3: (A) The energy profile of the cycloaddition between triplet dibromocarbene and 1,2-
+bis(methylene)cycloheptane at the M06-2X/def2-TZVP-SMD(PhCl) level of theory. Numbers in 3D pictures of
+optimized structures denote key bond lengths. Unit: Å. (B) Results of quasi-classical simulations on the variational
+transition state VTS1 searched from vicinity of TS1. 100 trajectories were obtained.
+
+
+   We also tested the possibility of a triplet pathway because a triplet intermediate IM-Triplet can
+be located. However, because the triplet state of dibromocarbene is 13.1 kcal/mol higher in free
+energy compared with its singlet state, a barrier of 18.9 kcal/mol is required for entering the triplet
+pathway via TS1-triplet. Then the ring-closure via TS2-Triplet from IM-Triplet requires a barrier
+of 25.3 kcal/mol. However, in experiment19 the possibility of having diradical intermediates is
+capped as the reaction gives a decent yield of 79%. Therefore, we ruled out the possibility for the
+triplet pathway.
+   As quasi-classical simulations on TS1 lead to a recrossing ratio of 19%, we searched the
+variational transition state VTS1 around TS1 and ran 100 trajectories on VTS1 (Figure S3B). The
+recrossing ratio is indeed decreased to 8% but simulations start to yield recrossing trajectories
+between the 2 products (5% recross back to the initial state while 3% are between the 2 products).
+Meanwhile, the (2 + 1)/(4 + 1) ratio of trajectories is 0.69 : 0.31 for VTS1, in close consistency with
+the ratio of 0.66 : 0.34 for TS1, indicating similar dynamics behaviors for both VTS1 and TS1.
+Therefore, we still run quasi-classical simulations on TS1 for better reproducibility and more
+complete analysis for trajectories.
+
+
+
+                                                                6
+                                                                  (4 + 2) vs. (4 + 3)
+                                                                  A reported outlier
+
+
+
+                                                                      (4 + 1) vs. (2 + 1)
+                                                                     Studied in this work
+
+
+
+
+                              A reported linear correlation
+
+
+
+
+Figure S4: Fitting the data point of the (2 + 1)/(4 + 1) cycloaddition into a linear correlation between product ratio
+and bond length difference.
+
+
+The data point of ambimodal cycloaddition between dibromocarbene and diene was plotted against
+an linear correlation (Figure S4) between the ratio of competing products and differences of lengths
+of corresponding bonds in ambimodal TSs of pericyclic reactions,20 and a reported outlier.21
+According to the linear correlation, ambimodal phenomenon would diminish if the difference of
+competing bond lengths exceeds 0.4 Å. However, in the case of ambimodal TS1, the difference
+between the bond forming (4 + 1) versus the bond forming (2 + 1) reaches 0.57 Å—well beyond
+the proposed threshold—yet the product ratio of (4 + 1) from QCMD remains substantial at 0.34,
+rendering the newly found point as another salient outlier. This deviation from the expected trend
+suggests that other factors may contribute to the observed ambimodality.
+
+
+
+
+                                                          7
+      A
+                                                4                             4                                                         4
+                                                                                                                4
+                                                                                                                                        1
+                                          1                               1                                 1
+                                   5C                              7C                              8C                                 6R
+     d(C1-C4)                    3.08 Å                          2.97 Å                          2.96 Å                             2.83 Å
+
+
+
+
+         LUMO
+
+
+
+                                -0.06 ev                         0.33 ev                        0.30 ev                            0.22 ev
+      B
+
+                  CBr2
+
+                  48%
+                                                                                                           Br       +              Br
+                                              C
+                Recrossing            Br            Br                                                Br                           Br
+                              TS-5C-h1                           Ntraj = 100 MD ratio            22%                          21%
+                           ΔG‡ =7.7 kcal/mol                                 Exp. ratio         (0.04)                       (0.96)
+
+
+                  CBr2
+                                                                                                       Br
+                                     Br         Br
+                                          C                                                           Br
+                              TS-5C-h2
+                           ΔG‡ =7.2 kcal/mol
+      C
+
+                  CBr2
+
+                  11%
+                                                                                                      Br   +                  Br+                Br
+                                                 C                                                                            Br
+                Recrossing                 Br                                                     Br
+                                                Br                                                                                                   Br
+                               TS-8C
+                          ΔG‡ =7.2 kcal/mol                 Ntraj = 100 MD ratio         8%                          74%                    4%
+                                                                        Exp. ratio      (0.10)                      (0.90)
+      D
+                   CBr2         Br                                                               Br
+                                                                                          Br
+
+                               Br
+                                     C                                                                      +       Br
+                   4%                                                                                                   Br
+                Recrossing
+                                 TS-6r-h1
+                             ΔG‡ =9.8 kcal/mol                    Ntraj = 100 MD ratio 66%                                   21%
+
+
+
+                 CBr2
+                               Br                                                         Br
+                                     C
+                                    Br                                                     Br
+                                 TS-6r-h2
+                             ΔG‡ =7.0 kcal/mol
+
+Figure    S5:      (A)       C1-C4              distance   and   LUMO             of   1,2-bis(methylene)cyclopentane                        (5C),        1,2-
+bis(methylene)cycloheptane (7C), 1,2-bis(methylene)cyclooctane (8C), and cyclohexadiene (6R), (B) cycloaddition
+between 5C and dibromocarbene, (C) cycloaddition between 8C and dibromocarbene, (D) cycloaddition between
+6R and dibromocarbene. 100 quasi-classical trajectories are simulated for each case. Numbers in 3D picture of
+optimized structures denote key bond lengths. Unit: Å.
+
+
+  With a hypothesis that low LUMO energy and small C1-C4 distance favor the (4 + 1) pathway
+(Figure S5A), we studied the cycloadditions involving other dienes. In cycloaddition between 5C
+and dibromocarbene (Figure S5B), the situation is similar to that of 7C and dichlorocarbene (Figure
+                                                                       8
+5). As 5C has lower LUMO energy than that of 7C, trajectories show that the ambimodal TS, TS-
+5C-h1 leads to significantly higher ratio of (4 + 1) product. However, because the C1-C4 distance
+of 5C is also longer than that of 7C, hampering the C4-C5 orbital overlapping, TS-5C-h1 is
+kinetically unfavored compared with another competing pathway via TS-5C-h2, which yields only
+(2 + 1) product for 0.5 kcal/mol. Therefore, the experimentally observed (2 + 1) to (4 + 1) ratio is
+increased to 0.96 : 0.04. For 8C (Figure S5C), although its C1-C4 distance and LUMO energy are
+consistent with those of 7C, however, its bond length difference between C4-C5 and C2-C5 in the
+ambimodal TS is increased to 0.60 Å, decreasing its (4 + 1) product ratio. The (2 + 1)/(4 + 1) ratio
+of trajectories is 0.10 : 0.90, in decent agreement with the experimental ratio. Noticeably, 6R (Figure
+S5D) has both smaller LUMO energy and C1-C4 distance than those of 7C, and indeed trajectories
+starting from TS-6r-h1 show (4 + 1) is now the main pathway, but in previous experiments only (2
++ 1) product was observed.22 This is because the ambimodal TS-6r-h1 is kinetically unfavored as
+its Gibbs free energy is 2.8 kcal/mol higher than that of TS-6r-h2. The relatively higher energy of
+TS-6r-h1 may arise from steric repulsion between bromine and hydrogen.
+
+
+
+
+Figure S6: Relative Gibbs free energies of transition states along competing pathways between dibromocarbene and
+1,2-bis(methylene)heptane. Numbers in 3D pictures of optimized structures of transition states denote key bond
+lengths. Unit: Å.
+
+
+
+
+  ΔΔG‡              TS-2OMe                          TS-2OMe-cis                        TS-2OMe-C2
+(kcal/mol)             0                                 1.6                                15.0
+Figure S7: Relative Gibbs free energies of transition states along competing pathways between dimethoxycarbene
+and cyclohexene aldehyde. Numbers in 3D picture of optimized structures of transition states denote key bond
+lengths. Unit: Å.
+
+
+
+
+                                                       9
+A                                                              B
+
+
+
+
+                     Entropic trap
+
+
+
+
+                                C
+
+
+
+
+                                                                     TS + 16
+
+
+
+
+Figure S8: (A) entropic (solid lines, T = 384 K) and average free energy (hollow lines) profile from BGAN-EPS of
+(2 + 1) in bond range of [2.7Å, 1.7 Å], from 158 trajectories. Error bars were computed from 10 loops. Electronic
+energies were averaged from snapshots of trajectories. The first points were set as the reference for entropy. Numbers
+in 3D pictures of optimized structures of transition states denote key bond lengths. Unit: Å. (B) Histogram of the
+time-gap analysis. Each interval spans 60 fs. (C) IRC of the cycloaddition between dimethoxycarbene and 1-
+cyclohexene-1-carboxaldehyde.
+
+
+   IRC graph of TS-2OMe clearly shows a flat post-TS region that corresponds to an entropic
+intermediate. Average time-gap is 58 fs for (2 + 1) trajectories and 138 fs for (4 + 1) trajectories,
+meaning the (2 + 1) pathway prefers being dynamically concerted (< 60 fs) while the (4 + 1) pathway
+prefers being dynamically step-wise (> 60 fs). An entropic trap is also observed in the (2 + 1)
+pathway with depth of -4.6 kcal/mol. The analysis was not performed on (4 + 1) because much less
+trajectories lead to (4 + 1).
+
+
+
+
+                                                         10
+  A                                                                     B
+                                                                              MeO
+
+                                                                                          OMe                       O
+    Fragment 1
+     (carbene)                                                                  LUMO
+                                                                                                                LUMO
+
+
+                                                                            MeO
+
+                                                                                          OMe
+                                                                                                                    O
+    Fragment 2
+      (olefin)                                                                  HOMO
+                                                                                                                HOMO
+
+                                                                                                            HOMO  1
+                                                                                                                    O
+                       1st PIO pair   2nd PIO pair    3rd PIO pair
+
+                                                                                                MeO
+    Contribution         68.2%                                          MeO    (2 + 1)                          MeO (4 + 1)
+                                        25.2%               1.3%
+                                                                                                          OMe
+                                                                                    OMe                                 OMe
+ Electron Population
+ (carbene) (olefin)
+                       1.63   0.37    0.12   1.88         0.01   1.99
+                                                                                    O
+                                                                                          +           O
+                                                                                                                +       O
+                                       TS-2OMe
+
+
+Figure S9: (A) PIO of TS-2OMe calculated at the M06-2X/def2-TZVP-SMD(PhMe) level of theory. Carbene and
+olefin are assigned as the 2 fragments for PIO analysis. (B) Scheme for orbital interactions that enable the
+ambimodality.
+
+
+
+
+   Similar to the case of cycloaddition between dibromocarbene and diene, the 1st and 2nd PIO pairs
+correspond to the simultaneous interactions between HOMO (carbene) and LUMO (olefin), LUMO
+(carbene) and HOMO (π-orbital of olefin). However, according to IBO analysis of example
+trajectories (Figure 7), the ambimodality of TS-2OMe is achieved by the competing interactions
+between LUMO (carbene) with either HOMO (π-orbital of olefin) or HOMO – 1 (lone pair of
+carbonyl oxygen). Therefore the 2nd PIO pair facilitates the formation of C2-C5 bond, i.e. (2 + 1)
+product. The 3rd PIO pair incorporates the HOMO – 1 (olefin), but its contribution to the overall
+interaction is as trivial as 1.3% involving presumably in hydrogen bonding with a methyl group of
+carbene. Its electron population on the 2 fragments also has a steep difference of 0.01 versus 1.99,
+also indicating a weak interaction. Such a trivial component of orbital interaction in TS-2OMe
+favoring (4 + 1) reflects on the low (4 + 1) ratio obtained through trajectories, and emphasizes the
+importance of entropic intermediate in directing ambimodal pathways.
+
+
+
+
+                                                     11
+   A                                                                                                                       Et
+                                    1                       1                       1
+                                                                                                                          1
+                                                                O
+                                    O                                                    O                            O
+                                  5O                     6O                       7O                               6J
+  d(C1-O)                       2.92 Å                 2.85 Å                   2.82 Å                           2.83 Å
+
+
+
+
+   HOMO
+
+
+
+
+                              -8.37 ev                 -8.41 ev             -8.34 ev                            -8.24 ev
+
+
+
+
+  HOMO-1
+
+
+
+                              -8.93 ev                 -8.84 ev             -8.83 ev                            -8.44 ev
+   B
+
+             MeO        OMe        MeO                                              OMe
+                    C                 C OMe
+                 2%
+                                                                                      OMe         +              OMe
+                                                                                                                OMe
+                                         O                                          O
+            O Recrossing                                                                                    O
+                                  TS-5O
+                            ΔG‡ =21.3 kcal/mol                       MD ratio      1%                       97%
+   C
+
+              MeO       OMe             MeO                                                  OMe
+                    C                      C OMe
+                   2%
+                                                                                               OMe
+                                                                                                        +                  OMe
+            O                                O                                               O                            OMe
+                Recrossing                                                                                            O
+                                    TS-7O
+                              ΔG‡ =22.8 kcal/mol                     MD ratio        19%                        79%
+   D
+             Et MeO         OMe                Et                                                 Et                          Et
+                        C
+                                                 OMe
+                      5%                       C                                                   OMe      +                 OMe
+        O                                    O                                               O
+                   Recrossing                   OMe                                               OMe                     O OMe
+                                      TS-6J
+                                ΔG‡ =21.5 kcal/mol                      MD ratio             0%                       95%
+
+Figure S10: (A) C1-O distance, HOMO, HOMO - 1 of cyclopent-1-ene-1-carbaldehyde (5O), cyclohex-1-ene-1-
+carbaldehyde (6O), cyclohept-1-ene-1-carbaldehyde (7O), and (E)-2-propylidenecyclohexan-1-one (6J).
+Cycloaddition between dimethoxycarbene and (B) 5O, (C) 7O, (D) 6J. 100 quasi-classical trajectories are simulated
+for each case. Numbers in 3D picture of optimized structures denote key bond lengths. Unit: Å.
+
+
+  Indicated by IBO analysis (Figure 7), the ambimodality originates from the competing interaction
+between the LUMO of carbene and the HOMO or HOMO - 1 of olefin. 7O that has the shortest
+d(C1-O) indeed gives the highest (4 + 1) ratio. However, HOMO and HOMO - 1 energies do not
+show any trend for predicting (4 + 1) ratio. The impact of structure to the ambimodality of
+cycloaddition between dimethoxycarbene and α, β-unsaturated aldehyde awaits further study.
+
+
+
+                                                                12
+   A
+
+               +             5%
+                                                                                               +
+                          Recrossing
+                                     TS-64-42                                        (4 + 2)         (6 + 4)
+                                       ‡
+                                                                      MD ratio        90%              5%
+                                 ΔG =31.9 kcal/mol
+   B                                                                       C
+
+
+     Fragment 1
+       (diene)                                                                                         LUMO
+
+                                                                            LUMO
+
+
+
+
+     Fragment 2
+       (triene)                                                                                        HOMO
+                                                                            HOMO
+
+
+                         1st PIO pair                 2nd PIO pair
+
+
+     Contribution           48.1%                       47.2%
+
+ Electron Population                                  1.68    0.32
+                         0.32   1.68
+  (diene) (triene)                                                       HOMO (triene)             HOMO (diene)
+                                           TS-64-42                      LUMO (diene)              LUMO (triene)
+
+Figure S11: (A) Pericyclic reaction between hexatriene and butadiene computed at the M06-2X/def2-TZVP-
+SMD(PhCl) level of theory for energetics and at the M06-2X/def2-SVP-SMD(PhCl) level of theory for quasi-
+classical simulations. 100 trajectories were obtained. (B) PIO of TS-64-42 calculated at the M06-2X/def2-TZVP-
+SMD(PhCl) level of theory. Hexatriene and butadiene are assigned as the 2 fragments for PIO analysis. (C) Scheme
+for orbital interactions that enable the ambimodality. Numbers in 3D picture of optimized structures denote key bond
+lengths. Unit: Å.
+
+
+   From previous studies of Houk et al.20, We took the pericyclic reaction between hexatriene and
+butadiene as an example for comparison. In Figure S11A, at the level of theory used in this work,
+the bond length difference is 0.46 Å (0.37 Å in literature), shorter than the value of 0.57 Å in the
+case of dibromocarbene and diene, while the product ratio of (6 + 4) (with longer forming bond)
+versus (4 + 2) (with shorter forming bond) is 0.053 : 0.947 (0.048 : 0.952 in literature). PIO analysis
+(Figure S11B) of ambimodal TS-64-42 reveals that, according to orbital symmetries, both the 1st
+and 2nd PIO pairs allow interactions for both (4 + 2) and (6 + 4) pathways as of depicted in Figure
+S11C. However, although the 2 pairs have comparable contributions, 48.1% and 47.2%, (6 + 4) is
+overwhelmed by (4 + 2) meaning neither of them prefer (6 + 4). Therefore, although PIO can help
+to deduce the orbital interactions originating ambimodal TSs, predicting product ratios remains
+difficult. Apart from contributions and electron populations of vital PIO pairs, other key information
+including orbital distributions on atoms that form competing bonds, and/or indices for orbital
+interactions, are required for better predict product ratios using orbital analysis methods.
+
+
+
+                                                         13
+Table S2: Electronic energy, enthalpy, Gibbs free energy and imaginary modes of transition states
+                           E (Hartree)            H (Hartree)            G (Hartree)                ν (cm-1)
+
+        TS1              -5537.701682            -5537.473774           -5537.531488                -117.00
+
+        TS2              -5537.718321            -5537.489026           -5537.541702                -38.23
+
+      TS-CF2              -589.038722            -588.807263             -588.857906                -312.03
+
+      TS-CCl2            -1309.713750            -1309.484901           -1309.538836                -158.47
+
+    TS-CCl2-C4           -1309.713956            -1309.485291           -1309.539801                -110.39
+
+       TS-CI2             -984.565865            -984.338239             -984.398336                -121.88
+
+     TS-2OMe              -616.228695            -615.956949             -616.036788                -385.66
+
+    TS-2OMe-2             -616.244082            -615.971317             -616.047851                -102.87
+
+     TS1-Triplet         -5537.680343            -5537.452500           -5537.513066                -148.41
+
+     TS2-Triplet         -5537.705228            -5537.477903           -5537.533341                -715.21
+
+      TS-64-42            -389.316397            -389.096705             -389.143536                -526.72
+
+     TS-5C-h1            -5459.083930            -5458.916950           -5458.969948                -34.84
+
+     TS-5C-h2            -5459.084651            -5458.917702           -5458.970795                -56.19
+
+       TS-8C             -5577.005943            -5576.747790           -5576.807065                -51.71
+
+      TS-6r-h1           -5419.779263            -5419.640878           -5419.689874                -122.15
+
+      TS-6r-h2           -5419.780684            -5419.642590           -5419.694400                -17.65
+
+       TS1-h2            -5537.702295            -5537.474191           -5537.530795                -97.43
+
+       TS1-h3            -5537.701869            -5537.474014           -5537.531219                -89.25
+
+    TS-2OMe-cis           -616.225863            -615.954107             -616.034279                -407.09
+
+    TS-2OMe-C2            -616.204040            -615.933430             -616.013003                -518.24
+
+       TS-5O              -576.919498            -576.679090             -576.755225                -408.55
+
+       TS-7O              -655.538813            -655.236189             -655.318935                -373.94
+
+       TS-6J              -694.861250            -694.528746             -694.618616                -387.70
+
+
+
+
+                                                       14
+Table S3: Electronic energy, enthalpy and Gibbs free energy of optimized minima structures
+                                      E (Hartree)            H (Hartree)            G (Hartree)
+
+                     7C              -351.319127            -351.100342            -351.142801
+
+               7C-H-transfer         -5537.823780           -5537.592163          -5537.647065
+
+                 7C-(2 + 1)          -5537.811852           -5537.580316          -5537.633574
+
+                 7C-(4 + 1)          -5537.855935           -5537.623062          -5537.676149
+
+                    6O               -347.953958            -347.784207            -347.841498
+
+                 6O-(2 + 1)          -616.291674            -616.017335            -616.095322
+
+                 6O-(4 + 1)          -616.318938            -616.043865            -616.119927
+
+                    CBr2             -5186.375079           -5186.367099          -5186.400416
+
+                    CF2              -237.719428            -237.708395            -237.736343
+
+                    CCl2             -958.389406            -958.380820            -958.411455
+
+                    CI2              -633.238705            -633.231006            -633.266136
+
+               CBr2 (Triplet)        -5186.353615           -5186.345296          -5186.379494
+
+                CF2 (Triplet)        -237.634675            -237.623675            -237.652786
+
+               CCl2 (Triplet)        -958.361179            -958.352235            -958.383811
+
+                CI2 (Triplet)        -633.226231            -633.218298            -633.254359
+
+                 IM-triplet          -5537.746231           -5537.516647          -5537.573679
+
+             7C-(4 + 1)-Triplet      -5537.742925           -5537.513221          -5537.567423
+
+                Hexatriene           -233.369129            -233.241993            -233.279971
+
+                 Butadiene           -155.973629            -155.882346            -155.914331
+
+                     5C              -272.700995            -272.542979            -272.581831
+
+                     8C              -390.622667            -390.373590            -390.418119
+
+                     6R              -233.399931            -233.270780            -233.305077
+
+                    5O               -308.635888            -308.497269            -308.551204
+
+                    7O               -387.256558            -387.055833            -387.117351
+
+                     6J              -426.576223            -426.345169            -426.414922
+
+
+
+
+                                                      15
+Structural information
+
+Atomic coordinates are reported here in .xyz format. Gibbs free energy values are in Hartree
+
+Carbenes
+
+3
+CBr2 G=-5186.400416
+  C                   0.00000000           0.98326600     0.00000000
+  Br                 1.54253200          -0.08445400     0.00000000
+  Br                -1.54253200         -0.08410600      0.00000000
+
+
+
+3
+CBr2-triplet G=-5186.379494
+  C                     0.00000000         0.71043600     0.00000000
+  Br                   1.65540500        -0.05991100     0.00000000
+  Br                  -1.65540500       -0.06187800      0.00000000
+
+
+
+3
+CF2 G=-237.736343
+  C                      0.00000000        0.59046500     0.00000000
+  F                     1.02367600       -0.19683700     0.00000000
+  F                    -1.02367600      -0.19680600      0.00000000
+
+
+
+3
+CF2-triplet G=-237.652786
+  C                     0.00000000         0.49997700     0.00000000
+  F                    1.12620200        -0.16666000     0.00000000
+  F                   -1.12620200       -0.16665900      0.00000000
+
+
+
+3
+CCl2 G=-958.411455
+  C                  0.00000000           0.83122900      0.00000000
+  Cl                1.39334000          -0.14668900      0.00000000
+  Cl               -1.39334000         -0.14668500       0.00000000
+
+
+
+3
+CCl2-triplet G=-958.383811
+  C                    0.00000000         0.61716400      0.00000000
+                                                16
+ Cl                  1.49926800     -0.10891700    0.00000000
+ Cl                 -1.49926800    -0.10890500     0.00000000
+
+
+
+3
+CI2 G=-633.266136
+  C                   0.00000000    1.09104300       0.00000000
+  I                  1.72226400 -0.06176500        0.00000000
+  I                 -1.72226400  -0.06175000       0.00000000
+
+
+
+3
+CI2-triplet G=-633.254359
+  C                     0.00000000    0.76687800     0.00000000
+  I                    1.85174200 -0.04340700      0.00000000
+  I                   -1.85174200  -0.04340900     0.00000000
+
+
+
+11
+Dimethoxycarbene G=-268.237892
+ C                  -0.07832300      0.87306600       0.00013200
+ O                  -0.69792900    -0.28711400       0.00028800
+ O                   1.21302500      0.68498400      -0.00012200
+ C                   1.78702600     -0.63876800     -0.00004400
+ H                   1.48072600     -1.18545200     -0.88991100
+ H                   2.86227200     -0.48718900     -0.00048200
+ H                   1.48139700     -1.18504800       0.89030300
+ C                  -2.12762900    -0.19565500     -0.00016200
+ H                  -2.46571000      0.32904500       0.89132900
+ H                  -2.46510800      0.33024800     -0.89116800
+ H                  -2.50079200    -1.21642000     -0.00096000
+
+
+
+11
+Dimethoxycarbene G=-268.138715
+ C                   0.05364200     -0.73475800      0.00037600
+ O                   0.80823000       0.38176800      0.00083100
+ O                  -1.28159200     -0.70797000    -0.00019100
+ C                  -1.88009000       0.58676000   -0.00021700
+ H                  -1.58962500       1.14597400    -0.89152800
+ H                  -2.95421900       0.42095200    -0.00069200
+ H                  -1.59036400       1.14565900     0.89153400
+ C                   2.20220600       0.10645400    -0.00049000
+ H                   2.47931900      -0.46125400     0.89121200
+                                          17
+ H                     2.47785200    -0.46016100    -0.89334500
+ H                     2.70938700     1.06771100     -0.00030600
+
+
+
+Olefins
+
+23
+1,2-bis(methylene)cycloheptane 7C G=-351.142801
+ C                      1.12299100    -1.36651700   -0.64301200
+ C                      2.16814100    -0.39919600   -0.08881000
+ C                      1.73388000     1.06032200    -0.00778800
+ C                     -0.07748900   -1.58889700     0.28714300
+ C                      0.44834200     1.30900400      0.79451400
+ H                      0.77444100    -1.02298000   -1.62245100
+ H                      2.45471000    -0.74099500     0.91189100
+ H                      1.58970300     1.45845600    -1.01680100
+ H                      0.52186300     0.80847000      1.76464500
+ H                      0.28615000    -1.59443400     1.32124000
+ H                      1.60737100    -2.33147600   -0.80680000
+ H                      3.06904800    -0.45673700   -0.70509700
+ H                      2.54255200     1.63780600      0.44719200
+ H                     -0.51017800   -2.57422700      0.10911300
+ H                      0.36068300     2.37914600      0.98840000
+ C                     -1.18499600   -0.56966100     0.16359300
+ C                     -0.79525000     0.86037700     0.06296800
+ C                     -2.46510000   -0.94118400     0.17507800
+ H                     -3.26878500   -0.21518700      0.15492200
+ H                     -2.74254000   -1.98801500      0.22418200
+ C                     -1.47813500     1.71585300   -0.69750300
+ H                     -1.19854000     2.76246500   -0.74848400
+ H                     -2.32078700     1.39710300   -1.29905200
+
+
+
+17
+1,2-bis(methylene)cyclopentane 5C G=-272.581831
+ C                      0.96799400    -1.20766800     0.16494200
+ C                      1.78105100    -0.00582300    -0.32958800
+ C                      0.98049400     1.19295400      0.19191500
+ C                     -0.45924700     0.74702100     0.05865000
+ C                     -0.46833300   -0.74250100      0.05553400
+ C                     -1.53400600   -1.52903200    -0.05160200
+ H                     -1.43351900   -2.60796500    -0.06818300
+ C                     -1.51217700     1.54696100    -0.07224300
+ H                     -2.51829000     1.15683700    -0.17411500
+                                           18
+ H                   -2.53767400    -1.12653200     -0.12586800
+ H                   -1.39803500      2.62457200     -0.08347000
+ H                    1.20352000     -1.39676300       1.21731900
+ H                    1.15348900     -2.12774700     -0.38780200
+ H                    2.81192300     -0.01531700       0.02143900
+ H                    1.79204400      0.00686500      -1.42188600
+ H                    1.18112400      2.12541400      -0.33402700
+ H                    1.21075400      1.34916400       1.25094400
+
+
+
+26
+1,2-bis(methylene)cyclooctane 8C G=-390.418119
+ C                     -1.41458100     0.97483200      0.93550500
+ C                     -0.32407100   -1.48614900    -0.86850900
+ C                     -2.21142100     0.14985300    -0.08963500
+ C                     -1.72779200   -1.28848200    -0.27810900
+ H                     -0.26774000   -1.01265500    -1.85083500
+ H                     -2.10783100     1.53440500      1.56711200
+ H                     -2.22150800     0.66523300    -1.05595600
+ H                     -0.87760500     0.29902000      1.60499000
+ H                     -0.18590800   -2.55698000    -1.03112300
+ H                     -3.25443200     0.09644700      0.22987200
+ H                     -2.43525000   -1.80892900    -0.92926700
+ H                     -1.76109900   -1.79700200       0.69090100
+ C                      0.51743100     1.43543100     -0.73586000
+ H                     -0.06421700     1.08766600    -1.59340400
+ H                      1.14099300     2.25424100     -1.09805200
+ C                     -0.44190200     1.98526800      0.32447500
+ H                      0.14393000     2.44614400       1.12469000
+ H                     -1.02141100     2.78745800    -0.14240400
+ C                      1.41532700     0.32317500     -0.25669800
+ C                      0.80935800    -1.00854700      0.01760700
+ C                      1.23786700    -1.77063800      1.02355400
+ H                      1.99746300    -1.42874000      1.71600500
+ H                      0.82082700    -2.75782400      1.19212400
+ C                      2.72770000     0.51705600     -0.11934300
+ H                      3.39356000    -0.28438200      0.17719500
+ H                      3.17273700     1.48510500     -0.31977000
+
+
+
+14
+Cyclohexadiene 6R G= -233.305077
+ C                   -1.18717800    -0.71682100     -0.25674000
+ C                    0.10684300     -1.41567600      0.06280100
+                                           19
+ C                    1.25175400      0.72209800    -0.11413200
+ C                    0.11241300      1.41525300    -0.06284600
+ C                   -1.18428900      0.72139700      0.25674300
+ H                   -1.31819700    -0.71817500    -1.34725500
+ H                    0.10404100     -2.49191600      0.19311700
+ H                    2.19668200      1.21856900     -0.30059300
+ H                    0.11358200      2.49146600     -0.19337500
+ H                   -2.02923900      1.27214100    -0.15740700
+ H                   -1.31514300      0.72301800      1.34728700
+ H                   -2.03426500    -1.26409600      0.15765300
+ C                    1.24890200    -0.72689300       0.11419100
+ H                    2.19186200     -1.22715200      0.30047700
+
+
+
+18
+1-Cyclohexene-1-carboxaldehyde 6O G=-347.841498
+ C                     2.10369000     0.43105200      0.04824500
+ O                     2.95914600    -0.41718300    -0.00466800
+ C                     0.64264600     0.18321000      0.01995300
+ C                   -0.26596300      1.38215900      0.09745400
+ C                     0.19057200   -1.06822700     -0.08284700
+ C                   -1.68874600      1.03369100    -0.33001900
+ H                    -0.26725300     1.77419700      1.12072100
+ C                   -1.26152600   -1.42655300     -0.09026100
+ H                     0.91858300    -1.86957400    -0.16564000
+ C                   -2.14587100   -0.25892000       0.33953000
+ H                    -2.36471200     1.85495300    -0.08824600
+ H                    -1.42015900   -2.29462200      0.55465200
+ H                    -2.08219500   -0.13950100      1.42532400
+ H                    -1.53030500   -1.75745100    -1.10058700
+ H                    -3.18887400   -0.47136000      0.10104600
+ H                    -1.71533600     0.90231000    -1.41617300
+ H                     0.13693100     2.18150500     -0.53122700
+ H                     2.39134400     1.49854300      0.12515200
+
+
+
+15
+1-Cyclopentene-1-carboxaldehyde 5O G=-308.551204
+ C                     1.82114200     0.44648700     0.01192200
+ O                     2.68376400    -0.39228200   -0.08253400
+ C                     0.37591700     0.16493500     0.02802400
+ C                    -0.68389700     1.23715300    0.12763900
+ C                    -0.15772100   -1.05744000     0.01541700
+ C                    -1.97364500     0.46532200   -0.21182300
+                                          20
+ H                   -0.71160000     1.64557000     1.14298600
+ C                   -1.65492600   -1.01069000      0.09764600
+ H                    0.42194200    -1.97170400    -0.00722500
+ H                   -2.84337600     0.83389100     0.32922000
+ H                   -1.97123100   -1.29524700      1.10747800
+ H                   -2.13901100   -1.70648500    -0.58904400
+ H                   -2.17838300     0.56699000    -1.27857800
+ H                   -0.50586200     2.07487200    -0.54861300
+ H                    2.09618600     1.51577000      0.09109500
+
+
+
+21
+1-Cycloheptene-1-carboxaldehyde 7O G=-387.117351
+ C                    -2.34765200   -0.43182700  -0.07923000
+ O                    -3.17055300     0.38345500  -0.41330900
+ C                    -0.92247900   -0.14485100    0.22780100
+ C                    -0.03974700   -1.30798000    0.59332500
+ C                    -0.50967400     1.12326200    0.16546200
+ C                     1.16585100    -1.50611200  -0.33104100
+ H                     0.32170800    -1.18518400    1.62093600
+ C                     0.88631300     1.58881600     0.44298200
+ H                    -1.25127600     1.86750800  -0.10961000
+ C                     1.95146900     0.95460500   -0.46206100
+ H                     1.57032700    -2.50597400  -0.15664600
+ H                     1.13675000     1.36144600     1.48687000
+ H                     2.86391600     1.54887500   -0.37521500
+ H                     0.92703800     2.67311500     0.34196700
+ H                     1.62656900     1.02773800   -1.50402300
+ H                     0.82946700    -1.47934900  -1.37183300
+ H                    -0.64436000   -2.21824900     0.58994000
+ H                    -2.63802100   -1.49631900     0.01949600
+ C                     2.29131400    -0.49520900  -0.12651600
+ H                     2.62413500    -0.54603900    0.91641700
+ H                     3.14580100    -0.79944400  -0.73615400
+
+
+
+24
+6J G=-426.414922
+ C                   -0.84676100     1.15628400    -0.01070800
+ C                   -2.30073200     0.82052800      0.24531100
+ C                    0.13760200     0.02403900     -0.04320300
+ C                   -0.35806100   -1.38698700    -0.26160200
+ H                    0.33476600    -2.09548900      0.19446700
+ H                   -2.42200900     0.85016600      1.33507200
+                                          21
+ C                   1.42637200      0.32577700      0.12907800
+ H                   1.67474500      1.37259100      0.28429400
+ C                   2.56434400     -0.65033300      0.12713000
+ H                   2.40768700     -1.40091800    -0.65147100
+ H                   2.56441400     -1.19836000      1.07652400
+ C                   3.91345600      0.03065800    -0.06742200
+ H                   4.10361900      0.75102100      0.73020300
+ H                   4.72566100     -0.69665000    -0.06533300
+ H                   3.94407500      0.56864000     -1.01645200
+ O                  -0.49982700      2.30941300    -0.14124100
+ H                  -0.35256600    -1.59646700    -1.33807900
+ H                  -2.90690500      1.62772500    -0.16514700
+ C                  -2.72124800    -0.55422800    -0.26292600
+ H                  -2.70860700    -0.56545000    -1.35731300
+ H                  -3.74769900    -0.75914800      0.04496800
+ C                  -1.77197400    -1.62018800      0.26526300
+ H                  -1.76845200    -1.58983000      1.35942700
+ H                  -2.10810000    -2.61644300    -0.02675600
+
+
+
+14
+Hexatriene G=-233.279971
+ C                   -2.84897900     0.49095100   -0.03773800
+ C                   -1.81532900   -0.34043600     0.08617600
+ H                   -3.86755200     0.15358500     0.10578900
+ H                   -2.70142300     1.53654800   -0.28605400
+ H                   -1.98783000   -1.38373000     0.33657200
+ C                   -0.43051500     0.06326300   -0.09389000
+ C                    0.60404900    -0.77622600     0.03233700
+ H                   -0.25317100     1.10326800   -0.35676800
+ H                    0.39911500    -1.82220800     0.24457700
+ C                    2.01212100    -0.40521700   -0.12206100
+ C                    2.52065500     0.79999400     0.12409300
+ H                    2.67890400    -1.19867100   -0.44651000
+ H                    3.57252900     1.00518700    -0.03004900
+ H                    1.90741600     1.61204500     0.49893600
+
+
+
+10
+Butadiene G=-155.914331
+ C                   -1.83403400   -0.11097300     0.00016300
+ C                   -0.60722900    0.40420600    -0.00026700
+ H                   -2.71427100    0.51938200     0.00042000
+ H                   -1.99147300   -1.18434500     0.00056100
+                                         22
+ H                  -0.47040200     1.48229400     -0.00053100
+ C                   0.60719800    -0.40417100     -0.00019800
+ C                   1.83402400     0.11096300       0.00016700
+ H                   0.47045100    -1.48226400     -0.00053800
+ H                   1.99171200     1.18429200       0.00062500
+ H                   2.71423300    -0.51951200      0.00026800
+
+
+
+Transition states
+
+26
+TS1 G= -5537.531488
+ C                    4.13738000    -0.12291700       0.17481600
+ C                    3.87290100    -1.14023900     -0.93353800
+ C                    2.56944400    -1.92056500     -0.80845100
+ C                    3.18457600      1.08074600      0.16328300
+ C                    1.30624900    -1.04707200     -0.72586500
+ H                    4.09939700     -0.61430100      1.15253100
+ H                    3.87885800     -0.61243500    -1.89342400
+ H                    2.60416200     -2.56465900      0.07506600
+ H                    1.33740800     -0.29163800    -1.51839600
+ H                    2.98228100      1.35294000     -0.87920700
+ H                    5.15625100      0.25121600      0.05519500
+ H                    4.69990000     -1.85396300    -0.96657400
+ H                    2.47154400     -2.57789600    -1.67538100
+ H                    3.67251100      1.94391600      0.61742000
+ H                    0.43252000     -1.67632100    -0.91013000
+ C                    1.87382900      0.86829300      0.88061500
+ C                    1.13396400    -0.38414900       0.61257300
+ C                    1.37231500      1.79806800      1.69545600
+ H                    0.40027800      1.68516500      2.16140000
+ H                    1.91400100      2.71603800      1.89207800
+ C                    0.32560500    -0.93165000       1.53741200
+ H                   -0.18527700    -1.86509100      1.33904400
+ H                    0.25825500     -0.53615400      2.54209300
+ C                   -1.66335200      0.39782000      0.72896300
+ Br                 -1.27605100      1.43611600    -0.82788800
+ Br                 -2.79250800    -1.06316900      0.20093600
+
+
+
+26
+TS1-h2 G= -5537.530795
+ C                    4.09560200   -0.00011900      0.78698900
+ C                    4.31369000   -0.47359300     -0.64847500
+                                          23
+ C                    3.18802800     -1.31600100    -1.23748200
+ C                    2.95302200      1.01299700      0.95109000
+ C                    1.81030800     -0.63246100    -1.22512300
+ H                    3.92165100     -0.85905100      1.44331900
+ H                    4.46386900      0.40705100     -1.28235000
+ H                    3.11170400     -2.26623400    -0.70052100
+ H                    1.91193900      0.39235600     -1.59502500
+ H                    2.95398700      1.68408100      0.08457500
+ H                    5.01779500      0.47204800      1.13189300
+ H                    5.24006400     -1.05158700    -0.69520600
+ H                    3.43745300     -1.55784100    -2.27297600
+ H                    3.13683600      1.63717200      1.82602600
+ H                    1.14078300     -1.16136400    -1.90536800
+ C                    1.58099100      0.40342900      1.10548200
+ C                    1.17461600     -0.63051400      0.13685000
+ C                    0.74567200      0.82552500      2.05924600
+ H                   -0.26064800      0.43709900      2.16111900
+ H                    1.04779700      1.59079700      2.76442400
+ C                    0.25238100     -1.56807900      0.43702000
+ H                    0.02131100     -2.35944800    -0.26425400
+ H                   -0.15702200    -1.65858900      1.43469300
+ C                   -1.48059200    -0.39229900    -0.81388600
+ Br                 -1.24066600      1.49730700    -0.66078300
+ Br                 -2.95332900    -0.89958700      0.33390900
+
+
+
+26
+TS1-h3 G= -5537.531219
+ C                   -3.27678000   -1.83117800     -0.18691200
+ C                   -3.99197700   -0.78227500     -1.03569700
+ C                   -3.88180400    0.65166700      -0.53010200
+ C                   -1.74519800   -1.73111000     -0.22056200
+ C                   -2.44379800    1.15939000      -0.35382200
+ H                   -3.62873900   -1.78030500       0.84836600
+ H                   -3.59056800   -0.83155500     -2.05366200
+ H                   -4.40337400    0.74854700       0.42699400
+ H                   -1.86362100    0.93349300      -1.25427900
+ H                   -1.42909800   -1.44046900     -1.23099400
+ H                   -3.55420800   -2.81895400     -0.56006000
+ H                   -5.05052000   -1.04503900     -1.10586700
+ H                   -4.39386900    1.30913000      -1.23678100
+ H                   -1.29924100   -2.70820900     -0.03167500
+ H                   -2.46157600    2.24504200      -0.24774800
+ C                   -1.14218600   -0.75080600       0.74445800
+                                          24
+ C                  -1.75299100     0.58699800     0.86068100
+ C                  -0.01261500   -1.06083000      1.40896400
+ H                   0.47002700    -0.35485500     2.07347300
+ H                   0.39655100    -2.06193600     1.36036400
+ C                  -1.72115700     1.25942900     2.01301400
+ H                  -2.15227700     2.25140700     2.08967300
+ H                  -1.29146400     0.83477500     2.91194400
+ C                   1.23439600    -0.28048500    -0.63690100
+ Br                  1.25676600     1.61055500    -0.34355600
+ Br                  2.93342400   -0.99929500    -0.06697200
+
+
+
+26
+TS2 G= -5537.541702
+ C                  -4.12239900     0.09168200     0.26703000
+ C                  -3.88478100     1.11170800    -0.84233100
+ C                  -2.58938500     1.90663800    -0.73459100
+ C                  -3.09024500   -1.04240600      0.32131900
+ C                  -1.31243200     1.03846900    -0.79783300
+ H                  -4.15613800     0.59595500     1.23786700
+ H                  -3.89378300     0.58892300    -1.80459300
+ H                  -2.58279400     2.50052300     0.18332500
+ H                  -1.45145600     0.27217300    -1.57125700
+ H                  -2.87246300   -1.37841100    -0.69869200
+ H                  -5.10695700   -0.35474100      0.11310000
+ H                  -4.72162600     1.81412700    -0.86093500
+ H                  -2.53992400     2.61168900    -1.56646000
+ H                  -3.51832500   -1.89541100      0.84798300
+ H                  -0.46636700     1.65656100    -1.09979000
+ C                  -1.80085500   -0.67377800      1.01135600
+ C                  -0.99395300     0.38931000     0.49865400
+ C                  -1.34798900   -1.39664900      2.06377000
+ H                  -0.42481000   -1.17709500      2.58085300
+ H                  -1.90178400   -2.26300100      2.40625500
+ C                   0.22416500     0.75215400      1.18525100
+ H                   0.50909000     1.77021300      0.92480000
+ H                   0.20130000     0.65545700      2.26891100
+ C                   1.35427500    -0.21448600     0.63433300
+ Br                  2.97622400     0.81678500     0.24461900
+ Br                  0.97542300   -1.30743700    -0.94756500
+
+
+
+26
+TS-CF2 G= -588.857906
+                                        25
+ C                    2.73821600      0.77837400     -0.05660600
+ C                    2.94797500    -0.71565000     -0.27750200
+ C                    1.89655200    -1.61562300       0.35846700
+ C                    1.46329300      1.33709000     -0.70520600
+ C                    0.45708200    -1.35916700     -0.12381100
+ H                    2.72966800      1.00196000       1.01503300
+ H                    2.96843000    -0.90711200     -1.35585400
+ H                    1.92837200    -1.51677200       1.44761600
+ H                    0.45769200    -1.23240000     -1.21205800
+ H                    1.32433800      0.85668900     -1.67956900
+ H                    3.59398000      1.30977400     -0.47852200
+ H                    3.93032900    -0.99950700       0.10836100
+ H                    2.14354800    -2.65467500       0.13036800
+ H                    1.59514100      2.40148700     -0.90006100
+ H                  -0.14555200    -2.24025200        0.09584000
+ C                    0.21031200      1.17944400       0.12348600
+ C                  -0.19548300    -0.17536700       0.53078000
+ C                  -0.51340600      2.25879900       0.44437400
+ H                  -1.42516400      2.20633400       1.02343800
+ H                  -0.20244900      3.24454300       0.11966600
+ C                  -1.20305900    -0.40339100       1.42074800
+ H                  -1.37960800    -1.41085100        1.77408000
+ H                  -1.61077600      0.38683300       2.03674300
+ C                  -2.74102800    -0.45512700       0.07461600
+ F                  -2.74967400      0.71744600     -0.54840000
+ F                  -2.39151200    -1.31992900     -0.88061700
+
+
+
+26
+TS-CCl2 G= -1309.538836
+ C                  -3.36707600     0.61745600     -0.45126900
+ C                  -3.61145700    -0.70593800       0.26943100
+ C                  -2.49560300    -1.73536200       0.13903300
+ C                  -2.20368100     1.44455600       0.11607500
+ C                  -1.12531000    -1.24480800       0.64232700
+ H                  -3.20094400     0.43815600      -1.51848300
+ H                  -3.77316800    -0.49611400       1.33218500
+ H                  -2.39679500    -2.05409300     -0.90283100
+ H                  -1.25835100    -0.72861600       1.59812700
+ H                  -2.20874700     1.35851800       1.20820300
+ H                  -4.27609900     1.21761300      -0.37542100
+ H                  -4.53789300    -1.14833800     -0.10506000
+ H                  -2.76635100    -2.62205200       0.71573300
+ H                  -2.36101500     2.49879900      -0.11276000
+                                          26
+ H                  -0.47676700    -2.10411900       0.81838500
+ C                  -0.84232600      1.06350400     -0.41402400
+ C                  -0.43726300    -0.34277300     -0.33633200
+ C                  -0.01147800      1.99759600     -0.89449800
+ H                    0.98080100      1.76617800     -1.26046100
+ H                  -0.30896100      3.03909500     -0.92305100
+ C                   0.58302600     -0.85244400     -1.08212500
+ H                    0.74500700    -1.92148800     -1.11019800
+ H                    1.02280700    -0.27653100     -1.88486400
+ C                   2.13373700     -0.74396000       0.44433300
+ Cl                  3.52133100    -0.51221800     -0.64376000
+ Cl                  1.95402500      0.75021900       1.34510000
+
+
+
+26
+TS-CCl2-C4 G= -1309.539801
+ C                  -3.23787900    -0.77273200     -0.34536700
+ C                  -3.38654400     0.67307200      -0.80322000
+ C                  -2.56817000     1.69172700      -0.01505000
+ C                  -1.79852600    -1.30479200     -0.38003200
+ C                  -1.04820400     1.56575700      -0.19565200
+ H                  -3.62911300    -0.88394700        0.67050600
+ H                  -3.10093400      0.74167900     -1.85842600
+ H                  -2.81781000      1.63067500       1.04884600
+ H                  -0.82901500      1.29696500     -1.23908900
+ H                  -1.33918300    -1.04237200     -1.33769600
+ H                  -3.85158600    -1.40571200     -0.99060100
+ H                  -4.44226400      0.95009400     -0.74765000
+ H                  -2.85749300      2.69161200     -0.34403600
+ H                  -1.82170600    -2.39389300     -0.32381300
+ H                  -0.56872800      2.52966300     -0.02533700
+ C                  -0.94130100    -0.80519300       0.75879700
+ C                  -0.37382000     0.55019000        0.67448400
+ C                  -0.72774300    -1.56948200       1.83432800
+ H                  -0.18017500    -1.21008500        2.69648300
+ H                  -1.12974300    -2.57482800        1.88848100
+ C                   0.81522400      0.85012000        1.24930900
+ H                    1.17184900     1.87163900        1.26895500
+ H                    1.34931100     0.12491800        1.85067400
+ C                   2.00495900      0.44846500      -0.68373300
+ Cl                  3.60323500     0.66716800        0.03410200
+ Cl                  1.78609400    -1.27241600     -0.92354200
+
+
+
+                                          27
+26
+TS-CI2 G= -984.398336
+ C                    4.57751300  -0.33043300   -0.05569700
+ C                    4.17193700  -1.46272600   -0.99673400
+ C                    2.85762800  -2.15519900   -0.65588500
+ C                    3.66816100    0.90437400   -0.13271600
+ C                    1.64052700  -1.21969000   -0.56849600
+ H                    4.61724600  -0.69533400     0.97584200
+ H                    4.10616400  -1.05851200   -2.01276900
+ H                    2.95341600  -2.68638200     0.29585800
+ H                    1.61770900  -0.56882800   -1.44932400
+ H                    3.36923300    1.05027300   -1.17723200
+ H                    5.59219500  -0.02068500   -0.31449000
+ H                    4.96497300  -2.21470800   -1.01266300
+ H                    2.65337800  -2.90950900   -1.41941900
+ H                    4.22888300    1.79465400    0.15423100
+ H                    0.73508400  -1.82902200   -0.58906600
+ C                    2.43170500    0.84446800    0.73135500
+ C                    1.61664500  -0.39040100     0.68743400
+ C                    2.07005100    1.88735500    1.48183200
+ H                    1.15342600    1.88653300    2.05970400
+ H                    2.67806100    2.78377600    1.52099700
+ C                    0.88994000  -0.78798900     1.74558500
+ H                    0.32816500  -1.71301800     1.71758600
+ H                    0.92748100  -0.26342400     2.69120900
+ C                   -1.33635300   0.26439500     0.96965600
+ I                  -1.06267300   1.80231300   -0.43793800
+ I                  -2.24774000  -1.40383700    0.04777800
+
+
+
+29
+TS-2OMe G= -616.036788
+ C                  0.33706400     1.92669200    -0.98662800
+ O                   1.49245800    2.12333100    -0.62131200
+ C                  0.82969700    -0.92551800     0.46259600
+ O                   0.37725100   -1.66118600   -0.51760200
+ O                   2.08387400   -0.61990600     0.29173500
+ C                  1.12579700    -1.79229000   -1.73854300
+ H                   0.49257500   -2.36799200   -2.40749700
+ H                   1.31953500   -0.80084000   -2.15075200
+ H                   2.06609100   -2.31250200   -1.56655500
+ C                  2.74148500     0.09260200     1.34705200
+ H                   3.77402600   -0.24764700     1.34465000
+ H                   2.68874400    1.15624600     1.12698600
+                                        28
+ H                   2.27512700     -0.14531800      2.30231800
+ C                  -0.65269000      1.17642700    -0.27529300
+ C                  -2.02271200      0.93043100    -0.84821400
+ C                  -0.36095400      0.64872800      0.97069200
+ C                  -2.51488300    -0.49808100    -0.57265700
+ H                  -2.73639200      1.63461500    -0.40244900
+ C                  -1.50242900      0.05354800      1.73967100
+ H                   0.44976600      1.10045200      1.52989500
+ C                  -2.31697000    -0.93745900      0.89589300
+ H                  -3.56759800    -0.57244400    -0.84967800
+ H                  -2.14311700      0.89040800      2.04172900
+ H                  -3.28189300    -1.09266400      1.38035300
+ H                  -1.14893700    -0.42809100      2.65122500
+ H                  -1.79871700    -1.89726400      0.91342400
+ H                  -1.96937000    -1.17957600    -1.22459300
+ H                  -2.03140500      1.12684100    -1.92290000
+ H                   0.00248300      2.34739600     -1.95612800
+
+
+
+29
+TS-2OMe-cis G= -616.034279
+ C                    0.00116300     2.17348700     -0.32647400
+ O                    0.31756600     3.16859300       0.31090100
+ C                   -1.07588400   -0.88814200    -0.01049400
+ O                   -0.67987700   -1.11757300       1.20786600
+ O                   -2.26801100   -0.33773300    -0.03820000
+ C                   -1.33160100   -0.48616500      2.32502900
+ H                   -0.75920500   -0.78041200       3.19975000
+ H                   -1.29632100     0.59648300      2.19233900
+ H                   -2.36272400   -0.82153300       2.41483400
+ C                   -2.89376000   -0.20093200    -1.31712900
+ H                   -3.95963600   -0.33950500    -1.15436400
+ H                   -2.71011500     0.79919200    -1.70825500
+ H                   -2.52098400   -0.95920500    -2.00426600
+ C                    0.73841400     0.95317500     -0.41760700
+ C                    2.05274100     0.78292200       0.29026000
+ C                    0.24829200    -0.08808300    -1.19969600
+ C                    2.31224800    -0.66135000      0.74386700
+ H                    2.85759400     1.09270700     -0.38817200
+ C                    1.21498300    -1.18655400    -1.54208500
+ H                   -0.48505600     0.16305100    -1.95982000
+ C                    1.94045400    -1.73425000    -0.30544000
+ H                    3.36303500    -0.75797800      1.02057400
+ H                    1.94368100    -0.74841500    -2.23280300
+                                         29
+ H                   2.83228100   -2.26668700    -0.63852600
+ H                   0.71059800   -1.99587900    -2.07104000
+ H                   1.29255800   -2.47705100     0.16256400
+ H                   1.73678500   -0.84327400     1.65048400
+ H                   2.10262500    1.46306200      1.14201100
+ H                  -0.94484100    2.18451300    -0.91123300
+
+
+
+29
+TS-2OMe-C2 G= -616.013003
+ C                   0.60956600     2.02947400    -0.82030500
+ O                   1.20883500     2.82673200     -0.15627500
+ C                   0.99326500    -0.40351000   -0.58642000
+ O                   0.58826000    -1.66503200    -0.32536600
+ O                   2.18383900    -0.13517900    -0.04667000
+ C                   0.00582900    -2.38454200   -1.41126600
+ H                   0.44023600    -3.38394500    -1.40037200
+ H                  -1.07365300   -2.46571700    -1.28760600
+ H                   0.23739300    -1.89671900    -2.35814000
+ C                   2.62746400    -0.87280300      1.08889700
+ H                   3.57099900    -0.42435500      1.39039200
+ H                   1.89590600    -0.78319800      1.89678600
+ H                   2.77371700    -1.92468600      0.84677000
+ C                 -0.22698300      0.90145700   -0.27466200
+ C                 -1.49507000      0.63846200   -1.08214900
+ C                 -0.22028400      0.65165800      1.08118000
+ C                 -2.69346000      0.39269300   -0.16749000
+ H                  -1.68304500     1.50594000    -1.72059300
+ C                 -1.19865700    -0.24555100      1.76075200
+ H                   0.56424000     1.10602000      1.67492300
+ C                 -2.35933500    -0.68168800      0.85951100
+ H                  -2.96044200     1.32066300      0.34597100
+ H                  -1.58412600     0.28105300      2.64126500
+ H                  -3.23153900   -0.91743100      1.47088900
+ H                  -0.68420700   -1.13410100      2.14967000
+ H                  -2.08912700   -1.59987400      0.33509900
+ H                  -3.55625200     0.09651900    -0.76668500
+ H                  -1.35587200   -0.20802000    -1.75390300
+ H                   0.63428900     2.06178100     -1.92626900
+
+
+
+29
+TS-2OMe-2 G= -616.047851
+ C                  -0.19569200    2.12694100    -0.00133900
+                                        30
+ O                   -1.40400800      2.17178200    -0.34889300
+ C                   -0.74681000    -0.59076000    -0.37619000
+ O                   -0.58043300    -1.10368100       0.81675000
+ O                   -1.91607400    -0.51806100    -0.89083600
+ C                   -1.13842700    -0.38557100      1.95139000
+ H                   -0.29602200    -0.12524300       2.58746700
+ H                   -1.63035200      0.52479700      1.61341300
+ H                   -1.82756700    -1.04458200       2.47505900
+ C                   -3.11319300    -0.87053200    -0.17797900
+ H                   -3.83597300    -1.12369600    -0.94716300
+ H                   -2.93554400    -1.72571200       0.47014400
+ H                   -3.45531700    -0.00357400       0.38147600
+ C                    0.74306300      1.15163500     -0.29329300
+ C                    2.12141900      1.12648500       0.31111300
+ C                    0.37182800     -0.03921600    -1.16172300
+ C                    2.44902900     -0.23350900      0.93620800
+ H                    2.89138300      1.34918700     -0.44016500
+ C                    1.56816100     -0.97715900    -1.36403000
+ H                   -0.04774100      0.25401500    -2.12559200
+ C                    2.29688400     -1.38699200    -0.07956400
+ H                    3.46233000     -0.22580900      1.34281900
+ H                    2.25429900     -0.42476500    -2.00874600
+ H                    3.27997500     -1.76346500    -0.36865700
+ H                    1.25929000     -1.86237300    -1.92294300
+ H                    1.77519400     -2.22285400      0.38790400
+ H                    1.77468800     -0.39928300      1.77828900
+ H                    2.19675300      1.91138500       1.06715900
+ H                    0.20115000      2.95371300       0.62580100
+
+
+
+26
+TS1-Triplet G=-5537.513066
+ C                     4.31144500   -0.71989800      0.46045400
+ C                     4.52955100    0.27818300    -0.67588700
+ C                     3.40015000    0.36813900    -1.69658100
+ C                     3.20448100   -0.31698700      1.44449900
+ C                     2.02013000    0.68853600    -1.10144100
+ H                     4.10007800   -1.71371700      0.05239200
+ H                     4.68973000    1.26867000     -0.23599700
+ H                     3.32597800   -0.57256100    -2.25054300
+ H                     2.10438800    1.55039800     -0.43222400
+ H                     3.24063900    0.77044300      1.57800500
+ H                     5.24578400   -0.80625300      1.01912000
+ H                     5.45137600    0.02076500     -1.20375000
+                                          31
+ H                    3.64965100       1.14454200    -2.42389500
+ H                    3.40074700      -0.75310000     2.42481400
+ H                    1.34530200       0.97169000    -1.91126600
+ C                    1.80624400      -0.71435500     1.03517800
+ C                    1.41034600      -0.48223600   -0.37272600
+ C                    0.94573700      -1.21786400     1.92177600
+ H                   -0.08135700     -1.44103700     1.65756500
+ H                    1.24453000      -1.39940600     2.94783500
+ C                    0.54823800      -1.29307800   -1.00117500
+ H                    0.25487600      -1.10446500   -2.02786500
+ H                    0.17412200      -2.19708500   -0.53613100
+ C                   -1.60537100     -0.03445100   -0.18712300
+ Br                 -1.44333100       1.71373300     0.36929400
+ Br                 -3.17299900     -1.00158500   -0.30129200
+
+
+
+26
+TS2-Triplet G=-5537.533341
+ C                     3.65959600      0.72811300       1.07208900
+ C                     4.25226700      0.07247600     -0.17423500
+ C                     3.72306100     -1.32588000    -0.50734500
+ C                     2.17193000      1.09380500       0.96949700
+ C                     2.38309500     -1.34881500    -1.24193200
+ H                     3.80500500      0.06609800       1.93130900
+ H                     4.09983500      0.72960600     -1.03802700
+ H                     3.64449000     -1.91356500      0.41324600
+ H                     2.48064600     -0.77359500    -2.17484100
+ H                     2.03938300      1.74773200       0.09763300
+ H                     4.21445600      1.64582600       1.28201000
+ H                     5.33284900      0.00340500     -0.02755100
+ H                     4.45412800     -1.83432100    -1.13936300
+ H                     1.87337800      1.65471600       1.85761400
+ H                     2.16004000     -2.37439000    -1.56450900
+ C                     1.29030200     -0.10318700      0.82247400
+ C                     1.23258200     -0.83266900    -0.45613700
+ C                     0.20500500     -0.36715800      1.62671900
+ H                    -0.18074400    -1.37977200       1.71053300
+ H                    -0.04634400      0.29444200      2.44926300
+ C                    -0.18821300    -1.05313100    -0.89685500
+ H                    -0.33773400    -0.82016700    -1.95652900
+ H                    -0.46534900    -2.10847300    -0.77332300
+ C                    -1.07872300    -0.20226700    -0.01703900
+ Br                  -2.82334000    -0.92672500      0.31552500
+ Br                  -1.14750100      1.64371700    -0.55126400
+                                           32
+24
+TS-64-42 G=-389.143536
+ C                    2.53183300    -1.38461800      0.39055700
+ C                    1.37900100    -1.68932100    -0.22064000
+ H                    3.48395100    -1.73622900      0.01255500
+ H                    2.54443100    -0.80245000      1.30372500
+ H                    1.39308900    -2.29793700    -1.12121700
+ C                    0.09916200    -1.20639800      0.22260300
+ C                  -1.09983300    -1.61439100    -0.31425000
+ H                    0.10767400    -0.58639200      1.11043300
+ H                   -1.08220600   -2.37573600    -1.08873100
+ C                  -2.31182600    -0.97683200    -0.03499700
+ C                  -2.37121300      0.17844300      0.73617700
+ H                   -3.18359500   -1.25910000    -0.61465400
+ H                   -3.33878600     0.64293100      0.88742900
+ H                   -1.69374300     0.29978300      1.57207600
+ C                  -1.45733000      1.59798700    -0.33120800
+ C                  -0.12687300      1.29815200    -0.60699000
+ H                   -1.64678900     2.36317600      0.41505600
+ H                   -2.16290700     1.59011000    -1.15062600
+ C                    0.96035400     1.76310300      0.21148300
+ H                    0.13251500     0.84459600     -1.55647300
+ C                    2.25643500     1.66827100     -0.11869300
+ H                    0.68867600     2.22080800      1.16103300
+ H                    2.56456300     1.24369800     -1.06690100
+ H                    3.03486500     2.04636000      0.53203400
+
+
+
+20
+TS-5C-h1 G= -5458.969948
+ C                    1.58440100    -1.06473900   -0.33913400
+ C                    2.31110100    -0.56345500     0.84964600
+ C                    3.38782300     0.38551000     0.36658500
+ C                    3.57373600     0.01347500    -1.10935800
+ C                    2.15942900    -0.38153200   -1.55252100
+ H                    2.12408500    -1.00319100   -2.44608000
+ H                    4.30092700     0.31942100     0.95678300
+ C                   -1.02853500   -0.10827200     0.71657200
+ H                    4.23724200    -0.84994500   -1.19247200
+ H                    3.01724800     1.41304700     0.44180100
+ H                    3.99334500     0.82371100    -1.70346600
+ H                    1.57601500     0.52616400    -1.75536500
+                                         33
+ C                    2.04272100    -0.87390300      2.11477200
+ H                    2.62439500    -0.45830300      2.92939500
+ C                    0.58632300    -1.95440000     -0.34282000
+ H                    0.25898200    -2.45068000      0.56219700
+ H                    1.23628500    -1.54876000      2.37640300
+ H                    0.11705900    -2.25802300     -1.27152500
+ Br                 -2.64507500    -0.66365100     -0.13100300
+ Br                 -0.53171300     1.59995000       0.04185700
+
+
+
+20
+TS-5C-h2 G= -5458.970795
+ C                    2.39309500     -0.06131800      0.86722600
+ C                    1.59146800     -1.20767100      0.39073400
+ C                    2.15886000     -1.65614500    -0.93163700
+ C                    2.85737400     -0.39697400    -1.45946600
+ C                    3.43199800      0.24471300     -0.19021200
+ H                    3.62765000      1.31230400     -0.28355300
+ H                    1.39056400     -2.05160300    -1.59523500
+ H                    2.11401100      0.26790900     -1.90597700
+ H                    2.89956500     -2.44399300    -0.75792100
+ H                    3.61612200     -0.61325100    -2.20983400
+ H                    4.37365700     -0.24631300      0.07501400
+ C                    0.48221800     -1.69376600      0.95892000
+ H                   -0.04050500    -2.53624300       0.52354000
+ C                    2.19298800      0.61923300       1.99350600
+ H                    1.42010300      0.34097700       2.70054600
+ H                    0.10520900     -1.30810400      1.89943600
+ H                    2.80469800      1.47766900       2.24532300
+ C                   -0.91795700    -0.20261700    -0.73020900
+ Br                 -2.60963500    -0.65513600      0.05556300
+ Br                 -0.46040300      1.56736300    -0.22940600
+
+
+
+29
+TS-8C G=-5576.807065
+ C                  -4.03735800    -0.83160600      0.38862100
+ C                  -1.03487000    -0.94879000     -0.79051900
+ C                  -3.56895000    -1.56918600     -0.87727300
+ C                  -2.11520500    -2.04047000     -0.84785800
+ H                  -1.13782700    -0.28361600     -1.65046800
+ H                  -5.02319000    -1.20048600      0.67909700
+ H                  -3.73322800    -0.93942200     -1.75796600
+ H                  -3.37048100    -1.07694900      1.21923800
+                                          34
+ H                  -0.06569400    -1.44627200    -0.89287000
+ H                  -4.18942000    -2.45563700    -1.02471900
+ H                  -1.92473800    -2.64327800    -1.73931000
+ H                  -1.97644800    -2.70026500      0.01444200
+ C                  -2.89814000      1.39472500   -0.29883400
+ H                  -2.71625800      1.06573000    -1.32498100
+ H                  -3.09999600      2.46562500    -0.34942900
+ C                  -4.14557900      0.68662800     0.24002400
+ H                  -4.40466100      1.12183900     1.20920500
+ H                  -4.97345600      0.91342200    -0.43841200
+ C                  -1.65684600      1.17873000     0.52917400
+ C                  -1.00482200    -0.15306900      0.49242900
+ C                  -0.37683000    -0.64773800      1.57012500
+ H                  -0.39745900    -0.14034400      2.52570100
+ H                   0.09141000     -1.62400100     1.54150000
+ C                  -1.13064900      2.17097100     1.24968000
+ H                  -0.21403500      2.04274900     1.81399700
+ H                  -1.59491500      3.15024100     1.27275600
+ C                   1.95972300      0.33748600      0.81401000
+ Br                  1.78578000      1.48365900   -0.69134600
+ Br                  2.75100700    -1.30410000      0.23662400
+
+
+
+17
+TS-6r-h1 G= -5419.689874
+ C                   -2.73029600     0.91920300    -0.58273900
+ C                   -3.09980700   -0.50277700    -0.87107300
+ C                   -1.54967900   -1.30924500      0.79198400
+ C                   -1.20592100   -0.04788900      1.16983000
+ C                   -2.11077600     1.09519900     0.80261100
+ H                   -2.03372400     1.24485200    -1.36330100
+ H                   -3.79109900   -0.68751700    -1.68620100
+ H                   -1.00985200   -2.16064400      1.18639000
+ H                   -0.49009000     0.08887300     1.97146000
+ H                   -1.58646000     2.04704000     0.87145000
+ H                   -2.90556000     1.12010300     1.55757100
+ C                    0.29104200    -0.04865400    -0.51151700
+ Br                   1.14413800     1.66366200    -0.07379600
+ Br                   1.60226200   -1.43661100    -0.06872600
+ H                   -3.61159100     1.55493600    -0.68180800
+ C                   -2.57112400   -1.53875000    -0.20133900
+ H                   -2.83625300   -2.55694600    -0.45382300
+
+
+
+                                         35
+17
+TS-6r-h2 G= -5419.694400
+ C                     2.89234900     -0.47371100   -1.16583600
+ C                     3.01644600      0.92719800    -0.63276200
+ C                     1.74774400      0.27237300     1.33602000
+ C                     1.86266900     -1.03010200     1.06188500
+ C                     2.76414600     -1.50488100   -0.04405900
+ H                     2.00243200     -0.51197500   -1.80563200
+ H                     3.51369800      1.67256800    -1.24332400
+ H                     1.13910400      0.61066500     2.16669800
+ H                     1.35929900     -1.76827900     1.67612700
+ H                     2.40946500     -2.45488900   -0.44598500
+ H                     3.75258600     -1.70417900     0.39122000
+ C                    -0.62297800    -0.02990500   -0.66065400
+ Br                  -1.70132900    -1.44715500   -0.02724700
+ Br                  -1.30405600      1.61889600   -0.04139800
+ H                     3.74382500     -0.71771200   -1.80217700
+ C                     2.46501600      1.26809300     0.53387500
+ H                     2.51571000      2.28848400     0.89482000
+
+
+
+26
+TS-5O G=-576.755225
+ C                  -0.00866500       1.74632700   -1.16389000
+ O                   1.07667600       2.20000900    -0.82435900
+ C                   0.73053600      -0.88446800     0.63251700
+ O                   0.27717300      -1.76755900   -0.22350000
+ O                   1.92422900      -0.46611000     0.30601200
+ C                   0.92648900      -1.94238800   -1.49386400
+ H                   0.31353200      -2.65128900   -2.04308100
+ H                   0.96490000      -0.98285700   -2.01413300
+ H                   1.93473300      -2.33238200   -1.36742300
+ C                   2.57069100       0.41329500     1.23576700
+ H                   3.63708800       0.22173400     1.14502900
+ H                   2.34467100       1.43977700     0.95753700
+ H                   2.23687100       0.18927500     2.24824000
+ C                  -0.86656900       0.93625700   -0.35137700
+ C                  -2.11525200       0.24572900   -0.85049800
+ C                  -0.61720500       0.62766500     0.96757900
+ C                  -2.57042800     -0.61076900     0.35310300
+ H                  -2.87783600       0.97774600   -1.13397100
+ C                  -1.82228900     -0.04283500     1.57302000
+ H                   0.06994200       1.20596100     1.57160000
+ H                  -3.65082800     -0.59507900     0.48845700
+                                           36
+ H                  -2.41526300    0.72686500      2.07670300
+ H                  -1.56217600   -0.79917500      2.31222400
+ H                  -2.27132500   -1.64593700      0.19824400
+ H                  -1.92939800   -0.37326900    -1.73323000
+ H                  -0.38337800    1.95503900     -2.18556800
+
+
+
+32
+TS-7O G=-655.318935
+ C                  -0.74850200     2.14683400      0.28738800
+ O                  -1.89888000     2.08905300    -0.13533800
+ C                  -0.97529200   -1.03221200    -0.08649200
+ O                  -0.49797700   -1.34160100       1.08946600
+ O                  -2.25779600   -0.81639000    -0.04071800
+ C                  -1.28055600   -1.12761100      2.27676300
+ H                  -0.62547100   -1.37894500       3.10601600
+ H                  -1.57943600   -0.07960500       2.32737900
+ H                  -2.16201600   -1.76591200       2.28384500
+ C                  -2.93334600   -0.57597500    -1.28140100
+ H                  -3.91864000   -1.02492200    -1.18290200
+ H                  -3.01442800     0.49878500    -1.42396300
+ H                  -2.39012100   -1.04990200    -2.09809200
+ C                   0.34824200     1.30115100     -0.10179300
+ C                   1.67640100     1.49521100       0.58458500
+ C                   0.10268200     0.37224900     -1.09940900
+ C                   2.40986600     0.24152500       1.06828700
+ H                   2.36003800     2.03588400     -0.08453200
+ C                   1.17333500    -0.40126100    -1.82054300
+ H                  -0.77261800     0.59747300    -1.70034100
+ C                   2.07648900    -1.29695900    -0.97439600
+ H                   3.20043000     0.56172800       1.75211800
+ H                   1.79178900     0.33145600     -2.35536800
+ H                   2.65474500    -1.92176000    -1.65992300
+ H                   0.68816400    -1.01678100    -2.58015200
+ H                   1.44906200    -1.97352800    -0.38843100
+ H                   1.72921600    -0.39207300      1.64183800
+ H                   1.51667900     2.15854900       1.43908600
+ H                  -0.50132700     2.90968600      1.05249100
+ C                   3.05175900    -0.57406000    -0.05023400
+ H                   3.68953700     0.08856000     -0.64731300
+ H                   3.71515400    -1.32054700      0.39443200
+
+
+
+35
+                                        37
+TS-6J G=-694.618616
+ C                   1.56123400         -0.48739700      0.64264300
+ O                   0.98408700         -0.46213600      1.81984000
+ O                   1.59261000         -1.69374500      0.14271500
+ C                   0.22071900         -1.59371000      2.27047400
+ H                  -0.23592200        -1.29028800       3.20840200
+ H                  -0.54485300        -1.83162500       1.52883000
+ H                   0.86210300         -2.45952700      2.42473000
+ C                   2.34539300         -1.85968500    -1.06774700
+ H                   2.77396400         -2.85825600    -1.02484200
+ H                   1.66939100         -1.76726800    -1.91324100
+ H                   3.13970900         -1.11523200    -1.11175600
+ C                  -1.14450900        -0.42357300    -1.17216500
+ C                  -2.63630200        -0.69061500    -1.05407200
+ C                  -0.56610400          0.66484700    -0.39865700
+ C                  -1.36175900          1.36685300      0.67396300
+ H                  -1.07519800          2.42016400      0.72107800
+ H                  -3.10466500        -0.18094900    -1.90377600
+ C                   0.77222300          0.95224900     -0.58710900
+ H                   1.22530400          0.52566000     -1.47770500
+ C                   1.42358600          2.19965100     -0.05353100
+ H                   1.27706900          2.25644700       1.02710800
+ H                   0.88901800          3.05519600     -0.48175400
+ C                   2.90139600          2.30051800     -0.39429200
+ H                   3.05555700          2.27100400     -1.47523200
+ H                   3.32676900          3.23352100     -0.02276900
+ H                   3.45477900          1.47345600       0.05270000
+ O                  -0.48443900        -1.12506700    -1.93466300
+ H                  -1.09710900          0.94344100      1.65428000
+ H                  -2.78818100        -1.75928200    -1.20950600
+ C                  -3.26599400        -0.19480900      0.24131900
+ H                  -2.92246400        -0.80739400       1.08204900
+ H                  -4.35096600        -0.30458700       0.19311600
+ C                  -2.87130200          1.25395000      0.48508200
+ H                  -3.18209200          1.85845100    -0.37298300
+ H                  -3.38175800          1.65498900      1.36268800
+
+
+
+Transition states (quasi-classical simulation)
+
+26
+TS1-svp Nu_i=-101.18
+ C                   4.17964400        -0.06415500     0.26760300
+ C                   3.99224800        -0.96511000    -0.95330100
+                                                 38
+ C                    2.71556000    -1.80099700     -0.96606300
+ C                    3.16722700      1.08754600      0.36592400
+ C                    1.41262900    -0.99173300     -0.83804800
+ H                    4.14776300     -0.66566900      1.19230100
+ H                    4.01198500     -0.33109900    -1.85705300
+ H                    2.74525300     -2.54514600    -0.15304300
+ H                    1.44136300     -0.14152600    -1.54165300
+ H                    2.97684900      1.47442500     -0.65150900
+ H                    5.18900500      0.37151000      0.21756400
+ H                    4.85510400     -1.64477600    -1.03461400
+ H                    2.67640000     -2.36751100    -1.90918000
+ H                    3.60460900      1.92142300      0.93275300
+ H                    0.56779600     -1.63068900    -1.13666200
+ C                    1.84676800      0.73773100      1.01479700
+ C                    1.15080300    -0.49196700       0.56012500
+ C                    1.29461700      1.53974300      1.93923700
+ H                    0.30712800      1.33578500      2.35999800
+ H                    1.81070800      2.44449600      2.27100500
+ C                    0.29425400    -1.15854600       1.36607900
+ H                   -0.20560400    -2.06364500      1.01371900
+ H                    0.15846500     -0.88512600      2.41371400
+ C                   -1.64714700      0.38791900      0.69003200
+ Br                 -1.21688400      1.39424000    -0.87182800
+ Br                 -2.91815700    -0.96438300      0.22052300
+
+
+
+26
+TS-CF2-svp Nu_i=-312.03
+ C                    2.73973000     0.78887700     -0.04654600
+ C                    2.95678200   -0.70414000     -0.28135000
+ C                    1.90957900   -1.62081900       0.34224900
+ C                    1.46299400     1.35226500     -0.69051000
+ C                    0.46462100   -1.36079500     -0.12126300
+ H                    2.73224100     1.00644900       1.03516300
+ H                    2.98186100    -0.88497500    -1.37023500
+ H                    1.94838500    -1.54530400      1.44168100
+ H                    0.44807200    -1.22901700    -1.21757600
+ H                    1.32756600     0.87975000     -1.67905400
+ H                    3.60148100     1.33064700     -0.46515000
+ H                    3.94890400    -0.98934800      0.10263200
+ H                    2.16237500    -2.66240900      0.09193100
+ H                    1.59244100     2.42705700     -0.87781600
+ H                   -0.14215000   -2.24911100       0.10055900
+ C                    0.20093500     1.18316000       0.12758200
+                                          39
+ C                  -0.19015500    -0.17819800       0.54208300
+ C                  -0.54994700      2.25841900       0.43188100
+ H                  -1.48095600      2.18729800       0.99540100
+ H                  -0.24571500      3.25529400       0.10369800
+ C                  -1.20456800    -0.41060800       1.43235700
+ H                  -1.37977000    -1.42758400       1.78745300
+ H                  -1.61643200      0.38734000       2.05241400
+ C                  -2.74884500    -0.46502400       0.05966100
+ F                  -2.74563300     0.70540300      -0.54877900
+ F                  -2.37937400    -1.32150400     -0.88210600
+
+
+
+26
+TS-CCl2-svp Nu_i=-135.94
+ C                  -3.28550700      0.82217000     -0.37978600
+ C                  -3.62346700    -0.56769100       0.16049500
+ C                  -2.58209700    -1.65046800     -0.10746700
+ C                  -2.08230400      1.49491200       0.29952200
+ C                  -1.17375900    -1.32425200       0.42259100
+ H                  -3.11643200      0.77548200     -1.46928700
+ H                  -3.77881200    -0.48696100        1.25050700
+ H                  -2.51439200    -1.85091100     -1.18957200
+ H                  -1.25076700    -0.94678000        1.45589900
+ H                  -2.11249500      1.26492000       1.37944400
+ H                  -4.16429300      1.46758300     -0.23129600
+ H                  -4.58537500    -0.89393600     -0.26510900
+ H                  -2.91657000    -2.58656200        0.36489000
+ H                  -2.17118900      2.58706900       0.21595400
+ H                  -0.57494100    -2.24628400        0.45228800
+ C                  -0.72815700      1.10567700     -0.25131400
+ C                  -0.43935900    -0.32757300     -0.43148900
+ C                    0.20949200     2.03625000      -0.50663100
+ H                    1.21386500      1.77385700     -0.84845800
+ H                  -0.00211800      3.09748100     -0.35326600
+ C                    0.50765400    -0.77632900     -1.30532500
+ H                    0.62106900    -1.84615800     -1.48345300
+ H                    0.96686600    -0.10205000     -2.02965900
+ C                    2.19682500    -0.90627100       0.19907200
+ Cl                  3.44940600    -0.08807800     -0.75142100
+ Cl                  1.86763200      0.12070700       1.58395600
+
+
+
+26
+TS-CI2-svp Nu_i=-13.79
+                                          40
+ C                   4.62145200  -0.29433700   -0.06501700
+ C                   4.22547800  -1.42544400   -1.01487700
+ C                   2.91944700  -2.14115800   -0.68128400
+ C                   3.69925200    0.93349700   -0.12396200
+ C                   1.68868100  -1.22537700   -0.56974200
+ H                   4.67419100  -0.66948500     0.97148600
+ H                   4.15396600  -1.01010100   -2.03546300
+ H                   3.02629000  -2.69296900     0.26752800
+ H                   1.64228100  -0.56431500   -1.45260100
+ H                   3.39939000    1.09455700   -1.17519600
+ H                   5.63962300    0.03025100   -0.32791500
+ H                   5.03524300  -2.17160000   -1.04241000
+ H                   2.72296600  -2.89267500   -1.46175500
+ H                   4.25510200    1.83327000    0.17559400
+ H                   0.78431200  -1.85250300   -0.58435600
+ C                   2.45715500    0.85392900    0.73643700
+ C                   1.66501700  -0.40238800     0.69640700
+ C                   2.06783700    1.89754000    1.48572400
+ H                   1.13653200    1.87661200    2.05761500
+ H                   2.66579400    2.81171500    1.52891600
+ C                   0.96698800  -0.82664800     1.76931700
+ H                   0.39774100  -1.75866500     1.73384600
+ H                   1.00262900  -0.29697300     2.72336100
+ C                  -1.39897900   0.27182400     0.96249400
+ I                 -1.10606700   1.82330100   -0.43276700
+ I                 -2.25261200  -1.43812600    0.04500100
+
+
+
+29
+TS-2OMe-svp Nu_i=-375.40
+ C                  0.36196900     1.93027000    -0.98813500
+ O                   1.51341000    2.10684700    -0.61295700
+ C                  0.82692300    -0.94324600     0.48281100
+ O                   0.36191600   -1.66887000   -0.49905500
+ O                   2.07580700   -0.62943100     0.28661000
+ C                  1.09502400    -1.80817800   -1.72026500
+ H                   0.45578600   -2.39039600   -2.39180300
+ H                   1.29488400   -0.81311700   -2.14455400
+ H                   2.04551200   -2.33017400   -1.55256400
+ C                  2.75839800     0.08611400     1.31559400
+ H                   3.80228400   -0.24632000     1.28932000
+ H                   2.69280000    1.15697600     1.09086600
+ H                   2.31831700   -0.15018500     2.29359300
+ C                 -0.64931700     1.18527100   -0.28055100
+                                       41
+ C                  -2.01765400     0.93561800     -0.86101200
+ C                  -0.36630700     0.66736100       0.97462800
+ C                  -2.51058200    -0.49291900    -0.57734900
+ H                  -2.73905800     1.64927500     -0.42074900
+ C                  -1.51357300     0.07427500       1.74158900
+ H                   0.45706900      1.11779800      1.53419000
+ C                  -2.32101100    -0.92383800      0.89644200
+ H                  -3.56872100    -0.57364100    -0.86631100
+ H                  -2.16127400     0.91804600       2.03959700
+ H                  -3.29495200    -1.08527800      1.38080400
+ H                  -1.16110500    -0.40555100      2.66482100
+ H                  -1.79283400    -1.88804600      0.92080800
+ H                  -1.95228700    -1.18262800    -1.22442100
+ H                  -2.02175500     1.12929300     -1.94518600
+ H                   0.03303700      2.36121500     -1.96771700
+
+
+
+24
+TS-64-42-svp Nu_i=-522.55
+ C                    2.53551500    -1.38843600      0.39532200
+ C                    1.37728700    -1.70600400    -0.21547500
+ H                    3.49639600    -1.74579700      0.01823800
+ H                    2.54287200    -0.79141200      1.30974500
+ H                    1.39372500    -2.33039700    -1.11598600
+ C                    0.09204700    -1.21769400      0.22164500
+ C                   -1.11194000   -1.62178000    -0.32032500
+ H                    0.09734000    -0.58180200      1.10923300
+ H                   -1.09685900   -2.39113900    -1.09919200
+ C                   -2.32909700   -0.97684400    -0.03970500
+ C                   -2.38531000     0.17773200      0.73891000
+ H                   -3.20859100   -1.26027700    -0.62399700
+ H                   -3.35916500     0.64842900      0.89614700
+ H                   -1.69624800     0.29513600      1.57766900
+ C                   -1.45436000     1.62481800    -0.32417100
+ C                   -0.12291700     1.32207800    -0.60941700
+ H                   -1.64146100     2.38681000      0.43861400
+ H                   -2.17017700     1.62100300    -1.14666600
+ C                    0.97812800     1.77316100      0.20803300
+ H                    0.12859800     0.85884100     -1.56691100
+ C                    2.27900200     1.64903100     -0.12346600
+ H                    0.71462500     2.24648900      1.16245000
+ H                    2.57755200     1.20730700     -1.07738100
+ H                    3.07125500     2.02043500      0.52993600
+
+
+                                         42
+20
+TS-5C-h1-svp Nu_i=-15.67
+ C                   -2.45670300   -0.46494300    -0.79493600
+ C                   -1.53396500   -1.25647500      0.05908200
+ C                   -1.82708600   -0.91861600      1.50944400
+ C                   -2.79150400     0.27930400      1.45023700
+ C                   -3.52442700     0.10714600      0.11172700
+ H                   -3.96671100     1.03358700    -0.27806000
+ H                   -0.90599200   -0.70965400       2.07570900
+ H                   -2.22076100     1.22011400      1.43489500
+ H                   -2.31211600   -1.78208900       1.99379800
+ H                   -3.47206500     0.31957000      2.31088700
+ H                   -4.33616600   -0.63202400       0.22696600
+ C                   -0.61193500   -2.12941500    -0.37484500
+ H                    0.02818000    -2.66931200      0.32771400
+ C                   -2.30240900   -0.22983500    -2.10229300
+ H                   -1.45557000   -0.64295900    -2.65703800
+ H                   -0.50072400   -2.36159500    -1.43664600
+ H                   -3.01114600     0.39563200    -2.65072900
+ C                    1.12081400     0.05768500     -0.86516200
+ Br                   0.46026200     1.60899100    -0.00564700
+ Br                   2.56020600   -0.66157300      0.13973200
+
+
+
+29
+TS-8C-svp Nu_i=-11.89
+ C                   -4.05225400   -0.80747600      0.38621600
+ C                   -1.03714400   -0.96810600    -0.77424800
+ C                   -3.58086300   -1.57142400    -0.86470300
+ C                   -2.12805000   -2.05044600    -0.82760700
+ H                   -1.12905700   -0.30497300    -1.64818200
+ H                   -5.05421900   -1.16069300      0.67330600
+ H                   -3.74579000   -0.95462300    -1.76544300
+ H                   -3.39617600   -1.05731000      1.23586200
+ H                   -0.06359800   -1.47765600    -0.86958700
+ H                   -4.20986000   -2.46440600    -0.99932200
+ H                   -1.93877300   -2.66912200    -1.71885300
+ H                   -1.99514100   -2.71204800      0.04550100
+ C                   -2.87952000    1.40293200     -0.32080100
+ H                   -2.69196500    1.05521200     -1.34940800
+ H                   -3.07396900    2.48264900     -0.39194900
+ C                   -4.13737700    0.71248200      0.22047400
+ H                   -4.39850400    1.16468400      1.19090500
+                                         43
+ H                   -4.96777100      0.94603400   -0.46665200
+ C                   -1.63987200      1.18972100    0.51599600
+ C                   -1.00209100    -0.15401200     0.50140400
+ C                   -0.38278800    -0.64293400     1.59642100
+ H                   -0.40255900    -0.11315800     2.55060600
+ H                    0.08633900     -1.62987600    1.58171800
+ C                   -1.10523700      2.19114100    1.23233100
+ H                   -0.18184200      2.05774200    1.80267200
+ H                   -1.56791200      3.18164800    1.24352700
+ C                    1.99012800      0.33495200     0.81165800
+ Br                   1.79978900      1.49142400   -0.67897000
+ Br                   2.72767400    -1.32471200     0.22246800
+
+
+
+17
+TS-6r-h1-svp Nu_i=-122.08
+ C                   -2.72417500      0.92801100    -0.55502100
+ C                   -3.13132000    -0.47922600    -0.88194300
+ C                   -1.57716400    -1.36182100      0.75588800
+ C                   -1.22658900    -0.11224100      1.18128200
+ C                   -2.11732500      1.05362400     0.84283600
+ H                   -1.99727200      1.24981700    -1.32236900
+ H                   -3.83922800    -0.63151400    -1.70143800
+ H                   -1.03318600    -2.23720400      1.11686100
+ H                   -0.49364100    -0.00496000      1.98475800
+ H                   -1.57759200      2.00396100     0.94827900
+ H                   -2.92409300      1.06803100     1.59853400
+ C                     0.33239400    -0.05193200    -0.53531100
+ Br                   1.11966500      1.67333900    -0.07292600
+ Br                   1.64258100    -1.41789100    -0.06492600
+ H                   -3.58745200      1.60133300    -0.65710500
+ C                   -2.61056900    -1.54781100    -0.24390500
+ H                   -2.89767400    -2.56179600    -0.52566000
+
+
+
+26
+TS-5O Nu_i=-398.90
+ C                    0.01121100     1.75901600     -1.15429400
+ O                    1.09779100     2.18933200     -0.79896800
+ C                    0.73338300    -0.90038400      0.64578900
+ O                    0.26931400    -1.76978800    -0.21691800
+ O                    1.91812700    -0.47425200      0.29920600
+ C                    0.90437200    -1.94657400    -1.48607300
+ H                    0.29142100    -2.66775900    -2.03633700
+                                          44
+ H                    0.93578700    -0.98288100    -2.01807200
+ H                    1.92646500    -2.32787800    -1.36766800
+ C                    2.58962100     0.39939300      1.20703500
+ H                    3.66226000     0.20173900      1.09925000
+ H                    2.36501200     1.43433300      0.92493800
+ H                    2.27286700     0.18438900      2.23638700
+ C                   -0.87044900     0.94771400   -0.35151500
+ C                   -2.12415300     0.26430400   -0.85376000
+ C                   -0.62694700     0.63851400     0.97260800
+ C                   -2.56402000   -0.61447100      0.34056200
+ H                   -2.89607200     1.00829000    -1.11739500
+ C                   -1.83642200   -0.03682900      1.56928800
+ H                    0.06870100     1.21724700      1.58316200
+ H                   -3.65437400   -0.63700400      0.46961800
+ H                   -2.44445000     0.73667500     2.06896100
+ H                   -1.57600000   -0.79362400      2.32123300
+ H                   -2.22618100   -1.64614000      0.17760500
+ H                   -1.94886400   -0.33923800    -1.76028800
+ H                   -0.35800600     1.98541600    -2.18579500
+
+
+
+32
+TS-7O Nu_i=-363.20
+ C                   -0.77970600     2.13624700      0.34506100
+ O                   -1.92159800     2.07412200    -0.08839000
+ C                   -0.96811000   -1.05614900    -0.12938500
+ O                   -0.47394400   -1.39058400       1.03297300
+ O                   -2.24643100   -0.82248600    -0.04872900
+ C                   -1.23241200   -1.21223400      2.23333900
+ H                   -0.56788500   -1.49600100       3.05581200
+ H                   -1.53088400   -0.15752000       2.32594100
+ H                   -2.12808200   -1.84609700       2.23181300
+ C                   -2.95549700   -0.54230800    -1.25520800
+ H                   -3.95298200   -0.98236100    -1.14335600
+ H                   -3.02679800     0.54554200    -1.36684300
+ H                   -2.44079900   -1.00202200    -2.10954700
+ C                    0.33875000     1.31103700     -0.06440400
+ C                    1.65769300     1.48459900       0.64946800
+ C                    0.10453200     0.41749000     -1.10044800
+ C                    2.39890500     0.21453000       1.08037500
+ H                    2.34883300     2.07268600       0.01429200
+ C                    1.18020000    -0.33017000    -1.84637400
+ H                   -0.78437500     0.65617800    -1.69213000
+ C                    2.08974100    -1.24675700    -1.02720900
+                                         45
+ H                    3.18787200     0.50955400      1.79043000
+ H                    1.79723600     0.42559800     -2.36768600
+ H                    2.68186500    -1.84710400    -1.73597400
+ H                    0.69238500    -0.93082500    -2.62786000
+ H                    1.45914300    -1.95523700    -0.46656200
+ H                    1.71125700    -0.45318800      1.62247400
+ H                    1.47800900     2.10912100      1.53978000
+ H                   -0.54113600     2.88427500      1.14327000
+ C                    3.05385400    -0.55129900    -0.06797700
+ H                    3.69720100     0.14355100     -0.63793200
+ H                    3.72722500    -1.31448200      0.35382100
+
+
+
+35
+TS-6J-svp Nu_i=-372.71
+ C                     1.58423500    -0.49050000      0.63253800
+ O                     1.01798200    -0.43309000      1.81243600
+ O                     1.56951500    -1.70470400      0.15211200
+ C                     0.27282700    -1.54716600      2.31339100
+ H                   -0.14639400    -1.23014900       3.27396300
+ H                   -0.53203900    -1.80120200       1.60640900
+ H                     0.92030100    -2.42253200      2.45065300
+ C                     2.29051000    -1.93098600    -1.06092800
+ H                     2.69544400    -2.94792300    -1.00112900
+ H                     1.59581200    -1.84182400    -1.90285800
+ H                     3.11242900    -1.20747000    -1.14631900
+ C                   -1.15349700    -0.42749400    -1.17775600
+ C                   -2.64984600    -0.68494200    -1.05201500
+ C                   -0.57133200      0.67464500    -0.40868100
+ C                   -1.35699900      1.37174600      0.67749000
+ H                   -1.07682800      2.43599000      0.72179700
+ H                   -3.12479700    -0.15163600    -1.89465800
+ C                     0.76735000     0.96238400     -0.61475400
+ H                     1.21175700     0.52330500     -1.51431700
+ C                     1.42934300     2.20564800     -0.07807300
+ H                     1.29562200     2.24527400       1.01393300
+ H                     0.88066900     3.07282300     -0.48689500
+ C                     2.90321300     2.31375300     -0.43759200
+ H                     3.04527500     2.31051600     -1.52918000
+ H                     3.34253700     3.24188500     -0.04571600
+ H                     3.46233200     1.46552200     -0.01687900
+ O                   -0.49532700    -1.12979500    -1.93658000
+ H                   -1.06308400      0.94919600      1.65979400
+ H                   -2.81184900    -1.75701100    -1.23182400
+                                          46
+ C                   -3.26248800     -0.20573100      0.25960600
+ H                   -2.90283200     -0.83270600      1.09426300
+ H                   -4.35614200     -0.32078700      0.22865200
+ C                   -2.87072400      1.24417300      0.51638300
+ H                   -3.20663100      1.86162700     -0.33414100
+ H                   -3.37449100      1.63462900      1.41305000
+
+
+
+Products
+
+
+
+26
+7C-(2 + 1) G= -5537.633574
+ C                      3.50087900      0.44867300    -0.95396800
+ C                      3.56251400     -1.04283900   -0.63875000
+ C                      2.77729400     -1.49490000     0.59512500
+ C                      2.08258400      1.03163800    -1.02042700
+ C                      1.25719000     -1.48133700     0.39609800
+ H                      4.05753500      1.00615100    -0.19501200
+ H                      3.19065800     -1.60673900   -1.50089900
+ H                      3.05391000     -0.89310100     1.46621700
+ H                      1.04083300     -1.78520600   -0.63212500
+ H                      1.47488400      0.45578300    -1.72501100
+ H                      4.00127300      0.62639900    -1.90900600
+ H                      4.61127400     -1.32417800   -0.51534400
+ H                      3.06990200     -2.52214100     0.82134500
+ H                      2.13808500      2.05295800    -1.40054700
+ H                      0.79645600     -2.23093800     1.03955000
+ C                      1.42307800      1.05509800      0.33769100
+ C                      0.58070900     -0.13683200     0.67201700
+ C                      1.64836000      2.04265700      1.19470100
+ H                      1.23325700      2.05612600      2.19443900
+ H                      2.27059800      2.88504900      0.91233700
+ C                     -0.41768800    -0.05344500     1.80423100
+ H                     -0.58954900    -0.95226400      2.38212500
+ H                     -0.51664100      0.87226600     2.35372300
+ C                     -0.90338700    -0.04833300     0.39950600
+ Br                   -1.66154400      1.57413700   -0.30702700
+ Br                   -1.84993300    -1.59020700   -0.26466200
+
+
+
+26
+7C-(4 + 1) G= -5537.676149
+ C                     3.79112700    -0.47065300      1.28020200
+                                            47
+ C                    4.36727100       0.12771600      0.00000600
+ C                    3.79114300      -0.47046100   -1.28029200
+ C                    2.39077700       0.00277300      1.65348900
+ C                    2.39076900       0.00299300    -1.65344900
+ H                    3.79047300      -1.56163600     1.19052400
+ H                    4.22201000       1.21418800      0.00007900
+ H                    3.79055000      -1.56145900   -1.19080500
+ H                    2.41875000       1.08177900    -1.85507900
+ H                    2.41876600       1.08152200      1.85531200
+ H                    4.45149000      -0.22684900     2.11594200
+ H                    5.44688500      -0.04034100     0.00000400
+ H                    4.45147700      -0.22646800   -2.11599900
+ H                    2.10844800      -0.46357700     2.60150600
+ H                    2.10840700      -0.46318800   -2.60154100
+ C                    1.28912400      -0.25061200     0.66810400
+ C                    1.28913200      -0.25054900   -0.66808100
+ C                   -0.10465300     -0.50623000     1.20564700
+ H                   -0.21875200     -1.56010600      1.48099600
+ H                   -0.35709600       0.09274200     2.08039900
+ C                   -0.10463300     -0.50611900   -1.20567800
+ H                   -0.35707400       0.09296800   -2.08035100
+ H                   -0.21874700     -1.55996200   -1.48114200
+ C                   -0.98600700     -0.19319300   -0.00000100
+ Br                 -1.40952500       1.73199400     0.00007000
+ Br                 -2.66875800     -1.18381100   -0.00005600
+
+
+
+29
+6O-(2 + 1) G= -616.095322
+ C                     0.88636400     1.96115500    -0.82396700
+ O                     1.72252500     2.49372200     -0.14422500
+ C                     0.55999400   -0.41147900       0.07376500
+ O                    -0.06483700   -1.60385200    -0.20705400
+ O                     1.93349200    -0.46977700    -0.04257800
+ C                     0.16010300   -2.05195500    -1.53387700
+ H                    -0.47425400   -2.92337400    -1.68535300
+ H                    -0.10826600   -1.27415400    -2.25624700
+ H                     1.20445300    -2.33133300    -1.68625200
+ C                     2.54231700   -1.25606100       0.96732600
+ H                     3.61613700    -1.20738300      0.79916900
+ H                     2.31415800    -0.85839200      1.96048700
+ H                     2.21198900    -2.29639100      0.91301400
+ C                    -0.05585300     0.90331500   -0.37162900
+ C                    -1.42986300     0.98877600   -1.01349200
+                                           48
+ C                   -0.01989900     0.49443000       1.09337800
+ C                   -2.44587800    -0.07303800    -0.57361300
+ H                   -1.82548800     1.97813600     -0.75994300
+ C                   -1.36496900     0.31221700       1.76207000
+ H                    0.73268200      1.02339000      1.66892500
+ C                   -2.41620700    -0.43269400      0.93073900
+ H                   -3.43581100     0.29337400     -0.84899900
+ H                   -1.73281500     1.31467500       2.00124400
+ H                   -3.39192200    -0.23668100      1.37766200
+ H                   -1.23496900    -0.20051400      2.71730400
+ H                   -2.23892700    -1.50209100      1.02648500
+ H                   -2.28719500    -0.98082700    -1.15410700
+ H                   -1.33483100     0.97248300     -2.10285500
+ H                    0.75895400      2.26035600     -1.88388100
+
+
+
+29
+6O-(4 + 1) G= -616.119927
+ C                     0.49983700     1.93723700     -0.13183800
+ O                    -0.85162100     1.68291900    -0.08382200
+ C                    -1.00942400     0.27318800    -0.17323400
+ O                    -1.19435400   -0.26414200       1.09214800
+ O                    -2.12777900     0.09922800    -0.97378300
+ C                    -2.33023300     0.22288500      1.79029600
+ H                    -2.31273400   -0.25114100       2.76944000
+ H                    -2.28273400     1.30609600      1.90930000
+ H                    -3.25702400   -0.04071300       1.27622600
+ C                    -2.46295800   -1.25578500    -1.20078800
+ H                    -3.37020500   -1.25435300    -1.80130800
+ H                    -1.67432300   -1.77598100    -1.75334900
+ H                    -2.64970200   -1.78777100    -0.26451000
+ C                     1.23591600     0.90523300     -0.50814100
+ C                     2.70860000     0.70102800     -0.55128300
+ C                     0.31553400    -0.26357700    -0.76153700
+ C                     3.11165100    -0.47641800      0.38393600
+ H                     3.00607600     0.46523900     -1.57727600
+ C                     0.88813900    -1.56042900    -0.16344800
+ H                     0.15831500    -0.38388400    -1.83820000
+ C                     1.90473700    -1.24674900      0.93320400
+ H                     3.75604900    -1.16652200    -0.16488400
+ H                     1.38413800    -2.12220700    -0.96010800
+ H                     2.24787700    -2.16963700      1.40445200
+ H                     0.08528400    -2.18840200      0.22298600
+ H                     1.40875700    -0.65721000      1.70766900
+                                          49
+ H                     3.70156200    -0.09529700      1.21866500
+ H                     3.23071200     1.61710700     -0.27454500
+ H                     0.78718400     2.94095300      0.14609400
+
+
+
+26
+IM1-Triplet G=-5537.573679
+ C                     4.19551900      -0.81678200     0.32289800
+ C                     4.40256300       0.34368400    -0.64638500
+ C                     3.23544200       0.63373700    -1.58348100
+ C                     3.04761000      -0.61930700     1.32302100
+ C                     1.93069400       1.00264600    -0.85351700
+ H                     4.02907900      -1.74456600   -0.23383900
+ H                     4.61165900       1.24790700    -0.06394200
+ H                     3.05289700      -0.22653100   -2.23481400
+ H                     2.17641000       1.69919700    -0.04307700
+ H                     3.06456200       0.41454200      1.68428400
+ H                     5.12074400      -0.95372600     0.88760000
+ H                     5.29526800       0.14752600    -1.24593400
+ H                     3.51189400       1.46824600    -2.23232500
+ H                     3.21735800      -1.25615800     2.19156400
+ H                     1.28004800       1.54512500    -1.54071200
+ C                     1.67843900      -0.94505200     0.76562800
+ C                     1.18043200      -0.17641200   -0.31034500
+ C                     0.97894000      -1.98468300     1.31286300
+ H                    -0.00463000     -2.27598700      0.96815600
+ H                     1.39333400      -2.55400000     2.13477400
+ C                    -0.13852000     -0.52530000   -0.93953300
+ H                    -0.22674600     -0.03852200   -1.91824400
+ H                    -0.21997700     -1.60223000   -1.11250500
+ C                    -1.30609800     -0.13181800   -0.08401900
+ Br                  -1.35835800       1.60674200     0.62753100
+ Br                  -2.97112800     -0.93688700   -0.42992400
+
+
+
+26
+7C-(4 + 1)-Triplet G=-5537.567423
+ C                      3.60477000    0.91056300       0.94532100
+ C                      4.14315100    0.09723100      -0.23582500
+ C                      3.71783900   -1.37876300     -0.25518700
+ C                      2.09617400    1.19548800       0.91357500
+ C                      2.40009200   -1.65328800     -0.98303300
+ H                      3.84584100    0.37958200       1.87139500
+ H                      3.85191900    0.57624700      -1.17764200
+                                            50
+H      3.64219300     -1.73702500      0.77614500
+H      2.54974700     -1.54712000    -2.06471100
+H      1.89437600      1.84912900      0.04964600
+H      4.12839200      1.86891400      0.98492600
+H      5.23360000      0.14221000     -0.19217000
+H      4.49721100     -1.97622400    -0.73221800
+H      1.80361400      1.74421200      1.81194100
+H      2.10929200     -2.70404500    -0.83224900
+C      1.28398200     -0.04314800      0.76768900
+C      1.29557100     -0.74875900    -0.55972900
+C     -0.08903100    -0.23195400      1.33210100
+H     -0.20488300    -1.22924500      1.77315600
+H     -0.39433700      0.51392900      2.06343500
+C     -0.12767400    -0.98170300    -0.98549800
+H     -0.37721400    -0.69239200    -2.00774700
+H     -0.36050000    -2.05052000    -0.88920000
+C     -0.95092400    -0.21247400      0.05567700
+Br   -2.72467000    -0.98929700      0.32633100
+Br   -1.17427200      1.65053100    -0.53790900
+
+
+
+
+                           51
+References
+
+1.    Frisch, M. J.;     Trucks, G. W.;        Schlegel, H. B.;     Scuseria, G. E.;    Robb, M. A.;        Cheeseman,
+J. R.;   Scalmani, G.;        Barone, V.;        Petersson, G. A.;       Nakatsuji, H.;       Li, X.;      Caricato, M.;
+Marenich, A. V.;        Bloino, J.;     Janesko, B. G.;      Gomperts, R.;        Mennucci, B.;       Hratchian, H. P.;
+Ortiz, J. V.;     Izmaylov, A. F.;      Sonnenberg, J. L.;       Williams;     Ding, F.;     Lipparini, F.;     Egidi, F.;
+Goings, J.;     Peng, B.;    Petrone, A.;      Henderson, T.;      Ranasinghe, D.; Zakrzewski, V. G.;            Gao, J.;
+Rega, N.;       Zheng, G.;   Liang, W.;        Hada, M.;    Ehara, M.;       Toyota, K.;     Fukuda, R.;      Hasegawa,
+J.;   Ishida, M.;      Nakajima, T.;      Honda, Y.;       Kitao, O.;    Nakai, H.;     Vreven, T.;       Throssell, K.;
+Montgomery Jr., J. A.;       Peralta, J. E.;     Ogliaro, F.;     Bearpark, M. J.;     Heyd, J. J.;     Brothers, E. N.;
+Kudin, K. N.;       Staroverov, V. N.;      Keith, T. A.;     Kobayashi, R.;      Normand, J.;        Raghavachari, K.;
+Rendell, A. P.;     Burant, J. C.;      Iyengar, S. S.;    Tomasi, J.;    Cossi, M.;       Millam, J. M.;     Klene, M.;
+Adamo, C.;         Cammi, R.;         Ochterski, J. W.;          Martin, R. L.;      Morokuma, K.;            Farkas, O.;
+Foresman, J. B.; Fox, D. J. Gaussian 16 Rev. C.01, Wallingford, CT, 2016.
+2.    Zhao, Y.; Truhlar, D. G., The M06 suite of density functionals for main group thermochemistry,
+thermochemical kinetics, noncovalent interactions, excited states, and transition elements: two new
+functionals and systematic testing of four M06-class functionals and 12 other functionals. Theor. Chem.
+Acc. 2008, 120 (1-3), 215-241.
+3.    Weigend, F.; Ahlrichs, R., Balanced basis sets of split valence, triple zeta valence and quadruple
+zeta valence quality for H to Rn: Design and assessment of accuracy. Phys. Chem. Chem. Phys. 2005, 7
+(18), 3297-3305.
+4.    Weigend, F., Accurate Coulomb-fitting basis sets for H to Rn. Phys. Chem. Chem. Phys. 2006, 8
+(9), 1057-1065.
+5.    Marenich, A. V.;        Cramer, C. J.; Truhlar, D. G., Universal Solvation Model Based on Solute
+Electron Density and on a Continuum Model of the Solvent Defined by the Bulk Dielectric Constant and
+Atomic Surface Tensions. J. Phys. Chem. B 2009, 113 (18), 6378-6396.
+6.    Singleton, D. A.; Hang, C.;          Szymanski, M. J.; Greenwald, E. E., A New Form of Kinetic Isotope
+Effect. Dynamic Effects on Isotopic Selectivity and Regioselectivity. J. Am. Chem. Soc. 2003, 125 (5),
+1176-1177.
+7.    Roytman, V. A.;        Jin, S.;    Nguyen, V. T.;       Nguyen, V. D.;       Haug, G. C.;         Larionov, O. V.;
+Singleton, D. A., Bond Memory in Dynamically Determined Stereoselectivity. J. Am. Chem. Soc. 2020,
+142 (1), 85-88.
+8.    Bao, J. L.; Truhlar, D. G., Variational transition state theory: theoretical framework and recent
+developments. Chem. Soc. Rev. 2017, 46 (24), 7548-7596.
+9.    Truhlar, D. G.; Garrett, B. C., Variational transition-state theory. Acc. Chem. Res. 1980, 13 (12),
+440-448.
+10. Canneaux, S.;         Bohr, F.; Henon, E., KiSThelP: A program to predict thermodynamic properties
+
+and rate constants from quantum chemistry results†. J. Comput. Chem. 2014, 35 (1), 82-93.
+
+11. Shin, W.;          Ran, X.; Yang, Z. J., Accelerated Entropic Path Sampling with a Bidirectional
+Generative Adversarial Network. J. Phys. Chem. B 2023, 127 (19), 4254-4260.
+12. Qin, Z.-X.;        Tremblay, M.;         Hong, X.; Yang, Z. J., Entropic Path Sampling: Computational
+Protocol to Evaluate Entropic Profile along a Reaction Path. J. Phys. Chem. Lett. 2021, 12 (43), 10713-
+10719.
+                                                            52
+13. Knizia, G.; Klein, J. E. M. N., Electron Flow in Reaction Mechanisms—Revealed from First
+
+Principles. Angew. Chem. Int. Ed. 2015, 54 (18), 5518-5522.
+14. Perdew, J. P.;   Burke, K.; Ernzerhof, M., Generalized Gradient Approximation Made Simple. Phys.
+Rev. Lett. 1996, 77 (18), 3865-3868.
+15. Zhang, J.-X.;    Sheong, F. K.; Lin, Z., Unravelling Chemical Interactions with Principal Interacting
+Orbital Analysis. Chem. Eur. J. 2018, 24 (38), 9639-9650.
+16. Zhang, J.-X.;    Sheong, F. K.; Lin, Z., Principal interacting orbital: A chemically intuitive method
+for deciphering bonding interaction. WIREs Computational Molecular Science 2020, 10 (6), e1469.
+17. Hanwell, M. D.;     Curtis, D. E.;   Lonie, D. C.;   Vandermeersch, T.;    Zurek, E.; Hutchison, G.
+R., Avogadro: an advanced semantic chemical editor, visualization, and analysis platform. Journal of
+Cheminformatics 2012, 4 (1), 17.
+18. Legault, C. Y., CYLview20 - Build 0001. 2020.
+19. Jenneskens, L. W.;       de Wolf, W. H.; Bickelhaupt, F., 1,4-Addition of Dihalocarbenes to 1,3-
+Dienes. Angew. Chem. Int. Ed. 1985, 24 (7), 585-586.
+20. Yang, Z.;    Dong, X.;     Yu, Y.;    Yu, P.;   Li, Y.;   Jamieson, C.; Houk, K. N., Relationships
+between Product Ratios in Ambimodal Pericyclic Reactions and Bond Lengths in Transition Structures.
+J. Am. Chem. Soc. 2018, 140 (8), 3061-3067.
+
+21. Chen, S.;   Yu, P.; Houk, K. N., Ambimodal Dipolar/Diels–Alder Cycloaddition Transition States
+
+Involving Proton Transfers. J. Am. Chem. Soc. 2018, 140 (51), 18124-18131.
+22. Coates, R. M.; Last, L. A., Electrocyclic ring opening of a .beta.-lithiocyclopropyloxirane.
+Generation and trapping of (2Z,4E)-cyclohepta-2,4-dienol. J. Am. Chem. Soc. 1983, 105 (25), 7322-7326.
+
+
+
+
+                                                    53
+
