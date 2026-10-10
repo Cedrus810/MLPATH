@@ -436,7 +436,7 @@ def apply(atoms, probe, bond_scale=1.2, active=None):
     bond length and bond angle to machine precision. Only where no rigid split exists --
     anything inside a ring, a non-bonded pair whose ends stay connected, or any other
     genuinely collective coordinate -- does delivery fall back to the continuation scheme:
-    a large perturbation realized as a sequence of small, locally valid ones.
+    a sequence of small target changes with the other bond lengths restored at each step.
     """
     if probe.mode == "kick":
         before = atoms.get_kinetic_energy()
@@ -499,7 +499,10 @@ def apply(atoms, probe, bond_scale=1.2, active=None):
             atoms.positions, "bond", probe.indices
         ) - internal.coordinate(reference.positions, "bond", probe.indices)
     else:
-        _, achieved = internal.displace(atoms, probe.kind, probe.indices, requested)
+        graph = encode(reference, bond_scale, active=active)
+        _, achieved = internal.constrained_displace(
+            atoms, probe.kind, probe.indices, requested, graph.edges
+        )
 
     return {
         "requested": requested,
@@ -918,22 +921,87 @@ def candidate_id(family, indices, sign):
     return f"{family}:{'-'.join(str(int(i)) for i in indices)}:{'+' if sign >= 0 else '-'}"
 
 
-def spectral_overlap(atoms, kind, indices, modes):
+def delivered_direction(atoms, family, indices, bond_scale=1.2, active=None, graph=None):
+    """The mass-weighted unit vector a family's delivery travels along at its onset.
+
+    kick and pulse start the system along g/sqrt(m): a kick adds momentum q*g, so the
+    velocity is g/m, and a pulse applies the pair force +/- alpha r_hat, which is the bond
+    gradient, so the acceleration is g/m. Both are g/sqrt(m) in mass-weighted coordinates.
+
+    `displace` is not. `apply` delivers it by the exact rigid motion where one exists -- a
+    bond as a translation of its two whole sides, an angle as rotations of its two sides,
+    a torsion as a rotation of one side -- and uses a bond-preserving constrained continuation inside a
+    ring. The gradient lives on the two (three, four) named atoms and the rigid motion
+    moves whole fragments, so scoring g/sqrt(m) scored a direction nothing travels in:
+    on b09 the carbene-C : ring-C approach translates both molecules, and its endpoint
+    gradient is a different vector.
+
+    The rigid motions are differentiated here in closed form, using the same side and
+    torsion lookups `apply` uses; tests/test_spectral_rank.py differences `apply` itself
+    and pins the two together. Differencing `apply` at run time would also work, but it
+    pays `collateral_metrics` twice per candidate -- 7.5 s per direction on b09's 29
+    atoms, three quarters of an hour for one proposal.
+
+    Rigid-body components are projected out, as `internal.gradient` does for the kick
+    direction; the soft modes carry none, and leaving them in would only shrink the score.
+    """
+    kind = FAMILIES[family]["kind"]
+    masses = atoms.get_masses()
+    positions = atoms.positions
+    gradient = internal.gradient(positions, kind, indices)
+    tangent = gradient / masses[:, None]  # what kick and pulse move
+    if FAMILIES[family]["mode"] == "displace":
+        if graph is None:
+            graph = encode(atoms, bond_scale, active=active)
+        rigid = np.zeros_like(positions)
+        tangent = None
+        if kind == "bond" and (sides := _bond_sides(graph, *indices)):
+            i, j = indices
+            axis = positions[j] - positions[i]
+            axis = axis / np.linalg.norm(axis)
+            side_i, side_j = (list(side) for side in sides)
+            mass_i, mass_j = float(masses[side_i].sum()), float(masses[side_j].sum())
+            rigid[side_j] += axis * (mass_i / (mass_i + mass_j))
+            rigid[side_i] -= axis * (mass_j / (mass_i + mass_j))
+            tangent = rigid
+        elif kind == "angle" and (sides := _angle_sides(graph, *indices)):
+            i, vertex, k = indices
+            axis = np.cross(positions[i] - positions[vertex], positions[k] - positions[vertex])
+            axis = axis / np.linalg.norm(axis)
+            for side, rate in zip(sides, (-0.5, 0.5)):
+                side = list(side)
+                rigid[side] = rate * np.cross(axis, positions[side] - positions[vertex])
+            tangent = rigid
+        elif kind == "dihedral":
+            torsion = torsion_for(atoms, indices, bond_scale, active)
+            if torsion is not None and torsion.moving:
+                j, k = torsion.indices[1], torsion.indices[2]
+                axis = positions[k] - positions[j]
+                axis = axis / np.linalg.norm(axis)
+                moving = list(torsion.moving)
+                rigid[moving] = -np.cross(axis, positions[moving] - positions[j])
+                tangent = rigid
+    if tangent is None:
+        tangent = internal.constrained_direction(positions, masses, kind, indices, graph.edges)
+    vector = (tangent * np.sqrt(masses)[:, None]).reshape(-1)
+    from .runner import _trivial_modes
+
+    trivial = _trivial_modes(positions, masses)
+    vector = vector - trivial.T @ (trivial @ vector)
+    norm = float(np.linalg.norm(vector))
+    return vector / norm if norm > 1e-30 else vector
+
+
+def spectral_overlap(atoms, family, indices, modes, bond_scale=1.2, active=None, graph=None):
     """How much of a direction lies in the softest non-torsional modes, in [0, 1].
 
-    `displace` steps along g/m in Cartesian coordinates -- the internal coordinate's own
-    gradient over the masses -- so in mass-weighted coordinates q = sqrt(m) x that is
-    g/sqrt(m). Using g, or g*sqrt(m), computes the overlap with a direction nothing
-    travels in; that is the same mass-weighting slip the relay made once already
-    (M^(1/2) g where M^-1 g was meant), so the conversion is written out rather than
-    inherited. `modes` arrives mass-weighted and unit norm from `soft_internal_modes`.
+    The direction is the one the family's delivery travels (`delivered_direction`), in
+    mass-weighted coordinates, because that is the metric the Hessian's eigenvectors are
+    orthogonal in. `modes` arrives mass-weighted and unit norm from `soft_internal_modes`.
     """
-    gradient = internal.gradient(atoms.positions, kind, indices)
-    vector = (gradient / np.sqrt(atoms.get_masses())[:, None]).reshape(-1)
-    norm = float(np.linalg.norm(vector))
-    if norm < 1e-30:
+    vector = delivered_direction(atoms, family, indices, bond_scale, active, graph)
+    if float(np.linalg.norm(vector)) < 1e-30:
         return 0.0
-    vector = vector / norm
     return max(abs(float(vector @ mode)) for _, mode in modes)
 
 
@@ -969,6 +1037,14 @@ def propose(atoms, config, seed, report=None, soft_modes=(), key_difference=None
         only orders candidates inside a band. Absent modes changes nothing, which is what
         a microstate whose Hessian could not be had must fall back to -- a ranking is never
         worth failing a search for.
+        Since 2026-10-09 the overlap is taken with the motion the family delivers
+        (`delivered_direction`), not the endpoint gradient; b04's C-Cl stretch still leads
+        its family (0.990, next 0.184). Limit, measured on b09: every intermolecular
+        compress between the same two molecules is a rigid translation of both along the
+        pair axis, so the score ranks those candidates by how the AXIS aligns with the
+        soft intermolecular modes, not by which atoms would bond (b09 2-15: 36th of 84;
+        b04's four Cl approaches: 0.994-1.000). See
+        benchmarks/carbene_ambimodal/results/2026-10-09/rank_b09.log.
     [5] `key_difference = (broken, formed)` is connect mode's intervention I-b
         (PLAN_2026-09-28.md G3): a bond-kind direction that stretches a pair in `broken`
         or compresses a pair in `formed` moves to band -1, allocated before band 0. The
@@ -1025,7 +1101,17 @@ def propose(atoms, config, seed, report=None, soft_modes=(), key_difference=None
     if soft_modes:
         directions = [
             entry[:4]
-            + (-spectral_overlap(atoms, FAMILIES[entry[0]]["kind"], entry[1], soft_modes),)
+            + (
+                -spectral_overlap(
+                    atoms,
+                    entry[0],
+                    entry[1],
+                    soft_modes,
+                    config.bond_scale,
+                    config.active_atoms,
+                    graph,
+                ),
+            )
             + entry[5:]
             for entry in directions
         ]

@@ -812,6 +812,25 @@ def curvature_spectrum(candidate, factory, config, source="auto"):
     return eigenvalues[order], vectors[:, order], floor, provenance
 
 
+def _restricted_soft_modes(eigenvalues, vectors, excluded, limit):
+    """Diagonalize the Hessian in the complement of the excluded row span.
+
+    Projecting each old eigenvector and renormalizing it preserves neither its
+    eigenvalue nor the spectral order: a tiny remainder of a soft torsion can be
+    stiff. SVD also avoids QR's extra columns when exclusions are dependent.
+    """
+    _, singular, right = np.linalg.svd(excluded, full_matrices=True)
+    tolerance = max(excluded.shape) * np.finfo(float).eps * singular[0] if len(singular) else 0
+    rank = int(np.count_nonzero(singular > tolerance))
+    basis = right[rank:].T
+    if basis.shape[1] == 0:
+        return ()
+    overlap = basis.T @ vectors
+    reduced = (overlap * eigenvalues) @ overlap.T
+    values, modes = np.linalg.eigh((reduced + reduced.T) / 2)
+    return tuple((float(value), basis @ modes[:, k]) for k, value in enumerate(values[:limit]))
+
+
 def soft_internal_modes(candidate, factory, config):
     """The softest directions at a minimum that are neither rigid-body nor torsional.
 
@@ -838,6 +857,10 @@ def soft_internal_modes(candidate, factory, config):
     direction at 0.6893 and of everything else at 0.2558 or below. In the run itself that
     direction came out first from the seeded shuffle, with no mechanism putting it there.
 
+    The Hessian is diagonalized again in the complement of both excluded subspaces.
+    Projecting individual modes and normalizing the remainder does not preserve
+    their eigenvalues or order, especially for an almost entirely torsional mode.
+
     Vectors are returned MASS-WEIGHTED and unit norm, because that is the metric the
     Hessian's eigenvectors are orthogonal in and the one a displacement has to be stated
     in to be compared with them. Returns (modes, note); modes is empty and note says why
@@ -854,7 +877,7 @@ def soft_internal_modes(candidate, factory, config):
         return (), f"{type(exc).__name__}: {exc}"
 
     from .canonical import canonical_form
-    from . import internal
+    from .perturbations import delivered_direction
 
     trivial = _trivial_modes(candidate.positions, candidate.get_masses())
     graph = encode(candidate, config.bond_scale, active=config.active_atoms)
@@ -864,26 +887,14 @@ def soft_internal_modes(candidate, factory, config):
     genuine, rotors = rotatable_torsions(graph, labels, orbits)
     columns = []
     for torsion in list(genuine) + list(rotors):
-        gradient = internal.gradient(candidate.positions, "dihedral", torsion.indices)
-        vector = (gradient / np.sqrt(candidate.get_masses())[:, None]).reshape(-1)
+        vector = delivered_direction(
+            candidate, "torsion", torsion.indices, config.bond_scale, config.active_atoms, graph
+        )
         norm = float(np.linalg.norm(vector))
         if norm > 1e-30:
             columns.append(vector / norm)
-    torsional = np.linalg.qr(np.array(columns).T)[0] if columns else None
-
-    modes = []
-    for column in range(vectors.shape[1]):
-        if len(modes) >= config.spectral_rank_modes:
-            break
-        mode = vectors[:, column]
-        if float(np.linalg.norm(trivial @ mode)) > 0.5:
-            continue  # a rigid-body mode wearing a zero eigenvalue
-        if torsional is not None:
-            mode = mode - torsional @ (torsional.T @ mode)
-        survival = float(np.linalg.norm(mode))
-        if survival < 1e-8:
-            continue  # entirely torsional: the direction this projection exists to drop
-        modes.append((float(eigenvalues[column]), mode / survival))
+    excluded = np.vstack([trivial, *columns]) if columns else trivial
+    modes = _restricted_soft_modes(eigenvalues, vectors, excluded, config.spectral_rank_modes)
     note = (
         f"{provenance.get('source')}; {len(columns)} torsional direction(s) removed"
         if modes

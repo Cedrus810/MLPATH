@@ -15,7 +15,7 @@ from ase.build import molecule
 
 from prrs.calculators import demo_atoms, double_well_factory
 from prrs.config import SearchConfig
-from prrs.perturbations import propose, spectral_overlap
+from prrs.perturbations import Probe, apply, delivered_direction, propose, spectral_overlap
 from prrs.runner import soft_internal_modes
 from prrs import internal
 
@@ -39,13 +39,13 @@ def test_a_direction_that_is_the_soft_mode_is_ranked_first():
     atoms.center(vacuum=4.0)
     config = SearchConfig(families=("stretch",), max_directions=64)
     target = (0, 1)
-    modes = ((0.01, _mass_weighted(atoms, "bond", target)),)
+    modes = ((0.01, delivered_direction(atoms, "stretch", target)),)
 
     ranked, _ = _order(atoms, config, modes)
     assert ranked[0] == f"stretch:{target[0]}-{target[1]}:+", ranked[:4]
 
     # And the overlap that put it there is the self-overlap, so it is exactly 1.
-    assert spectral_overlap(atoms, "bond", target, modes) == pytest.approx(1.0, abs=1e-12)
+    assert spectral_overlap(atoms, "stretch", target, modes) == pytest.approx(1.0, abs=1e-12)
 
 
 def test_the_ranking_is_what_changed_and_nothing_else():
@@ -62,6 +62,90 @@ def test_the_ranking_is_what_changed_and_nothing_else():
     # the quota takes a fraction of each family, ranked or not.
     assert set(plain_pool) == set(ranked_pool), set(plain_pool) ^ set(ranked_pool)
     assert plain != ranked, "a ranking that changes no order is not a ranking"
+
+
+def test_a_displacement_is_scored_along_the_motion_apply_delivers():
+    """The score belongs to the vector the probe moves along, not to its endpoint gradient.
+
+    Two separate molecules: compressing an intermolecular pair is delivered as a rigid
+    translation of both whole molecules, so every atom moves. The endpoint gradient is
+    nonzero on two atoms only. Scoring that gradient gave b09's carbene-C : ring-C
+    approach a number for a motion nothing executes.
+    """
+    atoms = molecule("H2O") + molecule("NH3")
+    atoms.positions[3:] += (3.2, 0.0, 0.0)
+    pair = (0, 3)  # O ... N, no bond between the molecules
+    tangent = delivered_direction(atoms, "compress", pair)
+
+    moved = atoms.copy()
+    apply(moved, Probe("compress", pair, -1, 1e-3, seed=0))
+    step = ((moved.positions - atoms.positions) * np.sqrt(atoms.get_masses())[:, None]).ravel()
+    assert abs(float(tangent @ step)) / np.linalg.norm(step) == pytest.approx(1.0, abs=1e-6)
+    assert np.count_nonzero(np.linalg.norm(tangent.reshape(-1, 3), axis=1) > 1e-6) == len(atoms)
+
+    # Here the heavy atoms carry most of the mass, so the two vectors still overlap 0.924;
+    # what is pinned is that they are different vectors, not by how much.
+    endpoint = _mass_weighted(atoms, "bond", pair)
+    assert abs(float(endpoint @ tangent)) < 0.99, "the case the old score got wrong"
+
+
+def _differenced_through_apply(atoms, family, indices, step=1e-4):
+    """The delivery's own tangent, by central difference of `apply`, mass-weighted."""
+    moved = []
+    for sign in (1, -1):
+        trial = atoms.copy()
+        apply(trial, Probe(family, indices, sign, step, seed=0))
+        moved.append(trial.positions)
+    tangent = (moved[0] - moved[1]) / (2 * step) * np.sqrt(atoms.get_masses())[:, None]
+    # apply keeps the centre of mass but not the angular momentum: a rigid rotation of one
+    # side turns the whole molecule a little. That part is free motion and is projected
+    # out of both vectors before they are compared.
+    from prrs.runner import _trivial_modes
+
+    trivial = _trivial_modes(atoms.positions, atoms.get_masses())
+    tangent = tangent.ravel()
+    return tangent - trivial.T @ (trivial @ tangent)
+
+
+@pytest.mark.parametrize(
+    "family, indices",
+    [
+        ("compress", (0, 3)),  # two molecules: both translate whole
+        ("stretch", (3, 4)),  # N-H: the H alone against the rest of NH3
+        ("bend", (1, 0, 2)),  # H-O-H: two terminal sides
+    ],
+)
+def test_closed_form_tangent_matches_apply(family, indices):
+    """The closed form in delivered_direction is the motion apply executes, nothing else."""
+    atoms = molecule("H2O") + molecule("NH3")
+    atoms.positions[3:] += (3.2, 0.0, 0.0)
+    numeric = _differenced_through_apply(atoms, family, indices)
+    closed = delivered_direction(atoms, family, indices)
+    assert abs(float(closed @ numeric)) / np.linalg.norm(numeric) == pytest.approx(
+        1.0, abs=1e-7
+    )
+
+
+@pytest.mark.parametrize("indices", [(3, 0, 1, 2), (0, 1, 2, 8)])
+def test_closed_form_torsion_matches_apply(indices):
+    """A bridge torsion rotates one side rigidly; the closed form must follow apply's choice."""
+    atoms = molecule("CH3CH2OH")
+    atoms.center(vacuum=4.0)
+    numeric = _differenced_through_apply(atoms, "torsion", indices)
+    closed = delivered_direction(atoms, "torsion", indices)
+    assert abs(float(closed @ numeric)) / np.linalg.norm(numeric) == pytest.approx(
+        1.0, abs=1e-7
+    )
+
+
+def test_kicks_keep_the_gradient_direction():
+    """A kick adds momentum along g, so it starts along g/sqrt(m): no change there."""
+    atoms = molecule("CH3CH2OH")
+    atoms.center(vacuum=4.0)
+    tangent = delivered_direction(atoms, "kick", (0, 1))
+    assert abs(float(tangent @ _mass_weighted(atoms, "bond", (0, 1)))) == pytest.approx(
+        1.0, abs=1e-6
+    )
 
 
 def test_no_spectrum_leaves_the_existing_order_untouched():

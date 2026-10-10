@@ -2064,6 +2064,324 @@ class ReactionSearch:
                 publish()
                 return record
 
+            def finish_scan(node, state, probes, coarse, proposal, schedule, direction):
+                """Refine and analyse a scan only after this source's coarse coverage.
+
+                The microstate remains the resume transaction: a kill in either pass
+                rolls back to its existing checkpoint and replays both passes.
+                """
+                scan = {
+                    "source": node.id,
+                    "source_microstate": state.id,
+                    "family": probes[0].family,
+                    "indices": list(probes[0].indices),
+                    "sign": probes[0].sign,
+                    "seed": probes[0].seed,
+                    "unit": probes[0].unit,
+                    "local_brackets": [],
+                    "window_semantics": window_semantics(cfg),
+                }
+                observed = list(coarse)
+                log.info(
+                    "scanning %s %s sign %+d on %s",
+                    probes[0].family,
+                    tuple(probes[0].indices),
+                    probes[0].sign,
+                    state.id,
+                )
+
+                # [1] refine only between a return and a departure
+                def returned(record):
+                    return (
+                        record["status"] == "completed"
+                        and record.get("target_microstate") == state.id
+                    )
+
+                def departed(record):
+                    """Did this record leave the source microstate?
+
+                    Notes
+                    -----
+                    [1] A quench that stopped on a ridge reached SOME basin boundary.
+                        That is enough to bracket an amplitude -- returning stopped
+                        happening between here and the last amplitude that returned --
+                        and it is not enough to claim the probe crossed the coordinate
+                        it was aimed at. On 3-oxobutanal every O-H amplitude ended on a
+                        rotor barrier at -65 to -80 cm^-1 while the proton transfer sits
+                        at -3186; calling that a departure along the O-H would have been
+                        evidence for a reaction that never happened.
+                    """
+                    if record["status"] == "completed":
+                        reached = record.get("target_microstate")
+                        return reached is not None and reached != state.id
+                    if record["status"] == "ts_candidate":
+                        # [1] a ridge is some boundary, not the probed one
+                        return True
+                    return bool((record.get("crossing") or {}).get("observed"))
+
+                for low_record, high_record in zip(coarse, coarse[1:]):
+                    if not (returned(low_record) and departed(high_record)):
+                        continue
+                    low = low_record["probe"]["amplitude"]
+                    high = high_record["probe"]["amplitude"]
+                    bracket = {
+                        **_bracket_high(high_record),
+                        "low": low,
+                        "high": high,
+                        "high_kind_meaning": (_RUN_HIGH_KIND_MEANING),
+                        "meaning": "local observed window; no monotonicity assumed",
+                        "interrupted_by": None,
+                    }
+                    for _ in range(cfg.refinement_steps):
+                        if len(records) >= cfg.max_trials:
+                            break
+                        allowed, _ = registry.may_search(node, state)
+                        if not allowed:
+                            break
+                        middle = (low + high) / 2
+                        refined = execute(
+                            node,
+                            state,
+                            replace(probes[0], amplitude=middle),
+                            "refine",
+                            [low_record["attempt_id"], high_record["attempt_id"]],
+                        )
+                        observed.append(refined)
+                        if departed(refined):
+                            high, high_record = middle, refined
+                        elif returned(refined):
+                            low, low_record = middle, refined
+                        else:
+                            bracket["interrupted_by"] = refined["attempt_id"]
+                            break
+                    # Every derived field comes from the record that ended up at the
+                    # high end, not from the coarse sample that started there.
+                    bracket.update(low=low, high=high, **_bracket_high(high_record))
+                    scan["local_brackets"].append(bracket)
+                    log.info(
+                        "bracket [%.4f, %.4f] high_kind=%s on %s",
+                        low,
+                        high,
+                        bracket["high_kind"],
+                        state.id,
+                    )
+
+                observed.sort(key=lambda r: r["probe"]["amplitude"])
+                scan["samples"] = [
+                    {
+                        "amplitude": r["probe"]["amplitude"],
+                        "attempt": r["attempt_id"],
+                        "status": r["status"],
+                        "admission": r["admission"],
+                        "target": r["target"],
+                        "target_microstate": r["target_microstate"],
+                        **dict(
+                            zip(("outcome", "outcome_reason"), _sample_outcome(r, state.id))
+                        ),
+                    }
+                    for r in observed
+                ]
+                # A later success after an intervening return is a second window,
+                # not evidence that the first one was wrong.
+                departed = False
+                scan["nonmonotonic_return_observed"] = False
+                for entry in observed:
+                    if entry["status"] != "completed" or entry["target_microstate"] is None:
+                        continue
+                    if entry["target_microstate"] != state.id:
+                        departed = True
+                    elif departed:
+                        scan["nonmonotonic_return_observed"] = True
+                # Committor (PLAN item 2, decision 3): N Maxwell-Boltzmann shots
+                # from each bracketed window's ridge frame, model-report only.
+                # Gated OFF by default: every shot is a full trial's budget, and
+                # b04's negative side is coverage-limited, not statistics-limited.
+                # "other" is counted, never folded into A or B -- a shot that did
+                # not terminate says nothing about p_B. With committor_entry_steps > 0
+                # the shot ends on first entry into A's or B's graph and is judged by
+                # that side (docs/P1_COMMITTOR_FIRST_ENTRY_PROTOCOL.md, frozen
+                # 2026-09-25): fixed length moved P1's p_B with t_free. The quench from
+                # the entry geometry is the protocol's check -- a disagreement is
+                # counted, never a re-judgement. Endpoints that share one graph (a
+                # torsion window) cannot be told apart by it and keep the fixed rule.
+                if cfg.committor_shots > 0 and scan["local_brackets"]:
+                    for bracket_index, bracket in enumerate(scan["local_brackets"]):
+                        at_high = next(
+                            (s for s in scan["samples"] if s["amplitude"] == bracket["high"]),
+                            None,
+                        )
+                        if at_high is None:
+                            continue
+                        frame, _, _, _ = _dividing_frame(
+                            output / "trials" / at_high["attempt"],
+                            probe=probes[0].to_dict(),
+                        )
+                        if frame is None:
+                            bracket["committor"] = {
+                                "shots": 0,
+                                "reason": "no_ridge_frame",
+                            }
+                            continue
+                        target = bracket.get("target_microstate")
+                        first_entry, shot_cfg, termination = None, cfg, "fixed_t_free"
+                        if cfg.committor_entry_steps > 0:
+                            target_state = next(
+                                (
+                                    s
+                                    for n in registry.nodes
+                                    for s in n.microstates
+                                    if s.id == target
+                                ),
+                                None,
+                            )
+                            graphs = {
+                                side: frozenset(
+                                    encode(
+                                        geometry.structure,
+                                        cfg.bond_scale,
+                                        active=cfg.active_atoms,
+                                    ).edges
+                                )
+                                for side, geometry in (("A", state), ("B", target_state))
+                                if geometry is not None
+                            }
+                            if len(set(graphs.values())) == 2:
+                                first_entry = {
+                                    "graphs": graphs,
+                                    "k": cfg.committor_entry_steps,
+                                }
+                                shot_cfg = replace(cfg, response_steps=cfg.committor_max_steps)
+                                termination = "first_entry"
+                            else:
+                                termination = (
+                                    "fixed_t_free:endpoints_share_one_graph"
+                                    if target_state is not None
+                                    else "fixed_t_free:no_target_microstate"
+                                )
+                        shots = shoot(
+                            frame,
+                            probes[0],
+                            physical_factory,
+                            shot_cfg,
+                            output,
+                            cfg.committor_shots,
+                            cfg.seed + 1009 * len(records),
+                            prefix=f"c{len(network['amplitude_scans']):03d}b{bracket_index:02d}s",
+                            first_entry=first_entry,
+                        )
+                        reached_a = reached_b = other = mismatch = 0
+                        # Where the "other" shots actually went. Without this the
+                        # count is a dead end: "other 16" cannot distinguish a third
+                        # basin from a quench that never terminated from a judging
+                        # bug, and the 2026-09-22 run needed all three told apart.
+                        landings = {}
+                        for outcome in shots:
+                            record = outcome.record
+                            # `target_microstate` is written by the SCAN path, after
+                            # registry.admit; shots never go through it, so reading
+                            # that key here made A and B unreachable by construction
+                            # (fixed 2026-09-22, after a production run reported
+                            # A 0 / B 0 / other 16 on all three brackets). Identify
+                            # reads the registry instead of writing to it: a probe
+                            # that is never a criterion must not enter the network.
+                            landed = None
+                            # the entry check quenches whatever the free tail did;
+                            # the fixed rule keeps its completed-only reading
+                            judged = (
+                                outcome.endpoint is not None
+                                if first_entry is not None
+                                else record["status"] == "completed"
+                            )
+                            if judged:
+                                _, landed = registry.identify(outcome.endpoint)
+                                landed = landed.id if landed is not None else None
+                            record["committor_landed_microstate"] = landed
+                            bucket = landed or f"unidentified:{record['status']}"
+                            landings[bucket] = landings.get(bucket, 0) + 1
+                            if first_entry is not None:
+                                side = (record.get("first_entry") or {}).get("side")
+                                if side == "A":
+                                    reached_a += 1
+                                elif side == "B":
+                                    reached_b += 1
+                                else:
+                                    other += 1
+                                expected = {"A": state.id, "B": target}.get(side)
+                                if expected is not None and landed != expected:
+                                    mismatch += 1
+                            elif landed is not None and landed == state.id:
+                                reached_a += 1
+                            elif landed is not None and target is not None and landed == target:
+                                reached_b += 1
+                            else:
+                                other += 1
+                        terminated = reached_a + reached_b
+                        p_b = reached_b / terminated if terminated else None
+                        wilson = wilson_interval(reached_b, terminated) if terminated else None
+                        bracket["committor"] = {
+                            "shots": len(shots),
+                            "reached_A": reached_a,
+                            "reached_B": reached_b,
+                            "other": other,
+                            "landings": dict(sorted(landings.items())),
+                            "termination": termination,
+                            "p_B_given_AB": p_b,
+                            # p_B is conditional on reaching A or B; with a third
+                            # basin or unterminated shots it is NOT the committor,
+                            # so its denominator and the excluded share are stated
+                            "p_B_conditioned_on": "reached_A or reached_B",
+                            "other_fraction": other / len(shots) if shots else None,
+                            # the measured drift, not "passed the gate": the gate
+                            # is a guard at 0.1 eV/atom, not an accuracy statement
+                            "max_nve_drift_eV_atom": max(
+                                (o.record.get("max_nve_drift_eV_atom") or 0.0 for o in shots),
+                                default=None,
+                            ),
+                            "wilson_95": list(wilson) if wilson else None,
+                            **(
+                                {
+                                    "entry_steps": cfg.committor_entry_steps,
+                                    "max_steps": cfg.committor_max_steps,
+                                    "entry_quench_mismatch": mismatch,
+                                }
+                                if first_entry is not None
+                                else {}
+                            ),
+                            "ensemble": "maxwell-boltzmann",
+                            "temperature_K": cfg.temperature_K,
+                            "meaning": (
+                                "independent probe, model report only, never a "
+                                "criterion (decision 3, 2026-09-20); 'other' shots "
+                                "are excluded from p_B_given_AB's denominator and "
+                                "reported; under first_entry, other = not entered by "
+                                "max_steps or rejected by a gate"
+                            ),
+                        }
+                        log.info(
+                            "committor on %s bracket [%.3f, %.3f]: A %d / B %d / other %d",
+                            state.id,
+                            bracket["low"],
+                            bracket["high"],
+                            reached_a,
+                            reached_b,
+                            other,
+                        )
+                # [2] the scan's one geometry a saddle is reachable from
+                scan["proposal"] = {
+                    "priority": probes[0].priority,
+                    "priority_reason": probes[0].priority_reason,
+                    "budget": proposal,
+                    "schedule": schedule.schedule_of(direction),
+                }
+                scan["saddle_search"] = seek_saddle(node, state, observed)
+                # A third named intervention, kept separate from the other two for the
+                # same reason: the saddle search answers "is there a saddle on this
+                # coordinate", the continuation answers "does the delivered probe reach
+                # the product", and an improvement in either must be attributable.
+                scan["boundary_continuation"] = continue_boundary(node, state, observed)
+                network["amplitude_scans"].append(scan)
+                publish()
+
             spectra = {}
             if cfg.direction_mode == "exhaustive":
                 _refuse_unaffordable_enumeration(atoms, cfg)
@@ -2150,6 +2468,7 @@ class ReactionSearch:
                     if modes
                     else f"seeded shuffle; no spectrum ({spectrum_note})"
                 )
+                pending_scans = []
                 for probes in generator:
                     # The schedule is built lazily with the generator: `proposal` is
                     # filled before the first batch arrives, so its selected_ids are
@@ -2185,332 +2504,12 @@ class ReactionSearch:
                     if not coarse:
                         schedule.stopped(direction, "no_coarse_sample")
                         break
-                    scan = {
-                        "source": node.id,
-                        "source_microstate": state.id,
-                        "family": probes[0].family,
-                        "indices": list(probes[0].indices),
-                        "sign": probes[0].sign,
-                        "seed": probes[0].seed,
-                        "unit": probes[0].unit,
-                        "local_brackets": [],
-                        "window_semantics": window_semantics(cfg),
-                    }
-                    observed = list(coarse)
-                    log.info(
-                        "scanning %s %s sign %+d on %s",
-                        probes[0].family,
-                        tuple(probes[0].indices),
-                        probes[0].sign,
-                        state.id,
-                    )
+                    pending_scans.append((probes, coarse, direction))
 
-                    # [1] refine only between a return and a departure
-                    def returned(record):
-                        return (
-                            record["status"] == "completed"
-                            and record.get("target_microstate") == state.id
-                        )
-
-                    def departed(record):
-                        """Did this record leave the source microstate?
-
-                        Notes
-                        -----
-                        [1] A quench that stopped on a ridge reached SOME basin boundary.
-                            That is enough to bracket an amplitude -- returning stopped
-                            happening between here and the last amplitude that returned --
-                            and it is not enough to claim the probe crossed the coordinate
-                            it was aimed at. On 3-oxobutanal every O-H amplitude ended on a
-                            rotor barrier at -65 to -80 cm^-1 while the proton transfer sits
-                            at -3186; calling that a departure along the O-H would have been
-                            evidence for a reaction that never happened.
-                        """
-                        if record["status"] == "completed":
-                            reached = record.get("target_microstate")
-                            return reached is not None and reached != state.id
-                        if record["status"] == "ts_candidate":
-                            # [1] a ridge is some boundary, not the probed one
-                            return True
-                        return bool((record.get("crossing") or {}).get("observed"))
-
-                    for low_record, high_record in zip(coarse, coarse[1:]):
-                        if not (returned(low_record) and departed(high_record)):
-                            continue
-                        low = low_record["probe"]["amplitude"]
-                        high = high_record["probe"]["amplitude"]
-                        bracket = {
-                            **_bracket_high(high_record),
-                            "low": low,
-                            "high": high,
-                            "high_kind_meaning": (_RUN_HIGH_KIND_MEANING),
-                            "meaning": "local observed window; no monotonicity assumed",
-                            "interrupted_by": None,
-                        }
-                        for _ in range(cfg.refinement_steps):
-                            if len(records) >= cfg.max_trials:
-                                break
-                            allowed, _ = registry.may_search(node, state)
-                            if not allowed:
-                                break
-                            middle = (low + high) / 2
-                            refined = execute(
-                                node,
-                                state,
-                                replace(probes[0], amplitude=middle),
-                                "refine",
-                                [low_record["attempt_id"], high_record["attempt_id"]],
-                            )
-                            observed.append(refined)
-                            if departed(refined):
-                                high, high_record = middle, refined
-                            elif returned(refined):
-                                low, low_record = middle, refined
-                            else:
-                                bracket["interrupted_by"] = refined["attempt_id"]
-                                break
-                        # Every derived field comes from the record that ended up at the
-                        # high end, not from the coarse sample that started there.
-                        bracket.update(low=low, high=high, **_bracket_high(high_record))
-                        scan["local_brackets"].append(bracket)
-                        log.info(
-                            "bracket [%.4f, %.4f] high_kind=%s on %s",
-                            low,
-                            high,
-                            bracket["high_kind"],
-                            state.id,
-                        )
-
-                    observed.sort(key=lambda r: r["probe"]["amplitude"])
-                    scan["samples"] = [
-                        {
-                            "amplitude": r["probe"]["amplitude"],
-                            "attempt": r["attempt_id"],
-                            "status": r["status"],
-                            "admission": r["admission"],
-                            "target": r["target"],
-                            "target_microstate": r["target_microstate"],
-                            **dict(
-                                zip(("outcome", "outcome_reason"), _sample_outcome(r, state.id))
-                            ),
-                        }
-                        for r in observed
-                    ]
-                    # A later success after an intervening return is a second window,
-                    # not evidence that the first one was wrong.
-                    departed = False
-                    scan["nonmonotonic_return_observed"] = False
-                    for entry in observed:
-                        if entry["status"] != "completed" or entry["target_microstate"] is None:
-                            continue
-                        if entry["target_microstate"] != state.id:
-                            departed = True
-                        elif departed:
-                            scan["nonmonotonic_return_observed"] = True
-                    # Committor (PLAN item 2, decision 3): N Maxwell-Boltzmann shots
-                    # from each bracketed window's ridge frame, model-report only.
-                    # Gated OFF by default: every shot is a full trial's budget, and
-                    # b04's negative side is coverage-limited, not statistics-limited.
-                    # "other" is counted, never folded into A or B -- a shot that did
-                    # not terminate says nothing about p_B. With committor_entry_steps > 0
-                    # the shot ends on first entry into A's or B's graph and is judged by
-                    # that side (docs/P1_COMMITTOR_FIRST_ENTRY_PROTOCOL.md, frozen
-                    # 2026-09-25): fixed length moved P1's p_B with t_free. The quench from
-                    # the entry geometry is the protocol's check -- a disagreement is
-                    # counted, never a re-judgement. Endpoints that share one graph (a
-                    # torsion window) cannot be told apart by it and keep the fixed rule.
-                    if cfg.committor_shots > 0 and scan["local_brackets"]:
-                        for bracket_index, bracket in enumerate(scan["local_brackets"]):
-                            at_high = next(
-                                (
-                                    s
-                                    for s in scan["samples"]
-                                    if s["amplitude"] == bracket["high"]
-                                ),
-                                None,
-                            )
-                            if at_high is None:
-                                continue
-                            frame, _, _, _ = _dividing_frame(
-                                output / "trials" / at_high["attempt"],
-                                probe=probes[0].to_dict(),
-                            )
-                            if frame is None:
-                                bracket["committor"] = {
-                                    "shots": 0,
-                                    "reason": "no_ridge_frame",
-                                }
-                                continue
-                            target = bracket.get("target_microstate")
-                            first_entry, shot_cfg, termination = None, cfg, "fixed_t_free"
-                            if cfg.committor_entry_steps > 0:
-                                target_state = next(
-                                    (
-                                        s
-                                        for n in registry.nodes
-                                        for s in n.microstates
-                                        if s.id == target
-                                    ),
-                                    None,
-                                )
-                                graphs = {
-                                    side: frozenset(
-                                        encode(
-                                            geometry.structure,
-                                            cfg.bond_scale,
-                                            active=cfg.active_atoms,
-                                        ).edges
-                                    )
-                                    for side, geometry in (("A", state), ("B", target_state))
-                                    if geometry is not None
-                                }
-                                if len(set(graphs.values())) == 2:
-                                    first_entry = {
-                                        "graphs": graphs,
-                                        "k": cfg.committor_entry_steps,
-                                    }
-                                    shot_cfg = replace(
-                                        cfg, response_steps=cfg.committor_max_steps
-                                    )
-                                    termination = "first_entry"
-                                else:
-                                    termination = (
-                                        "fixed_t_free:endpoints_share_one_graph"
-                                        if target_state is not None
-                                        else "fixed_t_free:no_target_microstate"
-                                    )
-                            shots = shoot(
-                                frame,
-                                probes[0],
-                                physical_factory,
-                                shot_cfg,
-                                output,
-                                cfg.committor_shots,
-                                cfg.seed + 1009 * len(records),
-                                prefix=f"c{len(network['amplitude_scans']):03d}b{bracket_index:02d}s",
-                                first_entry=first_entry,
-                            )
-                            reached_a = reached_b = other = mismatch = 0
-                            # Where the "other" shots actually went. Without this the
-                            # count is a dead end: "other 16" cannot distinguish a third
-                            # basin from a quench that never terminated from a judging
-                            # bug, and the 2026-09-22 run needed all three told apart.
-                            landings = {}
-                            for outcome in shots:
-                                record = outcome.record
-                                # `target_microstate` is written by the SCAN path, after
-                                # registry.admit; shots never go through it, so reading
-                                # that key here made A and B unreachable by construction
-                                # (fixed 2026-09-22, after a production run reported
-                                # A 0 / B 0 / other 16 on all three brackets). Identify
-                                # reads the registry instead of writing to it: a probe
-                                # that is never a criterion must not enter the network.
-                                landed = None
-                                # the entry check quenches whatever the free tail did;
-                                # the fixed rule keeps its completed-only reading
-                                judged = (
-                                    outcome.endpoint is not None
-                                    if first_entry is not None
-                                    else record["status"] == "completed"
-                                )
-                                if judged:
-                                    _, landed = registry.identify(outcome.endpoint)
-                                    landed = landed.id if landed is not None else None
-                                record["committor_landed_microstate"] = landed
-                                bucket = landed or f"unidentified:{record['status']}"
-                                landings[bucket] = landings.get(bucket, 0) + 1
-                                if first_entry is not None:
-                                    side = (record.get("first_entry") or {}).get("side")
-                                    if side == "A":
-                                        reached_a += 1
-                                    elif side == "B":
-                                        reached_b += 1
-                                    else:
-                                        other += 1
-                                    expected = {"A": state.id, "B": target}.get(side)
-                                    if expected is not None and landed != expected:
-                                        mismatch += 1
-                                elif landed is not None and landed == state.id:
-                                    reached_a += 1
-                                elif (
-                                    landed is not None
-                                    and target is not None
-                                    and landed == target
-                                ):
-                                    reached_b += 1
-                                else:
-                                    other += 1
-                            terminated = reached_a + reached_b
-                            p_b = reached_b / terminated if terminated else None
-                            wilson = (
-                                wilson_interval(reached_b, terminated) if terminated else None
-                            )
-                            bracket["committor"] = {
-                                "shots": len(shots),
-                                "reached_A": reached_a,
-                                "reached_B": reached_b,
-                                "other": other,
-                                "landings": dict(sorted(landings.items())),
-                                "termination": termination,
-                                "p_B_given_AB": p_b,
-                                # p_B is conditional on reaching A or B; with a third
-                                # basin or unterminated shots it is NOT the committor,
-                                # so its denominator and the excluded share are stated
-                                "p_B_conditioned_on": "reached_A or reached_B",
-                                "other_fraction": other / len(shots) if shots else None,
-                                # the measured drift, not "passed the gate": the gate
-                                # is a guard at 0.1 eV/atom, not an accuracy statement
-                                "max_nve_drift_eV_atom": max(
-                                    (
-                                        o.record.get("max_nve_drift_eV_atom") or 0.0
-                                        for o in shots
-                                    ),
-                                    default=None,
-                                ),
-                                "wilson_95": list(wilson) if wilson else None,
-                                **(
-                                    {
-                                        "entry_steps": cfg.committor_entry_steps,
-                                        "max_steps": cfg.committor_max_steps,
-                                        "entry_quench_mismatch": mismatch,
-                                    }
-                                    if first_entry is not None
-                                    else {}
-                                ),
-                                "ensemble": "maxwell-boltzmann",
-                                "temperature_K": cfg.temperature_K,
-                                "meaning": (
-                                    "independent probe, model report only, never a "
-                                    "criterion (decision 3, 2026-09-20); 'other' shots "
-                                    "are excluded from p_B_given_AB's denominator and "
-                                    "reported; under first_entry, other = not entered by "
-                                    "max_steps or rejected by a gate"
-                                ),
-                            }
-                            log.info(
-                                "committor on %s bracket [%.3f, %.3f]: A %d / B %d / other %d",
-                                state.id,
-                                bracket["low"],
-                                bracket["high"],
-                                reached_a,
-                                reached_b,
-                                other,
-                            )
-                    # [2] the scan's one geometry a saddle is reachable from
-                    scan["proposal"] = {
-                        "priority": probes[0].priority,
-                        "priority_reason": probes[0].priority_reason,
-                        "budget": proposal,
-                        "schedule": schedule.schedule_of(direction),
-                    }
-                    scan["saddle_search"] = seek_saddle(node, state, observed)
-                    # A third named intervention, kept separate from the other two for the
-                    # same reason: the saddle search answers "is there a saddle on this
-                    # coordinate", the continuation answers "does the delivered probe reach
-                    # the product", and an improvement in either must be attributable.
-                    scan["boundary_continuation"] = continue_boundary(node, state, observed)
-                    network["amplitude_scans"].append(scan)
-                    publish()
+                # Spend the source's trial budget on all selected coarse batches first.
+                # Refinement and auxiliary path analysis may use only what is left.
+                for probes, coarse, direction in pending_scans:
+                    finish_scan(node, state, probes, coarse, proposal, schedule, direction)
 
             # One ledger per searched microstate, plus the run-level roll-up. Written
             # even when every direction ran: "nothing was dropped" is a result too, and

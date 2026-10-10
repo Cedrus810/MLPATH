@@ -185,6 +185,84 @@ def gradient(positions, kind, indices):
     return result
 
 
+def _bond_jacobian(positions, bonds):
+    rows = np.zeros((len(bonds), positions.size))
+    lengths = np.zeros(len(bonds))
+    for row, (a, b) in enumerate(bonds):
+        axis = positions[b] - positions[a]
+        lengths[row] = np.linalg.norm(axis)
+        if lengths[row] < 1e-12:
+            raise ValueError("Cannot preserve a zero-length bond")
+        axis /= lengths[row]
+        rows[row, 3 * a : 3 * a + 3] = -axis
+        rows[row, 3 * b : 3 * b + 3] = axis
+    return rows, lengths
+
+
+def _constrained_correction(positions, masses, kind, indices, bonds, residual):
+    """Minimum mass-weighted movement satisfying the linearized coordinates."""
+    rows, _ = _bond_jacobian(positions, bonds)
+    jacobian = np.vstack([gradient(positions, kind, indices).ravel(), rows])
+    inverse_mass = 1 / np.repeat(masses, 3)
+    metric = (jacobian * inverse_mass) @ jacobian.T
+    multipliers = np.linalg.lstsq(metric, residual, rcond=1e-12)[0]
+    return (inverse_mass * (jacobian.T @ multipliers)).reshape(positions.shape)
+
+
+def constrained_direction(positions, masses, kind, indices, bonds):
+    """Cartesian tangent per unit target change with all other bonds held fixed."""
+    target = frozenset(indices) if kind == "bond" else None
+    bonds = [pair for pair in sorted(bonds) if frozenset(pair) != target]
+    residual = np.zeros(1 + len(bonds))
+    residual[0] = 1
+    return _constrained_correction(positions, masses, kind, indices, bonds, residual)
+
+
+def constrained_displace(atoms, kind, indices, delta, bonds, tolerance=1e-9):
+    """Continue one coordinate while restoring every non-target bond each step.
+
+    This is a geometric delivery contract, not a relaxed or force-minimized path.
+    The ordinary clash, fragment and energy gates still judge the delivered probe.
+    An incompatible constraint set fails rather than silently tearing another bond.
+    """
+    indices = _check(kind, indices, len(atoms))
+    start = coordinate(atoms.positions, kind, indices)
+    if kind == "bond" and start + delta <= 0:
+        raise ValueError("Bond displacement targets a nonpositive length")
+    if kind == "angle" and not 0 < start + delta < np.pi:
+        raise ValueError("Angle displacement targets an angle outside (0, pi)")
+    target = frozenset(indices) if kind == "bond" else None
+    bonds = [pair for pair in sorted(bonds) if frozenset(pair) != target]
+    _, lengths = _bond_jacobian(atoms.positions, bonds)
+    masses = atoms.get_masses()
+    centre = atoms.get_center_of_mass()
+    steps = max(1, int(np.ceil(abs(delta) / MAX_STEP[kind])))
+    for step in range(1, steps + 1):
+        destination = start + delta * step / steps
+        for _ in range(40):
+            _, current_lengths = _bond_jacobian(atoms.positions, bonds)
+            error = destination - coordinate(atoms.positions, kind, indices)
+            if PERIODIC[kind]:
+                error = _wrap(error)
+            residual = np.r_[error, lengths - current_lengths]
+            if np.max(np.abs(residual)) < tolerance:
+                break
+            correction = _constrained_correction(
+                atoms.positions, masses, kind, indices, bonds, residual
+            )
+            # Bound Newton steps as well as the target increments: a near-singular
+            # constraint Jacobian must not produce an unbounded atomic displacement.
+            largest = float(np.linalg.norm(correction, axis=1).max())
+            if largest > 0.1:
+                correction *= 0.1 / largest
+            atoms.set_positions(atoms.positions + correction)
+        else:
+            raise ValueError("Bond-preserving probe delivery did not converge")
+    atoms.set_positions(atoms.positions + centre - atoms.get_center_of_mass())
+    achieved = coordinate(atoms.positions, kind, indices) - start
+    return atoms, float(_wrap(achieved) if PERIODIC[kind] else achieved)
+
+
 def displace(atoms, kind, indices, delta, in_place=True, tolerance=1e-9, max_iterations=None):
     """Move by delta along one internal coordinate, preserving the center of mass.
 
