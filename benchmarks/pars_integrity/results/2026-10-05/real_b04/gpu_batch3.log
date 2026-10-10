@@ -1,0 +1,7 @@
+== b04_probe
+  pc-rc0000-t000003: ci_neb_converged
+pars refine: 1 refined, 0 already done under the same conditions; 1 recorded under /tmp/claude-1000/-home-ruigengji-MLPATH/10efff89-d01b-459a-a81e-2b69632f85a1/scratchpad/rep_b04_probe/sel/refined
+== b04_probe2_openceiling
+  pc-rc0000-t000003: ci_neb_converged
+pars refine: 1 refined, 0 already done under the same conditions; 1 recorded under /tmp/claude-1000/-home-ruigengji-MLPATH/10efff89-d01b-459a-a81e-2b69632f85a1/scratchpad/rep_b04_probe2_openceiling/sel/refined
+== b04_probe3_rigidbond

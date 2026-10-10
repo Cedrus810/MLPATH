@@ -1,0 +1,4 @@
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+  pc-rc0000-t000003: ci_neb_converged
+  pc-rc0000-t000004: ci_neb_converged
+pars refine: 2 refined, 0 already done under the same conditions; 2 recorded under /tmp/claude-1000/-home-ruigengji-MLPATH/10efff89-d01b-459a-a81e-2b69632f85a1/scratchpad/b04_real/sel/refined

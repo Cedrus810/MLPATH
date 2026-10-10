@@ -1,0 +1,1510 @@
+[
+ {
+  "run": "runs/b04_frozen1",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/elastic": 60
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b04_frozen2",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/elastic": 60
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b04_probe",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 1,
+  "skipped": {
+   "completed/elastic": 54,
+   "rejected/unphysical": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b04_probe2_openceiling",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 1,
+  "skipped": {
+   "completed/elastic": 54,
+   "rejected/unphysical": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b04_probe3_rigidbond",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 2,
+  "skipped": {
+   "completed/elastic": 62
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b04_probe4_ledger",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 2,
+  "skipped": {
+   "completed/elastic": 62
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b05_probe1_sampled",
+  "result": "no_ledger_skip"
+ },
+ {
+  "run": "runs/b05_probe2_pruned",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 26,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 5
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b05_probe3_budget",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 68,
+   "quench_failed/None": 3,
+   "rejected/unphysical": 15
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/b05_probe4_bend",
+  "state": {
+   "charge": -1,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 72,
+   "quench_failed/None": 3,
+   "rejected/unphysical": 11
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed1/discover",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 11,
+  "skipped": {
+   "completed/elastic": 52,
+   "rejected/unphysical": 15,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed1/pIa",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 18,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed1/pIapIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 8,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 17,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed1/pIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 9,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 16,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed2/discover",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 11,
+  "skipped": {
+   "completed/elastic": 52,
+   "rejected/unphysical": 15,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed2/pIa",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 18,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed2/pIapIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 8,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 17,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed2/pIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 9,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 16,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed3/discover",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 11,
+  "skipped": {
+   "completed/elastic": 52,
+   "rejected/unphysical": 15,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed3/pIa",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 18,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed3/pIapIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 8,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 17,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed3/pIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 9,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 16,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed4/discover",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 11,
+  "skipped": {
+   "completed/elastic": 52,
+   "rejected/unphysical": 15,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed4/pIa",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 18,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed4/pIapIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 8,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 17,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed4/pIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 9,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 16,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed5/discover",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 11,
+  "skipped": {
+   "completed/elastic": 52,
+   "rejected/unphysical": 15,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed5/pIa",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 18,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed5/pIapIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 8,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 17,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore/seed5/pIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 9,
+  "skipped": {
+   "completed/elastic": 53,
+   "rejected/unphysical": 16,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore_detour/seed1/discover",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 15,
+  "skipped": {
+   "completed/elastic": 83,
+   "rejected/unphysical": 19,
+   "unconfirmed/reactive": 3
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore_detour/seed1/pIa",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 15,
+  "skipped": {
+   "completed/elastic": 83,
+   "rejected/unphysical": 19,
+   "unconfirmed/reactive": 3
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore_detour/seed1/pIapIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 16,
+  "skipped": {
+   "completed/elastic": 78,
+   "rejected/unphysical": 20,
+   "unconfirmed/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/connect_g5_explore_detour/seed1/pIb",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 16,
+  "skipped": {
+   "completed/elastic": 78,
+   "rejected/unphysical": 20,
+   "unconfirmed/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/demo",
+  "result": "old_format_skip"
+ },
+ {
+  "run": "runs/e2e_ethanol",
+  "result": "old_format_skip"
+ },
+ {
+  "run": "runs/knob_T300_s17",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 2,
+  "skipped": {
+   "completed/elastic": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/knob_T300_s19",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 2,
+  "skipped": {
+   "completed/elastic": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p0_after_batch2",
+  "result": "old_format_skip"
+ },
+ {
+  "run": "runs/p0_after_curvature_batch",
+  "result": "old_format_skip"
+ },
+ {
+  "run": "runs/p1_committor1",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 12,
+  "skipped": {
+   "completed/elastic": 37,
+   "rejected/unphysical": 8
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p1_committor2",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 12,
+  "skipped": {
+   "completed/elastic": 39,
+   "completed/rearrangement": 1,
+   "rejected/unphysical": 8
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p1_malonaldehyde",
+  "result": "no_ledger_skip"
+ },
+ {
+  "run": "runs/p1_round3",
+  "result": "no_ledger_skip"
+ },
+ {
+  "run": "runs/p1_round4",
+  "result": "no_ledger_skip"
+ },
+ {
+  "run": "runs/p1_round5",
+  "result": "no_ledger_skip"
+ },
+ {
+  "run": "runs/p1_round6",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/elastic": 33,
+   "completed/rearrangement": 8,
+   "rejected/unphysical": 14,
+   "unconfirmed/reactive": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p1_round7",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 15,
+  "skipped": {
+   "completed/elastic": 35,
+   "rejected/unphysical": 8,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p1_round8",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 15,
+  "skipped": {
+   "completed/elastic": 35,
+   "rejected/unphysical": 8,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed17",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/elastic": 19,
+   "quench_failed/None": 2,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed19",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 17,
+   "completed/rearrangement": 1,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed23",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 5,
+  "skipped": {
+   "completed/elastic": 22,
+   "completed/rearrangement": 3,
+   "quench_failed/None": 3,
+   "rejected/unphysical": 24,
+   "ts_candidate/reactive": 3
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed29",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 18,
+   "completed/rearrangement": 2,
+   "rejected/unphysical": 4,
+   "ts_candidate/reactive": 8
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed31",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/dissociation": 1,
+   "completed/elastic": 29,
+   "completed/rearrangement": 4,
+   "quench_failed/None": 5,
+   "rejected/unphysical": 15,
+   "ts_candidate/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed37",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/elastic": 15,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 9,
+   "ts_candidate/rearrangement": 2,
+   "unconfirmed/reactive": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed41",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 2,
+  "skipped": {
+   "completed/elastic": 27,
+   "completed/rearrangement": 4,
+   "quench_failed/None": 2,
+   "rejected/unphysical": 21,
+   "ts_candidate/reactive": 4
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed43",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 3,
+  "skipped": {
+   "completed/elastic": 25,
+   "completed/rearrangement": 3,
+   "quench_failed/None": 3,
+   "rejected/unphysical": 22,
+   "ts_candidate/reactive": 4
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed47",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 3,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 7,
+   "ts_candidate/reactive": 4,
+   "unconfirmed/reactive": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed53",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/elastic": 17,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed59",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 7,
+   "ts_candidate/reactive": 6,
+   "unconfirmed/reactive": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed61",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 14,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 9,
+   "ts_candidate/reactive": 4,
+   "ts_candidate/rearrangement": 2,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed67",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 4,
+  "skipped": {
+   "completed/dissociation": 1,
+   "completed/elastic": 18,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 1,
+   "unconfirmed/reactive": 2
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed71",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 22,
+   "completed/rearrangement": 1,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 4,
+   "ts_candidate/reactive": 4
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed73",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 7,
+  "skipped": {
+   "completed/dissociation": 1,
+   "completed/elastic": 32,
+   "completed/rearrangement": 1,
+   "quench_failed/None": 2,
+   "rejected/unphysical": 14,
+   "ts_candidate/rearrangement": 2,
+   "unconfirmed/reactive": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_T300_seed79",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 3,
+  "skipped": {
+   "completed/elastic": 37,
+   "completed/rearrangement": 3,
+   "quench_failed/None": 1,
+   "rejected/unphysical": 13,
+   "ts_candidate/reactive": 2,
+   "ts_candidate/rearrangement": 1
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_oxobutanal",
+  "result": "no_ledger_skip"
+ },
+ {
+  "run": "runs/p2_round2",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 28,
+   "completed/rearrangement": 3,
+   "quench_failed/None": 2,
+   "rejected/unphysical": 20,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_round3",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_round4",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_round5",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_round6",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_round7",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed101",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed103",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed107",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed109",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed113",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed127",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed19",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 17,
+   "rejected/unphysical": 6,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed23",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 14,
+   "rejected/unphysical": 9,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed29",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 19,
+   "rejected/unphysical": 4,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed31",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 19,
+   "rejected/unphysical": 4,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed37",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 14,
+   "rejected/unphysical": 9,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed41",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 16,
+   "rejected/unphysical": 7,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed43",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 14,
+   "rejected/unphysical": 9,
+   "ts_candidate/reactive": 9
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed47",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed53",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed59",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed61",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed67",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed71",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed73",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed79",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed83",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 5,
+   "ts_candidate/reactive": 7
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed89",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/p2_seed97",
+  "state": {
+   "charge": 0,
+   "spin": 1
+  },
+  "uncertainty_status": [
+   "unavailable"
+  ],
+  "traces": 0,
+  "skipped": {
+   "completed/elastic": 6,
+   "ts_candidate/reactive": 6
+  },
+  "result": "ok"
+ },
+ {
+  "run": "runs/smoke_ethanol",
+  "result": "old_format_skip"
+ }
+]

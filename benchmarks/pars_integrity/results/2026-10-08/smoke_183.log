@@ -1,0 +1,26 @@
+kasuga02
+Thu Oct  8 16:35:24 JST 2026
+../.venv-tools/bin/ruff format --check src/pars tests
+47 files already formatted
+../.venv-tools/bin/ruff check src/pars tests
+All checks passed!
+make: Leaving directory '/home/ruigengji/MLPATH/pars'
+== pytest
+........................................................................ [ 88%]
+.........                                                                [100%]
+81 passed in 17.94s
+
+real	0m40.780s
+user	0m11.823s
+sys	0m0.774s
+== rereview_old
+    "inspected_commit": subprocess.check_output(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+exit=1
+Thu Oct  8 16:36:07 JST 2026

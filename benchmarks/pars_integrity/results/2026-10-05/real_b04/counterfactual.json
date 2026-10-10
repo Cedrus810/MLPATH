@@ -1,0 +1,19 @@
+{
+ "pc-rc0000-t000003": {
+  "status": "neb_converged",
+  "barrier_eV": 0.6183416123785719,
+  "message": "climbing-image stage rejected (not converged, top image at an endpoint, or the climbing image left the stable band; barrier 0.715 vs 0.618 eV); reporting the plain NEB band",
+  "negative_modes": null,
+  "connectivity": "not_checked"
+ },
+ "pc-rc0000-t000004": {
+  "status": "failed",
+  "barrier_eV": null,
+  "message": "climbing image connectivity check: signed descents do not uniquely match both endpoint basins; not reporting success; no barrier reported",
+  "negative_modes": 1,
+  "connectivity": "failed"
+ },
+ "states_seen": [
+  "(None, None)"
+ ]
+}

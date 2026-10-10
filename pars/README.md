@@ -1,6 +1,6 @@
 # PARS — Pareto-Adaptive Reaction Path Search
 
-Review and compatibility notes: [2026-10-04 fixes (Chinese)](../docs/FIXES_2026-10-04.md). The planned maturation workflow is a separate downstream diagnostic step; the current PARS commands are `select` and `refine`.
+Review and compatibility notes: [2026-10-04 fixes (Chinese)](../docs/FIXES_2026-10-04.md); 2026-10-05 electronic-state handoff, Hessian-sample uncertainty gate and verify-before-filter ingestion ([review](../docs/REREVIEW_2026-10-05.md), fix record and real b04 check in [DONE_LOG](../docs/DONE_LOG.md)). The planned maturation workflow is a separate downstream diagnostic step; the current PARS commands are `select` and `refine`.
 
 An **independent module** next to [PRRS](../README.md): PRRS discovers
 reactions; PARS organizes and selects reaction paths, then hands

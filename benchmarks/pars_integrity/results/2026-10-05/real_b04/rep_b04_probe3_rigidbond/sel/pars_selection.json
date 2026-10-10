@@ -1,0 +1,152 @@
+{
+  "pars_version": "0.1.0",
+  "config": {
+    "include_classifications": [
+      "reactive"
+    ],
+    "include_phases": [
+      "source",
+      "free_start",
+      "free"
+    ],
+    "min_path_frames": 3,
+    "uncertainty_quantile": 1.0,
+    "normalization": "robust",
+    "objective_scales": [],
+    "dominance_mode": "uncertainty_aware",
+    "dominance_tolerance": 0.0,
+    "margin_gamma": 0.15,
+    "cover_objective_tolerance": 0.1,
+    "preserve_mechanism_diversity": true,
+    "tube_distance_threshold": 0.3,
+    "audit_size": 5,
+    "audit_seed": 0,
+    "refinement_images": 9,
+    "refinement_fmax_endpoints": 0.01,
+    "refinement_fmax_neb": 0.05,
+    "refinement_climbing_image": true,
+    "refinement_max_steps_endpoints": 500,
+    "refinement_max_steps_neb": 1000,
+    "refinement_endpoint_min_rmsd": 0.05,
+    "refinement_spring_k": 5.0,
+    "refinement_remove_rigid_motion": true,
+    "refinement_max_top_gap_ratio": 2.0,
+    "refinement_uncertainty_refusal": null,
+    "refinement_endpoint_hessian_step": 0.001,
+    "refinement_endpoint_curvature_tolerance": 0.0001,
+    "refinement_endpoint_identity_rmsd": 0.05,
+    "refinement_saddle_hessian_step": 0.001,
+    "refinement_saddle_curvature_tolerance": 0.0001,
+    "refinement_descent_displacement": 0.05,
+    "refinement_descent_step": 0.05,
+    "refinement_descent_max_displacement": 0.05,
+    "refinement_descent_fmax": 0.001,
+    "refinement_descent_max_steps": 2000,
+    "refinement_descent_max_backtracks": 20,
+    "refinement_descent_resolution_factor": 0.25
+  },
+  "run_dir": "runs/b04_probe3_rigidbond",
+  "units": {
+    "energy": "eV",
+    "length": "Angstrom",
+    "force": "eV/Angstrom",
+    "time": "fs",
+    "mass": "amu",
+    "angle": "radian"
+  },
+  "counts": {
+    "attempts_total": 64,
+    "traces": 2,
+    "candidates": 2,
+    "channels": 1,
+    "skipped_attempts": {
+      "completed/elastic": 62
+    },
+    "channel_members_not_ingested": {}
+  },
+  "channels": {
+    "rc0000": {
+      "channel_id": "rc0000",
+      "n_candidates": 2,
+      "gamma": 0.15,
+      "dominance_scope": "reaction_tube",
+      "tiers": {
+        "active_frontier": [
+          "pc-rc0000-t000003",
+          "pc-rc0000-t000004"
+        ]
+      },
+      "tubes": [
+        {
+          "tube_id": "tube-rc0000-0000",
+          "channel_id": "rc0000",
+          "member_ids": [
+            "pc-rc0000-t000003",
+            "pc-rc0000-t000004"
+          ],
+          "representative_id": "pc-rc0000-t000003"
+        }
+      ],
+      "representatives": [
+        "pc-rc0000-t000003",
+        "pc-rc0000-t000004"
+      ],
+      "refinement_order": [
+        "pc-rc0000-t000003",
+        "pc-rc0000-t000004"
+      ],
+      "audit": [],
+      "normalization": {
+        "method": "robust",
+        "center": {
+          "energy_excursion": 1.8439183117297944,
+          "trigger_severity": 0.9,
+          "path_curvature": 15.717680765445866,
+          "recrossing": 0.0
+        },
+        "scale": {
+          "energy_excursion": 0.1618494859612838,
+          "trigger_severity": 0.09999999999999987,
+          "path_curvature": 1.6312344363683096,
+          "recrossing": 1.0
+        }
+      },
+      "objectives_raw": {
+        "pc-rc0000-t000003": {
+          "energy_excursion": 2.005767797691078,
+          "trigger_severity": 1.0,
+          "mlp_uncertainty": null,
+          "path_curvature": 14.086446329077557,
+          "recrossing": 0.0,
+          "endpoint_penalty": null
+        },
+        "pc-rc0000-t000004": {
+          "energy_excursion": 1.6820688257685106,
+          "trigger_severity": 0.8,
+          "mlp_uncertainty": null,
+          "path_curvature": 17.348915201814176,
+          "recrossing": 0.0,
+          "endpoint_penalty": null
+        }
+      },
+      "objectives_normalized": {
+        "pc-rc0000-t000003": {
+          "energy_excursion": 1.0,
+          "trigger_severity": 1.000000000000001,
+          "mlp_uncertainty": null,
+          "path_curvature": -1.0,
+          "recrossing": 0.0,
+          "endpoint_penalty": null
+        },
+        "pc-rc0000-t000004": {
+          "energy_excursion": -1.0,
+          "trigger_severity": -1.000000000000001,
+          "mlp_uncertainty": null,
+          "path_curvature": 1.0,
+          "recrossing": 0.0,
+          "endpoint_penalty": null
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=0 charge=-1 spin=1 energy=-26132.799619815574 pbc="F F F"
+C       -0.00068639      -0.00069363      -1.23508086
+Cl       0.00012613       0.00012971       1.94368512
+H        1.02440922      -0.00078070      -0.89076169
+H       -0.51367329       0.88697720      -0.89117206
+H       -0.51345236      -0.88892147      -0.89223648
+Cl       0.00046867       0.00043949      -3.05270168
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=1 charge=-1 spin=1 energy=-26132.777741998874 pbc="F F F"
+C       -0.00054016      -0.00055011      -1.19712906
+Cl      -0.00040614      -0.00039322       1.77540996
+H        1.02583421      -0.00054040      -0.85703590
+H       -0.51400922       0.88822256      -0.85719883
+H       -0.51376342      -0.88964399      -0.85761834
+Cl       0.00007671       0.00005577      -3.02469548
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=2 charge=-1 spin=1 energy=-26132.65790502554 pbc="F F F"
+C       -0.00056530      -0.00057479      -1.12138976
+Cl      -0.00040598      -0.00039434       1.61576390
+H        1.04087549      -0.00055659      -0.83151101
+H       -0.52155379       0.90123673      -0.83164087
+H       -0.52129092      -0.90267220      -0.83196827
+Cl       0.00013248       0.00011181      -3.01752165
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=3 charge=-1 spin=1 energy=-26132.37844053162 pbc="F F F"
+C       -0.00058371      -0.00059236      -0.98488014
+Cl      -0.00043155      -0.00042064       1.51794710
+H        1.06194335      -0.00055530      -0.82850399
+H       -0.53208712       0.91947213      -0.82861144
+H       -0.53180654      -0.92089007      -0.82887591
+Cl       0.00015755       0.00013685      -3.06534326
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=4 charge=-1 spin=1 energy=-26132.2009557438 pbc="F F F"
+C       -0.00056962      -0.00057720      -0.83943631
+Cl      -0.00047003      -0.00045968       1.44737733
+H        1.07010137      -0.00055467      -0.83663983
+H       -0.53615913       0.92652215      -0.83674244
+H       -0.53585418      -0.92790269      -0.83699264
+Cl       0.00014357       0.00012270      -3.11583376
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=5 charge=-1 spin=1 energy=-26132.396924251574 pbc="F F F"
+C       -0.00062395      -0.00063047      -0.67593024
+Cl      -0.00045036      -0.00044064       1.38940924
+H        1.06015762      -0.00054908      -0.84510055
+H       -0.53118484       0.91792759      -0.84519379
+H       -0.53090630      -0.91933527      -0.84541774
+Cl       0.00019980       0.00017846      -3.19603457
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=6 charge=-1 spin=1 energy=-26132.677926964676 pbc="F F F"
+C       -0.00063992      -0.00064542      -0.53960163
+Cl      -0.00047000      -0.00046089       1.34324487
+H        1.03804395      -0.00054995      -0.83970062
+H       -0.52012751       0.89878621      -0.83976331
+H       -0.51986623      -0.90020904      -0.83990318
+Cl       0.00025168       0.00022970      -3.30254377
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=7 charge=-1 spin=1 energy=-26132.77837941735 pbc="F F F"
+C       -0.00091824      -0.00091632      -0.47279243
+Cl       0.00019279       0.00018428       1.35319487
+H        1.02479320      -0.00098334      -0.81461444
+H       -0.51418273       0.88729393      -0.81424656
+H       -0.51396996      -0.88965806      -0.81326999
+Cl       0.00127693       0.00123011      -3.45653910
+6
+Properties=species:S:1:pos:R:3 purpose=pars_refined_path candidate_id=pc-rc0000-t000035 status=ci_neb_converged image=8 charge=-1 spin=1 energy=-26132.7976060889 pbc="F F F"
+C       -0.00081293      -0.00081758      -0.43774987
+Cl      -0.00020801      -0.00019717       1.38002603
+H        1.02420362      -0.00078108      -0.78174824
+H       -0.51358451       0.88682901      -0.78147945
+H       -0.51341824      -0.88886850      -0.78071270
+Cl       0.00101205       0.00098594      -3.61660341

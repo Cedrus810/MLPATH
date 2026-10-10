@@ -1156,3 +1156,126 @@ C1 的来由：窗口普查（688 scan）中一侧 unresolved 的相邻对 154 �
   Wilson(8,16) ≈ [0.28, 0.72](可行性评估修正第 4 条)。
   边界变异检验:`import mature` 塞入 pars/src/pars → 边界测试红,移除后恢复绿。
 - **不做**(属 M2–M4):候选提取、射击接线、CLI 实装(现 fail-closed 退 2)、诊断写盘编排。
+
+## 已完成：PARS 10-05 复审三项修复 + 真实 b04（POLAR-1）核验 · 2026-10-05（2026-10-08 补记）· 本机 / 183
+
+问题清单见 [REREVIEW_2026-10-05.md](REREVIEW_2026-10-05.md)（两项 P1、一项 P2）。修复于 10-05 12:0x 落地，
+**当天没有写文档**，本节是 10-08 根据代码、测试和结果目录补的记录。
+PARS 源码指纹：修复前 `57fcad4d…`（REREVIEW 记录）→ 修复后 **`d7493683c7683cd3…`**
+（10-08 现算；`pars/src` 最新文件时间 10-05 12:09，晚间真实 b04 跑在这份代码上）。不碰 `src/prrs/`。
+
+### 修了什么
+
+- **P1 电子态交接**：新增 `pars/src/pars/electronic.py`；`adapters/prrs_run.py:200` `_declared_electronic_state`
+  从 manifest 读 total_charge / multiplicity，与逐帧、端点的 `atoms.info` 交叉核对，冲突、部分打标、
+  缺失或非法都在计算前拒绝；状态随 candidate → 代表文件 → seed → 后端所有构型 → 输出一路传递，
+  `refinement/ase_neb.py:298` 把 `electronic_state` 写进精修记录（没有声明时写 `unspecified`）。
+- **P1 Hessian 采样不确定度**：`ase_neb.py:167-194` `_curvature` 每次正负位移的 force evaluation 当场检查
+  `force_uncertainty_eV_A`：非有限或负值直接拒绝；设了拒绝阈值时，缺测或超阈值不交付曲率成功；
+  采样的不确定度计入报告的最大值。
+- **P2 先核验再过滤**：`paths/ingest.py:32` 改为遍历 `run.checked_attempts()`，账本与 result.json 冲突在过滤前就报错；
+  一致的 elastic 试验照常跳过。
+- 回归测试：`pars/tests/test_rereview_regressions.py`（电子态 9 条、Hessian 门 3 条、过滤顺序 2 条）。
+
+### 真实分子核验：b04（Cl⁻ + CH₃Cl，charge −1，单重态），MACE-POLAR-1，本机 GPU，10-05 晚
+
+脚本 `benchmarks/pars_integrity/real_b04/`，结果 `benchmarks/pars_integrity/results/2026-10-05/real_b04/`。
+`logged_polar1.py` 记录 POLAR-1 实际收到的每个结构的 (charge, spin)。
+
+| 条件 | 代表 | 结果 | POLAR-1 收到的电子态 |
+| --- | --- | --- | --- |
+| **修复前做法**（`counterfactual.py`：剥掉 electronic_state，probe4_ledger） | t3 | CI 阶段被拒，退回 plain NEB，势垒 0.618 eV（CI 0.715） | `(None, None)` |
+| 同上 | t4 | `failed`：连接检查下降不能唯一匹配两端盆地，不报势垒 | `(None, None)` |
+| **修复后**，probe4_ledger（`b04_real/`） | t3、t4 | 都是 `ci_neb_converged`，0.59670 / 0.59681 eV，1 个负模，连接 `matched` | `(-1, 1)` × 8969 |
+| 修复后，b04_probe | t3 | `ci_neb_converged` 0.59666 eV，1 负模，`matched` | `(-1, 1)` × 5222 |
+| 修复后，b04_probe2_openceiling | t3 | `ci_neb_converged` 0.59666 eV，1 负模，`matched` | `(-1, 1)` × 5222 |
+| 修复后，b04_probe3_rigidbond | t3 | `ci_neb_converged` 0.59670 eV，1 负模，`matched` | 未落 seen.json（批次中断） |
+
+读法：
+- 电子态丢失**在真实带电分子上确实改变结果**（同一组代表：修复前一个退化成 plain NEB、一个连接失败；
+  修复后全部 CI 收敛并连上两端）。修复前的结果不是"数值略差"，而是错误 PES 上的计算。
+- 修复后 5 条精修势垒跨度 0.15 meV；10-08 补齐到 14 条后跨度 2.1 meV（见下）。b04 仍是**单鞍点**数据，
+  和 P1 一样**不能**验证"选择保留多机理多样性"。
+- 势垒、负模数值不进 b04 判据（CRITERIA.md §2 规矩 2）；与 QM 的比较见 `docs/experiments/b04_qm/`。
+- `ingest_audit.json`：用修复后的严格导入把 `runs/` 下 97 个 run 全部导入一遍，没有一个被拒；
+  新格式 run 的电子态都读出来了（b04/b05 为 (−1, 1)，其余 (0, 1)），旧格式与无账本的照常跳过。
+
+**10-08 补齐（183，2080 Ti）**：`gpu_batch.sh … b04_probe3_rigidbond b04_frozen1 b04_frozen2`，16:40–17:47 一批跑完
+（log `benchmarks/pars_integrity/results/2026-10-08/gpu_batch_183.log`，末尾 `BATCH_DONE`）。9 个代表约 7 min/个。
+
+| run | 代表 | 结果 |
+| --- | --- | --- |
+| b04_probe3_rigidbond | t4 | `ci_neb_converged` 0.59681 eV，1 负模，`matched` |
+| b04_frozen1 | t3 / t4 / t35 / t36 | 全部 `ci_neb_converged`，0.59670 / 0.59681 / 0.59866 / 0.59878 eV，各 1 负模，`matched` |
+| b04_frozen2 | t3 / t4 / t35 / t36 | 与 frozen1 逐个相同（到 0.01 meV） |
+
+全部 9 条记录的 `electronic_state` 为 (−1, 1)。合计 b04 上修复后 14 条精修全部 CI 收敛、单负模、连接 matched。
+t35/t36 比 t3/t4 高约 2 meV，可能是端点极小不同，**未核实**；不当作第二个鞍点。
+POLAR-1 收到的电子态的**独立计数**（`seen.json`）对这 9 条**丢失**：后面两次续跑（全部"already done"、没有计算）
+在退出时把 `{}` 覆盖了上去。`logged_polar1.py` 已改为累加写入。这 9 条的电子态证据只剩精修记录里的 `electronic_state`。
+
+**更正（10-08 当天）**：我一度在本文记录"183 上补跑无声死亡、原因未查明"，**这是错的**。
+两台机器的 NFS 都挂载为 `acregmin=acdirmin=21600`（属性缓存 6 h）+ `nocto`，181 上看到的 log 长度和目录内容是
+过期缓存（log 显示 618 B，183 上实为 2493 B 且有 `BATCH_DONE`）。之后两次"重跑"都只是发现结果已在、几十秒内正常退出。
+10-05 那一批在 probe3 处停下的原因仍不清楚（当时全在本机），但与此无关。
+教训：**跨主机读结果要在写结果的那台机器上读**（ssh 过去读），不要从另一台的 NFS 视图下结论。
+
+### 验证
+
+- 2026-10-08 · 183（kasuga02）：`make -C pars fmt-check lint` 通过（47 文件）；
+  `pytest tests/test_rereview_regressions.py tests/test_review_regressions.py tests/test_ingest.py tests/test_cli.py`
+  **81 passed**，18 s。日志 `benchmarks/pars_integrity/results/2026-10-08/smoke_183.log`。
+  本次没有跑 PARS 全量测试，也没有跑根目录 `make check`（不涉及 `src/prrs/`）。
+- `benchmarks/pars_integrity/rereview.py` 的断言**固定的是修复前的缺陷**，修复后它理应失败，不能再当回归用；
+  另外它要执行 `git rev-parse HEAD`，在 NFS 工作区上跑不起来（10-08 在 183 上就停在这一步）。
+  修复后的行为以 `test_rereview_regressions.py` 和上面的真实 b04 对照为准。
+- `real_b04/gpu_batch.sh` 原本写死旧会话 scratchpad 路径；10-08 改成仓库内路径 + `<out dir>` 参数，可续跑。
+  10-08 用它在 183 补齐了剩下 9 个代表（见上）；之后又加了 `RUN_EXIT` 退出码记录、`TRACE_EVERY` 栈转储（`traced_pars.py`），
+  以及 `logged_polar1.py` 的累加写入。
+
+### 仍未处理
+
+- REREVIEW 末尾的两项 provenance 缺口（PRRS 绑定 factory 指纹相同但实例状态不同；PARS 模型非权重 scale 不同但指纹相同），
+  见 [DEFERRED_FIXES_2026-10-04.md](DEFERRED_FIXES_2026-10-04.md)。
+- 多机理选择有效性仍缺多鞍点参照集（b05 方向），见项目总览 §9 第 3 条。
+
+## 已完成：PRRS 谱排序改为按实际执行的运动打分（2026-10-09）
+
+起因：b09 探针 1（`runs/b09_probe1`）0 反应，卡宾 C → 环烯碳的方向从没被选中；外部审查（用户转来）指出排序打分用端点梯度，
+而位移类 probe 由 `apply` 以整片段刚体运动执行，两者不是同一个向量。
+
+- `src/prrs/perturbations.py`：新增 `delivered_direction`（位移类按 `apply` 的刚体平移 / 转动求闭式切向量，环内回退仍为 g/m；
+  kick / pulse 沿 g/√m 不变；投影掉刚体分量）；`spectral_overlap` 改签名为 `(atoms, family, indices, modes, bond_scale, active, graph)`；
+  `propose` 传入已建好的图。先试过对 `apply` 做数值差分，b09 上每个方向 7.5 s（`collateral_metrics` 占大头），弃用。
+- `tests/test_spectral_rank.py`：闭式切向量与 `apply` 数值差分逐族对齐（compress / stretch / bend / 两个 torsion），
+  分子间 compress 的分数不再等于端点梯度，kick 保持梯度方向。相关 8 个测试文件 261 passed（181，CPU）。
+- 实测（`benchmarks/carbene_ambimodal/results/2026-10-09/rank_b0{4,9}.log`）：b04 的 C–Cl 拉伸仍排第一（0.990）；
+  b09 的 `compress:2-15` 0.186 → 0.515，名次 21 → 36/84，**仍选不上**。分子间 compress 都是两分子沿轴线的刚体平移，
+  软模先验只看轴向，分不出成键原子对。详见 `benchmarks/carbene_ambimodal/probe_b09/README.md`。
+
+### 同一份审查的其余各条（10-09 下午由 Codex 修，用户选方案 B）
+
+见 [SEARCH_DESIGN_REPAIR_2026-10-09.md](SEARCH_DESIGN_REPAIR_2026-10-09.md)：
+第 2 条受限软模重新对角化、第 3/4 条方案 B（源微态内先全部粗扫再细化）、第 5 条环内保键交付（门限不变）。
+我在 181 上复跑相关 11 个测试文件 277 passed、ruff 通过；Codex 的 `make check` 592 passed / 2 skipped 日志与三组变异检验
+原放在 `/tmp`，10-09 拷进 `benchmarks/carbene_ambimodal/results/2026-10-09/search_repair/`。
+
+仍未处理：双分子体系的成键排序先验（没有替代先验，先做全候选粗扫基线）；
+`runner.py:2279` 的 `log.info("... %d relay(s)", relays)` 把列表传给 `%d`（日志报 Logging error，不影响计算）。
+
+## 已完成：b09 compress 族全候选粗扫（方案 B，2026-10-09 15:57 → 10-10 06:51，183）
+
+`runs/b09_compress_coverage`，配置 `benchmarks/carbene_ambimodal/probe_b09/config_compress_coverage.json`。
+336/336 trial，14 h 53 min（2.66 min/trial）；84 个 compress 方向全部执行，账本无截断。
+0 个反应、0 个门拒；37 个 `ts_candidate` 全是复合物软模（离源微态 ≤ 0.23 Å，+0.4–23 meV）。
+卡宾 C → Cb（`compress:2-15`）在最大振幅 1.0 Å 时推到 C:–Cb 2.12 Å，POLAR-1 TS-2OMe 是 1.98 Å，随后弹回：
+阴性结论只覆盖"振幅 ≤ 1.0 Å 的刚体压缩"。分析脚本 `benchmarks/carbene_ambimodal/analyze_coverage_b09.py`，
+结果 `benchmarks/carbene_ambimodal/results/2026-10-10/`，详见 `benchmarks/carbene_ambimodal/probe_b09/README.md`。
+- 10-10 加大力度冒烟（`benchmarks/carbene_ambimodal/push_b09.py`，8 个 trial）：compress 2-15 推 1.5 Å（推完 +6.16 eV）
+  撞出 (2+1) 环丙烷（比源低 1.17 eV），但淬火 500 步未收敛被记为 `quench_failed`，search 不会记成反应；1.2 Å 与
+  0.5 / 1.0 eV 的 kick 都弹回；compress 2-13 1.5 Å 被碎片数门拒。覆盖扫描的 26 个淬火失败里没有卡宾–环成键，
+  但 `t000327` 有一个甲氧基 H 被撞飞（C5–H6 末帧 10.22 Å），同样未收录——"没有漏掉反应"不成立（10-10 外部复核指出，已核实）。
+  p001 单纯力优化：同一起点 FIRE 834 步、BFGS 139 步收敛到同一个环丙烷（`quench_p001/continue_quench.log`；
+  导出文件的能量/力写错过，已修脚本重跑）；未经 runner 的 polish / 极小确认，完整验收见 replay_quench。
+  更正：此前"TS-2OMe 能垒 ≈ 0.16 eV"错误，POLAR-1 TS-2OMe 相对本次源微态 +0.477 eV。
+  淬火重放冒烟（`benchmarks/carbene_ambimodal/replay_quench_b09.py`，quench_steps 1500）：p001 经完整 runner 链判为 reactive、极小确认通过，与 POLAR-1 (2+1) 产物 RMSD 0.029 Å，134 s。
