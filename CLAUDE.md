@@ -9,8 +9,10 @@
 | --- | --- | --- |
 | PARS | `Pareto-Adaptive Reaction Path Search (PARS) — MLPATH Integration Design.md`（项目根目录；实现覆盖 §43 的 MVP-1..5） | 用户确认（2026-10-08） |
 | PRRS 核心 | `mlp_native_perturbation_response_reaction_search.md`（项目根目录，原始方法意图） | 待用户确认 |
-| 路径成熟层 `mature/` | `docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md`（施工计划） | 待用户确认 |
+| 路径成熟层 `mature/` | `docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md`（施工计划） | 用户 2026-10-11 指示施工 M2–M4（探索批序贯停止）；全文仍待确认 |
 | connect | `docs/PLAN_2026-09-28.md` | 待用户确认 |
+| 评估协议（量尺，先冻结） | `docs/EVALUATION_PROTOCOL_DESIGN_2026-10-13.md`（按其 v1 范围） | 用户审定（2026-10-13）；执行参数待零号批后冻结 |
+| 发现层重设计（方案 A 约束松弛） | `docs/DISCOVERY_LAYER_DESIGN_2026-10-13.md`（按其 §1.1 v1 范围）；施工计划 `docs/PLAN_EXPLORE_V1_2026-10-13.md`，代码在独立包 `explore/` | 用户审定（2026-10-13）；M1–M2 已施工，M3 起待逐步计划 |
 
 ## 环境
 

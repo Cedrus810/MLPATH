@@ -1,20 +1,22 @@
-"""Command line shape for the maturation layer: ``mature prepare|shoot|report``.
+"""Command line for the maturation layer: ``mature prepare|shoot|report``.
 
-The three verbs and the order they land in are fixed by the construction
-plan (``docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md`` sections 1, 3.1
-and 8): ``prepare`` extracts candidate geometries from PARS-selected
-paths (M2), ``shoot`` runs diagnostic shooting with independent thermal
-momenta (M3), ``report`` writes per-channel diagnosis, budgets and the
-refinement handoff (M4).
+The three verbs are fixed by the construction plan
+(``docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md`` sections 1, 3.1 and 8):
 
-Until then every subcommand refuses with exit code 2 instead of
-pretending to run: a stage that does not exist must never look like a
-stage that succeeded (fail closed, HANDOFF section 2).
+    prepare  --protocol P.json --out DIR   candidates from PARS-selected paths (M2)
+    shoot    --out DIR                     diagnostic shooting, resumable (M3/M4)
+    report   --out DIR                     diagnosis, budgets, refinement handoff (M4)
+
+``--dry-run`` on prepare and shoot says what would happen and writes nothing.
+A batch directory is owned by its protocol: prepare refuses a non-empty
+directory, shoot and report refuse a changed protocol, source, geometry or
+prrs implementation (M1).
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 
 _STAGES = {
@@ -33,13 +35,36 @@ def main(argv=None) -> int:
         ),
     )
     sub = parser.add_subparsers(dest="command", required=True)
-    for name, text in _STAGES.items():
-        sub.add_parser(name, help=text)
+    prepare = sub.add_parser("prepare", help=_STAGES["prepare"])
+    prepare.add_argument("--protocol", required=True, help="frozen MaturationProtocol JSON")
+    prepare.add_argument("--out", required=True, help="new batch directory")
+    prepare.add_argument("--dry-run", action="store_true")
+    shoot = sub.add_parser("shoot", help=_STAGES["shoot"])
+    shoot.add_argument("--out", required=True, help="batch directory from prepare")
+    shoot.add_argument("--max-new-shots", type=int, default=None)
+    shoot.add_argument("--dry-run", action="store_true")
+    report = sub.add_parser("report", help=_STAGES["report"])
+    report.add_argument("--out", required=True, help="batch directory")
 
     args = parser.parse_args(argv)
-    print(
-        f"mature {args.command}: not implemented yet "
-        f"(lands with M1-M4 of docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md)",
-        file=sys.stderr,
-    )
-    return 2
+    from . import maturation
+    from .io import read_json_strict
+    from .schema import MaturationProtocol
+
+    if args.command == "prepare":
+        protocol = MaturationProtocol.from_dict(read_json_strict(args.protocol))
+        result = maturation.prepare(protocol, args.out, dry_run=args.dry_run)
+        print(f"mature prepare: {len(result['proposals'])} candidates, {result['tasks']} tasks")
+    elif args.command == "shoot":
+        result = maturation.shoot_batch(
+            args.out, max_new_shots=args.max_new_shots, dry_run=args.dry_run
+        )
+        print(f"mature shoot: {json.dumps(result, sort_keys=True)}")
+    else:
+        result = maturation.report(args.out)
+        labels = {}
+        for row in result["candidates"]:
+            label = row.get("diagnosis", {}).get("label", row.get("status"))
+            labels[label] = labels.get(label, 0) + 1
+        print(f"mature report: {json.dumps(labels, sort_keys=True)}", file=sys.stdout)
+    return 0

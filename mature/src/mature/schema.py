@@ -501,8 +501,30 @@ class CandidateRule:
     allow_interpolation: bool = True
     preserve_all_hydrogens: bool = True
     rigid_alignment: str = "isolated_rigid_invariant_only"
+    # The explicit candidate list (plan M5): the zero batch's one candidate,
+    # or what a confirm/sidecheck batch takes from an explore batch. With
+    # ``from_batch`` the candidates are that batch's own geometries, copied,
+    # not re-extracted; without it, the listed ids filter the extraction.
+    proposal_ids: tuple | None = None
+    from_batch: str | None = None
 
     def __post_init__(self):
+        if self.proposal_ids is not None:
+            if not isinstance(self.proposal_ids, (list, tuple)) or not self.proposal_ids:
+                raise SchemaError("CandidateRule.proposal_ids: expected a non-empty list")
+            ids = tuple(
+                _identifier(i, "CandidateRule.proposal_ids[i]") for i in self.proposal_ids
+            )
+            if len(set(ids)) != len(ids):
+                raise SchemaError("CandidateRule.proposal_ids: an id is listed twice")
+            object.__setattr__(self, "proposal_ids", ids)
+        if self.from_batch is not None:
+            _identifier(self.from_batch, "CandidateRule.from_batch")
+            if self.proposal_ids is None:
+                raise SchemaError(
+                    "CandidateRule.from_batch: name the candidates taken from that batch "
+                    "in proposal_ids"
+                )
         _int_at_least(self.max_paths_per_channel, "CandidateRule.max_paths_per_channel", 1)
         _int_at_least(
             self.inner_candidates_per_path, "CandidateRule.inner_candidates_per_path", 1
@@ -530,7 +552,7 @@ class CandidateRule:
         )
 
     def to_dict(self) -> dict:
-        return {
+        data = {
             "max_paths_per_channel": self.max_paths_per_channel,
             "inner_candidates_per_path": self.inner_candidates_per_path,
             "arc_fractions": list(self.arc_fractions),
@@ -538,6 +560,12 @@ class CandidateRule:
             "preserve_all_hydrogens": self.preserve_all_hydrogens,
             "rigid_alignment": self.rigid_alignment,
         }
+        # written only when set, so protocols without a list keep their hash
+        if self.proposal_ids is not None:
+            data["proposal_ids"] = list(self.proposal_ids)
+        if self.from_batch is not None:
+            data["from_batch"] = self.from_batch
+        return data
 
     @classmethod
     def from_dict(cls, data) -> "CandidateRule":
@@ -551,6 +579,8 @@ class CandidateRule:
                 "allow_interpolation",
                 "preserve_all_hydrogens",
                 "rigid_alignment",
+                "proposal_ids",
+                "from_batch",
             ],
             "CandidateRule",
         )
@@ -561,6 +591,8 @@ class CandidateRule:
             allow_interpolation=data.get("allow_interpolation", True),
             preserve_all_hydrogens=data.get("preserve_all_hydrogens", True),
             rigid_alignment=data.get("rigid_alignment", "isolated_rigid_invariant_only"),
+            proposal_ids=data.get("proposal_ids"),
+            from_batch=data.get("from_batch"),
         )
 
 
@@ -578,6 +610,9 @@ class ShootingRule:
     other_fraction_max: float = 0.10
     entry_quench_mismatch_max: int = 0
     drift_tolerance_eV_atom: float | None = None
+    # Explore batches only: after the first `interim_look` shots of a candidate,
+    # stop it when their Wilson interval already lies wholly outside the band.
+    interim_look: int | None = None
 
     def __post_init__(self):
         _enum(self.batch_role, BATCH_ROLES, "ShootingRule.batch_role")
@@ -635,6 +670,17 @@ class ShootingRule:
         _int_at_least(
             self.entry_quench_mismatch_max, "ShootingRule.entry_quench_mismatch_max", 0
         )
+        if self.interim_look is not None:
+            if self.batch_role != "explore":
+                raise SchemaError(
+                    "ShootingRule.interim_look: only an explore batch may stop a candidate "
+                    "early; confirm and sidecheck batches are fixed-sample estimates"
+                )
+            _int_at_least(self.interim_look, "ShootingRule.interim_look", 1)
+            if self.interim_look >= self.shots_per_candidate:
+                raise SchemaError(
+                    "ShootingRule.interim_look: must be smaller than shots_per_candidate"
+                )
 
     def shots_for_role(self) -> int:
         """The one shot count this batch role uses; None means 'not this role'."""
@@ -657,6 +703,7 @@ class ShootingRule:
             "other_fraction_max": self.other_fraction_max,
             "entry_quench_mismatch_max": self.entry_quench_mismatch_max,
             "drift_tolerance_eV_atom": self.drift_tolerance_eV_atom,
+            "interim_look": self.interim_look,
         }
 
     @classmethod
@@ -673,6 +720,7 @@ class ShootingRule:
                 "other_fraction_max",
                 "entry_quench_mismatch_max",
                 "drift_tolerance_eV_atom",
+                "interim_look",
             ],
             "ShootingRule",
         )
@@ -687,6 +735,7 @@ class ShootingRule:
             other_fraction_max=data.get("other_fraction_max", 0.10),
             entry_quench_mismatch_max=data.get("entry_quench_mismatch_max", 0),
             drift_tolerance_eV_atom=data.get("drift_tolerance_eV_atom"),
+            interim_look=data.get("interim_look"),
         )
 
 
@@ -886,9 +935,25 @@ class PathProposal:
     frame_index: int | None = None
     interpolation: dict | None = None  # {"method": ..., "weights": [...]}
     region_graph_sha256s: dict = field(default_factory=dict)  # {"A": ..., "B": ...}
+    # set when the candidate was taken from an earlier batch (CandidateRule.from_batch)
+    origin_batch: dict | None = None  # {"dir", "protocol_sha256", "batch_role"}
 
     def __post_init__(self):
         _identifier(self.proposal_id, "PathProposal.proposal_id")
+        if self.origin_batch is not None:
+            origin = self.origin_batch
+            if not isinstance(origin, dict) or set(origin) != {
+                "dir",
+                "protocol_sha256",
+                "batch_role",
+            }:
+                raise SchemaError(
+                    "PathProposal.origin_batch: expected {'dir', 'protocol_sha256', "
+                    "'batch_role'}"
+                )
+            _identifier(origin["dir"], "PathProposal.origin_batch.dir")
+            _sha256_hex(origin["protocol_sha256"], "PathProposal.origin_batch.protocol_sha256")
+            _enum(origin["batch_role"], BATCH_ROLES, "PathProposal.origin_batch.batch_role")
         _enum(self.batch_role, BATCH_ROLES, "PathProposal.batch_role")
         _identifier(self.channel_id, "PathProposal.channel_id")
         _identifier(self.geometry_file, "PathProposal.geometry_file")
@@ -953,7 +1018,14 @@ class PathProposal:
 
     def allowable_interpolation(self) -> bool:
         data = self.interpolation
-        if not isinstance(data, dict) or set(data) - {"method", "weights"}:
+        if not isinstance(data, dict) or set(data) - {"method", "weights", "frames"}:
+            return False
+        frames = data.get("frames")
+        if frames is not None and (
+            not isinstance(frames, list)
+            or len(frames) != len(data.get("weights") or [])
+            or any(isinstance(f, bool) or not isinstance(f, int) or f < 0 for f in frames)
+        ):
             return False
         method = data.get("method")
         if not isinstance(method, str) or not method.strip():
@@ -984,7 +1056,15 @@ class PathProposal:
             "arc_fraction": self.arc_fraction,
             "frame_index": self.frame_index,
             "interpolation": (
-                {**self.interpolation, "weights": list(self.interpolation["weights"])}
+                {
+                    **self.interpolation,
+                    "weights": list(self.interpolation["weights"]),
+                    **(
+                        {"frames": list(self.interpolation["frames"])}
+                        if self.interpolation.get("frames") is not None
+                        else {}
+                    ),
+                }
                 if self.interpolation
                 else None
             ),
@@ -992,6 +1072,7 @@ class PathProposal:
             "geometry_sha256": self.geometry_sha256,
             "n_atoms": self.n_atoms,
             "region_graph_sha256s": dict(self.region_graph_sha256s),
+            **({"origin_batch": dict(self.origin_batch)} if self.origin_batch else {}),
         }
 
     @classmethod
@@ -1020,6 +1101,7 @@ class PathProposal:
                 "arc_fraction",
                 "frame_index",
                 "interpolation",
+                "origin_batch",
             ],
             "PathProposal",
         )
@@ -1043,6 +1125,7 @@ class PathProposal:
             geometry_sha256=data["geometry_sha256"],
             n_atoms=data["n_atoms"],
             region_graph_sha256s=dict(data["region_graph_sha256s"]),
+            origin_batch=dict(data["origin_batch"]) if data.get("origin_batch") else None,
         )
 
 
@@ -1076,6 +1159,7 @@ class ShotRecord:
     cost_wall_s: float | None = None
     endpoint_sha256: str | None = None
     model_checkpoint_sha256: str | None = None
+    cost_free_steps: int | None = None
 
     def __post_init__(self):
         _identifier(self.proposal_id, "ShotRecord.proposal_id")
@@ -1116,6 +1200,8 @@ class ShotRecord:
                 object.__setattr__(self, name, _finite(value, f"ShotRecord.{name}"))
         if self.cost_force_evaluations is not None:
             _int_at_least(self.cost_force_evaluations, "ShotRecord.cost_force_evaluations", 0)
+        if self.cost_free_steps is not None:
+            _int_at_least(self.cost_free_steps, "ShotRecord.cost_free_steps", 0)
         if self.model_checkpoint_sha256 is not None:
             _sha256_hex(self.model_checkpoint_sha256, "ShotRecord.model_checkpoint_sha256")
         if self.endpoint_sha256 is not None:
@@ -1143,6 +1229,7 @@ class ShotRecord:
             "cost_wall_s": self.cost_wall_s,
             "endpoint_sha256": self.endpoint_sha256,
             "model_checkpoint_sha256": self.model_checkpoint_sha256,
+            "cost_free_steps": self.cost_free_steps,
         }
 
     @classmethod
@@ -1172,6 +1259,7 @@ class ShotRecord:
                 "cost_wall_s",
                 "endpoint_sha256",
                 "model_checkpoint_sha256",
+                "cost_free_steps",
             ],
             "ShotRecord",
         )
@@ -1196,6 +1284,7 @@ class ShotRecord:
             cost_wall_s=data.get("cost_wall_s"),
             endpoint_sha256=data.get("endpoint_sha256"),
             model_checkpoint_sha256=data.get("model_checkpoint_sha256"),
+            cost_free_steps=data.get("cost_free_steps"),
         )
 
 
@@ -1264,13 +1353,12 @@ class ShootingEstimate:
         w_low, w_high = self.wilson_95
         if w_high < low:
             return "A_side"
-        if w_high < high and w_low <= high:
-            return "transition_region_compatible"
         if w_low > high:
             return "B_side"
-        if w_low <= low and w_high >= high:
-            return "transition_region_compatible"  # interval spans the whole band
-        return "unresolved"
+        # Any overlap with the band is "compatible", nothing more (plan M3). Until
+        # 2026-10-11 an interval such as [0.5, 0.9] -- overlapping the band from
+        # inside to above it -- fell through to "unresolved".
+        return "transition_region_compatible"
 
     def to_dict(self) -> dict:
         return {

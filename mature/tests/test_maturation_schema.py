@@ -7,6 +7,8 @@ section 3.3 data objects).
 import dataclasses
 import math
 
+from dataclasses import replace
+
 import pytest
 
 from conftest import fake_sha, make_protocol, make_sides, make_source_run
@@ -195,6 +197,31 @@ def test_endpoint_arc_fractions_are_refused(source):
         )
 
 
+@pytest.mark.parametrize(
+    ("candidates", "message"),
+    [
+        ({"proposal_ids": []}, "non-empty list"),
+        ({"proposal_ids": ["p1", "p1"]}, "listed twice"),
+        ({"from_batch": "explore"}, "name the candidates"),
+    ],
+)
+def test_a_candidate_list_must_name_each_candidate_once(source, candidates, message):
+    with pytest.raises(SchemaError, match=message):
+        make_protocol(source["root"], source["files"], candidates=candidates)
+
+
+def test_a_candidate_list_round_trips_and_its_absence_keeps_the_hash(source, protocol):
+    listed = make_protocol(
+        source["root"],
+        source["files"],
+        candidates={"from_batch": "explore", "proposal_ids": ["p1", "p2"]},
+    )
+    revived = MaturationProtocol.from_dict(listed.to_dict())
+    assert revived.candidates.proposal_ids == ("p1", "p2")
+    assert revived.sha256 == listed.sha256
+    assert "proposal_ids" not in protocol.to_dict()["candidates"]
+
+
 # ---- proposal provenance ----------------------------------------------------
 
 
@@ -344,6 +371,37 @@ def test_band_classification_uses_the_interval_not_the_point():
     # overlaps [0.4, 0.6] without containing it -- still only "compatible"
     mixed = all_a[:12] + all_b[:4]
     assert ShootingEstimate.from_records(mixed).band_class == "transition_region_compatible"
+
+    # 4/12 straddles the UPPER edge from inside: [0.46, 0.91]-ish. Until
+    # 2026-10-11 this overlap fell through to "unresolved".
+    upper = all_a[:4] + all_b[:12]
+    estimate = ShootingEstimate.from_records(upper)
+    assert 0.4 < estimate.wilson_95[0] < 0.6 < estimate.wilson_95[1]
+    assert estimate.band_class == "transition_region_compatible"
+
+
+def test_only_an_explore_batch_may_stop_a_candidate_early():
+    from mature.schema import ShootingRule
+
+    rule = ShootingRule(
+        batch_role="explore",
+        seed_base=0,
+        shots_per_candidate=16,
+        interim_look=8,
+        drift_tolerance_eV_atom=0.01,
+    )
+    assert ShootingRule.from_dict(rule.to_dict()) == rule
+    with pytest.raises(SchemaError, match="only an explore batch"):
+        ShootingRule(
+            batch_role="confirm",
+            seed_base=0,
+            confirm_shots=100,
+            selection_rule="frozen",
+            interim_look=8,
+            drift_tolerance_eV_atom=0.01,
+        )
+    with pytest.raises(SchemaError, match="smaller than shots_per_candidate"):
+        replace(rule, interim_look=16)
 
 
 def test_estimates_spanning_two_proposals_are_refused():

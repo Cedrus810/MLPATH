@@ -31,17 +31,36 @@ PRRS 发现;  PARS 选择;  mature 诊断(射击);  NEB/dimer 精化;  驻点/QM
 3. **新增数据只写新运行目录,** 不向源 `network.json` admit 射击端点,不改旧 run
    (计划 §1);输出目录契约见计划 §3.2。
 
-## 状态(2026-10-03)
+## 状态(2026-10-11)
 
 | 项 | 状态 |
 | --- | --- |
-| 模块骨架(pyproject / Makefile / README / LICENSE / 边界测试 / CLI 壳) | ✅ 本次落地 |
-| M0 清点与基线(preflight) | 未开始 —— **下一施工块**(计划 §8) |
-| M1 协议与落盘 / M2 候选提取 / M3 射击诊断 / M4 CLI 与交接 | 未开始 |
+| 模块骨架(pyproject / Makefile / README / LICENSE / 边界测试) | ✅ 2026-10-03 |
+| M0 清点与基线(preflight) / M1 协议与落盘 | ✅ 见 `docs/DONE_LOG.md` |
+| M2 候选提取 / M3 射击诊断 / M4 CLI 与交接 | ✅ 2026-10-11,`src/mature/maturation.py`;只在解析势测试台上验证过 |
 | M5 P1 工程实跑 / M6 多通道比较 / Q 学习层 / B 生成桥 | 未开始,入口条件见计划 §5–§6 |
 
-CLI 三动词 `mature prepare|shoot|report` 已定形;在对应任务落地前,
-每个子命令 fail-closed 退出码 2,不伪装成功。
+用法:
+
+```bash
+mature prepare --protocol protocol.json --out BATCH [--dry-run]   # M2:候选 + 任务表
+mature shoot   --out BATCH [--max-new-shots N] [--dry-run]       # M3:逐发射击,可续跑
+mature report  --out BATCH                                       # M4:诊断、预算、精化交接
+```
+
+- 候选几何取自源 PRRS `response.traj` 的自由段(`free_start`/`free`),按弧长位置;
+  PARS selection 只决定取哪几条路径(`refinement_order`,反应管优先)。插值候选标
+  `path_interpolation` 并记录来源帧与权重。
+- 判归:首次进入侧为 A/B;入口与淬火落点不一致只计数,不改判;未进入时淬火落到
+  第三盆记 `other`,否则 `unabsorbed`;门拒与失败各自计数,都不进 `p_B_given_AB` 的分母。
+- 探索批可在协议里设 `shooting.interim_look`:前 n 发的 Wilson 区间整段在诊断带外
+  就停该候选;排除项已经多到全样本必然超 `other_fraction_max` 时也停。确认批、抽查批固定发数。
+- 预算在每发之前检查;力评估与墙钟按已见单发最大值预留。
+- 显式候选清单(`candidates.proposal_ids`):只准备列出的候选,列了却产不出的 id
+  在写盘前拒绝(零号批固定 1 个候选;id 用 `prepare --dry-run` 看)。再加
+  `candidates.from_batch`:候选从那一批原样拷几何(确认批、抽查批打探索批诊断过的同一几何),
+  候选记录 `origin_batch`;区域键图不同、几何文件被改过都拒绝。怎么选由
+  `shooting.selection_rule` 写明,选了哪些由清单写明。
 
 ## 开发
 
