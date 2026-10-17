@@ -1,0 +1,5 @@
+{"frame": 0, "phase": "source", "events": {"formed": [], "broken": []}}
+{"frame": 1, "phase": "perturbed", "events": {"formed": [], "broken": []}}
+{"frame": 2, "phase": "forced", "events": {"formed": [[0, 1]], "broken": []}}
+{"frame": 3, "phase": "free_start", "events": {"formed": [], "broken": []}}
+{"frame": 4, "phase": "free", "events": {"formed": [[1, 2]], "broken": [[0, 1]]}}

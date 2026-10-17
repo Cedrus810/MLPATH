@@ -1,0 +1,32 @@
+{
+  "attempt_id": "t000002",
+  "probe": {
+    "family": "stretch",
+    "indices": [
+      0,
+      1
+    ],
+    "sign": 1,
+    "amplitude": 0.6,
+    "seed": 1236,
+    "unit": "Angstrom",
+    "kind": "bond",
+    "mode": "displace"
+  },
+  "status": "completed",
+  "classification": "reactive",
+  "fingerprint": {
+    "broken": [],
+    "formed": [],
+    "active_atoms": [
+      0,
+      1
+    ]
+  },
+  "failure": null,
+  "trajectory": "trials/t000002/response.traj",
+  "observations": "trials/t000002/observations.jsonl",
+  "endpoint": "trials/t000002/endpoint.extxyz",
+  "uncertainty_status": "unavailable",
+  "max_uncertainty_eV_A": null
+}

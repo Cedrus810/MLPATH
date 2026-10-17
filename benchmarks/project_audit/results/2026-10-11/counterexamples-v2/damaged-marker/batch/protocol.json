@@ -1,0 +1,139 @@
+{
+  "batch_role": "explore",
+  "budget": {
+    "max_force_evaluations": null,
+    "max_free_steps": null,
+    "max_shots": 160,
+    "max_wall_minutes": null
+  },
+  "candidates": {
+    "allow_interpolation": true,
+    "arc_fractions": [
+      0.16666666666666666,
+      0.3333333333333333,
+      0.5,
+      0.6666666666666666,
+      0.8333333333333334
+    ],
+    "inner_candidates_per_path": 5,
+    "max_paths_per_channel": 2,
+    "preserve_all_hydrogens": true,
+    "rigid_alignment": "isolated_rigid_invariant_only"
+  },
+  "created_utc": "2026-10-10T21:29:18+00:00",
+  "dynamics": {
+    "ensemble": "NVE",
+    "first_entry_k": 160,
+    "free_step_cap": 1280,
+    "integrator": "velocity-verlet",
+    "momenta": "maxwell-boltzmann",
+    "pulse_steps": 0,
+    "temperature_K": 300.0,
+    "timestep_fs": 0.25
+  },
+  "notes": "",
+  "regions": {
+    "method": "mapped_microstate",
+    "sides": {
+      "A": {
+        "chemical_key": "54e68a3053f4b20f69980395a3e9602e984f6cf14285d32b53540956fc7e9492",
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "mapped_broken": [
+          [
+            1,
+            2
+          ]
+        ],
+        "mapped_formed": [
+          [
+            0,
+            2
+          ]
+        ],
+        "microstate_id": "c0000/m0000",
+        "node_id": "c0000",
+        "structure_path": "chemical/c0000_m0000.extxyz",
+        "structure_sha256": "4762a44e7148d2a74255aa14250fabf820946d85220368b24782cdae9073efeb"
+      },
+      "B": {
+        "chemical_key": "54e68a3053f4b20f69980395a3e9602e984f6cf14285d32b53540956fc7e9492",
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "mapped_broken": [
+          [
+            1,
+            2
+          ]
+        ],
+        "mapped_formed": [
+          [
+            0,
+            2
+          ]
+        ],
+        "microstate_id": "c0000/m0001",
+        "node_id": "c0000",
+        "structure_path": "chemical/c0000_m0001.extxyz",
+        "structure_sha256": "536bea7bed21b1778a952d3b234dec2102737faa342f19f6fcf8832239525ae3"
+      }
+    },
+    "version": "1"
+  },
+  "schema_version": 1,
+  "shooting": {
+    "batch_role": "explore",
+    "confirm_shots": null,
+    "diagnostic_band": [
+      0.4,
+      0.6
+    ],
+    "drift_tolerance_eV_atom": 0.01,
+    "entry_quench_mismatch_max": 0,
+    "other_fraction_max": 0.1,
+    "seed_base": 100000,
+    "selection_rule": null,
+    "shots_per_candidate": 16,
+    "sidecheck_shots": null
+  },
+  "source": {
+    "files": {
+      "config.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "network.json": "73beada6093a6c91249ddf4234162eee23da3dc96818fb0b19566e39cf78a189"
+    },
+    "implementation_sha256": "8ccc2e91da4de410d980d339efaf4b043f256ea65175966943081dbeabf42cf1",
+    "input_structure_sha256": null,
+    "model_checkpoint_path": null,
+    "model_checkpoint_sha256": null,
+    "model_factory": "mature.tests:analytic_factory",
+    "model_kwargs": {
+      "device": "cpu"
+    },
+    "pars_selection_dir": null,
+    "pars_selection_sha256": null,
+    "run_dir": "/home/ruigengji/MLPATH/benchmarks/project_audit/results/2026-10-11/counterexamples-v2/damaged-marker/source/run"
+  },
+  "title": "synthetic batch",
+  "units": {
+    "energy": "eV",
+    "length": "Angstrom",
+    "temperature": "K",
+    "time": "fs"
+  }
+}

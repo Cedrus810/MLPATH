@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from ase.io import read as ase_read
+from ase.io import write as ase_write
 
 from pars.cli import main
 
@@ -267,6 +268,41 @@ def test_refine_refuses_when_the_seed_changed(selection_dir, factory_on_path):
     seed = selection_dir / "representatives" / f"rep-{A}.extxyz"
     seed.write_text(seed.read_text() + "\n")
     with pytest.raises(ValueError, match="seed_sha256"):
+        _refine(selection_dir, "--only", A)
+
+
+def _rewrite_seed(selection_dir, candidate_id, edit) -> None:
+    seed = selection_dir / "representatives" / f"rep-{candidate_id}.extxyz"
+    frames = ase_read(str(seed), index=":")
+    ase_write(str(seed), edit(frames))
+
+
+def _swap_middle_species(frames):
+    frames[len(frames) // 2].numbers[0] = 2  # one He image in an otherwise unchanged chain
+    return frames
+
+
+def _reverse_images(frames):
+    return frames[::-1]
+
+
+@pytest.mark.parametrize(
+    ("edit", "match"),
+    [(_swap_middle_species, "species differ"), (_reverse_images, "labelled")],
+)
+def test_refine_refuses_inconsistent_seed_images(selection_dir, factory_on_path, edit, match):
+    """Audit 2026-10-11 #1: the chain was rebuilt from image 0's species, so a
+    seed whose images disagree was refined as atoms the file does not record."""
+    _rewrite_seed(selection_dir, A, edit)
+    with pytest.raises(ValueError, match=match):
+        _refine(selection_dir, "--only", A)
+    assert not _record_path(selection_dir, A).exists()
+
+
+def test_refine_refuses_a_seed_written_for_another_candidate(selection_dir, factory_on_path):
+    other = selection_dir / "representatives" / f"rep-{B}.extxyz"
+    (selection_dir / "representatives" / f"rep-{A}.extxyz").write_text(other.read_text())
+    with pytest.raises(ValueError, match="seed is for candidate"):
         _refine(selection_dir, "--only", A)
 
 

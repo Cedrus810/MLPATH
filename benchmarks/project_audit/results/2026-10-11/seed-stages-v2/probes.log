@@ -1,0 +1,41 @@
+{
+  "kind": "geometry-and-metadata-seed-audit",
+  "recorded_utc": "2026-10-11T02:36:21.070278+00:00",
+  "source_sha256": {
+    "src/prrs/search.py": "d08e3e6233359ce2056bcd6668494f7495356bcc0a28988ed58b8500086db0b6",
+    "src/prrs/runner.py": "5f0c81d30cc10bc9f8a6a1224fe9c7c9e3da55326d74528d17e567cd9baea7d1",
+    "pars/src/pars/cli.py": "18e541fc7488aebe55aaeb084b5f8c0164f94dea13bdca3414b18381fbdc7310",
+    "pars/src/pars/paths/resample.py": "3ceca62310093c57242449b1d975970688f46815fb7d176a7011f81723c0c358",
+    "benchmarks/project_audit/seed_stage_probes.py": "b1b40571910248022f386ed902dd1a4a3f61b1f20f21b67876aa07ce675485bb"
+  },
+  "limits": "Synthetic helper inputs only; event labels are supplied, not physically measured. No PES/MD/NEB or real saddle outcomes.",
+  "first_switch": {
+    "description": "topology_switch:forced:2",
+    "tangent_source": "topology_switch_difference",
+    "later_free_switch_frame": 4
+  },
+  "forced_phase_fallback": {
+    "description": "raw_endpoint_no_switch_frame",
+    "tangent_missing_without_proposal_fallback": true,
+    "tangent_source": null,
+    "actual_last_forced_step_norm_A": 0.10000000000000009
+  },
+  "delivery_gap_resampling": {
+    "source_to_free_start_A": 1.0,
+    "free_segment_A": 0.05,
+    "images": 9,
+    "interior_images_in_free_segment": 0,
+    "moving_atom_x_A": [
+      -1.0,
+      -0.86875,
+      -0.7375,
+      -0.60625,
+      -0.475,
+      -0.34375,
+      -0.2125,
+      -0.08125,
+      0.05
+    ],
+    "rigid_removal": false
+  }
+}

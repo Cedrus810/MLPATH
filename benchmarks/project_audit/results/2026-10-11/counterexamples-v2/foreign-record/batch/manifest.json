@@ -1,0 +1,26 @@
+{
+  "batch_role": "explore",
+  "created_utc": "2026-10-10T21:29:18+00:00",
+  "kind": "mlpath-maturation",
+  "mature_version": "0.1.0",
+  "protocol_sha256": "529b65b593b32b0276ce9cd75fb5c16209ae50229b916f2eecd21df177167c62",
+  "prrs_implementation_sha256": "70eb2f551b9502ec575773d21cfe493325a34819ccefe670a0bd6c073fb82127",
+  "schema_version": 1,
+  "source": {
+    "files": {
+      "config.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "network.json": "73beada6093a6c91249ddf4234162eee23da3dc96818fb0b19566e39cf78a189"
+    },
+    "implementation_sha256": "8ccc2e91da4de410d980d339efaf4b043f256ea65175966943081dbeabf42cf1",
+    "input_structure_sha256": null,
+    "model_checkpoint_path": null,
+    "model_checkpoint_sha256": null,
+    "model_factory": "mature.tests:analytic_factory",
+    "model_kwargs": {
+      "device": "cpu"
+    },
+    "pars_selection_dir": null,
+    "pars_selection_sha256": null,
+    "run_dir": "/home/ruigengji/MLPATH/benchmarks/project_audit/results/2026-10-11/counterexamples-v2/foreign-record/source/run"
+  }
+}

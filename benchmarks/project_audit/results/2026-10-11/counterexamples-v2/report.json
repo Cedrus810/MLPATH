@@ -1,0 +1,79 @@
+{
+  "workspace": "/home/ruigengji/MLPATH",
+  "pars_implementation_sha256": "d7493683c7683cd3405da403f524576fe240ba5ada0aa3d4daa8a95f7e51bf19",
+  "script_sha256": "57b81688022bfe5b894f5df3d52b294a7ac10378c19374a3ef0f8bceef2f2a05",
+  "evidence_scope": "synthetic CPU counterexamples; no historical contamination claim",
+  "seed_species_mismatch": {
+    "input_species": [
+      [
+        "H"
+      ],
+      [
+        "H"
+      ],
+      [
+        "H"
+      ],
+      [
+        "He"
+      ],
+      [
+        "H"
+      ],
+      [
+        "H"
+      ],
+      [
+        "H"
+      ]
+    ],
+    "adopted_species": [
+      1
+    ],
+    "status": "ci_neb_converged",
+    "barrier_eV": 1.0,
+    "connectivity": "matched"
+  },
+  "duplicate_attempt_id": {
+    "ledger_classifications": [
+      "elastic",
+      "reactive"
+    ],
+    "checked_classifications": [
+      "reactive",
+      "reactive"
+    ],
+    "ingested_trace_ids": [
+      "t000001",
+      "t000001",
+      "t000002"
+    ],
+    "skipped": {
+      "completed/elastic": 1
+    }
+  },
+  "foreign_shot_conditions": {
+    "allocated_seed": 100000,
+    "accepted_seed": 999,
+    "protocol_matches": false,
+    "implementation_matches": false,
+    "counted_shots": 1,
+    "pending": 15
+  },
+  "unchecked_commit_hash": {
+    "hash_matches": false,
+    "result_json_outcome": "A",
+    "marker_outcome": "B",
+    "p_B_given_AB": 1.0,
+    "resume_accepted": true,
+    "recommit_accepted": true
+  },
+  "known_deferred_bound_method_identity": {
+    "same_identity": true,
+    "verifiable": true,
+    "factory_outputs": [
+      1,
+      2
+    ]
+  }
+}

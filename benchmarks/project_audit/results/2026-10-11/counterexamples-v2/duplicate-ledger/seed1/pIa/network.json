@@ -1,0 +1,101 @@
+{
+  "schema_version": 2,
+  "reaction_channels": [
+    {
+      "id": "rc0000",
+      "event_key": "aaaabbbbccccdddd",
+      "class": "reaction",
+      "ends": [
+        "c0000",
+        "c0001"
+      ],
+      "self_loop": false,
+      "broken": [
+        [
+          0,
+          1
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          2
+        ]
+      ],
+      "symmetry_enumerated": true,
+      "undirected": true,
+      "observed_by": [
+        "t000001"
+      ],
+      "ts_support": []
+    },
+    {
+      "id": "rc0001",
+      "event_key": "eeeeffffgggghhhh",
+      "class": "reaction",
+      "ends": [
+        "c0000",
+        "c0002"
+      ],
+      "self_loop": false,
+      "broken": [
+        [
+          1,
+          2
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          1
+        ]
+      ],
+      "symmetry_enumerated": true,
+      "undirected": true,
+      "observed_by": [
+        "t000002"
+      ],
+      "ts_support": []
+    }
+  ],
+  "reactions": [
+    {
+      "id": "r0000",
+      "source": "c0000",
+      "target": "c0001",
+      "observed_only": true,
+      "attempts": [
+        "t000001"
+      ],
+      "classifications": [
+        "reactive"
+      ],
+      "best_by_family": {
+        "stretch": {
+          "amplitude": 0.6,
+          "unit": "Angstrom",
+          "attempt": "t000001"
+        }
+      }
+    },
+    {
+      "id": "r0001",
+      "source": "c0000",
+      "target": "c0002",
+      "observed_only": true,
+      "attempts": [
+        "t000002"
+      ],
+      "classifications": [
+        "reactive"
+      ],
+      "best_by_family": {
+        "stretch": {
+          "amplitude": 0.6,
+          "unit": "Angstrom",
+          "attempt": "t000002"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "kind": "negative-normalization-scale-audit",
+  "recorded_utc": "2026-10-11T02:41:52.716562+00:00",
+  "source_sha256": {
+    "pars/src/pars/config.py": "134be075b3d5b29d6c26ee54c7745f180ce594c6771d343d3b6eedb84f31d2cf",
+    "pars/src/pars/frontier/normalize.py": "2a105eb775ea634a32db5594687d4a82eeb3c4eb214ac185692ab4f2146c60e6",
+    "pars/src/pars/frontier/dominance.py": "13404cba8c63b8511c183fbe7548e826d7c9f9b528a0957cf9280f45733a954f",
+    "benchmarks/project_audit/normalization_scale_probe.py": "78ea85bd4428ca8ca5e0acabc0cf4b55a52c8f7f4dcdadfd5abb88d68c3f6044"
+  },
+  "limits": "Synthetic objective vectors via real config parser; no production candidate ingestion or physical saddle outcome.",
+  "accepted_config": {
+    "objective_scales": [
+      [
+        "energy_excursion",
+        -1.0
+      ]
+    ]
+  },
+  "raw": {
+    "A0": {
+      "energy_excursion": 0.0
+    },
+    "A1": {
+      "energy_excursion": 0.0
+    },
+    "A2": {
+      "energy_excursion": 0.0
+    },
+    "A3": {
+      "energy_excursion": 0.0
+    },
+    "A4": {
+      "energy_excursion": 0.0
+    },
+    "A5": {
+      "energy_excursion": 0.0
+    },
+    "A6": {
+      "energy_excursion": 0.0
+    },
+    "A7": {
+      "energy_excursion": 0.0
+    },
+    "B": {
+      "energy_excursion": 1.0
+    }
+  },
+  "normalization": {
+    "method": "robust",
+    "center": {
+      "energy_excursion": 0.0
+    },
+    "scale": {
+      "energy_excursion": -1.0
+    }
+  },
+  "normalized": {
+    "A0": {
+      "energy_excursion": -0.0
+    },
+    "A1": {
+      "energy_excursion": -0.0
+    },
+    "A2": {
+      "energy_excursion": -0.0
+    },
+    "A3": {
+      "energy_excursion": -0.0
+    },
+    "A4": {
+      "energy_excursion": -0.0
+    },
+    "A5": {
+      "energy_excursion": -0.0
+    },
+    "A6": {
+      "energy_excursion": -0.0
+    },
+    "A7": {
+      "energy_excursion": -0.0
+    },
+    "B": {
+      "energy_excursion": -1.0
+    }
+  },
+  "worse_B_dominates_A_before": false,
+  "worse_B_dominates_A_after": true
+}

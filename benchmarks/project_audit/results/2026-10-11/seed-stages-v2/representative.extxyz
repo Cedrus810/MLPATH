@@ -1,0 +1,45 @@
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=0 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -1.00000000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=1 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.86875000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=2 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.73750000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=3 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.60625000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=4 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.47500000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=5 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.34375000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=6 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.21250000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=7 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H       -0.08125000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000
+3
+Properties=species:S:1:pos:R:3 purpose=pars_refinement_seed candidate_id=delivery-gap channel_id=synthetic image=8 pars_provenance="{\"run_dir\": \"synthetic-not-a-run\", \"attempt_id\": \"gap\", \"channel_id\": \"synthetic\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 4, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {\"kept_frames\": [0, 2, 3]}}" charge=0 spin=1 pbc="F F F"
+H        0.05000000       0.00000000       0.00000000
+H        0.00000000       2.00000000       0.00000000
+H        0.00000000       0.00000000       1.00000000

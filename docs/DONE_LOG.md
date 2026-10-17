@@ -1279,3 +1279,188 @@ POLAR-1 收到的电子态的**独立计数**（`seen.json`）对这 9 条**丢�
   导出文件的能量/力写错过，已修脚本重跑）；未经 runner 的 polish / 极小确认，完整验收见 replay_quench。
   更正：此前"TS-2OMe 能垒 ≈ 0.16 eV"错误，POLAR-1 TS-2OMe 相对本次源微态 +0.477 eV。
   淬火重放冒烟（`benchmarks/carbene_ambimodal/replay_quench_b09.py`，quench_steps 1500）：p001 经完整 runner 链判为 reactive、极小确认通过，与 POLAR-1 (2+1) 产物 RMSD 0.029 Å，134 s。
+- 10-10 覆盖扫描 26 个 `quench_failed` 重放（`replay_quench_b09.py`，quench_steps 1500，62 min，183）：25 个收敛（527–1102 步），
+  全是无键变化的构象重排、0 阶极小，22 个落到比源低 0.21–0.22 eV 的构象；t000327（H 被撞飞，+7.07 eV）2129 步后软模 polish
+  仍未定住。已收敛的 25 个重放都不是反应，即这 25 个没有因淬火上限漏收反应；t000327 仍未决，不能当作已证实无反应（2026-10-11 按审计 §5 收窄）。结果 `benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/`。
+- 10-10 交接：`docs/HANDOFF_B09_GAP_2026-10-10.md`（b09 定位为终极验收，只测差距；用户在新对话中分析差距）。
+- 10-10 差距分析：`docs/B09_GAP_ANALYSIS_2026-10-10.md`（读完交接必读清单后写；结论：盲搜第 1 级"发现 (2+1) 连接"未过、
+  验收判据未写；差距分参数级 / 设计稿 §3.4 协同扰动等未实现 / 同键图多鞍点超出发现层三类；用户 10-10 表示不着急做）。
+
+## 已完成：项目第一轮审计（2026-10-11；未实施修复）
+
+报告 `docs/AUDIT_2026-10-11.md`，反例脚本 `benchmarks/project_audit/reproduce.py`，
+有效证据 `benchmarks/project_audit/results/2026-10-11/counterexamples-v2/report.json`。
+确认四项数据契约缺口：PARS 代表路径逐帧元素序列未验、重复 attempt ID 遮蔽账本冲突、
+mature 提交不绑定本批 protocol/task seed/实现、commit marker 内容 hash 在恢复与汇总时未重验。
+另指出 b09 分析中“TS 来源起点最有利／差距下界”的推论缺依据；已知 factory/model 指纹缺口仍按既有裁决延后。
+四项新缺口均为合成 CPU 反例，没有证明历史运行已污染。算法源码、生产配置和历史结果未改。
+PRRS/PARS 回归 805 passed / 2 skipped；mature 53 passed；共 858 passed / 2 skipped。
+三包源码/测试 122 文件格式与 lint 通过，审计脚本格式/lint 通过；历史 digest 332 文件 / 2136 帧 / 4 事件对不变，254 次既有迁移比较通过。
+首次三包联合 pytest 因同名 conftest/test 模块出现收集冲突；有效结果来自 PRRS/PARS 联合与 mature 独立调用，详见报告。
+
+同日算法补充：审计报告 §6 汇总 ALG-01…10，区分当前必须修正、一般双分子／多鞍点／分支目标所需能力，
+以及需测出瓶颈才实施的性能候选。覆盖严重度跨族可比性、几何反应管、接近姿态与协同提案、覆盖保底与响应反馈、
+振幅域／时窗、完整淬火链、鞍点种子分配、全链成本账本、长扫描续跑与性能、射击成熟层及模型资格。
+新增 `benchmarks/project_audit/algorithm_probes.py` 与 `results/2026-10-11/algorithm-probes/report.json`，
+直接复现混合单位严重度的任意排序和同键序列不同几何路径的距离为零／归同管。
+证据是描述符级 CPU 探针，没有运行势能／生产候选导入或证明真实鞍点丢失；脚本格式与 lint 通过。
+源码、既有设计、生产配置和历史记录未改；未启动 GPU／新科学实验，未重复跑前述同源码回归。
+
+随后补充甲基／普通扭转／碎片软转动的节流讨论稿：建议分账、限额、去重复升级，
+保留真实构象与接近姿态入口，不按甲基名一律忽略、冻结或降低端点接受门。
+源码检查注明谱分数会覆盖原 genuine/rotor 排序字段；尚无真实谱反例或历史浪费因果结论。
+记录现有周期过滤、free 判别与构象容量已实现的范围，以及需要成本分解和同预算对照才冻结的规则。
+用户尚未确定方案，本次未实施代码／配置改动或新科学实验。
+
+同日 b09 差距续查：按 `CLAUDE.md` 在结果写入主机 183（kasuga02）经 SSH 只读核验，
+新证据 `benchmarks/project_audit/results/2026-10-11/b09-writer-snapshot.json`，
+读取脚本 `benchmarks/project_audit/b09_snapshot.py`，报告 §7。
+07:27 JST 的快照保存 41 个文件哈希和单文件读取稳定性；未加载势能模型或重算轨迹。
+compress 主批 manifest 与当前 PRRS hash 一致，84/84 方向、336/336 coarse、无重复 attempt，
+反应边／反应通道／已连接 TS 通道均为 0；26 个重放的 summary 与逐 trial JSON 相同，
+25 个已确认极小且无键变化，t000327 仍未决；p001 的有效产物记录仍属于人工强推诊断。
+旧 probe1 是旧源码结果；coarse_smoke 留着 running 状态但其历史 PID 不存在，不能当作活跃进展。
+差距清单分开参照资格、盲搜发现、同连接多入口保留、精修连接、分岔与 QM 门；
+明确当前经典 shoot 与论文准经典／溶剂条件尚不匹配，四个参照重优化点不等于完成盲搜或分支认证。
+仅补审计与依赖顺序，没有实施修复、更改协议或运行新分子实验；新脚本格式／lint 通过。
+
+随后对“拉伸像盲试、探索又不足、每个已执行候选需要 MD”的问题补审计 §8 讨论稿。
+回读 stretch/compress 的共用 Å 振幅、几何交付、MD 前门和完整 run_trial 链，
+区分可执行性筛选与搜索价值判断。提出有账本／探索保底的分级投入对照，
+及另立证据合同的 PES 激活／鞍点发现支路，分别说明短时／静态筛选不能推出无反应或动力学分支。
+dimer／activation-relaxation 能力说明核对官方文档／原始论文；没有安装库或实施／运行新方法。
+
+## 已完成：审计 2026-10-11 的 §1/§2/§3/§5 与 ALG-01 修复（2026-10-11）
+
+用户 10-11 决定修这五项；§4（marker 内容 hash 重验）不修，用户判为过度工程（marker 内嵌整条 record，只有手改 marker 才会触发）。
+- §1 `pars/src/pars/cli.py::_candidate_from_seed`：新增参数 candidate_id；逐帧核对元素序列、candidate/channel/provenance 与 image 序号，
+  并核对文件属于 selection 点名的候选。之前链条按第 0 帧的元素重建。
+- §2 `pars/src/pars/adapters/prrs_run.py`：attempts.jsonl 出现重复 attempt ID 时拒绝。PRRS 续跑会先把账本截到快照点，正常运行不会产生重复。
+- §3 `mature/src/mature/io.py::OutputStore.commit`：提交前核对任务在本批 tasks.jsonl 中、seed/batch_role 与分配一致、
+  protocol hash 与 manifest 一致、实现 hash 与 manifest 一致（manifest 记录了的话）。只在提交侧核对，读取 marker 侧不加（理由同 §4）。
+- ALG-01 `pars/src/pars/frontier/objectives.py`：触发严重度按族/单位分键 `trigger_severity[<family>/<unit>]`，
+  不同族的候选可用性掩码不同，支配/cover 中互不可比（保守保留）；缺族或单位时报 None。选择记录里的键名随之改变。
+- §5：`docs/B09_GAP_ANALYSIS_2026-10-10.md` §1 去掉"最有利/下界"；本文件 10-10 重放条目改为"已收敛 25 个无漏收，t000327 未决"。
+测试：mature 58 passed（新增 5）；PARS 219 passed（新增反例：换元素帧、乱序帧、错配代表文件、重复 ID、跨族严重度）；ruff format/check 通过。
+审计的 `reproduce.py` 断言"缺陷仍在"，且调用 `_candidate_from_seed` 旧签名，修后不能再用来复现，以新增回归测试为准。
+
+## 已完成：PRRS 两处小修（2026-10-11；审计 §6 / 已知待修项）
+
+- `src/prrs/runner.py:2279`：`relays` 是列表，原来传给 `%d`，日志打到这里时会在 stderr 输出 "Logging error"（不抛异常、不影响结果）；改为 `len(relays)`。
+- `src/prrs/perturbations.py::propose` 注 [4]：有软模谱时，原来用 `-spectral_overlap` 整列替换结构档位（genuine 扭转 0 / 对称 rotor 1），
+  注 [1] 里"rotor 排后"的意图就失效了。现在排序键改为 `(结构档位, -overlap)`，谱分数只在同一档位内部排序。
+  乙醇反例：软模正好是甲基转子的运动时，转子重叠 1.0、genuine 扭转 0.017；修改前转子排第一，修改后 genuine 排前面。
+  这是排序策略的改动，只影响带谱、并且同时有 genuine 和 rotor 的扭转族。没有测过它对历史 run 的预算实际有多大影响。
+- **PRRS 实现指纹因此改变**：改动前开始的 PRRS run 不能跨这次改动续跑，这是原有续跑门的设计。
+- 测试：新增 `tests/test_spectral_rank.py::test_the_spectrum_orders_inside_the_rotor_rank_not_over_it`；
+  与提案/谱/下降相关的 12 个测试文件共 210 passed（54.9 s，本机）。ruff 通过。
+  **补验（同日 10:00–10:11，本机，含 mature 显式候选清单之后的源码）**：根目录 `make check` 全部四步通过——fmt-check、lint、`594 passed, 1 skipped in 643.18s`、digest `332 files, 2136 frames, 4 event pairs` 不变（另 254 次迁移比较通过，1 分 45 秒）。日志在 `benchmarks/prrs_check/results/2026-10-11/`。
+
+## 已完成：mature M2–M4（2026-10-11；用户指示施工）
+
+依据：`docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md` §3、§4 M2–M4、§7（已全文读完）。代码在 `mature/src/mature/maturation.py`、`cli.py`；schema 小改。
+- **M2 prepare**：PARS selection 只用于选路径（`refinement_order`，每通道最多 `max_paths_per_channel` 条，不同反应管优先）；
+  候选几何取自源 PRRS `response.traj` 的自由段（`free_start`/`free`），按弧长 1/6…5/6。
+  没有使用 PARS 代表文件，因为那是重采样、刚体对齐后的链，从里面取点等于把插值冒充成 MD 帧。
+  插值候选记为 `path_interpolation`，带来源帧和权重；`allow_interpolation=false` 时取最近的真实帧（`observed_frame`）。
+  区域两侧的结构文件 hash 和编码出的键图必须与协议一致，否则拒绝。账本列出每个通道（`not_this_region` / `sampled`）、未采样的反应管、跳过的位置。
+- **M3 shoot**：每个任务调用一次 `prrs.runner.shoot(shots=1)`，`deliver=False`，种子取自任务表，首次进入用区域两侧的键图；
+  判归复用只读的 `Registry.identify`。A/B = 首次进入侧；入口与淬火落点不一致只计数，不改判；
+  未进入时淬火落到第三盆记 `other`，否则记 `unabsorbed`；门拒、失败分开计数。力评估用计数 wrapper 统计（不改变 ASE 缓存）。
+- **M4**：`mature prepare|shoot|report`，prepare/shoot 支持 `--dry-run`。续跑沿用 M1 的拒绝规则；半写的 shot 目录隔离后重做；report 每次都从 marker 重建。
+  探索批的序贯停止写进协议（`shooting.interim_look`）：前 n 发的 Wilson 区间整段落在诊断带外就停；
+  排除项已经多到全样本必然超过 `other_fraction_max` 也停。确认批、抽查批固定发数。
+  预算在每发之前检查，力评估和墙钟按已见到的单发最大值预留。
+- **schema 改动**：`ShootingRule.interim_look`（只允许探索批）、`ShotRecord.cost_free_steps`、插值候选可记录 `frames`；
+  **修复 `band_class`**：区间从带内跨到带上方（例如 4A/12B，约 [0.46, 0.91]）原来判 `unresolved`，按计划 M3 应判 `transition_region_compatible`。
+- 测试：mature `82 passed`（23 s），其中新增 `tests/test_maturation.py`，在 ProtonRelay 解析势上真跑 PRRS（16 trial）+ `pars select` 后端到端测试。
+  覆盖：自由段取点且保留全部原子、插值权重可复核、区域键图篡改被拒、dry-run 不落盘、同几何同种子与直接调用 `prrs.runner.shoot` 结果一致（首次进入和端点都一致）、
+  probe 没有被投递、9 种判归情形、停止规则、预算在发射前拦截、kill 后重做且重报不重复计数、实现指纹变化后拒绝续跑、CLI 三个动词。ruff 通过。
+- **没做**：M5（P1 真实 MACE 实跑），需要先冻结协议并报计划；`runs/` 和 GPU 都没有动。
+
+## 已完成：审计 B/C 后续清单核对与测量建议（2026-10-11）
+
+新增 `docs/AUDIT_NEXT_STEPS_2026-10-11.md`，审计报告顶部加入链接。
+按当前源码 diff 与交付记录区分已修转子排序、已实现 M2–M4 和仍待实跑的 M5；
+将 ALG-08 归为工程测量前置，区分已有解析势双鞍点工程台与真实多分子机制验证。
+记录零号 8 发→正式 410 发的协议冻结顺序、GPU 计划建议和完整成本要求；
+补低振幅返回不能直接剪除高振幅的漏检对照、转子分账及性能候选处理。
+两个延后身份问题仍按先提出后修；PERF-01/09 的闭项来自用户清单，本次未找到原测量工件。
+没有实施算法改动、执行新科学实验或重跑修复回归；旧审计测试不作为当前源码全量验收。
+
+## 已完成：mature 显式候选清单（2026-10-11；用户同意施工）
+
+依据：`docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md` §4 M5 表与"确认候选规则"段（已全文读完）。
+缺口：零号批要固定 1 个候选，确认批、抽查批要打探索批诊断过的候选，原来每批都从 PARS 路径重新抽候选，表达不了。
+- `CandidateRule.proposal_ids`：只准备列出的候选；列了产不出来的 id 在写盘前拒绝；未列出的位置在账本记 `not in CandidateRule.proposal_ids`。
+- `CandidateRule.from_batch`（必须同时给 `proposal_ids`）：从那一批的 `proposals.jsonl` 取记录、按字节拷几何，`batch_role` 改成本批，
+  新增 `PathProposal.origin_batch`（目录、协议 hash、角色），精化交接里也带上。拒绝：id 不在那一批、候选的区域键图与本协议不同（A/B 含义会变）、几何文件被改过。
+- 两个字段都只在设置时写进协议 JSON，未设置的协议 hash 不变。
+- 测试：mature `90 passed`（34 s），新增 8 个：列出一个候选只准备它、未知 id 写盘前拒绝、确认批几何与探索批逐字节相同且溯源完整并能射击和报告、
+  三种拒绝（id 不在、区域换边、几何被改）、schema 三种非法清单与往返 hash。ruff 通过。
+
+## 已完成：修复后审计清单状态同步（2026-10-11）
+
+用户告知一批修复完成后，核对当前源码入口、显式候选清单交付记录和 PRRS 补验日志。
+更新 `docs/AUDIT_NEXT_STEPS_2026-10-11.md`：显式候选／跨批几何复用标为已有，
+验证记录更新为 mature 90（交付记录）、PRRS 594 passed / 1 skipped（已读日志）及历史 digest 不变。
+仍保留 ALG-08 全链测量、M5 实跑、节流收益、一般协同提案和真实多通道研究门。
+本次未修改算法、重跑测试或启动实验。
+
+## 已完成：整体算法深挖 ALG-11…22（2026-10-11）
+
+用户要求继续开挖整体算法。新增 `docs/AUDIT_ALGORITHM_DEEP_DIVE_2026-10-11.md`，
+原审计与后续清单加链接。读取当前提案／响应／网络水库与 PARS 选择／种子／精修链，
+新增四个独立 CPU 探针，12 个算法阶段／几何／配置合成检查成功。
+新证据在 `benchmarks/project_audit/results/2026-10-11/` 的 `deep-dig`、`seed-stages-v2`、
+`audit-population`、`scale-domain`；报告均绑定相关源码和脚本哈希，检查运行前后未变。
+覆盖不变背景键稀释、随机流碰撞、响应奖励、IQR 池依赖与负备用尺度、leader 命名敏感性、
+交付跳跃吞掉自由段内部图像、施力段事件／阶段名的种子定位、外场曲率条件、
+源图返回计数与抽审人口的范围；候补水库／实际交付覆盖与结果反馈仅提出测量方向。
+种子脚本初次漏填电子态，被现有导出门正确拒绝；保留失败说明与部分工件，另开 v2 验证。
+四脚本 format/lint 通过。核对 AutoNEB 与 geomeTRIC 官方资料作为精修对照候选，未安装或运行。
+未改生产算法、历史数据或冻结协议，未加载势能模型、运行 MD／GPU 或复跑全量回归；
+未证明历史通道丢失／污染或新策略的真实科学收益。
+
+## 已完成：算法深挖第一批（ALG-12 / ALG-17 阶段名 / ALG-14 负尺度，2026-10-11；用户指示）
+
+依据：`docs/AUDIT_ALGORITHM_DEEP_DIVE_2026-10-11.md`，三处都先在源码核实。
+- **ALG-12**：`search.py` 的方向 seed 原来只取节点 ID 倒数第二个字节、不含微态 ID，100 个节点只有 10 种 seed，同节点微态共用一种。
+  新增 `_direction_seed(seed, microstate_id, n_microstates, trials_spent)`：完整微态 ID（含节点 ID）经 sha256 取 8 字节进 `SeedSequence`，其余输入不变。
+  这个 seed 只决定 `propose` 档位内的打乱顺序，不决定热动量。
+- **ALG-17（只修阶段名）**：`_dividing_frame` 无切换帧时的回退查 `("perturbed", "pulse")`，`run_trial` 写脉冲用的是 `"forced"`，pulse 族永远拿不到末步切向；改为 `"forced"`。
+  "最早事件抢占"属于策略问题，没有改。
+- **ALG-14（只修取值域）**：`ParsConfig` 拒绝非有限或 ≤0 的 `objective_scales`（IQR 为零时拿来做除数，负值会翻转好坏）。IQR 随池漂移的问题没有动。
+- **PRRS 实现指纹因此改变**，改动前开始的 run 不能跨改动续跑。
+- 测试：新增 `tests/test_search.py` 两个（真 pulse trial 的回退切向、800 个微态 seed 互不相同）、`pars/tests/test_config.py` 五个（四种非法尺度、正尺度照常）。
+  变异检查：阶段名改回 `"pulse"` 时新测试失败；旧 seed 公式在 800 个微态上只有 10 种 seed。PARS `224 passed`，mature `90 passed`。
+  根目录 `make check` 四步全过（本机）：fmt-check、lint、`596 passed, 1 skipped in 487.60s`、digest `332 files, 2136 frames, 4 event pairs` 不变（另 254 次迁移比较通过）。日志 `benchmarks/prrs_check/results/2026-10-11/make_*_alg.log`。
+
+## 已交付文档：评估协议与发现层设计 v0.1（2026-10-13，待用户审阅）
+
+用户授权接续 `PROJECT_DIRECTION_REVIEW_2026-10-13.md` §8 的暂停点补写设计。
+新增 `EVALUATION_PROTOCOL_DESIGN_2026-10-13.md`：两项比较、全链成本/恢复、目标 PES 参照、收益与重复设计、身份/来源隔离；
+新增 `DISCOVERY_LAYER_DESIGN_2026-10-13.md`：姿态/意图、有限约束松弛、疑似脊/释放、分级升级、抽查、自适应和静态工件契约。
+文档索引加入口，方向记录末尾追加交付和新暂停点。预算、数值门、样本量、N3 分子等明确待审或待测。
+核对两份新稿的本地链接与尾部空白，0 错误；另核对当前 D0 的 `relax_source` 与现有 pulse 表达范围，
+查询官方约束优化/Dimer 文档和公开数据集原始来源，仅作为设计依据。
+本次仅文档交付，未改生产源码、历史结果或冻结协议，未加载模型、执行 MD/GPU 或重跑科学回归。
+两份稿尚未冻结；用户先审评估再审发现，审过后才写施工计划。
+
+
+## 已完成：发现层 v1 施工 M1–M2（计数账本 + 约束松弛探针）与 b04 冒烟（2026-10-13；冒烟，未做验收）
+
+按 [施工计划](PLAN_EXPLORE_V1_2026-10-13.md) Task 1–6 以子 agent 施工、逐任务审查。新独立包 `explore/`（单向 import prrs；PRRS 源码未动，指纹/digest 不变）。
+- `explore/src/explore/ledger.py`：forward 账本（预算许可、预留、崩溃按预留上界计费；重放按 key 用栈配对 open/close，防同 key 重试“退款”）；`instrument`/`counted_factory`（`calculate` 前计费，缓存命中只计 request，后端 `get_hessian` 计 1）。
+- `explore/src/explore/probe.py`：`Intent`、`constrained_scan`（单标量约束 `FixBondCombo` + ASE BFGS，maxstep 0.05；**偏离施工计划**：ASE `FixInternals` 在线性几何上报 IndexError，双原子台和 b04 共线背面进攻都会碰到，故自写投影约束。审查者另用 Ar5 三对组合临时核查：残差 ≤2.2e-16 Å、dE*/dq 与有限差分差 2e-6——该核查不在测试套件内）、每点保存无偏 PES 力；`read_scan`（`ridge_suspected` / `jump`）、`bracket_jump`、`reverse_check`；`release`（解约束→淬火→极小确认→分类，返回释放坐标、释放点无偏力、seed、移除约束清单）。
+- 测试：`make -C explore check` → fmt-check、lint、**31 passed**（账本 15、探针 16）。“pytest 通过”只说明这些合成用例成立。
+
+**b04 真实模型冒烟**（本机 181 GPU；183 的 GPU 被他人 PID 1314669 占用，未抢卡）。结果：`benchmarks/explore_smoke/results/2026-10-13/run/`，PID 3400640 已退出，约 3 分钟。
+- 意图：亲核 Cl5 → C0 距离压缩，3.6 → 1.9 Å，步长 0.1 Å，18 点全部收敛（BFGS 4–11 步）。
+- 成本：扫描 157 forward / 18 点 = **8.7 forward/点**，段内墙钟 19.3 s ≈ **1.07 s/点**（2080 Ti，float64）；噪声重复 18–23 forward/次；释放：淬火 56、极小确认 13；全程 288 forward（含 1 个 unattributed，即来源快照）。模型每次 factory() 重新加载，加载时间不在扫描段内。
+- 能量噪声：中点（q = 2.7 Å）每个笛卡尔分量加 σ = 0.02 Å 高斯扰动后拉回同一 q，3 次收敛重复的极差 **4.7e-5 eV**，直接作 `read_scan` 的 noise_eV。只测了一个点、3 次，靠近脊处的噪声可能更大。
+- 判读：`read_scan` 报 `ridge_suspected`，峰在 q = 2.3 Å（相对扫描起点 +0.543 eV；相对扫描中能量最低点 q = 3.2 Å 为 +0.589 eV）。**但能量与反力积分在 2.3→2.2 Å 一步不一致**：ΔE = −0.085 eV，梯形积分 −0.039 eV，差 0.045 eV（其余各步 ≤0.007 eV），反力斜率 −21.9 eV/Å²（其余 ±3 以内），指向这一步发生换支；扫描未保存几何，无法确证。按设计 §4.3，跳支旁的峰不满足连续脊触发，所以**不能说已显示连续的脊**。`read_scan` 目前没有连续性检查。另记的 `jump`（2.2→2.1 Å）只是键图阈值越过，所在这一步本身是平滑的；真正的不连续（2.3→2.2）没有键图变化，`jump` 没抓到。`reverse_check` 没有运行。
+- 释放（q = 2.2 Å 点）：`c1_candidate`，label `reactive`，断 C0–Cl1、成 C0–Cl5，即 SN2 产物，极小已确认。
+- 事后对照（仅诊断，未进扫描）：b04 已认证 POLAR-1 势垒 0.5967–0.5988 eV（PROJECT_OVERVIEW §6，以精修的反应物端点为参照），本扫描峰相对扫描中最低约束点为 0.589 eV——两者参照点不同，且峰旁疑似换支，只能算量级相符。施工计划 Step 6 要求的“与已知 TS 的距离对照”没有做：脚本未保存几何。未做 C2。
+
+结论：**冒烟跑通，未做验收**。约束松弛扫描在 b04 真实 PES 上全程收敛，越过高能区后释放到了正确的 SN2 产物（极小已确认）；单点约 9 forward、约 1 s。**“出现连续的脊”没有被显示**：峰旁疑似换支，判读缺连续性检查。最终审查列出 M4/M5 前要修的代码项：I1 探针函数透传 attempt/reserve/artifact；I2 缓存命中真正计数；I3 失败码和被拒几何写进账本；I4 多对意图的可行性检查（在 M3 计划中定域）。另需在 M5 前给 `read_scan` 加连续性检查（涉及新阈值，按全局规则 §8 先报用户）。

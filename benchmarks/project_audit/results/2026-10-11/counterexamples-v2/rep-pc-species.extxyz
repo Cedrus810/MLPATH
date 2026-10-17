@@ -1,0 +1,21 @@
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=0 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+H       -1.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=1 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+H       -0.66666667       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=2 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+H       -0.33333333       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=3 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+He       0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=4 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+H        0.33333333       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=5 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+H        0.66666667       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 candidate_id=pc-species channel_id=rc0000 image=6 charge=0 spin=1 pars_provenance="{\"run_dir\": \"synthetic\", \"attempt_id\": \"t000001\", \"channel_id\": \"rc0000\", \"event_key\": null, \"reactant_state_id\": null, \"product_state_id\": null, \"frame_start\": 0, \"frame_stop\": 7, \"perturbation_family\": null, \"perturbation_amplitude\": null, \"perturbation_unit\": null, \"seed\": null, \"implementation_sha256\": null, \"calculator\": {}, \"electronic_state\": {\"charge\": 0, \"spin\": 1}, \"extra\": {}}" pbc="F F F"
+H        1.00000000       0.00000000       0.00000000

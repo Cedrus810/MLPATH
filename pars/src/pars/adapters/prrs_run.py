@@ -77,7 +77,13 @@ class PrrsRun:
             for attempt_id in set(reaction.get("attempts", ())):
                 self._reactions_by_attempt.setdefault(attempt_id, []).append(reaction)
         self._attempts = read_jsonl(self.run_dir / "attempts.jsonl")
-        self._attempts_by_id = {r["attempt_id"]: r for r in self._attempts}
+        self._attempts_by_id = {}
+        for record in self._attempts:
+            # A dict silently keeps the last row: a failed row followed by a
+            # reactive one under the same id would be checked as reactive twice.
+            if record["attempt_id"] in self._attempts_by_id:
+                raise ValueError(f"attempts.jsonl: duplicate attempt id {record['attempt_id']}")
+            self._attempts_by_id[record["attempt_id"]] = record
 
     # -- lookups ------------------------------------------------------------
 

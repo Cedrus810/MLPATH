@@ -41,6 +41,23 @@ def trigger_severity(candidate: PathCandidate) -> float | None:
     return candidate.provenance.perturbation_amplitude
 
 
+def trigger_severity_key(candidate: PathCandidate) -> str:
+    """Objective name the amplitude is reported under.
+
+    Design 8.2 compares amplitudes only "under the specified perturbation
+    family": 0.5 Angstrom of stretch and 0.2 eV of kick share no scale, and
+    median/IQR normalization of one mixed column does not give them one.
+    Keying the objective by family and unit gives candidates of different
+    families different availability masks, so dominance and cover treat them
+    as incomparable instead of ranking them by the bare number.
+    """
+    family = candidate.provenance.perturbation_family
+    unit = candidate.provenance.perturbation_unit
+    if family is None or unit is None:
+        return "trigger_severity"
+    return f"trigger_severity[{family}/{unit}]"
+
+
 def mlp_uncertainty(uncertainty: np.ndarray | None, quantile: float) -> float | None:
     """Per-frame force uncertainty aggregated at a high quantile (design 8.3).
 
@@ -132,9 +149,12 @@ def evaluate_candidate(candidate: PathCandidate, config: ParsConfig) -> dict:
     curvature = (
         path_curvature(segment, config.refinement_images) if segment.shape[0] >= 3 else None
     )
+    severity_key = trigger_severity_key(candidate)
+    # An amplitude without its family and unit has no comparison group.
+    severity = trigger_severity(candidate) if severity_key != "trigger_severity" else None
     return {
         "energy_excursion": energy_excursion(candidate.energies),
-        "trigger_severity": trigger_severity(candidate),
+        severity_key: severity,
         "mlp_uncertainty": mlp_uncertainty(candidate.uncertainty, config.uncertainty_quantile),
         "path_curvature": curvature,
         "recrossing": recrossing(candidate),

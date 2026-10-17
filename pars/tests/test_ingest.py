@@ -132,3 +132,19 @@ def test_ingest_rejects_disagreement_with_authoritative_result(run_dir):
     path.write_text(json.dumps(result))
     with pytest.raises(ValueError, match="ledger mismatch in status"):
         ingest_run(run_dir, ParsConfig())
+
+
+def test_duplicate_attempt_id_is_rejected(run_dir):
+    """Audit 2026-10-11 #2: the id index kept the last row, so a failed row
+    followed by a reactive one under the same id was checked as reactive twice
+    and the trial was ingested twice."""
+    import json
+
+    ledger = run_dir / "attempts.jsonl"
+    rows = [json.loads(line) for line in ledger.read_text().splitlines() if line.strip()]
+    shadow = dict(next(r for r in rows if r["attempt_id"] == "t000001"))
+    shadow.update(status="failed", classification="elastic")
+    rows.insert(rows.index(next(r for r in rows if r["attempt_id"] == "t000001")), shadow)
+    ledger.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    with pytest.raises(ValueError, match="duplicate attempt id t000001"):
+        ingest_run(run_dir, ParsConfig())

@@ -335,6 +335,7 @@ class OutputStore:
         same content hash is an idempotent re-commit; different content for
         the same task refuses.
         """
+        self._check_batch_conditions(record)
         record_dict = record.to_dict()
         record_sha = sha256_object(record_dict)
         result_path = (
@@ -363,6 +364,32 @@ class OutputStore:
                 "committed_utc": utc_now(),
             },
         )
+
+    def _check_batch_conditions(self, record: ShotRecord) -> None:
+        """A shot counts only for the task it was allocated under this batch.
+
+        Estimates group by proposal id alone, so a record from another
+        protocol, seed, role or implementation would otherwise occupy a task
+        and mix into one estimate with this batch's shots.
+        """
+        task_id = f"{record.proposal_id}#{record.shot_id}"
+        task = next((t for t in self.tasks() if t["task_id"] == task_id), None)
+        if task is None:
+            raise OutputConflict(f"commit refused: {task_id} is not in this batch's task table")
+        manifest = read_json_strict(self.output_dir / MANIFEST_NAME)
+        expected = {
+            "seed": task["seed"],
+            "batch_role": task["batch_role"],
+            "protocol_sha256": manifest["protocol_sha256"],
+        }
+        if manifest.get("prrs_implementation_sha256") is not None:
+            expected["implementation_sha256"] = manifest["prrs_implementation_sha256"]
+        differing = sorted(k for k, v in expected.items() if getattr(record, k) != v)
+        if differing:
+            raise OutputConflict(
+                f"commit refused: {task_id} ran under other conditions than this batch "
+                f"allocated ({', '.join(differing)})"
+            )
 
     def committed_records(self) -> list:
         records = []

@@ -1,0 +1,2396 @@
+{
+  "snapshot_utc": "2026-10-10T22:27:23.651740+00:00",
+  "writer_host": "kasuga02",
+  "workspace": "/home/ruigengji/MLPATH",
+  "evidence_scope": "read-only writer-host snapshot; no fresh molecular calculation, physical certification or whole-project run inventory",
+  "reader_script_sha256": null,
+  "writer_current_prrs_sha256": "d6a6986e147aa853574597dd10f463c2c286162491cf62949b67f960aba70128",
+  "immediate_b09_run_names": [
+    "b09_coarse_smoke",
+    "b09_compress_coverage",
+    "b09_probe1",
+    "b09_smoke0"
+  ],
+  "runs": {
+    "b09_probe1": {
+      "persisted_status": "completed",
+      "termination": "configured_scope_exhausted",
+      "attempt_count": 32,
+      "network_attempt_count": 32,
+      "duplicate_attempt_ids": [],
+      "outcome_counts_from_attempts": {
+        "completed": 16,
+        "rejected": 5,
+        "ts_candidate": 10,
+        "quench_failed": 1
+      },
+      "classification_counts_from_attempts": {
+        "elastic": 26,
+        "unphysical": 5,
+        "None": 1
+      },
+      "phase_counts_from_attempts": {
+        "coarse": 23,
+        "refine": 9
+      },
+      "reaction_count": 0,
+      "reaction_channel_count": 0,
+      "ts_candidate_count": 10,
+      "ts_connected_channel_count": 0,
+      "chemical_node_count": 1,
+      "direction_ledger": {
+        "directions_selected": 24,
+        "directions_executed": 7,
+        "directions_not_executed": 17,
+        "microstates_searched": 1,
+        "not_executed_reasons": {
+          "conformer_trials_per_microstate": 17
+        },
+        "not_executed_ids": [
+          "bend:13-14-17:+",
+          "bend:13-14-17:-",
+          "bend:16-14-13:-",
+          "bend:20-18-15:+",
+          "bend:20-18-15:-",
+          "compress:1-4:-",
+          "compress:3-15:-",
+          "compress:3-18:-",
+          "compress:9-15:-",
+          "kick:1-4:+",
+          "kick:1-4:-",
+          "kick:4-15:+",
+          "kick:4-15:-",
+          "stretch:0-13:+",
+          "stretch:16-20:+",
+          "stretch:18-20:+",
+          "stretch:5-7:+"
+        ],
+        "executed_ids": [
+          "bend:16-14-13:+",
+          "compress:4-15:-",
+          "compress:5-16:-",
+          "kick:5-16:+",
+          "kick:5-16:-",
+          "stretch:14-16:+",
+          "stretch:14-17:+"
+        ],
+        "uncovered_ids": [
+          "bend:0-13-15:+",
+          "bend:0-13-15:-",
+          "bend:1-0-13:+",
+          "bend:1-0-13:-",
+          "bend:1-0-28:+",
+          "bend:1-0-28:-",
+          "bend:10-9-12:+",
+          "bend:10-9-12:-",
+          "bend:11-9-10:+",
+          "bend:11-9-10:-",
+          "bend:11-9-12:+",
+          "bend:11-9-12:-",
+          "bend:13-0-28:+",
+          "bend:13-0-28:-",
+          "bend:13-14-27:+",
+          "bend:13-14-27:-",
+          "bend:13-15-18:+",
+          "bend:13-15-18:-",
+          "bend:14-13-0:+",
+          "bend:14-13-0:-",
+          "bend:14-13-15:+",
+          "bend:14-13-15:-",
+          "bend:14-16-21:+",
+          "bend:14-16-21:-",
+          "bend:16-14-17:+",
+          "bend:16-14-17:-",
+          "bend:16-14-27:+",
+          "bend:16-14-27:-",
+          "bend:16-20-18:+",
+          "bend:16-20-18:-",
+          "bend:16-20-23:+",
+          "bend:16-20-23:-",
+          "bend:16-20-25:+",
+          "bend:16-20-25:-",
+          "bend:18-20-23:+",
+          "bend:18-20-23:-",
+          "bend:18-20-25:+",
+          "bend:18-20-25:-",
+          "bend:19-15-13:+",
+          "bend:19-15-13:-",
+          "bend:19-15-18:+",
+          "bend:19-15-18:-",
+          "bend:20-16-14:+",
+          "bend:20-16-14:-",
+          "bend:20-16-21:+",
+          "bend:20-16-21:-",
+          "bend:20-16-26:+",
+          "bend:20-16-26:-",
+          "bend:20-18-22:+",
+          "bend:20-18-22:-",
+          "bend:20-18-24:+",
+          "bend:20-18-24:-",
+          "bend:22-18-15:+",
+          "bend:22-18-15:-",
+          "bend:22-18-24:+",
+          "bend:22-18-24:-",
+          "bend:23-20-25:+",
+          "bend:23-20-25:-",
+          "bend:24-18-15:+",
+          "bend:24-18-15:-",
+          "bend:26-16-14:+",
+          "bend:26-16-14:-",
+          "bend:26-16-21:+",
+          "bend:26-16-21:-",
+          "bend:27-14-17:+",
+          "bend:27-14-17:-",
+          "bend:3-5-8:+",
+          "bend:3-5-8:-",
+          "bend:4-2-3:+",
+          "bend:4-2-3:-",
+          "bend:4-9-10:+",
+          "bend:4-9-10:-",
+          "bend:4-9-11:+",
+          "bend:4-9-11:-",
+          "bend:4-9-12:+",
+          "bend:4-9-12:-",
+          "bend:5-3-2:+",
+          "bend:5-3-2:-",
+          "bend:6-5-3:+",
+          "bend:6-5-3:-",
+          "bend:6-5-8:+",
+          "bend:6-5-8:-",
+          "bend:7-5-3:+",
+          "bend:7-5-3:-",
+          "bend:7-5-6:+",
+          "bend:7-5-6:-",
+          "bend:7-5-8:+",
+          "bend:7-5-8:-",
+          "bend:9-4-2:+",
+          "bend:9-4-2:-",
+          "compress:0-11:-",
+          "compress:0-26:-",
+          "compress:0-4:-",
+          "compress:0-7:-",
+          "compress:0-9:-",
+          "compress:1-11:-",
+          "compress:1-12:-",
+          "compress:1-19:-",
+          "compress:1-27:-",
+          "compress:1-7:-",
+          "compress:1-9:-",
+          "compress:10-19:-",
+          "compress:11-13:-",
+          "compress:11-15:-",
+          "compress:11-19:-",
+          "compress:12-15:-",
+          "compress:12-19:-",
+          "compress:12-24:-",
+          "compress:13-23:-",
+          "compress:13-25:-",
+          "compress:14-22:-",
+          "compress:14-24:-",
+          "compress:15-21:-",
+          "compress:15-26:-",
+          "compress:16-19:-",
+          "compress:16-28:-",
+          "compress:17-18:-",
+          "compress:17-19:-",
+          "compress:17-22:-",
+          "compress:17-23:-",
+          "compress:17-24:-",
+          "compress:17-25:-",
+          "compress:17-28:-",
+          "compress:18-27:-",
+          "compress:19-25:-",
+          "compress:19-28:-",
+          "compress:2-13:-",
+          "compress:2-15:-",
+          "compress:2-16:-",
+          "compress:2-18:-",
+          "compress:2-19:-",
+          "compress:2-20:-",
+          "compress:2-24:-",
+          "compress:2-25:-",
+          "compress:2-26:-",
+          "compress:21-22:-",
+          "compress:22-26:-",
+          "compress:24-26:-",
+          "compress:26-28:-",
+          "compress:27-28:-",
+          "compress:3-12:-",
+          "compress:3-13:-",
+          "compress:3-16:-",
+          "compress:3-19:-",
+          "compress:3-20:-",
+          "compress:3-25:-",
+          "compress:3-26:-",
+          "compress:4-13:-",
+          "compress:4-19:-",
+          "compress:4-6:-",
+          "compress:4-7:-",
+          "compress:4-8:-",
+          "compress:5-25:-",
+          "compress:5-26:-",
+          "compress:5-9:-",
+          "compress:6-16:-",
+          "compress:6-26:-",
+          "compress:7-11:-",
+          "compress:7-13:-",
+          "compress:7-14:-",
+          "compress:7-16:-",
+          "compress:7-26:-",
+          "compress:7-27:-",
+          "compress:7-28:-",
+          "compress:7-9:-",
+          "compress:8-10:-",
+          "compress:8-9:-",
+          "compress:9-19:-",
+          "kick:0-11:+",
+          "kick:0-11:-",
+          "kick:0-13:+",
+          "kick:0-13:-",
+          "kick:0-1:+",
+          "kick:0-1:-",
+          "kick:0-26:+",
+          "kick:0-26:-",
+          "kick:0-28:+",
+          "kick:0-28:-",
+          "kick:0-4:+",
+          "kick:0-4:-",
+          "kick:0-7:+",
+          "kick:0-7:-",
+          "kick:0-9:+",
+          "kick:0-9:-",
+          "kick:1-11:+",
+          "kick:1-11:-",
+          "kick:1-12:+",
+          "kick:1-12:-",
+          "kick:1-19:+",
+          "kick:1-19:-",
+          "kick:1-27:+",
+          "kick:1-27:-",
+          "kick:1-7:+",
+          "kick:1-7:-",
+          "kick:1-9:+",
+          "kick:1-9:-",
+          "kick:10-19:+",
+          "kick:10-19:-",
+          "kick:11-13:+",
+          "kick:11-13:-",
+          "kick:11-15:+",
+          "kick:11-15:-",
+          "kick:11-19:+",
+          "kick:11-19:-",
+          "kick:12-15:+",
+          "kick:12-15:-",
+          "kick:12-19:+",
+          "kick:12-19:-",
+          "kick:12-24:+",
+          "kick:12-24:-",
+          "kick:13-14:+",
+          "kick:13-14:-",
+          "kick:13-15:+",
+          "kick:13-15:-",
+          "kick:13-23:+",
+          "kick:13-23:-",
+          "kick:13-25:+",
+          "kick:13-25:-",
+          "kick:14-16:+",
+          "kick:14-16:-",
+          "kick:14-17:+",
+          "kick:14-17:-",
+          "kick:14-22:+",
+          "kick:14-22:-",
+          "kick:14-24:+",
+          "kick:14-24:-",
+          "kick:14-27:+",
+          "kick:14-27:-",
+          "kick:15-18:+",
+          "kick:15-18:-",
+          "kick:15-19:+",
+          "kick:15-19:-",
+          "kick:15-21:+",
+          "kick:15-21:-",
+          "kick:15-26:+",
+          "kick:15-26:-",
+          "kick:16-19:+",
+          "kick:16-19:-",
+          "kick:16-20:+",
+          "kick:16-20:-",
+          "kick:16-21:+",
+          "kick:16-21:-",
+          "kick:16-26:+",
+          "kick:16-26:-",
+          "kick:16-28:+",
+          "kick:16-28:-",
+          "kick:17-18:+",
+          "kick:17-18:-",
+          "kick:17-19:+",
+          "kick:17-19:-",
+          "kick:17-22:+",
+          "kick:17-22:-",
+          "kick:17-23:+",
+          "kick:17-23:-",
+          "kick:17-24:+",
+          "kick:17-24:-",
+          "kick:17-25:+",
+          "kick:17-25:-",
+          "kick:17-28:+",
+          "kick:17-28:-",
+          "kick:18-20:+",
+          "kick:18-20:-",
+          "kick:18-22:+",
+          "kick:18-22:-",
+          "kick:18-24:+",
+          "kick:18-24:-",
+          "kick:18-27:+",
+          "kick:18-27:-",
+          "kick:19-25:+",
+          "kick:19-25:-",
+          "kick:19-28:+",
+          "kick:19-28:-",
+          "kick:2-13:+",
+          "kick:2-13:-",
+          "kick:2-15:+",
+          "kick:2-15:-",
+          "kick:2-16:+",
+          "kick:2-16:-",
+          "kick:2-18:+",
+          "kick:2-18:-",
+          "kick:2-19:+",
+          "kick:2-19:-",
+          "kick:2-20:+",
+          "kick:2-20:-",
+          "kick:2-24:+",
+          "kick:2-24:-",
+          "kick:2-25:+",
+          "kick:2-25:-",
+          "kick:2-26:+",
+          "kick:2-26:-",
+          "kick:2-3:+",
+          "kick:2-3:-",
+          "kick:2-4:+",
+          "kick:2-4:-",
+          "kick:20-23:+",
+          "kick:20-23:-",
+          "kick:20-25:+",
+          "kick:20-25:-",
+          "kick:21-22:+",
+          "kick:21-22:-",
+          "kick:22-26:+",
+          "kick:22-26:-",
+          "kick:24-26:+",
+          "kick:24-26:-",
+          "kick:26-28:+",
+          "kick:26-28:-",
+          "kick:27-28:+",
+          "kick:27-28:-",
+          "kick:3-12:+",
+          "kick:3-12:-",
+          "kick:3-13:+",
+          "kick:3-13:-",
+          "kick:3-15:+",
+          "kick:3-15:-",
+          "kick:3-16:+",
+          "kick:3-16:-",
+          "kick:3-18:+",
+          "kick:3-18:-",
+          "kick:3-19:+",
+          "kick:3-19:-",
+          "kick:3-20:+",
+          "kick:3-20:-",
+          "kick:3-25:+",
+          "kick:3-25:-",
+          "kick:3-26:+",
+          "kick:3-26:-",
+          "kick:3-5:+",
+          "kick:3-5:-",
+          "kick:4-13:+",
+          "kick:4-13:-",
+          "kick:4-19:+",
+          "kick:4-19:-",
+          "kick:4-6:+",
+          "kick:4-6:-",
+          "kick:4-7:+",
+          "kick:4-7:-",
+          "kick:4-8:+",
+          "kick:4-8:-",
+          "kick:4-9:+",
+          "kick:4-9:-",
+          "kick:5-25:+",
+          "kick:5-25:-",
+          "kick:5-26:+",
+          "kick:5-26:-",
+          "kick:5-6:+",
+          "kick:5-6:-",
+          "kick:5-7:+",
+          "kick:5-7:-",
+          "kick:5-8:+",
+          "kick:5-8:-",
+          "kick:5-9:+",
+          "kick:5-9:-",
+          "kick:6-16:+",
+          "kick:6-16:-",
+          "kick:6-26:+",
+          "kick:6-26:-",
+          "kick:7-11:+",
+          "kick:7-11:-",
+          "kick:7-13:+",
+          "kick:7-13:-",
+          "kick:7-14:+",
+          "kick:7-14:-",
+          "kick:7-16:+",
+          "kick:7-16:-",
+          "kick:7-26:+",
+          "kick:7-26:-",
+          "kick:7-27:+",
+          "kick:7-27:-",
+          "kick:7-28:+",
+          "kick:7-28:-",
+          "kick:7-9:+",
+          "kick:7-9:-",
+          "kick:8-10:+",
+          "kick:8-10:-",
+          "kick:8-9:+",
+          "kick:8-9:-",
+          "kick:9-10:+",
+          "kick:9-10:-",
+          "kick:9-11:+",
+          "kick:9-11:-",
+          "kick:9-12:+",
+          "kick:9-12:-",
+          "kick:9-15:+",
+          "kick:9-15:-",
+          "kick:9-19:+",
+          "kick:9-19:-",
+          "stretch:0-1:+",
+          "stretch:0-28:+",
+          "stretch:13-14:+",
+          "stretch:13-15:+",
+          "stretch:14-27:+",
+          "stretch:15-18:+",
+          "stretch:15-19:+",
+          "stretch:16-21:+",
+          "stretch:16-26:+",
+          "stretch:18-22:+",
+          "stretch:18-24:+",
+          "stretch:2-3:+",
+          "stretch:2-4:+",
+          "stretch:20-23:+",
+          "stretch:20-25:+",
+          "stretch:3-5:+",
+          "stretch:4-9:+",
+          "stretch:5-6:+",
+          "stretch:5-8:+",
+          "stretch:9-10:+",
+          "stretch:9-11:+",
+          "stretch:9-12:+"
+        ],
+        "coverage_censored": true,
+        "censored_by": "max_directions",
+        "meaning": "counts are (microstate, direction) pairs summed over microstates, so they close: selected = executed + not_executed. The *_ids lists are unions and are therefore NOT in that unit -- use the per-microstate ledgers to decide whether a negative result is admissible anywhere"
+      },
+      "manifest_host": "kasuga02",
+      "run_implementation_sha256": "cb45c8f1a0386495a35c1f57d989bab44ff2f9fdc33d291d34470d16e813f0ca",
+      "run_source_matches_writer_current": false,
+      "config": {
+        "families": [
+          "stretch",
+          "compress",
+          "kick",
+          "bend"
+        ],
+        "direction_mode": "sampled",
+        "geometry_amplitudes_A": [
+          0.1,
+          0.3,
+          0.6,
+          1.0
+        ],
+        "max_trials": 96,
+        "quench_steps": 500,
+        "temperature_K": 0.0,
+        "response_steps": 200,
+        "timestep_fs": 0.25,
+        "committor_shots": 0,
+        "max_depth": 1
+      }
+    },
+    "b09_compress_coverage": {
+      "persisted_status": "completed",
+      "termination": "trial_budget",
+      "attempt_count": 336,
+      "network_attempt_count": 336,
+      "duplicate_attempt_ids": [],
+      "outcome_counts_from_attempts": {
+        "completed": 273,
+        "quench_failed": 26,
+        "ts_candidate": 37
+      },
+      "classification_counts_from_attempts": {
+        "elastic": 297,
+        "None": 26,
+        "rearrangement": 13
+      },
+      "phase_counts_from_attempts": {
+        "coarse": 336
+      },
+      "reaction_count": 0,
+      "reaction_channel_count": 0,
+      "ts_candidate_count": 37,
+      "ts_connected_channel_count": 0,
+      "chemical_node_count": 1,
+      "direction_ledger": {
+        "directions_selected": 84,
+        "directions_executed": 84,
+        "directions_not_executed": 0,
+        "microstates_searched": 1,
+        "not_executed_reasons": {},
+        "not_executed_ids": [],
+        "executed_ids": [
+          "compress:0-11:-",
+          "compress:0-26:-",
+          "compress:0-4:-",
+          "compress:0-7:-",
+          "compress:0-9:-",
+          "compress:1-11:-",
+          "compress:1-12:-",
+          "compress:1-19:-",
+          "compress:1-27:-",
+          "compress:1-4:-",
+          "compress:1-7:-",
+          "compress:1-9:-",
+          "compress:10-19:-",
+          "compress:11-13:-",
+          "compress:11-15:-",
+          "compress:11-19:-",
+          "compress:12-15:-",
+          "compress:12-19:-",
+          "compress:12-24:-",
+          "compress:13-23:-",
+          "compress:13-25:-",
+          "compress:14-22:-",
+          "compress:14-24:-",
+          "compress:15-21:-",
+          "compress:15-26:-",
+          "compress:16-19:-",
+          "compress:16-28:-",
+          "compress:17-18:-",
+          "compress:17-19:-",
+          "compress:17-22:-",
+          "compress:17-23:-",
+          "compress:17-24:-",
+          "compress:17-25:-",
+          "compress:17-28:-",
+          "compress:18-27:-",
+          "compress:19-25:-",
+          "compress:19-28:-",
+          "compress:2-13:-",
+          "compress:2-15:-",
+          "compress:2-16:-",
+          "compress:2-18:-",
+          "compress:2-19:-",
+          "compress:2-20:-",
+          "compress:2-24:-",
+          "compress:2-25:-",
+          "compress:2-26:-",
+          "compress:21-22:-",
+          "compress:22-26:-",
+          "compress:24-26:-",
+          "compress:26-28:-",
+          "compress:27-28:-",
+          "compress:3-12:-",
+          "compress:3-13:-",
+          "compress:3-15:-",
+          "compress:3-16:-",
+          "compress:3-18:-",
+          "compress:3-19:-",
+          "compress:3-20:-",
+          "compress:3-25:-",
+          "compress:3-26:-",
+          "compress:4-13:-",
+          "compress:4-15:-",
+          "compress:4-19:-",
+          "compress:4-6:-",
+          "compress:4-7:-",
+          "compress:4-8:-",
+          "compress:5-16:-",
+          "compress:5-25:-",
+          "compress:5-26:-",
+          "compress:5-9:-",
+          "compress:6-16:-",
+          "compress:6-26:-",
+          "compress:7-11:-",
+          "compress:7-13:-",
+          "compress:7-14:-",
+          "compress:7-16:-",
+          "compress:7-26:-",
+          "compress:7-27:-",
+          "compress:7-28:-",
+          "compress:7-9:-",
+          "compress:8-10:-",
+          "compress:8-9:-",
+          "compress:9-15:-",
+          "compress:9-19:-"
+        ],
+        "uncovered_ids": [],
+        "coverage_censored": false,
+        "censored_by": null,
+        "meaning": "counts are (microstate, direction) pairs summed over microstates, so they close: selected = executed + not_executed. The *_ids lists are unions and are therefore NOT in that unit -- use the per-microstate ledgers to decide whether a negative result is admissible anywhere"
+      },
+      "manifest_host": "kasuga02",
+      "run_implementation_sha256": "d6a6986e147aa853574597dd10f463c2c286162491cf62949b67f960aba70128",
+      "run_source_matches_writer_current": true,
+      "config": {
+        "families": [
+          "compress"
+        ],
+        "direction_mode": "exhaustive",
+        "geometry_amplitudes_A": [
+          0.1,
+          0.3,
+          0.6,
+          1.0
+        ],
+        "max_trials": 336,
+        "quench_steps": 500,
+        "temperature_K": 0.0,
+        "response_steps": 200,
+        "timestep_fs": 0.25,
+        "committor_shots": 0,
+        "max_depth": 1
+      }
+    },
+    "b09_coarse_smoke": {
+      "persisted_status": "running",
+      "termination": null,
+      "attempt_count": 5,
+      "network_attempt_count": 5,
+      "duplicate_attempt_ids": [],
+      "outcome_counts_from_attempts": {
+        "completed": 4,
+        "ts_candidate": 1
+      },
+      "classification_counts_from_attempts": {
+        "elastic": 5
+      },
+      "phase_counts_from_attempts": {
+        "coarse": 5
+      },
+      "reaction_count": 0,
+      "reaction_channel_count": 0,
+      "ts_candidate_count": 1,
+      "ts_connected_channel_count": 0,
+      "chemical_node_count": 1,
+      "direction_ledger": null,
+      "manifest_host": "kasuga02",
+      "run_implementation_sha256": "d6a6986e147aa853574597dd10f463c2c286162491cf62949b67f960aba70128",
+      "run_source_matches_writer_current": true,
+      "config": {
+        "families": [
+          "stretch",
+          "compress",
+          "kick",
+          "bend"
+        ],
+        "direction_mode": "exhaustive",
+        "geometry_amplitudes_A": [
+          0.1,
+          0.3,
+          0.6,
+          1.0
+        ],
+        "max_trials": 1408,
+        "quench_steps": 500,
+        "temperature_K": 0.0,
+        "response_steps": 200,
+        "timestep_fs": 0.25,
+        "committor_shots": 0,
+        "max_depth": 1
+      }
+    },
+    "b09_smoke0": {
+      "persisted_status": "completed",
+      "termination": "trial_budget",
+      "attempt_count": 4,
+      "network_attempt_count": 4,
+      "duplicate_attempt_ids": [],
+      "outcome_counts_from_attempts": {
+        "completed": 1,
+        "rejected": 3
+      },
+      "classification_counts_from_attempts": {
+        "elastic": 1,
+        "unphysical": 3
+      },
+      "phase_counts_from_attempts": {
+        "coarse": 4
+      },
+      "reaction_count": 0,
+      "reaction_channel_count": 0,
+      "ts_candidate_count": 0,
+      "ts_connected_channel_count": 0,
+      "chemical_node_count": 1,
+      "direction_ledger": {
+        "directions_selected": 24,
+        "directions_executed": 1,
+        "directions_not_executed": 23,
+        "microstates_searched": 1,
+        "not_executed_reasons": {
+          "trial_budget": 23
+        },
+        "not_executed_ids": [
+          "bend:13-14-17:+",
+          "bend:13-14-17:-",
+          "bend:16-14-13:+",
+          "bend:16-14-13:-",
+          "bend:20-18-15:+",
+          "bend:20-18-15:-",
+          "compress:1-4:-",
+          "compress:3-15:-",
+          "compress:3-18:-",
+          "compress:4-15:-",
+          "compress:5-16:-",
+          "compress:9-15:-",
+          "kick:1-4:+",
+          "kick:1-4:-",
+          "kick:4-15:+",
+          "kick:4-15:-",
+          "kick:5-16:+",
+          "kick:5-16:-",
+          "stretch:0-13:+",
+          "stretch:14-17:+",
+          "stretch:16-20:+",
+          "stretch:18-20:+",
+          "stretch:5-7:+"
+        ],
+        "executed_ids": [
+          "stretch:14-16:+"
+        ],
+        "uncovered_ids": [
+          "bend:0-13-15:+",
+          "bend:0-13-15:-",
+          "bend:1-0-13:+",
+          "bend:1-0-13:-",
+          "bend:1-0-28:+",
+          "bend:1-0-28:-",
+          "bend:10-9-12:+",
+          "bend:10-9-12:-",
+          "bend:11-9-10:+",
+          "bend:11-9-10:-",
+          "bend:11-9-12:+",
+          "bend:11-9-12:-",
+          "bend:13-0-28:+",
+          "bend:13-0-28:-",
+          "bend:13-14-27:+",
+          "bend:13-14-27:-",
+          "bend:13-15-18:+",
+          "bend:13-15-18:-",
+          "bend:14-13-0:+",
+          "bend:14-13-0:-",
+          "bend:14-13-15:+",
+          "bend:14-13-15:-",
+          "bend:14-16-21:+",
+          "bend:14-16-21:-",
+          "bend:16-14-17:+",
+          "bend:16-14-17:-",
+          "bend:16-14-27:+",
+          "bend:16-14-27:-",
+          "bend:16-20-18:+",
+          "bend:16-20-18:-",
+          "bend:16-20-23:+",
+          "bend:16-20-23:-",
+          "bend:16-20-25:+",
+          "bend:16-20-25:-",
+          "bend:18-20-23:+",
+          "bend:18-20-23:-",
+          "bend:18-20-25:+",
+          "bend:18-20-25:-",
+          "bend:19-15-13:+",
+          "bend:19-15-13:-",
+          "bend:19-15-18:+",
+          "bend:19-15-18:-",
+          "bend:20-16-14:+",
+          "bend:20-16-14:-",
+          "bend:20-16-21:+",
+          "bend:20-16-21:-",
+          "bend:20-16-26:+",
+          "bend:20-16-26:-",
+          "bend:20-18-22:+",
+          "bend:20-18-22:-",
+          "bend:20-18-24:+",
+          "bend:20-18-24:-",
+          "bend:22-18-15:+",
+          "bend:22-18-15:-",
+          "bend:22-18-24:+",
+          "bend:22-18-24:-",
+          "bend:23-20-25:+",
+          "bend:23-20-25:-",
+          "bend:24-18-15:+",
+          "bend:24-18-15:-",
+          "bend:26-16-14:+",
+          "bend:26-16-14:-",
+          "bend:26-16-21:+",
+          "bend:26-16-21:-",
+          "bend:27-14-17:+",
+          "bend:27-14-17:-",
+          "bend:3-5-8:+",
+          "bend:3-5-8:-",
+          "bend:4-2-3:+",
+          "bend:4-2-3:-",
+          "bend:4-9-10:+",
+          "bend:4-9-10:-",
+          "bend:4-9-11:+",
+          "bend:4-9-11:-",
+          "bend:4-9-12:+",
+          "bend:4-9-12:-",
+          "bend:5-3-2:+",
+          "bend:5-3-2:-",
+          "bend:6-5-3:+",
+          "bend:6-5-3:-",
+          "bend:6-5-8:+",
+          "bend:6-5-8:-",
+          "bend:7-5-3:+",
+          "bend:7-5-3:-",
+          "bend:7-5-6:+",
+          "bend:7-5-6:-",
+          "bend:7-5-8:+",
+          "bend:7-5-8:-",
+          "bend:9-4-2:+",
+          "bend:9-4-2:-",
+          "compress:0-11:-",
+          "compress:0-26:-",
+          "compress:0-4:-",
+          "compress:0-7:-",
+          "compress:0-9:-",
+          "compress:1-11:-",
+          "compress:1-12:-",
+          "compress:1-19:-",
+          "compress:1-27:-",
+          "compress:1-7:-",
+          "compress:1-9:-",
+          "compress:10-19:-",
+          "compress:11-13:-",
+          "compress:11-15:-",
+          "compress:11-19:-",
+          "compress:12-15:-",
+          "compress:12-19:-",
+          "compress:12-24:-",
+          "compress:13-23:-",
+          "compress:13-25:-",
+          "compress:14-22:-",
+          "compress:14-24:-",
+          "compress:15-21:-",
+          "compress:15-26:-",
+          "compress:16-19:-",
+          "compress:16-28:-",
+          "compress:17-18:-",
+          "compress:17-19:-",
+          "compress:17-22:-",
+          "compress:17-23:-",
+          "compress:17-24:-",
+          "compress:17-25:-",
+          "compress:17-28:-",
+          "compress:18-27:-",
+          "compress:19-25:-",
+          "compress:19-28:-",
+          "compress:2-13:-",
+          "compress:2-15:-",
+          "compress:2-16:-",
+          "compress:2-18:-",
+          "compress:2-19:-",
+          "compress:2-20:-",
+          "compress:2-24:-",
+          "compress:2-25:-",
+          "compress:2-26:-",
+          "compress:21-22:-",
+          "compress:22-26:-",
+          "compress:24-26:-",
+          "compress:26-28:-",
+          "compress:27-28:-",
+          "compress:3-12:-",
+          "compress:3-13:-",
+          "compress:3-16:-",
+          "compress:3-19:-",
+          "compress:3-20:-",
+          "compress:3-25:-",
+          "compress:3-26:-",
+          "compress:4-13:-",
+          "compress:4-19:-",
+          "compress:4-6:-",
+          "compress:4-7:-",
+          "compress:4-8:-",
+          "compress:5-25:-",
+          "compress:5-26:-",
+          "compress:5-9:-",
+          "compress:6-16:-",
+          "compress:6-26:-",
+          "compress:7-11:-",
+          "compress:7-13:-",
+          "compress:7-14:-",
+          "compress:7-16:-",
+          "compress:7-26:-",
+          "compress:7-27:-",
+          "compress:7-28:-",
+          "compress:7-9:-",
+          "compress:8-10:-",
+          "compress:8-9:-",
+          "compress:9-19:-",
+          "kick:0-11:+",
+          "kick:0-11:-",
+          "kick:0-13:+",
+          "kick:0-13:-",
+          "kick:0-1:+",
+          "kick:0-1:-",
+          "kick:0-26:+",
+          "kick:0-26:-",
+          "kick:0-28:+",
+          "kick:0-28:-",
+          "kick:0-4:+",
+          "kick:0-4:-",
+          "kick:0-7:+",
+          "kick:0-7:-",
+          "kick:0-9:+",
+          "kick:0-9:-",
+          "kick:1-11:+",
+          "kick:1-11:-",
+          "kick:1-12:+",
+          "kick:1-12:-",
+          "kick:1-19:+",
+          "kick:1-19:-",
+          "kick:1-27:+",
+          "kick:1-27:-",
+          "kick:1-7:+",
+          "kick:1-7:-",
+          "kick:1-9:+",
+          "kick:1-9:-",
+          "kick:10-19:+",
+          "kick:10-19:-",
+          "kick:11-13:+",
+          "kick:11-13:-",
+          "kick:11-15:+",
+          "kick:11-15:-",
+          "kick:11-19:+",
+          "kick:11-19:-",
+          "kick:12-15:+",
+          "kick:12-15:-",
+          "kick:12-19:+",
+          "kick:12-19:-",
+          "kick:12-24:+",
+          "kick:12-24:-",
+          "kick:13-14:+",
+          "kick:13-14:-",
+          "kick:13-15:+",
+          "kick:13-15:-",
+          "kick:13-23:+",
+          "kick:13-23:-",
+          "kick:13-25:+",
+          "kick:13-25:-",
+          "kick:14-16:+",
+          "kick:14-16:-",
+          "kick:14-17:+",
+          "kick:14-17:-",
+          "kick:14-22:+",
+          "kick:14-22:-",
+          "kick:14-24:+",
+          "kick:14-24:-",
+          "kick:14-27:+",
+          "kick:14-27:-",
+          "kick:15-18:+",
+          "kick:15-18:-",
+          "kick:15-19:+",
+          "kick:15-19:-",
+          "kick:15-21:+",
+          "kick:15-21:-",
+          "kick:15-26:+",
+          "kick:15-26:-",
+          "kick:16-19:+",
+          "kick:16-19:-",
+          "kick:16-20:+",
+          "kick:16-20:-",
+          "kick:16-21:+",
+          "kick:16-21:-",
+          "kick:16-26:+",
+          "kick:16-26:-",
+          "kick:16-28:+",
+          "kick:16-28:-",
+          "kick:17-18:+",
+          "kick:17-18:-",
+          "kick:17-19:+",
+          "kick:17-19:-",
+          "kick:17-22:+",
+          "kick:17-22:-",
+          "kick:17-23:+",
+          "kick:17-23:-",
+          "kick:17-24:+",
+          "kick:17-24:-",
+          "kick:17-25:+",
+          "kick:17-25:-",
+          "kick:17-28:+",
+          "kick:17-28:-",
+          "kick:18-20:+",
+          "kick:18-20:-",
+          "kick:18-22:+",
+          "kick:18-22:-",
+          "kick:18-24:+",
+          "kick:18-24:-",
+          "kick:18-27:+",
+          "kick:18-27:-",
+          "kick:19-25:+",
+          "kick:19-25:-",
+          "kick:19-28:+",
+          "kick:19-28:-",
+          "kick:2-13:+",
+          "kick:2-13:-",
+          "kick:2-15:+",
+          "kick:2-15:-",
+          "kick:2-16:+",
+          "kick:2-16:-",
+          "kick:2-18:+",
+          "kick:2-18:-",
+          "kick:2-19:+",
+          "kick:2-19:-",
+          "kick:2-20:+",
+          "kick:2-20:-",
+          "kick:2-24:+",
+          "kick:2-24:-",
+          "kick:2-25:+",
+          "kick:2-25:-",
+          "kick:2-26:+",
+          "kick:2-26:-",
+          "kick:2-3:+",
+          "kick:2-3:-",
+          "kick:2-4:+",
+          "kick:2-4:-",
+          "kick:20-23:+",
+          "kick:20-23:-",
+          "kick:20-25:+",
+          "kick:20-25:-",
+          "kick:21-22:+",
+          "kick:21-22:-",
+          "kick:22-26:+",
+          "kick:22-26:-",
+          "kick:24-26:+",
+          "kick:24-26:-",
+          "kick:26-28:+",
+          "kick:26-28:-",
+          "kick:27-28:+",
+          "kick:27-28:-",
+          "kick:3-12:+",
+          "kick:3-12:-",
+          "kick:3-13:+",
+          "kick:3-13:-",
+          "kick:3-15:+",
+          "kick:3-15:-",
+          "kick:3-16:+",
+          "kick:3-16:-",
+          "kick:3-18:+",
+          "kick:3-18:-",
+          "kick:3-19:+",
+          "kick:3-19:-",
+          "kick:3-20:+",
+          "kick:3-20:-",
+          "kick:3-25:+",
+          "kick:3-25:-",
+          "kick:3-26:+",
+          "kick:3-26:-",
+          "kick:3-5:+",
+          "kick:3-5:-",
+          "kick:4-13:+",
+          "kick:4-13:-",
+          "kick:4-19:+",
+          "kick:4-19:-",
+          "kick:4-6:+",
+          "kick:4-6:-",
+          "kick:4-7:+",
+          "kick:4-7:-",
+          "kick:4-8:+",
+          "kick:4-8:-",
+          "kick:4-9:+",
+          "kick:4-9:-",
+          "kick:5-25:+",
+          "kick:5-25:-",
+          "kick:5-26:+",
+          "kick:5-26:-",
+          "kick:5-6:+",
+          "kick:5-6:-",
+          "kick:5-7:+",
+          "kick:5-7:-",
+          "kick:5-8:+",
+          "kick:5-8:-",
+          "kick:5-9:+",
+          "kick:5-9:-",
+          "kick:6-16:+",
+          "kick:6-16:-",
+          "kick:6-26:+",
+          "kick:6-26:-",
+          "kick:7-11:+",
+          "kick:7-11:-",
+          "kick:7-13:+",
+          "kick:7-13:-",
+          "kick:7-14:+",
+          "kick:7-14:-",
+          "kick:7-16:+",
+          "kick:7-16:-",
+          "kick:7-26:+",
+          "kick:7-26:-",
+          "kick:7-27:+",
+          "kick:7-27:-",
+          "kick:7-28:+",
+          "kick:7-28:-",
+          "kick:7-9:+",
+          "kick:7-9:-",
+          "kick:8-10:+",
+          "kick:8-10:-",
+          "kick:8-9:+",
+          "kick:8-9:-",
+          "kick:9-10:+",
+          "kick:9-10:-",
+          "kick:9-11:+",
+          "kick:9-11:-",
+          "kick:9-12:+",
+          "kick:9-12:-",
+          "kick:9-15:+",
+          "kick:9-15:-",
+          "kick:9-19:+",
+          "kick:9-19:-",
+          "stretch:0-1:+",
+          "stretch:0-28:+",
+          "stretch:13-14:+",
+          "stretch:13-15:+",
+          "stretch:14-27:+",
+          "stretch:15-18:+",
+          "stretch:15-19:+",
+          "stretch:16-21:+",
+          "stretch:16-26:+",
+          "stretch:18-22:+",
+          "stretch:18-24:+",
+          "stretch:2-3:+",
+          "stretch:2-4:+",
+          "stretch:20-23:+",
+          "stretch:20-25:+",
+          "stretch:3-5:+",
+          "stretch:4-9:+",
+          "stretch:5-6:+",
+          "stretch:5-8:+",
+          "stretch:9-10:+",
+          "stretch:9-11:+",
+          "stretch:9-12:+"
+        ],
+        "coverage_censored": true,
+        "censored_by": "max_directions",
+        "meaning": "counts are (microstate, direction) pairs summed over microstates, so they close: selected = executed + not_executed. The *_ids lists are unions and are therefore NOT in that unit -- use the per-microstate ledgers to decide whether a negative result is admissible anywhere"
+      },
+      "manifest_host": "kasuga02",
+      "run_implementation_sha256": "cb45c8f1a0386495a35c1f57d989bab44ff2f9fdc33d291d34470d16e813f0ca",
+      "run_source_matches_writer_current": false,
+      "config": {
+        "families": [
+          "stretch",
+          "compress",
+          "kick",
+          "bend"
+        ],
+        "direction_mode": "sampled",
+        "geometry_amplitudes_A": [
+          0.1,
+          0.3,
+          0.6,
+          1.0
+        ],
+        "max_trials": 4,
+        "quench_steps": 500,
+        "temperature_K": 0.0,
+        "response_steps": 200,
+        "timestep_fs": 0.25,
+        "committor_shots": 0,
+        "max_depth": 1
+      }
+    }
+  },
+  "coverage_replays": {
+    "count": 26,
+    "summary_matches_per_trial_files": true,
+    "converged": 25,
+    "minimum_confirmed": 25,
+    "classification_counts": {
+      "rearrangement": 25,
+      "None": 1
+    },
+    "unconverged": [
+      {
+        "label": "t000327",
+        "raw_endpoint": "runs/b09_compress_coverage/trials/t000327/raw_endpoint.extxyz",
+        "quench_steps_cap": 1500,
+        "converged": false,
+        "steps": 2129,
+        "reason": "soft_mode_moved_on_the_last_round",
+        "force_converged": true,
+        "polish_rounds": 7,
+        "fmax_eV_A": 0.00992708273768702,
+        "dE_eV": 7.070192840710661,
+        "markers": {
+          "C:-Ca": 3.404624341330051,
+          "C:-Cb": 3.018355971637973,
+          "C:-O_ald": 3.80890038603864
+        },
+        "quench_seconds": 419.3290021419525,
+        "total_seconds": 419.3417227268219
+      }
+    ],
+    "converged_with_bond_changes": []
+  },
+  "p001_replay": [
+    {
+      "label": "p001",
+      "raw_endpoint": "benchmarks/carbene_ambimodal/results/2026-10-10/push_b09/trials/p001/raw_endpoint.extxyz",
+      "quench_steps_cap": 1500,
+      "converged": true,
+      "steps": 834,
+      "reason": null,
+      "force_converged": true,
+      "polish_rounds": 1,
+      "fmax_eV_A": 0.009975729171437386,
+      "dE_eV": -1.1768876778151025,
+      "markers": {
+        "C:-Ca": 1.521539756350717,
+        "C:-Cb": 1.4823796970885663,
+        "C:-O_ald": 3.122786649312792
+      },
+      "quench_seconds": 118.27767705917358,
+      "classification": "reactive",
+      "formed": [
+        [
+          2,
+          13
+        ],
+        [
+          2,
+          15
+        ]
+      ],
+      "broken": [],
+      "minimum": true,
+      "saddle_order": 0,
+      "rmsd_to_source": 0.6601139391154524,
+      "total_seconds": 133.98114252090454
+    }
+  ],
+  "stored_analysis": {
+    "trial_count": 336,
+    "ts_candidate_count": 37,
+    "ts_candidates": [
+      {
+        "id": "ts0000",
+        "attempt": "t000035",
+        "direction": "compress:1-11",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -94.19653517582775
+        ],
+        "dE_meV": 22.194427416252438,
+        "markers": {
+          "C:-Ca": 3.4371397660541754,
+          "C:-Cb": 3.311351604596553,
+          "C:-O_ald": 3.9854816069282233
+        },
+        "rmsd_to_source": 0.21749104863183108,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3808954955394679,
+          "TS-2OMe-cis": 0.6261818701536284,
+          "TS-2OMe-C2": 0.7762324592368488,
+          "TS-2OMe-2": 0.683303787326631
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0001",
+        "attempt": "t000043",
+        "direction": "compress:7-27",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -106.43720010183469
+        ],
+        "dE_meV": 23.034059748169966,
+        "markers": {
+          "C:-Ca": 3.4258353152817533,
+          "C:-Cb": 3.3016605394692022,
+          "C:-O_ald": 4.022373841543247
+        },
+        "rmsd_to_source": 0.21884655353428942,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3779792419401688,
+          "TS-2OMe-cis": 0.6188605502007775,
+          "TS-2OMe-C2": 0.7700258164830889,
+          "TS-2OMe-2": 0.6838935798944439
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0002",
+        "attempt": "t000047",
+        "direction": "compress:0-9",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -117.93464520757227
+        ],
+        "dE_meV": 20.247238524461864,
+        "markers": {
+          "C:-Ca": 3.439102282655958,
+          "C:-Cb": 3.3591053884672943,
+          "C:-O_ald": 4.026858657551966
+        },
+        "rmsd_to_source": 0.23342544979347613,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.4024862405178385,
+          "TS-2OMe-cis": 0.6384582012766521,
+          "TS-2OMe-C2": 0.7714393205324268,
+          "TS-2OMe-2": 0.6996460560624095
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0003",
+        "attempt": "t000067",
+        "direction": "compress:4-19",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -59.733884177695835
+        ],
+        "dE_meV": 6.826175671449164,
+        "markers": {
+          "C:-Ca": 3.5413530171563767,
+          "C:-Cb": 3.0589042831713025,
+          "C:-O_ald": 4.070806196590894
+        },
+        "rmsd_to_source": 0.08012157248537702,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.32636659990998,
+          "TS-2OMe-cis": 0.5666146049533912,
+          "TS-2OMe-C2": 0.7659389740379845,
+          "TS-2OMe-2": 0.6466857254510688
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0004",
+        "attempt": "t000074",
+        "direction": "compress:4-15",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -19.9333529660936
+        ],
+        "dE_meV": 4.3737020569096785,
+        "markers": {
+          "C:-Ca": 3.5475864585955983,
+          "C:-Cb": 3.081047919541513,
+          "C:-O_ald": 4.100493098739723
+        },
+        "rmsd_to_source": 0.06446951819601453,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.32491764152698277,
+          "TS-2OMe-cis": 0.5613959498713084,
+          "TS-2OMe-C2": 0.7717285819069405,
+          "TS-2OMe-2": 0.6556786721631713
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0005",
+        "attempt": "t000075",
+        "direction": "compress:4-15",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -50.64275499648892
+        ],
+        "dE_meV": 6.235043216292979,
+        "markers": {
+          "C:-Ca": 3.540839330297052,
+          "C:-Cb": 3.05516212301315,
+          "C:-O_ald": 4.0667945250539805
+        },
+        "rmsd_to_source": 0.07718730055531467,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.32331993140033777,
+          "TS-2OMe-cis": 0.5648642971797285,
+          "TS-2OMe-C2": 0.767111649960146,
+          "TS-2OMe-2": 0.6467786954581544
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0006",
+        "attempt": "t000082",
+        "direction": "compress:7-14",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -22.728833705974182
+        ],
+        "dE_meV": 3.33610448797117,
+        "markers": {
+          "C:-Ca": 3.555420795637044,
+          "C:-Cb": 3.0782954004709984,
+          "C:-O_ald": 4.099989649196871
+        },
+        "rmsd_to_source": 0.05340303434847467,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3317181641271626,
+          "TS-2OMe-cis": 0.5660140992519491,
+          "TS-2OMe-C2": 0.7711026258022795,
+          "TS-2OMe-2": 0.6582580191319966
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0007",
+        "attempt": "t000086",
+        "direction": "compress:6-26",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -34.66957585414922
+        ],
+        "dE_meV": 5.712083886464825,
+        "markers": {
+          "C:-Ca": 3.5426458144600104,
+          "C:-Cb": 3.0562457964350003,
+          "C:-O_ald": 4.0978210092904535
+        },
+        "rmsd_to_source": 0.06837394781484343,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.32493220899163,
+          "TS-2OMe-cis": 0.5619733477607051,
+          "TS-2OMe-C2": 0.7655607661698313,
+          "TS-2OMe-2": 0.6508818828217746
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0008",
+        "attempt": "t000090",
+        "direction": "compress:7-13",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -20.772986231673368
+        ],
+        "dE_meV": 5.096288103231927,
+        "markers": {
+          "C:-Ca": 3.548045503868736,
+          "C:-Cb": 3.0501223643603237,
+          "C:-O_ald": 4.080409376811633
+        },
+        "rmsd_to_source": 0.07367085825901008,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3174428808408839,
+          "TS-2OMe-cis": 0.5560231938298893,
+          "TS-2OMe-C2": 0.7694209660077189,
+          "TS-2OMe-2": 0.643646402691859
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0009",
+        "attempt": "t000091",
+        "direction": "compress:7-13",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -73.00848731581915
+        ],
+        "dE_meV": 6.688479330478003,
+        "markers": {
+          "C:-Ca": 3.553541025100478,
+          "C:-Cb": 3.0520019565409813,
+          "C:-O_ald": 4.0757635672877806
+        },
+        "rmsd_to_source": 0.07995242894206188,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.32926737903860887,
+          "TS-2OMe-cis": 0.5670130985310143,
+          "TS-2OMe-C2": 0.765713470831742,
+          "TS-2OMe-2": 0.6468848767898043
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0010",
+        "attempt": "t000094",
+        "direction": "compress:6-16",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -37.283273924671086
+        ],
+        "dE_meV": 5.584869071753928,
+        "markers": {
+          "C:-Ca": 3.5468901573793867,
+          "C:-Cb": 3.05464805365219,
+          "C:-O_ald": 4.099102486895823
+        },
+        "rmsd_to_source": 0.06753237377078071,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3257907398109338,
+          "TS-2OMe-cis": 0.5619979517938078,
+          "TS-2OMe-C2": 0.7658520653032651,
+          "TS-2OMe-2": 0.6508568722132458
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0011",
+        "attempt": "t000098",
+        "direction": "compress:2-18",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -29.27502786158595
+        ],
+        "dE_meV": 3.4821651643142104,
+        "markers": {
+          "C:-Ca": 3.5606856375808054,
+          "C:-Cb": 3.077595665325694,
+          "C:-O_ald": 4.107967265507555
+        },
+        "rmsd_to_source": 0.05198431153518269,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3337985884724636,
+          "TS-2OMe-cis": 0.5663582744523051,
+          "TS-2OMe-C2": 0.7709156572959975,
+          "TS-2OMe-2": 0.6596555095483493
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0012",
+        "attempt": "t000102",
+        "direction": "compress:9-19",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -18.925855907139148
+        ],
+        "dE_meV": 3.8023695306037553,
+        "markers": {
+          "C:-Ca": 3.55249171866847,
+          "C:-Cb": 3.0889493453538845,
+          "C:-O_ald": 4.110985599307195
+        },
+        "rmsd_to_source": 0.05636716826601752,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3336617782277492,
+          "TS-2OMe-cis": 0.5677068706692038,
+          "TS-2OMe-C2": 0.7705652086247298,
+          "TS-2OMe-2": 0.6613335976044005
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0013",
+        "attempt": "t000103",
+        "direction": "compress:9-19",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -19.657389914979863
+        ],
+        "dE_meV": 5.166276168893091,
+        "markers": {
+          "C:-Ca": 3.5291416821065273,
+          "C:-Cb": 3.0806846956378,
+          "C:-O_ald": 4.062706466234682
+        },
+        "rmsd_to_source": 0.0790298833571164,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.32490982227274223,
+          "TS-2OMe-cis": 0.5678097814120633,
+          "TS-2OMe-C2": 0.7690338151085312,
+          "TS-2OMe-2": 0.6491801381448984
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0014",
+        "attempt": "t000106",
+        "direction": "compress:3-18",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -29.669992105548914
+        ],
+        "dE_meV": 4.7986291283450555,
+        "markers": {
+          "C:-Ca": 3.555615496478915,
+          "C:-Cb": 3.05321910746346,
+          "C:-O_ald": 4.093181981176827
+        },
+        "rmsd_to_source": 0.06778668975548363,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3210326659282686,
+          "TS-2OMe-cis": 0.5566569125432833,
+          "TS-2OMe-C2": 0.7701153853402061,
+          "TS-2OMe-2": 0.6474521632958976
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0015",
+        "attempt": "t000114",
+        "direction": "compress:10-19",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -21.32391319186819
+        ],
+        "dE_meV": 3.738180992513662,
+        "markers": {
+          "C:-Ca": 3.5566820498784733,
+          "C:-Cb": 3.0917647870877154,
+          "C:-O_ald": 4.120663875315845
+        },
+        "rmsd_to_source": 0.05283223407674981,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.33693991046516086,
+          "TS-2OMe-cis": 0.5689317285803251,
+          "TS-2OMe-C2": 0.7708110806374925,
+          "TS-2OMe-2": 0.6644861045319574
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0016",
+        "attempt": "t000115",
+        "direction": "compress:10-19",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -76.38223528337575
+        ],
+        "dE_meV": 5.44553062718478,
+        "markers": {
+          "C:-Ca": 3.571870481942922,
+          "C:-Cb": 3.0685183839513397,
+          "C:-O_ald": 4.123726939456625
+        },
+        "rmsd_to_source": 0.061988601279541776,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3371823241156904,
+          "TS-2OMe-cis": 0.5677195084443557,
+          "TS-2OMe-C2": 0.7680670112238834,
+          "TS-2OMe-2": 0.661213706214075
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0017",
+        "attempt": "t000118",
+        "direction": "compress:5-16",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -38.42066390799322
+        ],
+        "dE_meV": 3.3691795797494706,
+        "markers": {
+          "C:-Ca": 3.5697587519736347,
+          "C:-Cb": 3.0819165242552553,
+          "C:-O_ald": 4.1271215825877885
+        },
+        "rmsd_to_source": 0.04615414074458237,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3405780765172145,
+          "TS-2OMe-cis": 0.5689010752442497,
+          "TS-2OMe-C2": 0.7712298751698131,
+          "TS-2OMe-2": 0.6657305215507145
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0018",
+        "attempt": "t000123",
+        "direction": "compress:0-11",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -96.67624431561227
+        ],
+        "dE_meV": 22.630303294135956,
+        "markers": {
+          "C:-Ca": 3.5002928867060183,
+          "C:-Cb": 3.3908777915388906,
+          "C:-O_ald": 4.132824424724262
+        },
+        "rmsd_to_source": 0.2056073453095079,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.40489922741888384,
+          "TS-2OMe-cis": 0.6320148725356453,
+          "TS-2OMe-C2": 0.7796700255752808,
+          "TS-2OMe-2": 0.7156611405436174
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0019",
+        "attempt": "t000126",
+        "direction": "compress:3-20",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -52.875516927451955
+        ],
+        "dE_meV": 3.5785453583230264,
+        "markers": {
+          "C:-Ca": 3.575711382719415,
+          "C:-Cb": 3.0748479327075233,
+          "C:-O_ald": 4.133602629774113
+        },
+        "rmsd_to_source": 0.04797634729219618,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3427385307579986,
+          "TS-2OMe-cis": 0.5689516060701225,
+          "TS-2OMe-C2": 0.7703662767953979,
+          "TS-2OMe-2": 0.6661402031809204
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0020",
+        "attempt": "t000130",
+        "direction": "compress:5-26",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -34.46638019986642
+        ],
+        "dE_meV": 4.079464782989817,
+        "markers": {
+          "C:-Ca": 3.5618813946604924,
+          "C:-Cb": 3.063481975084993,
+          "C:-O_ald": 4.131896932914459
+        },
+        "rmsd_to_source": 0.05029404391569012,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3369620851369451,
+          "TS-2OMe-cis": 0.5662215673426417,
+          "TS-2OMe-C2": 0.7680336957335635,
+          "TS-2OMe-2": 0.6641525936551523
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0021",
+        "attempt": "t000134",
+        "direction": "compress:9-15",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -16.85430138750245
+        ],
+        "dE_meV": 3.4972456487594172,
+        "markers": {
+          "C:-Ca": 3.556519371416915,
+          "C:-Cb": 3.081624138184687,
+          "C:-O_ald": 4.135441332630442
+        },
+        "rmsd_to_source": 0.045900949172401145,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3400395585394187,
+          "TS-2OMe-cis": 0.5693268773449096,
+          "TS-2OMe-C2": 0.7696003332689582,
+          "TS-2OMe-2": 0.669184087711942
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0022",
+        "attempt": "t000139",
+        "direction": "compress:2-16",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -82.48087902970005
+        ],
+        "dE_meV": 21.741347169154324,
+        "markers": {
+          "C:-Ca": 3.490193686225866,
+          "C:-Cb": 3.3583915036704557,
+          "C:-O_ald": 4.116749387195687
+        },
+        "rmsd_to_source": 0.19685756180206154,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3956937811073844,
+          "TS-2OMe-cis": 0.6266997941863023,
+          "TS-2OMe-C2": 0.7773033886459794,
+          "TS-2OMe-2": 0.7073843401954686
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0023",
+        "attempt": "t000146",
+        "direction": "compress:2-24",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -69.98294801238224
+        ],
+        "dE_meV": 2.9428362322505563,
+        "markers": {
+          "C:-Ca": 3.5942864732856816,
+          "C:-Cb": 3.0684259470098287,
+          "C:-O_ald": 4.1360632128145705
+        },
+        "rmsd_to_source": 0.050381920971884556,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.34511369380206436,
+          "TS-2OMe-cis": 0.5683362362129442,
+          "TS-2OMe-C2": 0.7724724606216057,
+          "TS-2OMe-2": 0.6661921915002499
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0024",
+        "attempt": "t000150",
+        "direction": "compress:2-20",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -37.37071360269998
+        ],
+        "dE_meV": 3.384047915460542,
+        "markers": {
+          "C:-Ca": 3.57739923899525,
+          "C:-Cb": 3.075050648167788,
+          "C:-O_ald": 4.162386095439642
+        },
+        "rmsd_to_source": 0.04618735688844614,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3504714207946643,
+          "TS-2OMe-cis": 0.5723375658678769,
+          "TS-2OMe-C2": 0.7698272357886542,
+          "TS-2OMe-2": 0.6757339412477944
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0025",
+        "attempt": "t000166",
+        "direction": "compress:7-16",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -86.59199061717574
+        ],
+        "dE_meV": 2.1670731039193925,
+        "markers": {
+          "C:-Ca": 3.613200945996891,
+          "C:-Cb": 3.0726066188113013,
+          "C:-O_ald": 4.193093569684449
+        },
+        "rmsd_to_source": 0.06598074461565058,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3674521818143816,
+          "TS-2OMe-cis": 0.5791947842815335,
+          "TS-2OMe-C2": 0.7704182231543611,
+          "TS-2OMe-2": 0.6839099631719048
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0026",
+        "attempt": "t000170",
+        "direction": "compress:3-25",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -91.00701467814483
+        ],
+        "dE_meV": 1.2202129582874477,
+        "markers": {
+          "C:-Ca": 3.619789035690298,
+          "C:-Cb": 3.082727507340704,
+          "C:-O_ald": 4.192099791949689
+        },
+        "rmsd_to_source": 0.0635793249244666,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3702886339323768,
+          "TS-2OMe-cis": 0.5806482267948809,
+          "TS-2OMe-C2": 0.7727138127728789,
+          "TS-2OMe-2": 0.6858373652861285
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0027",
+        "attempt": "t000174",
+        "direction": "compress:11-19",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -84.6764419428172
+        ],
+        "dE_meV": 1.9032639829674736,
+        "markers": {
+          "C:-Ca": 3.6158139063103807,
+          "C:-Cb": 3.0837947394597633,
+          "C:-O_ald": 4.200067656240121
+        },
+        "rmsd_to_source": 0.06247269327214698,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3707599060140328,
+          "TS-2OMe-cis": 0.5811411506536761,
+          "TS-2OMe-C2": 0.7722866360589468,
+          "TS-2OMe-2": 0.688149332306362
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0028",
+        "attempt": "t000178",
+        "direction": "compress:12-24",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -76.15399587005061
+        ],
+        "dE_meV": 2.540519471949665,
+        "markers": {
+          "C:-Ca": 3.6169731615960727,
+          "C:-Cb": 3.09305912232125,
+          "C:-O_ald": 4.21746043501616
+        },
+        "rmsd_to_source": 0.06271268314814714,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3739919050597035,
+          "TS-2OMe-cis": 0.5826418981434452,
+          "TS-2OMe-C2": 0.7732641203497723,
+          "TS-2OMe-2": 0.6934715789227213
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0029",
+        "attempt": "t000182",
+        "direction": "compress:11-15",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -64.67833883415005
+        ],
+        "dE_meV": 2.7185847975488286,
+        "markers": {
+          "C:-Ca": 3.613222170034607,
+          "C:-Cb": 3.097931391867024,
+          "C:-O_ald": 4.2182710349987085
+        },
+        "rmsd_to_source": 0.05997020468563708,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.37431140949470315,
+          "TS-2OMe-cis": 0.5832348024447068,
+          "TS-2OMe-C2": 0.774023418049939,
+          "TS-2OMe-2": 0.6950567448315352
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0030",
+        "attempt": "t000186",
+        "direction": "compress:7-26",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -91.63492995041105
+        ],
+        "dE_meV": 0.447925747721456,
+        "markers": {
+          "C:-Ca": 3.6331068546526453,
+          "C:-Cb": 3.0887697299817827,
+          "C:-O_ald": 4.225501395737369
+        },
+        "rmsd_to_source": 0.07689661047298305,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3840909706206981,
+          "TS-2OMe-cis": 0.5876074143136172,
+          "TS-2OMe-C2": 0.7739996124577361,
+          "TS-2OMe-2": 0.6974821680110082
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0031",
+        "attempt": "t000190",
+        "direction": "compress:2-25",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -77.17968449013446
+        ],
+        "dE_meV": 1.5553599732811563,
+        "markers": {
+          "C:-Ca": 3.633379057997801,
+          "C:-Cb": 3.102837544104588,
+          "C:-O_ald": 4.240874434975263
+        },
+        "rmsd_to_source": 0.07175209947380572,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.38509865872510746,
+          "TS-2OMe-cis": 0.5875794676480187,
+          "TS-2OMe-C2": 0.7763965446106561,
+          "TS-2OMe-2": 0.7020552412757542
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0032",
+        "attempt": "t000194",
+        "direction": "compress:5-25",
+        "amplitude": 0.6,
+        "imaginary_cm": [
+          -86.53603803218027
+        ],
+        "dE_meV": 1.3686668462469243,
+        "markers": {
+          "C:-Ca": 3.624070469798809,
+          "C:-Cb": 3.0681655510723664,
+          "C:-O_ald": 4.186883628737991
+        },
+        "rmsd_to_source": 0.0660991045467783,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.36530342966010654,
+          "TS-2OMe-cis": 0.5761112598786492,
+          "TS-2OMe-C2": 0.7729364448709523,
+          "TS-2OMe-2": 0.680887466618263
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0033",
+        "attempt": "t000203",
+        "direction": "compress:14-22",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -37.81008625931449
+        ],
+        "dE_meV": 1.5265623005689122,
+        "markers": {
+          "C:-Ca": 3.5953116563162095,
+          "C:-Cb": 3.0987797184240926,
+          "C:-O_ald": 4.139277940708318
+        },
+        "rmsd_to_source": 0.034153162479706886,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.36193338856700363,
+          "TS-2OMe-cis": 0.5810246758088204,
+          "TS-2OMe-C2": 0.7754569397578281,
+          "TS-2OMe-2": 0.6797575201283123
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0034",
+        "attempt": "t000235",
+        "direction": "compress:18-27",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -18.985931189350644
+        ],
+        "dE_meV": 0.48549158964306116,
+        "markers": {
+          "C:-Ca": 3.612819333828433,
+          "C:-Cb": 3.096655182649689,
+          "C:-O_ald": 4.173777267609725
+        },
+        "rmsd_to_source": 0.04083510619089155,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3682785891911012,
+          "TS-2OMe-cis": 0.5810118055901974,
+          "TS-2OMe-C2": 0.7775708350029957,
+          "TS-2OMe-2": 0.6850566190744264
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0035",
+        "attempt": "t000263",
+        "direction": "compress:14-24",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -77.11954957509865
+        ],
+        "dE_meV": 0.843078269099351,
+        "markers": {
+          "C:-Ca": 3.6252771606100413,
+          "C:-Cb": 3.0662660270020297,
+          "C:-O_ald": 4.181283451541234
+        },
+        "rmsd_to_source": 0.06794522601135945,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.3714104552427184,
+          "TS-2OMe-cis": 0.5813671890045661,
+          "TS-2OMe-C2": 0.7738159488659061,
+          "TS-2OMe-2": 0.6848522921196036
+        },
+        "closest_dft": "TS-2OMe"
+      },
+      {
+        "id": "ts0036",
+        "attempt": "t000271",
+        "direction": "compress:13-23",
+        "amplitude": 1.0,
+        "imaginary_cm": [
+          -30.222519864157185
+        ],
+        "dE_meV": 0.3671689082693774,
+        "markers": {
+          "C:-Ca": 3.625740404257484,
+          "C:-Cb": 3.104302447681207,
+          "C:-O_ald": 4.1553626028833675
+        },
+        "rmsd_to_source": 0.04068970478656841,
+        "heavy_rmsd_to_dft": {
+          "TS-2OMe": 0.373251937443474,
+          "TS-2OMe-cis": 0.5847185937281452,
+          "TS-2OMe-C2": 0.7836348544287652,
+          "TS-2OMe-2": 0.6873313072712623
+        },
+        "closest_dft": "TS-2OMe"
+      }
+    ]
+  },
+  "historical_pid_check": {
+    "pids": [
+      953421,
+      953745,
+      956356,
+      957756,
+      958049
+    ],
+    "ps_exit_code": 1,
+    "ps_stdout": "",
+    "ps_stderr": "",
+    "caveat": "checks recorded PIDs only, not all possible b09 jobs; persisted running status is not process liveness"
+  },
+  "file_provenance": {
+    "runs/b09_probe1/network.json": {
+      "sha256": "4314df7fb758f4039db2626db8f79bff77ff502aba428674f264aa42f00e7f89",
+      "bytes": 351894,
+      "mtime_ns": 1791475002000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_probe1/config.json": {
+      "sha256": "63aad2a8731c17265c53aec325e02c37d024a4555ae356dfe433e4186da74569",
+      "bytes": 7104,
+      "mtime_ns": 1791475002000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_probe1/attempts.jsonl": {
+      "sha256": "511a97c3eed23e1a4e31b4f672b2c0c419bd67cd6d472d547fa72595f0f82c7e",
+      "bytes": 412396,
+      "mtime_ns": 1791475002000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_compress_coverage/network.json": {
+      "sha256": "59d5aa61fac551ae995643c944b39553288828d29c55c34647a6af318da06af4",
+      "bytes": 927971,
+      "mtime_ns": 1791582645000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_compress_coverage/config.json": {
+      "sha256": "2639831ccf604f652fdad3808494c39e3526ef17c4b8b90a8beffc084480c412",
+      "bytes": 7065,
+      "mtime_ns": 1791582645000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_compress_coverage/attempts.jsonl": {
+      "sha256": "5f30b0fc735ce8706adb8bc7f16a8aaec915c0ffc5a99c6f488221d4b0fcf5d1",
+      "bytes": 4337170,
+      "mtime_ns": 1791574906000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_coarse_smoke/network.json": {
+      "sha256": "34a78fff4bda86d33bad00d94a326a721e586c7278f17067c92d5c20f0792438",
+      "bytes": 6030,
+      "mtime_ns": 1791528829000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_coarse_smoke/config.json": {
+      "sha256": "3ba3a5b38ba1a1904e6a01ab2ab42a39a1e72ff8ddb9ee03daf8c1554bfd3ae2",
+      "bytes": 7111,
+      "mtime_ns": 1791528016000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_coarse_smoke/attempts.jsonl": {
+      "sha256": "38f84aba50a979be8691e88a6a354d2d67bcef44fb922f19300f7e5ca6abf096",
+      "bytes": 69728,
+      "mtime_ns": 1791528829000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_smoke0/network.json": {
+      "sha256": "c881abf237614ca875dd22bcd8c0a0f439cbaecb222fe3e329dfd20542c4ad7f",
+      "bytes": 54353,
+      "mtime_ns": 1791460089000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_smoke0/config.json": {
+      "sha256": "697e5530156b7c99cb2c642cb1353b60f50ab1ee678f8dfb8dde95b991c5026a",
+      "bytes": 7103,
+      "mtime_ns": 1791460089000000000,
+      "stable_during_read": true
+    },
+    "runs/b09_smoke0/attempts.jsonl": {
+      "sha256": "5261353feda6a104238feb9f538a090b3164741ba982aefc085cfa858746dda4",
+      "bytes": 15514,
+      "mtime_ns": 1791460089000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/summary.json": {
+      "sha256": "95c4f4fef25c7edbbd8864a5d1abf191ced5bfb6086909b8efc03cf49c67cd5b",
+      "bytes": 16935,
+      "mtime_ns": 1791623656000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000003.json": {
+      "sha256": "5727e85462126774a17b58fdd185744b4e360fe4ac0467d2d79b10c24485ce77",
+      "bytes": 629,
+      "mtime_ns": 1791620057000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000007.json": {
+      "sha256": "0d1172ada832fcd3749da1210a3d2a6c5efb8143eb37eed0ce6ccdfd743626bf",
+      "bytes": 629,
+      "mtime_ns": 1791620168000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000031.json": {
+      "sha256": "80ee88459403200d3fc8e6c00fc2806a3e5a09b4e925309b3b34cafeded62761",
+      "bytes": 630,
+      "mtime_ns": 1791620328000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000039.json": {
+      "sha256": "3ddcdddb4acdb5c1faf8f16ceefd7e59ed4074d093ba7a11ffd24d69a7aa713b",
+      "bytes": 629,
+      "mtime_ns": 1791620465000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000059.json": {
+      "sha256": "4f652dc8f18fb20ceeefed1f9139cc3a3921243841610a0fabdb592a86148c0a",
+      "bytes": 630,
+      "mtime_ns": 1791620621000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000071.json": {
+      "sha256": "68c347a16bf0fc978f0ac65f7bf53e2c4d0eeb9f08fb874dc1871620645389d6",
+      "bytes": 630,
+      "mtime_ns": 1791620751000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000079.json": {
+      "sha256": "9233f204e3936473a886065230c0aa45b448298cbc055601d2ab961468ddf7db",
+      "bytes": 630,
+      "mtime_ns": 1791620898000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000083.json": {
+      "sha256": "880876c84e00eface892d16a33ebe6609ec03db0d9af2aa04607f1e3db84afd3",
+      "bytes": 631,
+      "mtime_ns": 1791621086000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000087.json": {
+      "sha256": "612126021542aec191861b8858a718ad9655816e3dc363587648a5766142d8bc",
+      "bytes": 628,
+      "mtime_ns": 1791621239000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000095.json": {
+      "sha256": "a51026532d29f20670412f34e88ed97f731f4ffa82bf936510d95ef90ab4676e",
+      "bytes": 628,
+      "mtime_ns": 1791621389000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000099.json": {
+      "sha256": "09da349a2ef874cd21ef85757eedb106c2b0cd15ccd9d8a04f1098bb45742245",
+      "bytes": 627,
+      "mtime_ns": 1791621539000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000107.json": {
+      "sha256": "170cd3f78efc79af5fe0adf204f8298da3597143c68bba17ba3b6c31dc33bf94",
+      "bytes": 625,
+      "mtime_ns": 1791621700000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000111.json": {
+      "sha256": "71e105dd8669181f95e53d1b90398b5306d15da0715cb2357351c47081dbd36d",
+      "bytes": 631,
+      "mtime_ns": 1791621860000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000119.json": {
+      "sha256": "f7f11529425a4ef366bb2ef233a16419ed1ec4eba640dd3ab79cb5e5041000d2",
+      "bytes": 630,
+      "mtime_ns": 1791621978000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000127.json": {
+      "sha256": "9ffe7093bd1be30572ff47e180b1fd02d62a716e269b4cba4a69c760fc51e599",
+      "bytes": 630,
+      "mtime_ns": 1791622089000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000131.json": {
+      "sha256": "93873a309e8cfc97250e386afd86f7ad4cc89c7232cc72fff5a38fcf0f6c09cd",
+      "bytes": 631,
+      "mtime_ns": 1791622216000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000147.json": {
+      "sha256": "add943d834736e0ca4594db83baaf67b31ad009df7f3f77a82f6e2089ac47304",
+      "bytes": 630,
+      "mtime_ns": 1791622337000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000151.json": {
+      "sha256": "71eded5cfdc38b9fa28eaea11433c654fe01eed36aa819dce5f3c7abff96b54b",
+      "bytes": 627,
+      "mtime_ns": 1791622449000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000171.json": {
+      "sha256": "967f39ce3875c2c03f96808cc5b1092dbbe7f6f33fa50e482e698987c33c73ff",
+      "bytes": 629,
+      "mtime_ns": 1791622549000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000175.json": {
+      "sha256": "456714b69de231e8a1d153ac83de45935c79fb118d85f36b6736a3985d02acd0",
+      "bytes": 628,
+      "mtime_ns": 1791622666000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000179.json": {
+      "sha256": "c151af060b81122a76b9e085fdc5b0f5673fe31533a3d7046e3d9bfe9ec4fce4",
+      "bytes": 629,
+      "mtime_ns": 1791622777000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000183.json": {
+      "sha256": "38b7beda01adfd8a1274bf86dc0ae7f39d5230e518ef5dc8fa7e7c28e3af195b",
+      "bytes": 627,
+      "mtime_ns": 1791622894000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000187.json": {
+      "sha256": "a1d479703b0ac91474b79f4c165aba85404115e478869ac0394f17c329b4ba37",
+      "bytes": 629,
+      "mtime_ns": 1791623005000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000191.json": {
+      "sha256": "6e7df2ce07f64a0e969220eb3d6da8054cc8bcbef66e0691d7eb2eab1a21a08f",
+      "bytes": 629,
+      "mtime_ns": 1791623119000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000195.json": {
+      "sha256": "406a7b4a645572319ea18a831fc3668e6c2d707945b54824e564d535f10d9c44",
+      "bytes": 629,
+      "mtime_ns": 1791623234000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_coverage/t000327.json": {
+      "sha256": "1d93447192c1c09adc9a8461d44edc9607b3cb7433e36b8c5feea0a2e977b69d",
+      "bytes": 512,
+      "mtime_ns": 1791623656000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/b09_compress_coverage_analysis.json": {
+      "sha256": "191f34b8a583b87b0ea763ca42b137b2669569b3e5986614877ecbcc7b6d3155",
+      "bytes": 125110,
+      "mtime_ns": 1791612644000000000,
+      "stable_during_read": true
+    },
+    "benchmarks/carbene_ambimodal/results/2026-10-10/replay_quench_smoke/summary.json": {
+      "sha256": "befdb06fdab1f47edc660ebf699c5acd92aa2a7b3041bb3f361e8612b096424d",
+      "bytes": 729,
+      "mtime_ns": 1791618293000000000,
+      "stable_during_read": true
+    }
+  },
+  "all_files_stable_during_individual_reads": true
+}

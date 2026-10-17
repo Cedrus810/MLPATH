@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "units": {
+    "energy": "eV",
+    "length": "Angstrom",
+    "force": "eV/Angstrom",
+    "time": "fs"
+  },
+  "config": {
+    "charge_sensitive": false,
+    "total_charge": null,
+    "multiplicity": null
+  },
+  "calculator": {
+    "factory": "synthetic"
+  },
+  "implementation_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "versions": {}
+}

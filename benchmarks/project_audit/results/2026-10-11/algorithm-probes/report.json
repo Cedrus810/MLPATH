@@ -1,0 +1,189 @@
+{
+  "workspace": "/home/ruigengji/MLPATH",
+  "pars_implementation_sha256": "d7493683c7683cd3405da403f524576fe240ba5ada0aa3d4daa8a95f7e51bf19",
+  "script_sha256": "144ec2a6c16f3cde9f85be4389f819474787342c45bb8afaf408050cd0960b69",
+  "evidence_scope": "descriptor-only synthetic CPU probes; no PES, ingestion, archive deletion, certified saddle, historical contamination or GPU claim",
+  "cross_family_severity": {
+    "current_unit_example": {
+      "raw": {
+        "stretch": {
+          "trigger_severity": 0.5
+        },
+        "kick": {
+          "trigger_severity": 0.2
+        }
+      },
+      "normalization": {
+        "method": "robust",
+        "center": {
+          "trigger_severity": 0.35
+        },
+        "scale": {
+          "trigger_severity": 0.14999999999999997
+        }
+      },
+      "normalized": {
+        "stretch": {
+          "trigger_severity": 1.0000000000000004
+        },
+        "kick": {
+          "trigger_severity": -1.0
+        }
+      },
+      "stretch_dominates_kick": false,
+      "kick_dominates_stretch": true
+    },
+    "equivalent_length_unit_thought_experiment": {
+      "raw": {
+        "stretch": {
+          "trigger_severity": 0.05
+        },
+        "kick": {
+          "trigger_severity": 0.2
+        }
+      },
+      "normalization": {
+        "method": "robust",
+        "center": {
+          "trigger_severity": 0.125
+        },
+        "scale": {
+          "trigger_severity": 0.075
+        }
+      },
+      "normalized": {
+        "stretch": {
+          "trigger_severity": -1.0
+        },
+        "kick": {
+          "trigger_severity": 1.0000000000000002
+        }
+      },
+      "stretch_dominates_kick": true,
+      "kick_dominates_stretch": false
+    },
+    "equal_numeric_A_and_eV_are_indistinguishable": true,
+    "caveat": "PRRS currently emits fixed units, not nm; changing to nm illustrates missing dimensional comparability, not a reproduced producer unit-change bug. Other objectives are omitted/equal in this probe."
+  },
+  "same_signature_distinct_geometry": {
+    "path_positions_A": {
+      "path-a": [
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            1.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            1.0,
+            0.0
+          ]
+        ]
+      ],
+      "path-b": [
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            2.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            1.0,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "middle_mapped_pair_0_2_distances_A": [
+      1.118033988749895,
+      2.0615528128088303
+    ],
+    "signature_distance": 0.0,
+    "tube_count": 1,
+    "tube_members": [
+      "path-a",
+      "path-b"
+    ],
+    "caveat": "The descriptor cannot separate these inputs; actual physical multi-saddle loss requires an independently certified reference pool and full selection/refinement comparison."
+  }
+}

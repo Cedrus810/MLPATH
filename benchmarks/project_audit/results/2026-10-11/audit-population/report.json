@@ -1,0 +1,122 @@
+{
+  "kind": "selection-audit-population-probe",
+  "recorded_utc": "2026-10-11T02:37:32.475519+00:00",
+  "source_sha256": {
+    "pars/src/pars/frontier/archive.py": "a2f7e960f5db33beaed9fa51e76ecabb7dc1a4bb8fd80e3012aa7594917ba87d",
+    "pars/src/pars/frontier/cover.py": "b07ef208714dcb9db895715afb0e332aabd9be65adc08f8dbd1d3c69f5345a82",
+    "pars/src/pars/frontier/margin.py": "0c535746d468604be49b057b0052e8e7a7db46ccd1fb337fc6ab45199e2d4104",
+    "pars/src/pars/frontier/objectives.py": "a77d60e644af79feab3ca675e2f80c42d4f32342405f8804ba8d2f5795a0056a",
+    "benchmarks/project_audit/audit_population_probe.py": "184036d39e223c64bc633af6578539c612cc9de10649b9f5ab56482f738ab3de"
+  },
+  "limits": "Identical synthetic candidates; no physical diversity or missed saddle is asserted. Tests the archive population definition only.",
+  "frontier": [
+    "a",
+    "b",
+    "c"
+  ],
+  "representatives": [
+    "a"
+  ],
+  "unselected": [
+    "b",
+    "c"
+  ],
+  "audit_sample": [],
+  "selection": {
+    "channel_id": "synthetic",
+    "n_candidates": 3,
+    "gamma": 0.15,
+    "dominance_scope": "reaction_tube",
+    "tiers": {
+      "active_frontier": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "tubes": [
+      {
+        "tube_id": "tube-synthetic-0000",
+        "channel_id": "synthetic",
+        "member_ids": [
+          "a",
+          "b",
+          "c"
+        ],
+        "representative_id": "a"
+      }
+    ],
+    "representatives": [
+      "a"
+    ],
+    "refinement_order": [
+      "a"
+    ],
+    "audit": [],
+    "normalization": {
+      "method": "robust",
+      "center": {
+        "energy_excursion": 0.0,
+        "path_curvature": 0.0,
+        "recrossing": 0.0
+      },
+      "scale": {
+        "energy_excursion": 1.0,
+        "path_curvature": 1.0,
+        "recrossing": 1.0
+      }
+    },
+    "objectives_raw": {
+      "a": {
+        "energy_excursion": 0.0,
+        "trigger_severity": null,
+        "mlp_uncertainty": null,
+        "path_curvature": 0.0,
+        "recrossing": 0.0,
+        "endpoint_penalty": null
+      },
+      "b": {
+        "energy_excursion": 0.0,
+        "trigger_severity": null,
+        "mlp_uncertainty": null,
+        "path_curvature": 0.0,
+        "recrossing": 0.0,
+        "endpoint_penalty": null
+      },
+      "c": {
+        "energy_excursion": 0.0,
+        "trigger_severity": null,
+        "mlp_uncertainty": null,
+        "path_curvature": 0.0,
+        "recrossing": 0.0,
+        "endpoint_penalty": null
+      }
+    },
+    "objectives_normalized": {
+      "a": {
+        "energy_excursion": 0.0,
+        "trigger_severity": null,
+        "mlp_uncertainty": null,
+        "path_curvature": 0.0,
+        "recrossing": 0.0,
+        "endpoint_penalty": null
+      },
+      "b": {
+        "energy_excursion": 0.0,
+        "trigger_severity": null,
+        "mlp_uncertainty": null,
+        "path_curvature": 0.0,
+        "recrossing": 0.0,
+        "endpoint_penalty": null
+      },
+      "c": {
+        "energy_excursion": 0.0,
+        "trigger_severity": null,
+        "mlp_uncertainty": null,
+        "path_curvature": 0.0,
+        "recrossing": 0.0,
+        "endpoint_penalty": null
+      }
+    }
+  }
+}

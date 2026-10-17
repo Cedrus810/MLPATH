@@ -122,7 +122,7 @@ def test_evaluate_candidate_reports_unavailable_not_fabricated():
     candidate = make_candidate("c1", "ch", [0.0, 1.0, 0.2], [TRIO_EARLY, TRIO_LATE, TRIO_LATE])
     raw = evaluate_candidate(candidate, ParsConfig())
     assert raw["energy_excursion"] == pytest.approx(1.0)
-    assert raw["trigger_severity"] == 0.5
+    assert raw["trigger_severity[stretch/Angstrom]"] == 0.5
     assert raw["mlp_uncertainty"] is None  # not measured -> None, never a guess
     assert raw["endpoint_penalty"] is None  # design 8.6: PRRS stays the authority
     assert raw["path_curvature"] >= 0.0
@@ -141,6 +141,40 @@ def test_provenanceless_objectives_do_not_crash():
         frame_start=0,
         frame_stop=3,
     )
+    raw = evaluate_candidate(candidate, ParsConfig())
+    assert raw["trigger_severity"] is None
+
+
+def test_trigger_severity_compares_only_within_one_family():
+    """Audit ALG-01: 0.5 Angstrom of stretch and 0.2 eV of kick share no
+    scale, so the bare numbers must not decide dominance across families."""
+    from dataclasses import replace
+
+    from pars.frontier.dominance import dominates
+
+    path = [0.0, 1.0, 0.2]
+    signatures = [TRIO_EARLY, TRIO_LATE, TRIO_LATE]
+    stretch = make_candidate("c1", "ch", path, signatures, amplitude=0.5)
+    kick = make_candidate("c2", "ch", path, signatures, amplitude=0.2)
+    kick.provenance = replace(
+        kick.provenance, perturbation_family="kick", perturbation_unit="eV"
+    )
+    small_stretch = make_candidate("c3", "ch", path, signatures, amplitude=0.1)
+    raw = {
+        c.candidate_id: evaluate_candidate(c, ParsConfig())
+        for c in (stretch, kick, small_stretch)
+    }
+    assert raw["c2"]["trigger_severity[kick/eV]"] == 0.2
+    assert not dominates(raw["c2"], raw["c1"])
+    assert not dominates(raw["c1"], raw["c2"])
+    assert dominates(raw["c3"], raw["c1"])  # same family still ranks
+
+
+def test_trigger_severity_without_family_or_unit_is_unavailable():
+    from dataclasses import replace
+
+    candidate = make_candidate("c1", "ch", [0.0, 1.0, 0.2], [TRIO_EARLY, TRIO_LATE, TRIO_LATE])
+    candidate.provenance = replace(candidate.provenance, perturbation_unit=None)
     raw = evaluate_candidate(candidate, ParsConfig())
     assert raw["trigger_severity"] is None
 

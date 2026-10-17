@@ -158,14 +158,25 @@ def test_task_table_refuses_a_conflicting_rebuild(batch):
 # ---- commit markers and completion ------------------------------------------
 
 
+def _init_with_tasks(batch):
+    store = _init(batch)
+    proposal = make_proposal(batch["out"], "p1")
+    store.add_proposal(proposal)
+    store.build_task_table(batch["protocol"], [proposal])
+    return store
+
+
 def _record(batch, proposal_id="p1", shot_id="s0000", outcome="A", **overrides):
+    """A record that ran under the conditions this batch allocated to the task."""
+    task_id = f"{proposal_id}#{shot_id}"
+    task = next(t for t in OutputStore(batch["out"]).tasks() if t["task_id"] == task_id)
     kwargs = dict(
         proposal_id=proposal_id,
         shot_id=shot_id,
-        batch_role="explore",
-        seed=42,
+        batch_role=task["batch_role"],
+        seed=task["seed"],
         protocol_sha256=batch["protocol"].sha256,
-        implementation_sha256=fake_sha("impl"),
+        implementation_sha256=batch["fingerprint"],
         outcome=outcome,
         trial_dir=f"shots/{proposal_id}/{shot_id}",
     )
@@ -190,7 +201,7 @@ def test_commit_then_rebuild_completion_from_markers(batch):
 
 
 def test_recommit_identical_is_a_noop_and_a_content_clash_refuses(batch):
-    store = _init(batch)
+    store = _init_with_tasks(batch)
     store.commit(_record(batch))
     store.commit(_record(batch))  # same content: idempotent
     with pytest.raises(OutputConflict, match="commit conflict"):
@@ -198,7 +209,7 @@ def test_recommit_identical_is_a_noop_and_a_content_clash_refuses(batch):
 
 
 def test_half_written_shot_directory_is_quarantined_not_deleted(batch):
-    store = _init(batch)
+    store = _init_with_tasks(batch)
     stray = batch["out"] / "shots" / "p1" / "s0000"
     (stray / "trials").mkdir(parents=True)
     (stray / "result.json").write_text('{"partial": true}\n')
@@ -229,7 +240,7 @@ def test_resume_after_interrupt_redoes_only_the_unmarked_task(batch):
 
 
 def test_estimates_rebuild_from_markers_only(batch):
-    store = _init(batch)
+    store = _init_with_tasks(batch)
     assert store.estimates() == {}
     for i, outcome in enumerate(("A", "A", "A", "B")):
         store.commit(
@@ -247,6 +258,34 @@ def test_estimates_rebuild_from_markers_only(batch):
     assert estimate.shots == 4
     assert estimate.counts["A"] == 3 and estimate.counts["B"] == 1
     assert estimate.conditional_denominator == 4
+
+
+@pytest.mark.parametrize(
+    ("overrides", "field"),
+    [
+        ({"seed": 999}, "seed"),
+        ({"protocol_sha256": fake_sha("other-protocol")}, "protocol_sha256"),
+        ({"implementation_sha256": fake_sha("other-tree")}, "implementation_sha256"),
+        ({"batch_role": "confirm"}, "batch_role"),
+    ],
+)
+def test_commit_refuses_a_shot_run_under_other_conditions(batch, overrides, field):
+    """Audit 2026-10-11 #3: a foreign-batch record took a task and entered the
+    estimate, since estimates group by proposal id alone."""
+    store = _init_with_tasks(batch)
+    pending = len(store.pending_tasks())
+    with pytest.raises(OutputConflict, match=field):
+        store.commit(_record(batch, **overrides))
+    assert len(store.pending_tasks()) == pending
+    assert store.estimates() == {}
+    assert not (batch["out"] / "shots" / "p1" / "s0000").exists()
+
+
+def test_commit_refuses_a_task_this_batch_did_not_allocate(batch):
+    store = _init_with_tasks(batch)
+    record = replace(_record(batch), proposal_id="p9")
+    with pytest.raises(OutputConflict, match="not in this batch's task table"):
+        store.commit(record)
 
 
 # ---- JSON strictness --------------------------------------------------------

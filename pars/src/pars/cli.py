@@ -283,7 +283,7 @@ def _refine(args) -> int:
         backend = AseNebBackend(calculator)
         refined_dir.mkdir(parents=True, exist_ok=True)
     for candidate_id in todo:
-        candidate = _candidate_from_seed(seeds[candidate_id])
+        candidate = _candidate_from_seed(seeds[candidate_id], candidate_id)
         refined = backend.refine(candidate, config)
         artifact = _write_refined(refined_dir / f"refined-{candidate_id}.extxyz", refined)
         # one record per candidate as soon as it exists: a crash later in the
@@ -352,12 +352,29 @@ def _seed_state(provenance: Provenance, where: str) -> dict:
     return electronic.checked_state(provenance.electronic_state, where)
 
 
-def _candidate_from_seed(path: Path) -> PathCandidate:
+def _candidate_from_seed(path: Path, candidate_id: str) -> PathCandidate:
     frames = ase_read(str(path), index=":")
     info = frames[0].info
+    if info.get("candidate_id") != candidate_id:
+        raise ValueError(
+            f"{path.name}: seed is for candidate {info.get('candidate_id')!r}, "
+            f"selection names {candidate_id!r}"
+        )
     provenance = Provenance.from_dict(json.loads(info["pars_provenance"]))
     state = _seed_state(provenance, path.name)
+    numbers = frames[0].get_atomic_numbers()
     for index, frame in enumerate(frames):
+        # The chain is rebuilt from frame 0's species, so a frame with other
+        # species would be refined as atoms the file does not record.
+        if not np.array_equal(frame.get_atomic_numbers(), numbers):
+            raise ValueError(f"{path.name}: image {index} species differ from image 0")
+        for key in ("candidate_id", "channel_id", "pars_provenance"):
+            if frame.info.get(key) != info.get(key):
+                raise ValueError(f"{path.name}: image {index} {key} differs from image 0")
+        if frame.info.get("image") != index:
+            raise ValueError(
+                f"{path.name}: image {index} is labelled {frame.info.get('image')!r}"
+            )
         if electronic.info_state(frame.info, f"{path.name} image {index}") != state:
             raise ValueError(
                 f"{path.name}: image {index} electronic state "
@@ -371,7 +388,7 @@ def _candidate_from_seed(path: Path) -> PathCandidate:
         candidate_id=info["candidate_id"],
         channel_id=info["channel_id"],
         trace_id=provenance.attempt_id,
-        numbers=frames[0].get_atomic_numbers(),
+        numbers=numbers,
         positions=np.asarray([f.positions for f in frames], dtype=float),
         energies=np.asarray(energies, dtype=float),
         uncertainty=None,

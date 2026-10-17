@@ -1,0 +1,22 @@
+{
+  "batch_role": "explore",
+  "cost_force_evaluations": null,
+  "cost_wall_s": null,
+  "endpoint_sha256": null,
+  "entry_quench_consistent": null,
+  "entry_side": "A",
+  "entry_step": 200,
+  "entry_time_fs": null,
+  "implementation_sha256": "6cd9422a597d84252b99e350fdba53b61e47b5ac606a54eebf674320d677ce41",
+  "landed_microstate": null,
+  "max_nve_drift_eV_atom": null,
+  "model_checkpoint_sha256": null,
+  "outcome": "A",
+  "outcome_reason": null,
+  "proposal_id": "p1",
+  "protocol_sha256": "d0921323f768aa1c157241b25a172dafd7dc15eb6651bd42d4cfa70da3d2d9de",
+  "quench_converged": null,
+  "seed": 999,
+  "shot_id": "s0000",
+  "trial_dir": "shots/p1/s0000"
+}

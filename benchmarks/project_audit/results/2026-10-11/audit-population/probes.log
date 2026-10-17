@@ -1,0 +1,15 @@
+{
+  "frontier": [
+    "a",
+    "b",
+    "c"
+  ],
+  "representatives": [
+    "a"
+  ],
+  "unselected": [
+    "b",
+    "c"
+  ],
+  "audit_sample": []
+}

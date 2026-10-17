@@ -1,0 +1,108 @@
+{
+  "kind": "algorithm-stage-synthetic-audit",
+  "recorded_utc": "2026-10-11T02:33:35.851523+00:00",
+  "python": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 16:50:00) [GCC 14.3.0]",
+  "numpy": "2.4.6",
+  "source_sha256": {
+    "src/prrs/search.py": "d08e3e6233359ce2056bcd6668494f7495356bcc0a28988ed58b8500086db0b6",
+    "src/prrs/network.py": "87bf8003375fac2e53ee92e88fcdc6faecde093f6642b7faa5575bd9f608761e",
+    "pars/src/pars/frontier/objectives.py": "a77d60e644af79feab3ca675e2f80c42d4f32342405f8804ba8d2f5795a0056a",
+    "pars/src/pars/frontier/normalize.py": "2a105eb775ea634a32db5594687d4a82eeb3c4eb214ac185692ab4f2146c60e6",
+    "pars/src/pars/frontier/margin.py": "0c535746d468604be49b057b0052e8e7a7db46ccd1fb337fc6ab45199e2d4104",
+    "pars/src/pars/paths/cluster.py": "eae7f7eaa94db92f5455860aab19abb5177e68d58c9affdabefebaf81b5d097b",
+    "pars/src/pars/paths/fingerprint.py": "2f2083cae2a738d4436b84df45a416c34890f904849964c297ebd14bb77ccb65",
+    "pars/src/pars/paths/resample.py": "3ceca62310093c57242449b1d975970688f46815fb7d176a7011f81723c0c358",
+    "benchmarks/project_audit/algorithm_deep_dig.py": "7556ac7cb0dc1e3fdf5d11480a0d9c2df66266bdea08f14c4a99ace593d9991a"
+  },
+  "limits": "No PES/MD, production ingestion, historical-run contamination, real saddles or scientific coverage measured.",
+  "spectator_bond_dilution": [
+    {
+      "unchanged_bonds": 0,
+      "distance": 1.0,
+      "tubes": 2
+    },
+    {
+      "unchanged_bonds": 4,
+      "distance": 0.19999999999999996,
+      "tubes": 1
+    },
+    {
+      "unchanged_bonds": 32,
+      "distance": 0.030303030303030276,
+      "tubes": 1
+    }
+  ],
+  "leader_name_dependence": [
+    {
+      "id_order": "ABC",
+      "members_by_original_label": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C"
+        ]
+      ]
+    },
+    {
+      "id_order": "BAC",
+      "members_by_original_label": [
+        [
+          "B",
+          "A",
+          "C"
+        ]
+      ]
+    }
+  ],
+  "normalization_pool_dependence": [
+    {
+      "pool": "original",
+      "scale": {
+        "energy_excursion": 0.05000000000000001
+      },
+      "A_tier": "active_frontier",
+      "B_tier": "cold_archive",
+      "B_margin": 1.9999999999999998
+    },
+    {
+      "pool": "extra_dominated",
+      "scale": {
+        "energy_excursion": 10.5
+      },
+      "A_tier": "active_frontier",
+      "B_tier": "near_frontier_reserve",
+      "B_margin": 0.00952380952380949
+    }
+  ],
+  "direction_seed_collisions": {
+    "source_line": 2431,
+    "source_expression": "int(np.random.SeedSequence([cfg.seed, node.id.encode()[-2] if node.id else 0, len(node.microstates), state.trials_spent]).generate_state(1)[0])",
+    "100_node_unique_seeds": 10,
+    "8_microstate_unique_seeds": 1,
+    "example_nodes": {
+      "c0000": 1662199036,
+      "c0001": 1662199036,
+      "c0010": 2191096045,
+      "c0099": 2867393108
+    }
+  },
+  "reservoir_response_reward": {
+    "same_node_or_different_self_loop_channels_reward": 0.0,
+    "otherwise_unseen_failure_reward": 1.0,
+    "limitation": "note_trial receives target chemical node or status, not event/channel identity"
+  },
+  "external_field_shape": {
+    "rigid_motion_removal": false,
+    "reported_curvature": 0.0,
+    "raw_curvature": 6.609891577527322
+  },
+  "recrossing_scope": {
+    "counts": {
+      "A_B_A_B": 1,
+      "A_B_C_B_C_B": 0
+    },
+    "meaning": "source-bond-set returns, not all state boundaries or kinetic basin recrossings"
+  }
+}
