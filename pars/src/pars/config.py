@@ -183,6 +183,13 @@ class ParsConfig:
                 raise ValueError(f"{name} must be a nonnegative integer")
         if not 0 < self.refinement_descent_resolution_factor < 1:
             raise ValueError("refinement_descent_resolution_factor must be in (0, 1)")
+        for name, scale in self.objective_scales:
+            # the fallback divides an objective when its pool IQR is zero: a negative one
+            # flips which side is better, zero or a non-number is no scale at all
+            if not math.isfinite(scale) or scale <= 0:
+                raise ValueError(
+                    f"objective_scales[{name}] must be finite and > 0, got {scale}"
+                )
         if self.margin_gamma < 0:
             raise ValueError("margin_gamma must be >= 0")
         if self.dominance_tolerance < 0:

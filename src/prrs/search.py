@@ -811,7 +811,8 @@ def _dividing_frame(directory, probe=None):
         if index < len(frames):
             return frames[index], f"topology_switch:{row['phase']}:{index}", tangent, source
 
-    driven = [row["frame"] for row in rows if row["phase"] in ("perturbed", "pulse")]
+    # the phases run_trial writes while the probe acts: "forced" is the pulse
+    driven = [row["frame"] for row in rows if row["phase"] in ("perturbed", "forced")]
     fallback = directory / "raw_endpoint.extxyz"
     if fallback.exists():
         atoms = read(str(fallback))
@@ -823,6 +824,21 @@ def _dividing_frame(directory, probe=None):
             tangent, source = _probe_tangent(atoms, probe)
         return atoms, "raw_endpoint_no_switch_frame", tangent, source
     return None, "no_switch_frame", None, None
+
+
+def _direction_seed(seed, microstate_id, n_microstates, trials_spent) -> int:
+    """The seed of one proposal pass, named by the full microstate id.
+
+    Every character of the id enters (it carries the node id), and the bytes go through
+    sha256 rather than Python's per-process hash(). The id used to enter as one byte of
+    the node name, so different nodes and every microstate of one node shared streams.
+    """
+    identity = int.from_bytes(hashlib.sha256(microstate_id.encode()).digest()[:8], "big")
+    return int(
+        np.random.SeedSequence([seed, identity, n_microstates, trials_spent]).generate_state(1)[
+            0
+        ]
+    )
 
 
 def _closest_first(distances):
@@ -2428,15 +2444,8 @@ class ReactionSearch:
                         {"node": node.id, "microstate": state.id, "reason": blocked}
                     )
                     continue
-                direction_seed = int(
-                    np.random.SeedSequence(
-                        [
-                            cfg.seed,
-                            node.id.encode()[-2] if node.id else 0,
-                            len(node.microstates),
-                            state.trials_spent,
-                        ]
-                    ).generate_state(1)[0]
+                direction_seed = _direction_seed(
+                    cfg.seed, state.id, len(node.microstates), state.trials_spent
                 )
                 proposal = {}
                 # Rank the direction budget by the spectrum this microstate already paid

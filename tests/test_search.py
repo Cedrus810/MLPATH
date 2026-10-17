@@ -447,3 +447,46 @@ def test_a_run_reports_its_milestones_through_logging(protocol, tmp_path, caplog
     messages = [record.getMessage() for record in caplog.records]
     assert any("source admitted" in m for m in messages)
     assert any("scanning" in m for m in messages)
+
+
+def test_a_pulse_trials_last_forced_step_is_the_fallback_tangent(tmp_path, protocol):
+    """ALG-17: run_trial writes the pulse as "forced"; the no-switch fallback has to read
+    that name, or a pulse trial never yields its own last driven step."""
+    from prrs.search import _dividing_frame
+
+    source = relax_source(demo_atoms(), double_well_factory, protocol)
+    run_trial(
+        source,
+        Probe("pulse", (0, 1), 1, 0.6, 12),
+        double_well_factory,
+        replace(protocol, pulse_steps=10),
+        tmp_path / "pulse",
+        "t000000",
+    )
+    path = tmp_path / "pulse" / "observations.jsonl"
+    rows = [json.loads(line) for line in path.read_text().splitlines()]
+    # take the switch branch away, so the fallback is what answers
+    for row in rows:
+        row["events"] = {"formed": [], "broken": []}
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    driven = [row["frame"] for row in rows if row["phase"] in ("perturbed", "forced")]
+    assert [row["phase"] for row in rows if row["frame"] == driven[-1]] == ["forced"]
+
+    _, origin, tangent, source_name = _dividing_frame(tmp_path / "pulse")
+    assert origin == "raw_endpoint_no_switch_frame"
+    assert source_name == "last_probe_step"
+    frames = read(str(tmp_path / "pulse" / "response.traj"), index=":")
+    assert np.allclose(tangent, frames[driven[-1]].positions - frames[driven[-2]].positions)
+
+
+def test_proposal_streams_are_named_by_the_whole_microstate():
+    """ALG-12: the seed used to take one byte of the node id and no microstate id, so 100
+    nodes shared 10 streams and a node's microstates shared one."""
+    from prrs.search import _direction_seed
+
+    ids = [f"c{n:04d}/m{m:04d}" for n in range(100) for m in range(8)]
+    seeds = {_direction_seed(7, i, 8, 3) for i in ids}
+    assert len(seeds) == len(ids)
+    # deterministic across calls (no per-process hash), and still moved by the visit count
+    assert _direction_seed(7, "c0001/m0002", 8, 3) == _direction_seed(7, "c0001/m0002", 8, 3)
+    assert _direction_seed(7, "c0001/m0002", 8, 3) != _direction_seed(7, "c0001/m0002", 8, 4)

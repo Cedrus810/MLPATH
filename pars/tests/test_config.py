@@ -29,6 +29,25 @@ def test_out_of_range_values_rejected():
         ParsConfig(dominance_mode="something_else")
 
 
+@pytest.mark.parametrize("scale", [-1.0, 0.0, float("nan"), float("inf")])
+def test_a_fallback_scale_must_be_a_positive_number(scale):
+    """ALG-14: the fallback divides an objective whose pool IQR is zero; a negative one
+    made a worse raw value (1) normalise below a better one (0)."""
+    with pytest.raises(ValueError, match="objective_scales"):
+        ParsConfig.from_dict({"objective_scales": [["energy_excursion", scale]]})
+
+
+def test_a_positive_fallback_scale_keeps_the_order():
+    from pars.frontier.normalize import fit_normalization
+
+    config = ParsConfig.from_dict({"objective_scales": [["energy_excursion", 2.0]]})
+    raw = {f"c{i}": {"energy_excursion": 0.0} for i in range(8)}
+    raw["worse"] = {"energy_excursion": 1.0}
+    normalization = fit_normalization(raw, config)
+    assert normalization.scale["energy_excursion"] == 2.0
+    assert normalization.center["energy_excursion"] == 0.0
+
+
 def test_every_field_has_a_documented_rationale_when_nonobvious():
     from pars.config import RATIONALE
 
