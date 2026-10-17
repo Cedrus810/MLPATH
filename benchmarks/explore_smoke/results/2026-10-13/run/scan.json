@@ -1,0 +1,564 @@
+{
+  "status": "completed",
+  "q0": 3.6,
+  "points": [
+    {
+      "delta_A": -0.0,
+      "q_target": 3.6,
+      "q_actual": 3.600000000000001,
+      "energy_eV": -26132.751499346632,
+      "reaction_force": 0.16954909051586356,
+      "fmax_projected": 0.004610898393072376,
+      "converged": true,
+      "steps": 6,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.1,
+      "q_target": 3.5,
+      "q_actual": 3.5,
+      "energy_eV": -26132.767738622755,
+      "reaction_force": 0.1508451341814434,
+      "fmax_projected": 0.007426723496550829,
+      "converged": true,
+      "steps": 7,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.2,
+      "q_target": 3.4,
+      "q_actual": 3.4,
+      "energy_eV": -26132.781823054796,
+      "reaction_force": 0.12164409479367017,
+      "fmax_projected": 0.008917141134533037,
+      "converged": true,
+      "steps": 7,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.3,
+      "q_target": 3.3000000000000003,
+      "q_actual": 3.3000000000000007,
+      "energy_eV": -26132.792279910063,
+      "reaction_force": 0.08015690773472786,
+      "fmax_projected": 0.0015782505354716635,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.4,
+      "q_target": 3.2,
+      "q_actual": 3.2,
+      "energy_eV": -26132.79739939713,
+      "reaction_force": 0.0170001315019998,
+      "fmax_projected": 0.001969854889563965,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.5,
+      "q_target": 3.1,
+      "q_actual": 3.1000000000000005,
+      "energy_eV": -26132.79504005623,
+      "reaction_force": -0.07145892856926857,
+      "fmax_projected": 0.0026221981473736173,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.6,
+      "q_target": 3.0,
+      "q_actual": 3.0000000000000004,
+      "energy_eV": -26132.782154369383,
+      "reaction_force": -0.19629526125451913,
+      "fmax_projected": 0.003468638357941955,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.7,
+      "q_target": 2.9000000000000004,
+      "q_actual": 2.900000000000001,
+      "energy_eV": -26132.754469734893,
+      "reaction_force": -0.37021766494299874,
+      "fmax_projected": 0.004348477263757194,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.8,
+      "q_target": 2.8,
+      "q_actual": 2.8000000000000003,
+      "energy_eV": -26132.70659771719,
+      "reaction_force": -0.600497508872072,
+      "fmax_projected": 0.004891546188195782,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -0.9,
+      "q_target": 2.7,
+      "q_actual": 2.7,
+      "energy_eV": -26132.63332834307,
+      "reaction_force": -0.8729153403186061,
+      "fmax_projected": 0.004102363807923181,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.0,
+      "q_target": 2.6,
+      "q_actual": 2.5999999999999996,
+      "energy_eV": -26132.532621954713,
+      "reaction_force": -1.132883777365621,
+      "fmax_projected": 0.003446192656124045,
+      "converged": true,
+      "steps": 6,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.1,
+      "q_target": 2.5,
+      "q_actual": 2.5000000000000004,
+      "energy_eV": -26132.41156863835,
+      "reaction_force": -1.2457035799796827,
+      "fmax_projected": 0.005174602535832083,
+      "converged": true,
+      "steps": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.2,
+      "q_target": 2.4000000000000004,
+      "q_actual": 2.4000000000000004,
+      "energy_eV": -26132.297107685557,
+      "reaction_force": -0.9944453252515086,
+      "fmax_projected": 0.0036049090630341386,
+      "converged": true,
+      "steps": 9,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.3,
+      "q_target": 2.3,
+      "q_actual": 2.3,
+      "energy_eV": -26132.208373581045,
+      "reaction_force": -0.7017891278693692,
+      "fmax_projected": 0.004845140159541426,
+      "converged": true,
+      "steps": 8,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.4,
+      "q_target": 2.2,
+      "q_actual": 2.2,
+      "energy_eV": -26132.293114963788,
+      "reaction_force": 1.4906543779180448,
+      "fmax_projected": 0.005529808602222227,
+      "converged": true,
+      "steps": 10,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.5,
+      "q_target": 2.1,
+      "q_actual": 2.1000000000000005,
+      "energy_eV": -26132.460454609416,
+      "reaction_force": 1.7101144255512006,
+      "fmax_projected": 0.001979869447690371,
+      "converged": true,
+      "steps": 11,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.6,
+      "q_target": 2.0,
+      "q_actual": 1.9999999999999998,
+      "energy_eV": -26132.62907537059,
+      "reaction_force": 1.5784228308057218,
+      "fmax_projected": 0.0017310683493270615,
+      "converged": true,
+      "steps": 10,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    },
+    {
+      "delta_A": -1.7,
+      "q_target": 1.9000000000000001,
+      "q_actual": 1.9,
+      "energy_eV": -26132.75768765176,
+      "reaction_force": 0.9251195591116321,
+      "fmax_projected": 0.008282750649142025,
+      "converged": true,
+      "steps": 4,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "kind": "ridge_suspected",
+      "peak": 13,
+      "release": 14
+    },
+    {
+      "kind": "jump",
+      "before": 14,
+      "after": 15
+    }
+  ],
+  "release": {
+    "status": "c1_candidate",
+    "label": "reactive",
+    "fingerprint": {
+      "broken": [
+        [
+          0,
+          1
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          5
+        ]
+      ],
+      "active_subset": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "delta_coordination": [
+        0.021709080052861207,
+        -0.8819780570102466,
+        0.01350513847635626,
+        0.013240906283413123,
+        0.013227398741908036,
+        0.86361085921801
+      ],
+      "active_atoms": [
+        0,
+        1,
+        5
+      ],
+      "aligned_rmsd_A": 0.5629333514071989,
+      "energy_change_eV": -0.057961893482570304,
+      "components_before": 2,
+      "components_after": 2
+    },
+    "seed": 0,
+    "constraints_removed": []
+  },
+  "noise_status": "measured",
+  "noise_eV_used": 4.698795237345621e-05,
+  "noise_definition": "range (ptp) of converged repeat energies at mid point; used directly as read_scan noise_eV",
+  "spent": 288,
+  "error": null
+}

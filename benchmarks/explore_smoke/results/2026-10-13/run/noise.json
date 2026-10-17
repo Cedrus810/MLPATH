@@ -1,0 +1,43 @@
+{
+  "method": "perturb 0.02 A then pull q back to mid.q_target; energy of second point",
+  "mid_delta_A": -0.9,
+  "reference_eV": -26132.63332834307,
+  "runs": [
+    {
+      "repeat": 0,
+      "status": "completed",
+      "q_perturbed": 2.7192060554852824,
+      "q_target": 2.7,
+      "q_actual": 2.7000000000000006,
+      "converged": true,
+      "steps": 4,
+      "energy_eV": -26132.63328294517,
+      "in_range": true
+    },
+    {
+      "repeat": 1,
+      "status": "completed",
+      "q_perturbed": 2.690376789371918,
+      "q_target": 2.7,
+      "q_actual": 2.7,
+      "converged": true,
+      "steps": 2,
+      "energy_eV": -26132.63332293406,
+      "in_range": true
+    },
+    {
+      "repeat": 2,
+      "status": "completed",
+      "q_perturbed": 2.702575614362027,
+      "q_target": 2.7,
+      "q_actual": 2.7,
+      "converged": true,
+      "steps": 1,
+      "energy_eV": -26132.633329933124,
+      "in_range": true
+    }
+  ],
+  "noise_status": "measured",
+  "noise_eV_used": 4.698795237345621e-05,
+  "noise_definition": "range (ptp) of converged repeat energies at mid point; used directly as read_scan noise_eV"
+}

@@ -1,0 +1,13 @@
+{"arm": "smoke", "host": "kasuga01", "t": 1791872072.1843538, "event": "open", "task": "scan", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872091.5864289, "event": "close", "task": "scan", "attempt": 0, "stage": "probe", "forwards": 157, "requests": 314, "wall_s": 19.27432972495444, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872092.4366293, "event": "open", "task": "noise0", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872095.3012166, "event": "close", "task": "noise0", "attempt": 0, "stage": "probe", "forwards": 18, "requests": 36, "wall_s": 2.4278227121103555, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872095.677635, "event": "open", "task": "noise1", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872098.6598368, "event": "close", "task": "noise1", "attempt": 0, "stage": "probe", "forwards": 23, "requests": 46, "wall_s": 2.933865882921964, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872099.017661, "event": "open", "task": "noise2", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872101.7250628, "event": "close", "task": "noise2", "attempt": 0, "stage": "probe", "forwards": 20, "requests": 40, "wall_s": 2.623016088968143, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872102.8944237, "event": "open", "task": "release", "attempt": 0, "stage": "quench", "reserve": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872109.4405193, "event": "close", "task": "release", "attempt": 0, "stage": "quench", "forwards": 56, "requests": 112, "wall_s": 6.483520748093724, "outcome": "converged", "artifact": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872109.50058, "event": "open", "task": "release", "attempt": 0, "stage": "minimum_check", "reserve": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872115.1404574, "event": "close", "task": "release", "attempt": 0, "stage": "minimum_check", "forwards": 13, "requests": 24, "wall_s": 5.544253499014303, "outcome": "minimum", "artifact": null}
+{"arm": "smoke", "host": "kasuga01", "t": 1791872115.2039037, "event": "close", "task": "<unattributed>", "attempt": 0, "stage": "unattributed", "forwards": 1, "requests": 0, "wall_s": null, "outcome": null, "artifact": null}

@@ -9,6 +9,7 @@
 | 你要了解什么 | 入口 |
 | --- | --- |
 | 整个项目怎样连接 | [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) |
+| 10-13 评估协议与发现层重设计 | [评估协议设计](EVALUATION_PROTOCOL_DESIGN_2026-10-13.md)、[发现层设计](DISCOVERY_LAYER_DESIGN_2026-10-13.md)；用户 10-13 审定（按各自 v1 范围）。[施工计划](PLAN_EXPLORE_V1_2026-10-13.md)：M1–M2 已完成（`explore/` 账本 + 约束松弛探针，b04 冒烟跑通、未验收），M3 起开工前另写逐步计划 |
 | PRRS 数学与使用方式 | [onboarding/README.md](onboarding/README.md)；[中文 README](../README.zh-CN.md) |
 | 哪些命令现在能跑 | [PRRS README](../README.md)、[PARS README](../pars/README.md)；各自 `--help` |
 | 历史结论与项目规矩 | [HANDOFF.md](HANDOFF.md)；规矩在其 §2 |
@@ -16,6 +17,8 @@
 | 新旧结果为何不同 | 对应日期报告、run manifest、[DONE_LOG.md](DONE_LOG.md) |
 | 10-03 审查问题与修复 | [大问题复核](REVIEW_2026-10-03.md)、[10-04 修复与验证](FIXES_2026-10-04.md)；10-05 收口见 [完整性复审](INTEGRITY_REVIEW_2026-10-05.md)、[INTEGRITY_FIX](INTEGRITY_FIX_2026-10-05.md)、[复审的复审](REREVIEW_2026-10-05.md)；复审三项已修复，真实 b04 核验见 [DONE_LOG 末节](DONE_LOG.md) |
 | 10-09 b09 探针与搜索设计修复 | [搜索设计修复](SEARCH_DESIGN_REPAIR_2026-10-09.md)（谱排序按执行运动打分、受限软模、先粗扫后细化、环内保键交付）；b09 结果见 [probe_b09/README](../benchmarks/carbene_ambimodal/probe_b09/README.md) 与 [FOLLOWUP](../benchmarks/carbene_ambimodal/probe_b09/FOLLOWUP_2026-10-09.md) |
+| b09 差距测量现状（10-10 交接） | [HANDOFF_B09_GAP_2026-10-10.md](HANDOFF_B09_GAP_2026-10-10.md)：b09 定位为终极验收、当前只测差距；全部实验、已识别差距与待决定项 |
+| PRRS 离 b09 验收差多远 | [B09_GAP_ANALYSIS_2026-10-10.md](B09_GAP_ANALYSIS_2026-10-10.md)：按目标逐级对照、差距分参数级 / 设计稿预见未实现 / 超出发现层三类；用户 10-10：不着急做 |
 | 哪些决策尚未收口 | 项目总览 §9 → [DECISIONS_PENDING.md](DECISIONS_PENDING.md) 及对应工作线计划 |
 | 如何复跑与验证改动 | 两套 Makefile；[env/BASELINE.md](../env/BASELINE.md) 是环境与历史验证记录 |
 
