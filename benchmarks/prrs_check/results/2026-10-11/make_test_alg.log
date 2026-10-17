@@ -1,0 +1,37 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/bin/python -m pytest -q
+........................s............................................... [ 12%]
+........................................................................ [ 24%]
+........................................................................ [ 36%]
+........................................................................ [ 48%]
+........................................................................ [ 60%]
+........................................................................ [ 72%]
+........................................................................ [ 84%]
+........................................................................ [ 96%]
+.....................                                                    [100%]
+=============================== warnings summary ===============================
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+tests/test_backend_parity.py::test_backends_agree_on_energy_and_forces
+  /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_backend_parity.py: 90 warnings
+  /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torch/jit/_serialization.py:176: DeprecationWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+    warnings.warn(
+
+tests/test_backend_parity.py: 72 warnings
+  /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torch/jit/_serialization.py:89: DeprecationWarning: `torch.jit.save` is deprecated. Please switch to `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+596 passed, 1 skipped, 171 warnings in 487.60s (0:08:07)
+
+real	8m9.708s
+user	7m38.668s
+sys	0m7.776s

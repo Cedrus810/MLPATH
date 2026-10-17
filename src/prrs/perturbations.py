@@ -1026,15 +1026,20 @@ def propose(atoms, config, seed, report=None, soft_modes=(), key_difference=None
         rotatable bonds, so pair kicks would crowd out the torsion that is the one way to
         reach its other basins. Spanning the basis has to hold for the directions actually
         sampled, not only for the directions that could have been.
-    [4] Without a spectrum every candidate's rank is 0, so the stable sort in [1] is a
-        no-op and the order inside a family is the seeded shuffle alone. That is a lottery,
+    [4] Without a spectrum the rank is 0 for every candidate but a symmetry rotor, so
+        apart from pushing rotors back the stable sort in [1] is a no-op and the order
+        inside a family is the seeded shuffle alone. That is a lottery,
         and on b04 it happened to draw the C-Cl stretch first -- the one direction of 28
         that reacted -- with no mechanism putting it there. Given the softest non-torsional
         modes the rank becomes the overlap with them, which put that same direction first
         by construction at 0.9651 against 0.6893 for the next distinct one
         (`docs/experiments/spectral_proposal_probe.py`). The band in [1] is untouched: a
         hydrogen-bond donor still gets a front slot on its own evidence, and the spectrum
-        only orders candidates inside a band. Absent modes changes nothing, which is what
+        only orders candidates inside a band. Nor does it replace the structural rank:
+        the rank becomes (structural rank, -overlap), so a symmetry rotor stays behind
+        every genuine torsion however well it overlaps -- until 2026-10-11 the overlap
+        replaced the rank outright and undid [1] whenever a spectrum existed (audit
+        docs/AUDIT_2026-10-11.md section 6). Absent modes changes nothing, which is what
         a microstate whose Hessian could not be had must fall back to -- a ranking is never
         worth failing a search for.
         Since 2026-10-09 the overlap is taken with the motion the family delivers
@@ -1097,19 +1102,22 @@ def propose(atoms, config, seed, report=None, soft_modes=(), key_difference=None
     directions = list(_bond_directions(atoms, graph, config, families))
     directions += list(_angle_directions(graph, basis_orbits, families))
     directions += list(_dihedral_directions(graph, labels, basis_orbits, families))
-    # [4] rank by the spectrum when there is one
+    # [4] rank by the spectrum when there is one, inside the structural rank of [1]
     if soft_modes:
         directions = [
             entry[:4]
             + (
-                -spectral_overlap(
-                    atoms,
-                    entry[0],
-                    entry[1],
-                    soft_modes,
-                    config.bond_scale,
-                    config.active_atoms,
-                    graph,
+                (
+                    entry[4],
+                    -spectral_overlap(
+                        atoms,
+                        entry[0],
+                        entry[1],
+                        soft_modes,
+                        config.bond_scale,
+                        config.active_atoms,
+                        graph,
+                    ),
                 ),
             )
             + entry[5:]

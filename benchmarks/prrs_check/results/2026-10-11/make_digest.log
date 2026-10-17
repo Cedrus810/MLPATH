@@ -1,0 +1,17 @@
+/home/ruigengji/miniforge3/envs/openmm_dev/bin/python docs/experiments/digest_regression.py
+  [ok  ] 300+ relaxed conformers of one substance collapse to one key
+         1 distinct key(s), expected 1: 8710064d12ce6a5ax300
+  [ok  ] P1's two chemical structures are one substance (degenerate transfer)
+         1 distinct key(s), expected 1: 420aa40908c8fe43x2
+  [ok  ] P2's two chemical nodes really are two substances
+         2 distinct key(s), expected 2: afd590f8e10713a5x1, 573a10fe35da7d0ex1
+  [ok  ] P3 A and B are different substances
+         8710064d12ce6a5a vs b1a4338a45f1d300
+
+digests unchanged: 332 files, 2136 frames, 4 event pairs
+  plus 254 comparison(s) on reviewed migration 2026-09-04-unknown-is-not-empty
+        (v1 and v2 both hold these frames, so each is counted twice)
+
+real	1m44.745s
+user	1m44.678s
+sys	0m0.251s

@@ -190,3 +190,19 @@ def test_a_spectrum_that_cannot_be_had_returns_a_reason_not_an_exception():
     atoms.calc = double_well_factory()
     modes, note = soft_internal_modes(atoms, Exploding(), SearchConfig())
     assert modes == () and "RuntimeError" in note, note
+
+
+def test_the_spectrum_orders_inside_the_rotor_rank_not_over_it():
+    """A mode that IS a methyl rotor's own motion must not lift it over a genuine
+    torsion: the overlap orders candidates inside the structural rank of `propose`
+    note [1]. Until 2026-10-11 it replaced that rank (docs/AUDIT_2026-10-11.md)."""
+    atoms = molecule("CH3CH2OH")
+    atoms.center(vacuum=4.0)
+    config = SearchConfig(families=("torsion",), max_directions=64, direction_mode="exhaustive")
+    rotor, genuine = "torsion:7-0-1-2", "torsion:0-1-2-3"
+    modes = ((0.01, delivered_direction(atoms, "torsion", (7, 0, 1, 2))),)
+    assert spectral_overlap(atoms, "torsion", (7, 0, 1, 2), modes) == pytest.approx(1.0)
+
+    ranked, _ = _order(atoms, config, modes)
+    families = [identity.rsplit(":", 1)[0] for identity in ranked]
+    assert families == [genuine, genuine, rotor, rotor], ranked

@@ -2276,7 +2276,7 @@ def descend_saddle(saddle, mode, factory, config, sign, seed=0, recorder=None):
             return None, failed, relays
         settled, checked = confirm_minimum(endpoint, factory, config, seed + hop)
         if settled:
-            log.info("descent settled after %d relay(s)", relays)
+            log.info("descent settled after %d relay(s)", len(relays))
             return endpoint, checked, relays
         if checked.get("saddle_order") != 1:
             return None, checked, relays
