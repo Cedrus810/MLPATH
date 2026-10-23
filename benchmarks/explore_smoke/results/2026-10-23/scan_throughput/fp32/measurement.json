@@ -1,0 +1,95 @@
+{
+  "host": "kasuga02",
+  "dtype": "float32",
+  "phase": "scan_arms",
+  "arms": {},
+  "complete": false,
+  "threads": {
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  },
+  "import_s": 45.71111013588961,
+  "source_sha256": {
+    "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py": "79b8d73237b2f7fb836d62a2b04dfcf15d266fff5c3c49908f7eff4f402f731e",
+    "/home/ruigengji/MLPATH/explore/src/explore/probe.py": "0c4e95f105d7ee264abf2c32449af1a83dbf9fa5cc8f9e8ba8eddb2adbcf0b3b",
+    "/home/ruigengji/MLPATH/explore/src/explore/parallel.py": "19972354f9c9036e75e9aae95c0e4ad28d8bb6cd2bbbcb0f36b27042c4ad954f",
+    "/home/ruigengji/MLPATH/explore/src/explore/ledger.py": "3b80354533a1bc19b8e622711688064a86c1ba64b9d1da592980a70b9a5d4c93",
+    "/home/ruigengji/MLPATH/src/prrs/reliability.py": "64fdeabb33e20834f8fb9f50c12f63e68b5a7aad60b300be2c3c1d2d4922f9dc"
+  },
+  "versions": {
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "ase": "3.29.0",
+    "numpy": "2.4.6"
+  },
+  "model": [
+    "/home/ruigengji/MLP/mace/MACE-POLAR-1-M.model",
+    "PolarMACE"
+  ],
+  "load_s": 98.73568318795878,
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "parity_inputs": [
+    {
+      "n_atoms": 6,
+      "charge": -1,
+      "spin": 1
+    },
+    {
+      "n_atoms": 6,
+      "charge": 1,
+      "spin": 1
+    },
+    {
+      "n_atoms": 29,
+      "charge": 0,
+      "spin": 1
+    }
+  ],
+  "parity": [
+    {
+      "order": [
+        0
+      ],
+      "max_abs_dE_eV": [
+        0.0
+      ],
+      "max_abs_dF_eV_A": [
+        9.077787399291992e-05
+      ]
+    },
+    {
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "max_abs_dE_eV": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_dF_eV_A": [
+        0.00011391937732696533,
+        0.00012636184692382812,
+        0.0009816372767090797
+      ]
+    },
+    {
+      "order": [
+        2,
+        0,
+        1
+      ],
+      "max_abs_dE_eV": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_dF_eV_A": [
+        0.0011162548325955868,
+        0.00019262242130935192,
+        0.00014585256576538086
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+phase=import_runtime
+phase=load_model
+Timeout (0:01:00)!
+Thread 0x00007f09ad6c8780 (most recent call first):
+  File "<frozen importlib._bootstrap_external>", line 1190 in get_data
+  File "<frozen importlib._bootstrap_external>", line 1091 in get_code
+  File "<frozen importlib._bootstrap_external>", line 995 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torchmetrics/functional/__init__.py", line 96 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1415 in _handle_fromlist
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torchmetrics/__init__.py", line 37 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/train.py", line 23 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/__init__.py", line 20 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1310 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/foundations_models.py", line 11 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/__init__.py", line 1 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py", line 37 in _build
+  File "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py", line 46 in polar1
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 133 in main
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 268 in <module>
+phase=scan_arms
+Timeout (0:01:00)!
+Thread 0x00007f07e9b786c0 (most recent call first):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 355 in wait
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/_base.py", line 451 in result
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 103 in request
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 111 in <lambda>
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 67 in calculate
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/calculator.py", line 517 in get_property
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 55 in get_property
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/abc.py", line 25 in get_potential_energy
+  File "/home/ruigengji/MLPATH/src/prrs/reliability.py", line 41 in calculate
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/calculator.py", line 517 in get_property
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/abc.py", line 31 in get_forces
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/atoms.py", line 2015 in get_forces
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py", line 38 in get_gradient
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py", line 348 in irun
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py", line 375 in run
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py", line 506 in run
+  File "/home/ruigengji/MLPATH/explore/src/explore/probe.py", line 193 in constrained_scan
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 112 in run
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py", line 59 in run
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py", line 93 in _worker
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1012 in run
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f07f0e1d6c0 (most recent call first):
+  <no Python frame>
+
+Thread 0x00007f09ad6c8780 (most recent call first):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/torch_geometric/data.py", line 0 in <lambda>
+{"arm": "cold", "wall_s": 17.536685200990178, "spent": [158]}
+{"arm": "serial_warm", "wall_s": 37.1614126189379, "spent": [84, 83, 81, 80]}
+{"arm": "batch_warm", "wall_s": 16.599745998042636, "spent": [83, 82, 76, 82]}

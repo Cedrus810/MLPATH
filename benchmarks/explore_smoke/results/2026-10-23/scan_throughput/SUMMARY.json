@@ -1,0 +1,269 @@
+{
+  "complete": true,
+  "exit_code": 0,
+  "import_s": 30.159703415003605,
+  "load_s": 69.07823746500071,
+  "total_wall_s": 174.16453293093946,
+  "source_archive_matches": {
+    "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py": true,
+    "/home/ruigengji/MLPATH/explore/src/explore/probe.py": true,
+    "/home/ruigengji/MLPATH/explore/src/explore/parallel.py": true,
+    "/home/ruigengji/MLPATH/explore/src/explore/ledger.py": true,
+    "/home/ruigengji/MLPATH/src/prrs/reliability.py": true
+  },
+  "parity": [
+    {
+      "order": [
+        0
+      ],
+      "max_abs_dE_eV": [
+        0.0
+      ],
+      "max_abs_dF_eV_A": [
+        0.00027507543563842773
+      ]
+    },
+    {
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "max_abs_dE_eV": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_dF_eV_A": [
+        0.0003726482391357422,
+        0.0001570284366607666,
+        0.0007905159145593643
+      ]
+    },
+    {
+      "order": [
+        2,
+        0,
+        1
+      ],
+      "max_abs_dE_eV": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_abs_dF_eV_A": [
+        0.0009881891310214996,
+        0.0002434849739074707,
+        0.00011387467384338379
+      ]
+    }
+  ],
+  "cold_vs_warm": {
+    "statuses": [
+      "completed",
+      "completed"
+    ],
+    "n_points": [
+      18,
+      18
+    ],
+    "max_abs_dE_eV": 0.001953125,
+    "max_atom_displacement_A": 0.003471066480943038,
+    "max_abs_reaction_force_diff": 0.0030698002829305793,
+    "edge_mismatch_points": []
+  },
+  "serial_vs_batch": [
+    {
+      "statuses": [
+        "completed",
+        "completed"
+      ],
+      "n_points": [
+        18,
+        18
+      ],
+      "max_abs_dE_eV": 0.00390625,
+      "max_atom_displacement_A": 0.0023552419584150592,
+      "max_abs_reaction_force_diff": 0.005850363296652339,
+      "edge_mismatch_points": []
+    },
+    {
+      "statuses": [
+        "completed",
+        "completed"
+      ],
+      "n_points": [
+        18,
+        18
+      ],
+      "max_abs_dE_eV": 0.00390625,
+      "max_atom_displacement_A": 0.0033917627618931046,
+      "max_abs_reaction_force_diff": 0.004927022797887481,
+      "edge_mismatch_points": []
+    },
+    {
+      "statuses": [
+        "completed",
+        "completed"
+      ],
+      "n_points": [
+        18,
+        18
+      ],
+      "max_abs_dE_eV": 0.001953125,
+      "max_atom_displacement_A": 0.008608137292177877,
+      "max_abs_reaction_force_diff": 0.00941953480129469,
+      "edge_mismatch_points": []
+    },
+    {
+      "statuses": [
+        "completed",
+        "completed"
+      ],
+      "n_points": [
+        18,
+        18
+      ],
+      "max_abs_dE_eV": 0.001953125,
+      "max_atom_displacement_A": 0.005376722821106696,
+      "max_abs_reaction_force_diff": 0.006116647553194687,
+      "edge_mismatch_points": []
+    }
+  ],
+  "batch_speedup": 2.238673569060623,
+  "arms": {
+    "cold": {
+      "wall_s": 17.536685200990178,
+      "spent": [
+        158
+      ],
+      "total_forwards": 158,
+      "batch_structure_units": 158,
+      "model_calls": 158,
+      "points": [
+        18
+      ],
+      "not_converged": [
+        []
+      ],
+      "ledger_probe_wall_s": [
+        [
+          17.481770570972003
+        ]
+      ],
+      "controller_cpu_s": 1.273216377,
+      "outside_evaluator_wall_s": 1.3647014753660187,
+      "backend_stages_s": {
+        "prepare_s": 1.5765400145901367,
+        "model_s": 14.405518188141286,
+        "return_s": 0.019995601382106543
+      },
+      "errors": [
+        null
+      ]
+    },
+    "serial_warm": {
+      "wall_s": 37.1614126189379,
+      "spent": [
+        84,
+        83,
+        81,
+        80
+      ],
+      "total_forwards": 328,
+      "batch_structure_units": 328,
+      "model_calls": 328,
+      "points": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "not_converged": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "ledger_probe_wall_s": [
+        [
+          9.527356952894479
+        ],
+        [
+          9.371828218922019
+        ],
+        [
+          9.175684315967374
+        ],
+        [
+          8.889230280998163
+        ]
+      ],
+      "controller_cpu_s": 2.8140351969999995,
+      "outside_evaluator_wall_s": 3.0798552337801084,
+      "backend_stages_s": {
+        "prepare_s": 3.3710802438436076,
+        "model_s": 30.360198202659376,
+        "return_s": 0.036538176820613444
+      },
+      "errors": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "batch_warm": {
+      "wall_s": 16.599745998042636,
+      "spent": [
+        83,
+        82,
+        76,
+        82
+      ],
+      "total_forwards": 323,
+      "batch_structure_units": 323,
+      "model_calls": 83,
+      "points": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "not_converged": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "ledger_probe_wall_s": [
+        [
+          16.517028257017955
+        ],
+        [
+          16.35752284899354
+        ],
+        [
+          15.438214034074917
+        ],
+        [
+          16.32365748693701
+        ]
+      ],
+      "controller_cpu_s": 3.211583208,
+      "outside_evaluator_wall_s": 3.323197096469812,
+      "backend_stages_s": {
+        "prepare_s": 2.4988854478579015,
+        "model_s": 10.641956581152044,
+        "return_s": 0.014530871878378093
+      },
+      "errors": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  "normalized_structure_throughput_ratio": 2.20454744758104
+}

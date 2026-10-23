@@ -1,0 +1,2 @@
+{"arm": "batch_warm", "host": "kasuga02", "t": 1792709730.5371315, "event": "open", "task": "2", "attempt": 0, "stage": "probe", "reserve": 500}
+{"arm": "batch_warm", "host": "kasuga02", "t": 1792709746.113513, "event": "close", "task": "2", "attempt": 0, "stage": "probe", "forwards": 76, "requests": 152, "cache_hits": 76, "wall_s": 15.438214034074917, "outcome": "completed", "artifact": null}

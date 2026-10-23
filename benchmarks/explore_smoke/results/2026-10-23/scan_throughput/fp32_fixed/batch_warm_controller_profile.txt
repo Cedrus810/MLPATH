@@ -1,0 +1,38 @@
+         3356181 function calls (3202621 primitive calls) in 16.599 seconds
+
+   Ordered by: cumulative time
+   List reduced from 726 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+  897/129    0.015    0.000   59.811    0.464 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:37(get_gradient)
+ 1041/141    0.011    0.000   57.374    0.407 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/atoms.py:1999(get_forces)
+ 1364/141    0.006    0.000   47.901    0.340 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/abc.py:30(get_forces)
+        4    0.000    0.000   33.198    8.300 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1117(join)
+  1314/38    0.036    0.000   33.197    0.874 {method 'acquire' of '_thread.lock' objects}
+        4    0.000    0.000   33.197    8.299 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1155(_wait_for_tstate_lock)
+ 2154/201    0.028    0.000   31.597    0.157 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/calculator.py:494(get_property)
+  790/123    0.004    0.000   30.845    0.251 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/abc.py:20(get_potential_energy)
+   323/45    0.023    0.000   30.816    0.685 /home/ruigengji/MLPATH/src/prrs/reliability.py:24(calculate)
+  646/106    0.010    0.000   29.753    0.281 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:52(get_property)
+   323/53    0.008    0.000   27.719    0.523 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:60(calculate)
+   323/54    0.002    0.000   16.653    0.308 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:111(<lambda>)
+   323/54    0.005    0.000   16.651    0.308 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:94(request)
+   323/54    0.124    0.000   16.606    0.308 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/_base.py:428(result)
+        1    0.000    0.000   16.600   16.600 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:71(scan_many)
+        1    0.000    0.000   16.600   16.600 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/_base.py:646(__exit__)
+        1    0.000    0.000   16.600   16.600 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py:220(shutdown)
+      4/1    0.000    0.000   16.599   16.599 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1018(_bootstrap)
+      4/1    0.000    0.000   16.599   16.599 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1058(_bootstrap_inner)
+      4/1    0.000    0.000   16.599   16.599 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1001(run)
+      4/1    0.000    0.000   16.599   16.599 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py:70(_worker)
+      4/1    0.000    0.000   16.599   16.599 {method 'get' of '_queue.SimpleQueue' objects}
+    641/9    0.008    0.000   16.597    1.844 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:323(wait)
+      4/1    0.000    0.000   16.597   16.597 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py:54(run)
+      4/1    0.000    0.000   16.597   16.597 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:107(run)
+      4/1    0.000    0.000   16.597   16.597 /home/ruigengji/MLPATH/explore/src/explore/probe.py:145(constrained_scan)
+     72/1    0.002    0.000   16.589   16.589 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:490(run)
+     72/1    0.001    0.000   16.589   16.589 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:357(run)
+    395/2    0.008    0.000   16.589    8.294 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:295(irun)
+       83    0.033    0.000   13.169    0.159 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:236(__call__)
+
+

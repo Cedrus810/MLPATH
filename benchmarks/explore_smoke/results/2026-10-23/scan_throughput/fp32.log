@@ -1,0 +1,187 @@
+phase=import_runtime
+phase=load_model
+Timeout (0:01:00)!
+Thread 0x00007f2cd868c780 (most recent call first):
+  File "<frozen importlib._bootstrap_external>", line 1190 in get_data
+  File "<frozen importlib._bootstrap_external>", line 1091 in get_code
+  File "<frozen importlib._bootstrap_external>", line 995 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1310 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/sympy/polys/numberfields/utilities.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/sympy/polys/numberfields/__init__.py", line 21 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/sympy/polys/__init__.py", line 94 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/sympy/__init__.py", line 77 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/_spherical_harmonics.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/e3nn/o3/__init__.py", line 41 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1415 in _handle_fromlist
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/arg_parser_tools.py", line 5 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/__init__.py", line 2 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1310 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/foundations_models.py", line 11 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/__init__.py", line 1 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py", line 37 in _build
+  File "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py", line 46 in polar1
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 133 in main
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 270 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f2cd868c780 (most recent call first):
+  File "<frozen importlib._bootstrap_external>", line 1190 in get_data
+  File "<frozen importlib._bootstrap_external>", line 1091 in get_code
+  File "<frozen importlib._bootstrap_external>", line 995 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1415 in _handle_fromlist
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/pandas/core/groupby/generic.py", line 69 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/pandas/core/groupby/__init__.py", line 1 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/pandas/core/api.py", line 47 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/pandas/__init__.py", line 49 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/cli/visualise_train.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/train.py", line 25 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/tools/__init__.py", line 20 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1310 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/foundations_models.py", line 11 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/calculators/__init__.py", line 1 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py", line 37 in _build
+  File "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py", line 46 in polar1
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 133 in main
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 270 in <module>
+phase=scan_arms
+Timeout (0:01:00)!
+Thread 0x00007f2b189446c0 (most recent call first):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1012 in run
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f2b1b5cc6c0 (most recent call first):
+  <no Python frame>
+
+Thread 0x00007f2cd868c780 (most recent call first):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 355 in wait
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 150 in scan_many
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 206 in arm
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 244 in main
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 270 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f2b189446c0 (most recent call first):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1012 in run
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f2b1b5cc6c0 (most recent call first):
+  <no Python frame>
+
+Thread 0x00007f2cd868c780 (most recent call first):
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py", line 355 in wait
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 150 in scan_many
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 206 in arm
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 244 in main
+  File "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_throughput.py", line 270 in <module>
+bash: line 1: 1034511 Killed                     timeout --kill-after=10s 300s env OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 /home/ruigengji/miniforge3/envs/openmm_dev/bin/python -u benchmarks/explore_smoke/scan_throughput.py --out benchmarks/explore_smoke/results/2026-10-23/scan_throughput/fp32 --dtype float32

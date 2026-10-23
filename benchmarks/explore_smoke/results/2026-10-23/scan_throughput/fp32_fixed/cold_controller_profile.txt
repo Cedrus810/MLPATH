@@ -1,0 +1,38 @@
+         4310132 function calls (4108168 primitive calls) in 17.536 seconds
+
+   Ordered by: cumulative time
+   List reduced from 728 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000   17.537   17.537 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:71(scan_many)
+        1    0.000    0.000   17.537   17.537 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/_base.py:646(__exit__)
+        1    0.000    0.000   17.537   17.537 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py:220(shutdown)
+        1    0.000    0.000   17.536   17.536 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1117(join)
+   646/11    0.015    0.000   17.536    1.594 {method 'acquire' of '_thread.lock' objects}
+        1    0.000    0.000   17.536   17.536 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:1155(_wait_for_tstate_lock)
+    319/3    0.004    0.000   17.536    5.845 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/threading.py:323(wait)
+        1    0.000    0.000   17.536   17.536 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/thread.py:54(run)
+        1    0.000    0.000   17.536   17.536 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:107(run)
+        1    0.002    0.002   17.536   17.536 /home/ruigengji/MLPATH/explore/src/explore/probe.py:145(constrained_scan)
+       18    0.000    0.000   17.428    0.968 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:490(run)
+       18    0.000    0.000   17.428    0.968 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:357(run)
+      176    0.003    0.000   17.428    0.099 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:295(irun)
+ 1002/686    0.011    0.000   17.274    0.025 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/calculator.py:494(get_property)
+      492    0.003    0.000   17.211    0.035 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/atoms.py:1999(get_forces)
+      456    0.003    0.000   17.189    0.038 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/optimize/optimize.py:37(get_gradient)
+  650/492    0.002    0.000   17.151    0.035 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/abc.py:30(get_forces)
+      158    0.016    0.000   16.807    0.106 /home/ruigengji/MLPATH/src/prrs/reliability.py:24(calculate)
+      316    0.003    0.000   16.629    0.053 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:52(get_property)
+      352    0.001    0.000   16.617    0.047 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/calculators/abc.py:20(get_potential_energy)
+      158    0.003    0.000   16.372    0.104 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:60(calculate)
+      158    0.001    0.000   16.219    0.103 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:111(<lambda>)
+      158    0.003    0.000   16.218    0.103 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:94(request)
+      158    0.160    0.001   16.209    0.103 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/concurrent/futures/_base.py:428(result)
+      158    0.030    0.000   16.021    0.101 /home/ruigengji/MLPATH/explore/src/explore/parallel.py:236(__call__)
+48664/158    0.092    0.000   14.371    0.091 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torch/nn/modules/module.py:1774(_wrapped_call_impl)
+48664/158    2.259    0.000   14.370    0.091 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/torch/nn/modules/module.py:1782(_call_impl)
+      158    0.290    0.002   14.360    0.091 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/modules/extensions.py:592(forward)
+      158    0.001    0.000    7.502    0.047 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/modules/utils.py:167(get_outputs)
+      158    0.012    0.000    7.501    0.047 /home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/mace/modules/utils.py:41(compute_forces_virials)
+
+
