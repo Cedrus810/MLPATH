@@ -1,0 +1,9 @@
+resident fp32 model loaded in 4.3 s
+b04 cold converged_candidate 413 37.9 s steps 8.0 {'rmsd_kabsch_A': 0.00015255154903277417, 'dE_eV': -0.00041527980647515506} not_run not_run
+b04 curvature converged_candidate 242 21.5 s steps 4.0 {'rmsd_kabsch_A': 0.000186999715404159, 'dE_eV': -0.00041527980647515506} not_run not_run
+b04 predictor converged_candidate 341 30.1 s steps 5.0 {'rmsd_kabsch_A': 6.964267963916802e-05, 'dE_eV': -0.00041527980647515506} not_run not_run
+b04 warm converged_candidate 215 18.9 s steps 4.0 {'rmsd_kabsch_A': 0.0007033961375682165, 'dE_eV': -0.00041527980647515506} not_run not_run
+b05_r1_sA_6-9 cold converged_candidate 859 76.1 s steps 43.0 {'rmsd_kabsch_A': 0.0014408782864162959, 'dE_eV': -0.0011606009684328455} not_run not_run
+b05_r1_sA_6-9 curvature converged_candidate 303 27.2 s steps 6.0 {'rmsd_kabsch_A': 0.0021506101960178455, 'dE_eV': -0.0011606009684328455} not_run not_run
+b05_r1_sA_6-9 predictor converged_candidate 445 39.9 s steps 15.0 {'rmsd_kabsch_A': 0.0016885831872101372, 'dE_eV': -0.0011606009684328455} not_run not_run
+b05_r1_sA_6-9 warm converged_candidate 284 25.5 s steps 6.0 {'rmsd_kabsch_A': 0.0018116451544273723, 'dE_eV': -0.0031137259684328455} unresolved connected

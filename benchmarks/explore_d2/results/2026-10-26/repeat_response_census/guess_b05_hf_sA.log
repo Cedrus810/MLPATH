@@ -1,0 +1,232 @@
+[
+ {
+  "run": "results/2026-10-26/b05_hf_sA",
+  "rule_version": "D2-HF-v1",
+  "pose_chemical_keys": 1,
+  "automorphisms": 1296,
+  "l4_items": 236,
+  "class_mismatch": 0,
+  "pairwise_wall_s": 159.9254674911499,
+  "all_pairs_rmsd_A": {
+   "min": 0.0013828910260305547,
+   "p50": 1.2015843611109553,
+   "p90": 1.5032608868239323,
+   "max": 1.7724068499685752
+  },
+  "positive_pairs": {
+   "n": 3,
+   "rmsd_A": {
+    "min": 0.013997049436176707,
+    "p50": 0.026039424363228238,
+    "p90": 0.02815207451302628,
+    "max": 0.02868023705047579
+   },
+   "same_pose": 1
+  },
+  "negative_pairs": {
+   "n": 12,
+   "rmsd_A": {
+    "min": 0.0037984778934440303,
+    "p50": 0.5211339445163814,
+    "p90": 0.5334257072541128,
+    "max": 0.536007636668548
+   }
+  },
+  "sweep": [
+   {
+    "radius_A": 0.05,
+    "clusters": 94,
+    "items_skipped": 142,
+    "forwards_skipped": 142411.0,
+    "forwards_skipped_fraction": 0.6005684717472072,
+    "skipped_status": {
+     "unresolved:transverse_not_converged": 31,
+     "unresolved:hysteresis": 104,
+     "connected": 2,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 2,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.1,
+    "clusters": 77,
+    "items_skipped": 159,
+    "forwards_skipped": 159787.0,
+    "forwards_skipped_fraction": 0.6738456607640632,
+    "skipped_status": {
+     "unresolved:transverse_not_converged": 33,
+     "unresolved:hysteresis": 119,
+     "connected": 2,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 2,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.15,
+    "clusters": 60,
+    "items_skipped": 176,
+    "forwards_skipped": 180353.0,
+    "forwards_skipped_fraction": 0.7605755565583,
+    "skipped_status": {
+     "unresolved:hysteresis": 131,
+     "unresolved:transverse_not_converged": 38,
+     "connected": 2,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 2,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.2,
+    "clusters": 45,
+    "items_skipped": 191,
+    "forwards_skipped": 197627.0,
+    "forwards_skipped_fraction": 0.8334225963302365,
+    "skipped_status": {
+     "unresolved:hysteresis": 140,
+     "unresolved:transverse_not_converged": 44,
+     "connected": 2,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 2,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.3,
+    "clusters": 26,
+    "items_skipped": 210,
+    "forwards_skipped": 215490.0,
+    "forwards_skipped_fraction": 0.9087535371341096,
+    "skipped_status": {
+     "unresolved:hysteresis": 153,
+     "unresolved:transverse_not_converged": 49,
+     "connected": 2,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 2,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.4,
+    "clusters": 13,
+    "items_skipped": 223,
+    "forwards_skipped": 226597.0,
+    "forwards_skipped_fraction": 0.955593416186263,
+    "skipped_status": {
+     "unresolved:hysteresis": 160,
+     "unresolved:transverse_not_converged": 54,
+     "connected": 3,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 1,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.5,
+    "clusters": 8,
+    "items_skipped": 228,
+    "forwards_skipped": 230813.0,
+    "forwards_skipped_fraction": 0.9733729183095978,
+    "skipped_status": {
+     "unresolved:hysteresis": 164,
+     "unresolved:transverse_not_converged": 55,
+     "connected": 3,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 1,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.6,
+    "clusters": 6,
+    "items_skipped": 230,
+    "forwards_skipped": 231245.0,
+    "forwards_skipped_fraction": 0.9751947268763153,
+    "skipped_status": {
+     "unresolved:hysteresis": 166,
+     "unresolved:transverse_not_converged": 55,
+     "connected": 3,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 1,
+    "events_total": 4
+   },
+   {
+    "radius_A": 0.8,
+    "clusters": 5,
+    "items_skipped": 231,
+    "forwards_skipped": 232842.0,
+    "forwards_skipped_fraction": 0.9819295145639256,
+    "skipped_status": {
+     "unresolved:hysteresis": 167,
+     "unresolved:transverse_not_converged": 55,
+     "connected": 3,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 1,
+    "events_total": 4
+   },
+   {
+    "radius_A": 1.0,
+    "clusters": 3,
+    "items_skipped": 233,
+    "forwards_skipped": 235259.0,
+    "forwards_skipped_fraction": 0.9921223648087312,
+    "skipped_status": {
+     "unresolved:hysteresis": 169,
+     "unresolved:transverse_not_converged": 55,
+     "connected": 3,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 1,
+    "events_total": 4
+   },
+   {
+    "radius_A": 1.5,
+    "clusters": 2,
+    "items_skipped": 234,
+    "forwards_skipped": 235541.0,
+    "forwards_skipped_fraction": 0.9933116009564495,
+    "skipped_status": {
+     "unresolved:hysteresis": 169,
+     "unresolved:transverse_not_converged": 56,
+     "connected": 3,
+     "unresolved:branch_unresolved": 1,
+     "unresolved:no_resolved_maximum_bracket": 1,
+     "hf_duplicate": 2,
+     "unresolved:endpoint_unstable": 2
+    },
+    "events_kept": 1,
+    "events_total": 4
+   }
+  ]
+ }
+]

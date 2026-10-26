@@ -1,0 +1,2 @@
+{"arm": "HF-connect", "host": "kasuga01", "t": 1792962605.8014884, "event": "open", "task": "b04", "attempt": 0, "stage": "connect_ef", "reserve": null}
+{"arm": "HF-connect", "host": "kasuga01", "t": 1792962622.4210973, "event": "close", "task": "b04", "attempt": 0, "stage": "connect_ef", "forwards": 171, "requests": 342, "cache_hits": 171, "wall_s": 16.609538941003848, "outcome": "unresolved:endpoint_unstable", "artifact": null}

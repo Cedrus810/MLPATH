@@ -1,0 +1,293 @@
+{
+  "case": "b04",
+  "warm_source": "results/2026-10-26/hf_warm_start/b04-warm.json",
+  "sigma": 0.0042,
+  "connection": {
+    "status": "connected",
+    "sides": [
+      {
+        "side": "low",
+        "start": {
+          "source": "branch_frame",
+          "q_actual": 2.2763663968136445,
+          "reaction_force": 0.09712276858777524,
+          "energy_eV": -26132.201171875,
+          "rmsd_to_candidate_A": 0.004398834738721838
+        },
+        "descent": {
+          "converged": true,
+          "steps": 16,
+          "energy_eV": -26132.796875,
+          "fmax_eV_A": 0.02998066507279873,
+          "max_energy_rise_eV": 0.0,
+          "energy_drop_eV": 0.595703125,
+          "positions": [
+            [
+              0.22759238724662947,
+              0.09860671177972571,
+              0.06814831769138754
+            ],
+            [
+              -0.6414812733157041,
+              -0.23244578585841177,
+              1.6309267624804387
+            ],
+            [
+              1.246996769082372,
+              0.38207533622812956,
+              0.29525734107720614
+            ],
+            [
+              -0.282733512425033,
+              0.9033347086305337,
+              -0.444838252963657
+            ],
+            [
+              0.21103932706909243,
+              -0.8020863022102125,
+              -0.5315391775402564
+            ],
+            [
+              1.7515450976123863,
+              0.6792071736820384,
+              -2.668807066656261
+            ]
+          ]
+        },
+        "stability": {
+          "verdict": "ef_stable",
+          "trials": [
+            {
+              "energy_rise_eV": 0.078125,
+              "resolved": true,
+              "converged": true,
+              "steps": 5,
+              "returned": true,
+              "same_graph": true,
+              "resolved_drop": false,
+              "allowed_drop_eV": 0.008023423194050661,
+              "same_basin": true,
+              "rmsd_A": 0.015253355521922867,
+              "dE_eV": -0.00390625
+            },
+            {
+              "energy_rise_eV": 0.0390625,
+              "resolved": true,
+              "converged": true,
+              "steps": 6,
+              "returned": true,
+              "same_graph": true,
+              "resolved_drop": false,
+              "allowed_drop_eV": 0.00912610792362591,
+              "same_basin": true,
+              "rmsd_A": 0.02302566034167999,
+              "dE_eV": -0.001953125
+            },
+            {
+              "energy_rise_eV": 0.095703125,
+              "resolved": true,
+              "converged": true,
+              "steps": 6,
+              "returned": true,
+              "same_graph": true,
+              "resolved_drop": false,
+              "allowed_drop_eV": 0.009561470326045332,
+              "same_basin": true,
+              "rmsd_A": 0.026094324673296268,
+              "dE_eV": 0.0
+            }
+          ]
+        },
+        "status": "ef_stable"
+      },
+      {
+        "side": "high",
+        "start": {
+          "source": "branch_frame",
+          "q_actual": 2.281366396813644,
+          "reaction_force": -0.06684664807927584,
+          "energy_eV": -26132.201171875,
+          "rmsd_to_candidate_A": 0.003893634357715012
+        },
+        "descent": {
+          "converged": true,
+          "steps": 17,
+          "energy_eV": -26132.80078125,
+          "fmax_eV_A": 0.0076125734485685825,
+          "max_energy_rise_eV": 0.001953125,
+          "energy_drop_eV": 0.599609375,
+          "positions": [
+            [
+              0.6091548955620616,
+              0.2438535230882854,
+              -0.6174712811353619
+            ],
+            [
+              -0.9105550867442996,
+              -0.33489825204415,
+              2.1140519270021354
+            ],
+            [
+              1.2995485650333736,
+              0.4016620074321558,
+              0.19993184370121642
+            ],
+            [
+              -0.22908621035038723,
+              0.92291391462667,
+              -0.5400897695902522
+            ],
+            [
+              0.2647837969569197,
+              -0.7813284582138155,
+              -0.6283892036650452
+            ],
+            [
+              1.4790827234161352,
+              0.5764885620794776,
+              -2.1789050066209117
+            ]
+          ]
+        },
+        "stability": {
+          "verdict": "ef_stable",
+          "trials": [
+            {
+              "energy_rise_eV": 0.123046875,
+              "resolved": true,
+              "converged": true,
+              "steps": 10,
+              "returned": true,
+              "same_graph": true,
+              "resolved_drop": false,
+              "allowed_drop_eV": 0.00609543275280219,
+              "same_basin": true,
+              "rmsd_A": 0.006778819927707077,
+              "dE_eV": 0.001953125
+            },
+            {
+              "energy_rise_eV": 0.109375,
+              "resolved": true,
+              "converged": true,
+              "steps": 10,
+              "returned": true,
+              "same_graph": true,
+              "resolved_drop": false,
+              "allowed_drop_eV": 0.006582639903621795,
+              "same_basin": true,
+              "rmsd_A": 0.020769843326395792,
+              "dE_eV": 0.0
+            },
+            {
+              "energy_rise_eV": 0.138671875,
+              "resolved": true,
+              "converged": true,
+              "steps": 6,
+              "returned": true,
+              "same_graph": true,
+              "resolved_drop": false,
+              "allowed_drop_eV": 0.006284442529358464,
+              "same_basin": true,
+              "rmsd_A": 0.012206573198428041,
+              "dE_eV": 0.001953125
+            }
+          ]
+        },
+        "status": "ef_stable"
+      }
+    ],
+    "label": "reactive",
+    "fingerprint": {
+      "broken": [
+        [
+          0,
+          1
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          5
+        ]
+      ],
+      "active_subset": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "delta_coordination": [
+        0.002534575374036674,
+        -0.8606569651669033,
+        0.0007273092232052969,
+        0.0007143949670035399,
+        0.0007302696536292119,
+        0.8611477621026798
+      ],
+      "active_atoms": [
+        0,
+        1,
+        5
+      ],
+      "aligned_rmsd_A": 0.4681741281168873,
+      "energy_change_eV": -0.00390625,
+      "components_before": 2,
+      "components_after": 2
+    },
+    "provenance": {
+      "algorithm": "HF-EF-connect-v1",
+      "settings": {
+        "reaction_force_sigma": 0.0042,
+        "resolve_factor": 3.0,
+        "descent_fmax_eV_A": null,
+        "max_descent_steps": 1000,
+        "max_step_A": 0.1,
+        "tangent_amplitudes_A": [
+          0.02,
+          0.05,
+          0.1,
+          0.2
+        ],
+        "perturb_A": 0.03,
+        "n_perturb": 3,
+        "seed": 0
+      },
+      "descent_fmax_eV_A": 0.03,
+      "numbers": [
+        6,
+        17,
+        1,
+        1,
+        1,
+        17
+      ],
+      "candidate_energy_eV": -26132.201171875
+    },
+    "spent": 90,
+    "wall_s": 9.396681744983653
+  },
+  "forwards": 90,
+  "wall_s": 9.41043986598379,
+  "old_c2": {
+    "label": "reactive",
+    "broken": [
+      [
+        0,
+        1
+      ]
+    ],
+    "formed": [
+      [
+        0,
+        5
+      ]
+    ]
+  },
+  "same_event_as_old_c2": true,
+  "old_check_forwards": {
+    "warm_run": 173,
+    "tau1e-3_run": 44
+  }
+}

@@ -1,0 +1,779 @@
+{
+  "date": "2026-10-26",
+  "evidence": "bounded real-model performance check; single run per mode and bracket",
+  "model": "fp32 MACE-POLAR-1-M on local RTX 2080 Ti",
+  "search_source_sha256": {
+    "explore/src/explore/ts_ef.py": "2c74627d7077ab7d26abff692e9062d6161df0eae2348a48307abf878c8edaa5",
+    "explore/src/explore/ts_branch.py": "6fb62da3afdfc2499cec663dccc80e1204d7b0eba7adefad7f0455427ea7aab2"
+  },
+  "checks": {
+    "command": "make -C explore check",
+    "exit_code": 0,
+    "format": "passed",
+    "lint": "passed",
+    "passed": 197,
+    "wall_s": 89.05,
+    "targeted_tests_passed": 39
+  },
+  "paired": {
+    "b04": {
+      "cold": {
+        "search_forwards": 413,
+        "search_wall_s": 37.85833425800956,
+        "continuation": {
+          "points": 33,
+          "steps": [
+            1,
+            6,
+            11,
+            9,
+            7,
+            10,
+            11,
+            11,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            8,
+            45,
+            18,
+            14,
+            1,
+            16,
+            11,
+            5,
+            4,
+            4,
+            5,
+            7,
+            4,
+            6,
+            4,
+            5,
+            6,
+            6,
+            5
+          ],
+          "median_steps": 8.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 0
+        },
+        "bisection": {
+          "points": 10,
+          "steps": [
+            0,
+            0,
+            15,
+            12,
+            8,
+            7,
+            5,
+            5,
+            4,
+            14
+          ],
+          "median_steps": 6.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 0
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.00015255154903277417,
+          "dE_eV": -0.00041527980647515506
+        }
+      },
+      "curvature": {
+        "search_forwards": 242,
+        "search_wall_s": 21.50870219299395,
+        "continuation": {
+          "points": 33,
+          "steps": [
+            1,
+            5,
+            11,
+            10,
+            7,
+            7,
+            5,
+            3,
+            11,
+            3,
+            2,
+            1,
+            3,
+            2,
+            10,
+            7,
+            9,
+            3,
+            1,
+            11,
+            2,
+            5,
+            4,
+            2,
+            4,
+            6,
+            2,
+            2,
+            1,
+            2,
+            3,
+            4,
+            6
+          ],
+          "median_steps": 4.0,
+          "curvature_reused_points": 31,
+          "predicted_points": 0
+        },
+        "bisection": {
+          "points": 10,
+          "steps": [
+            0,
+            0,
+            11,
+            7,
+            6,
+            3,
+            5,
+            3,
+            4,
+            5
+          ],
+          "median_steps": 4.5,
+          "curvature_reused_points": 10,
+          "predicted_points": 0
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.000186999715404159,
+          "dE_eV": -0.00041527980647515506
+        }
+      },
+      "predictor": {
+        "search_forwards": 341,
+        "search_wall_s": 30.085626043000957,
+        "continuation": {
+          "points": 33,
+          "steps": [
+            1,
+            5,
+            11,
+            10,
+            6,
+            9,
+            4,
+            7,
+            2,
+            5,
+            5,
+            2,
+            9,
+            9,
+            10,
+            19,
+            22,
+            16,
+            0,
+            27,
+            16,
+            4,
+            5,
+            2,
+            3,
+            2,
+            0,
+            3,
+            1,
+            4,
+            6,
+            8,
+            11
+          ],
+          "median_steps": 5.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 26
+        },
+        "bisection": {
+          "points": 10,
+          "steps": [
+            0,
+            0,
+            15,
+            12,
+            13,
+            2,
+            1,
+            1,
+            1,
+            9
+          ],
+          "median_steps": 1.5,
+          "curvature_reused_points": 0,
+          "predicted_points": 8
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 6.964267963916802e-05,
+          "dE_eV": -0.00041527980647515506
+        }
+      },
+      "warm": {
+        "search_forwards": 215,
+        "search_wall_s": 18.91993589399499,
+        "continuation": {
+          "points": 35,
+          "steps": [
+            1,
+            5,
+            10,
+            10,
+            7,
+            6,
+            4,
+            3,
+            2,
+            5,
+            1,
+            1,
+            2,
+            3,
+            6,
+            6,
+            6,
+            1,
+            6,
+            15,
+            1,
+            6,
+            8,
+            6,
+            5,
+            2,
+            5,
+            4,
+            1,
+            1,
+            1,
+            2,
+            2,
+            4,
+            7
+          ],
+          "median_steps": 4.0,
+          "curvature_reused_points": 33,
+          "predicted_points": 28
+        },
+        "bisection": {
+          "points": 6,
+          "steps": [
+            0,
+            0,
+            4,
+            10,
+            4,
+            1
+          ],
+          "median_steps": 2.5,
+          "curvature_reused_points": 6,
+          "predicted_points": 4
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.0007033961375682165,
+          "dE_eV": -0.00041527980647515506
+        }
+      },
+      "forward_reduction": 0.4794188861985472,
+      "wall_speedup": 2.0009758209606536
+    },
+    "b05_r1_sA_6-9": {
+      "cold": {
+        "search_forwards": 859,
+        "search_wall_s": 76.13844742800575,
+        "continuation": {
+          "points": 17,
+          "steps": [
+            25,
+            25,
+            60,
+            61,
+            54,
+            53,
+            35,
+            47,
+            32,
+            33,
+            49,
+            15,
+            49,
+            46,
+            43,
+            38,
+            35
+          ],
+          "median_steps": 43.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 0
+        },
+        "bisection": {
+          "points": 4,
+          "steps": [
+            0,
+            0,
+            64,
+            74
+          ],
+          "median_steps": 32.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 0
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.0014408782864162959,
+          "dE_eV": -0.0011606009684328455
+        }
+      },
+      "curvature": {
+        "search_forwards": 303,
+        "search_wall_s": 27.22082767599204,
+        "continuation": {
+          "points": 17,
+          "steps": [
+            28,
+            25,
+            50,
+            19,
+            23,
+            5,
+            17,
+            4,
+            9,
+            4,
+            5,
+            7,
+            4,
+            5,
+            5,
+            6,
+            5
+          ],
+          "median_steps": 6.0,
+          "curvature_reused_points": 15,
+          "predicted_points": 0
+        },
+        "bisection": {
+          "points": 4,
+          "steps": [
+            0,
+            0,
+            31,
+            30
+          ],
+          "median_steps": 15.0,
+          "curvature_reused_points": 4,
+          "predicted_points": 0
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.0021506101960178455,
+          "dE_eV": -0.0011606009684328455
+        }
+      },
+      "predictor": {
+        "search_forwards": 445,
+        "search_wall_s": 39.895501062012045,
+        "continuation": {
+          "points": 17,
+          "steps": [
+            32,
+            24,
+            58,
+            6,
+            34,
+            20,
+            13,
+            31,
+            22,
+            15,
+            12,
+            5,
+            5,
+            8,
+            9,
+            41,
+            8
+          ],
+          "median_steps": 15.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 14
+        },
+        "bisection": {
+          "points": 4,
+          "steps": [
+            0,
+            1,
+            37,
+            43
+          ],
+          "median_steps": 19.0,
+          "curvature_reused_points": 0,
+          "predicted_points": 2
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.0016885831872101372,
+          "dE_eV": -0.0011606009684328455
+        }
+      },
+      "warm": {
+        "search_forwards": 284,
+        "search_wall_s": 25.48469322200981,
+        "continuation": {
+          "points": 17,
+          "steps": [
+            30,
+            25,
+            53,
+            13,
+            25,
+            6,
+            4,
+            17,
+            4,
+            3,
+            1,
+            5,
+            2,
+            9,
+            3,
+            10,
+            4
+          ],
+          "median_steps": 6.0,
+          "curvature_reused_points": 15,
+          "predicted_points": 14
+        },
+        "bisection": {
+          "points": 4,
+          "steps": [
+            0,
+            0,
+            22,
+            27
+          ],
+          "median_steps": 11.0,
+          "curvature_reused_points": 4,
+          "predicted_points": 2
+        },
+        "vs_old_saddle": {
+          "rmsd_kabsch_A": 0.0018116451544273723,
+          "dE_eV": -0.0031137259684328455
+        }
+      },
+      "forward_reduction": 0.6693830034924331,
+      "wall_speedup": 2.987614830781989
+    }
+  },
+  "warm": {
+    "b04": {
+      "search_forwards": 215,
+      "search_wall_s": 18.91993589399499,
+      "continuation": {
+        "points": 35,
+        "steps": [
+          1,
+          5,
+          10,
+          10,
+          7,
+          6,
+          4,
+          3,
+          2,
+          5,
+          1,
+          1,
+          2,
+          3,
+          6,
+          6,
+          6,
+          1,
+          6,
+          15,
+          1,
+          6,
+          8,
+          6,
+          5,
+          2,
+          5,
+          4,
+          1,
+          1,
+          1,
+          2,
+          2,
+          4,
+          7
+        ],
+        "median_steps": 4.0,
+        "curvature_reused_points": 33,
+        "predicted_points": 28
+      },
+      "bisection": {
+        "points": 6,
+        "steps": [
+          0,
+          0,
+          4,
+          10,
+          4,
+          1
+        ],
+        "median_steps": 2.5,
+        "curvature_reused_points": 6,
+        "predicted_points": 4
+      },
+      "vs_old_saddle": {
+        "rmsd_kabsch_A": 0.0007033961375682165,
+        "dE_eV": -0.00041527980647515506
+      },
+      "property_status": "index_one",
+      "connection_status": "connected",
+      "fmax_eV_A": 0.009772852063179016,
+      "check_forwards": 173,
+      "imaginary_wavenumbers_icm": [
+        -535.9347829657664
+      ],
+      "label": "reactive",
+      "broken": [
+        [
+          0,
+          1
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          5
+        ]
+      ]
+    },
+    "b05_r1_sA_6-9": {
+      "search_forwards": 284,
+      "search_wall_s": 25.48469322200981,
+      "continuation": {
+        "points": 17,
+        "steps": [
+          30,
+          25,
+          53,
+          13,
+          25,
+          6,
+          4,
+          17,
+          4,
+          3,
+          1,
+          5,
+          2,
+          9,
+          3,
+          10,
+          4
+        ],
+        "median_steps": 6.0,
+        "curvature_reused_points": 15,
+        "predicted_points": 14
+      },
+      "bisection": {
+        "points": 4,
+        "steps": [
+          0,
+          0,
+          22,
+          27
+        ],
+        "median_steps": 11.0,
+        "curvature_reused_points": 4,
+        "predicted_points": 2
+      },
+      "vs_old_saddle": {
+        "rmsd_kabsch_A": 0.0018116451544273723,
+        "dE_eV": -0.0031137259684328455
+      },
+      "property_status": "index_one",
+      "connection_status": "connected",
+      "fmax_eV_A": 0.00252252328209579,
+      "check_forwards": 715,
+      "imaginary_wavenumbers_icm": [
+        -886.1689811725024
+      ],
+      "label": "reactive",
+      "broken": [
+        [
+          9,
+          14
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          1
+        ],
+        [
+          6,
+          9
+        ]
+      ]
+    },
+    "b05_r1_sA_10-13": {
+      "search_forwards": 259,
+      "search_wall_s": 25.060614475005423,
+      "continuation": {
+        "points": 17,
+        "steps": [
+          54,
+          25,
+          41,
+          19,
+          6,
+          7,
+          6,
+          4,
+          17,
+          2,
+          3,
+          7,
+          7,
+          5,
+          19,
+          2,
+          2
+        ],
+        "median_steps": 7.0,
+        "curvature_reused_points": 15,
+        "predicted_points": 14
+      },
+      "bisection": {
+        "points": 4,
+        "steps": [
+          1,
+          0,
+          6,
+          5
+        ],
+        "median_steps": 3.0,
+        "curvature_reused_points": 4,
+        "predicted_points": 2
+      },
+      "vs_old_saddle": {
+        "rmsd_kabsch_A": 0.00017536024281401635,
+        "dE_eV": -0.002016650490986649
+      },
+      "property_status": "not_run",
+      "connection_status": "not_run",
+      "fmax_eV_A": 0.0013452348066493869
+    },
+    "b05_r1_sB_10-13": {
+      "search_forwards": 244,
+      "search_wall_s": 22.186865676994785,
+      "continuation": {
+        "points": 17,
+        "steps": [
+          22,
+          1,
+          60,
+          23,
+          10,
+          15,
+          7,
+          8,
+          4,
+          2,
+          2,
+          1,
+          10,
+          2,
+          5,
+          4,
+          3
+        ],
+        "median_steps": 5.0,
+        "curvature_reused_points": 15,
+        "predicted_points": 14
+      },
+      "bisection": {
+        "points": 4,
+        "steps": [
+          0,
+          0,
+          16,
+          28
+        ],
+        "median_steps": 8.0,
+        "curvature_reused_points": 4,
+        "predicted_points": 2
+      },
+      "vs_old_saddle": {
+        "rmsd_kabsch_A": 0.0030662381570495086,
+        "dE_eV": -0.0015497033309657127
+      },
+      "property_status": "not_run",
+      "connection_status": "not_run",
+      "fmax_eV_A": 0.008822890929877758
+    },
+    "b05_fp32_sA_10-13": {
+      "search_forwards": 256,
+      "search_wall_s": 23.608517824002774,
+      "continuation": {
+        "points": 17,
+        "steps": [
+          24,
+          15,
+          57,
+          7,
+          6,
+          11,
+          4,
+          11,
+          10,
+          5,
+          2,
+          2,
+          7,
+          7,
+          2,
+          7,
+          13
+        ],
+        "median_steps": 7.0,
+        "curvature_reused_points": 15,
+        "predicted_points": 14
+      },
+      "bisection": {
+        "points": 4,
+        "steps": [
+          0,
+          1,
+          29,
+          15
+        ],
+        "median_steps": 8.0,
+        "curvature_reused_points": 4,
+        "predicted_points": 2
+      },
+      "vs_old_saddle": {
+        "rmsd_kabsch_A": 0.007864616345164896,
+        "dE_eV": 0.0
+      },
+      "property_status": "not_run",
+      "connection_status": "not_run",
+      "fmax_eV_A": 0.0009214042220264673
+    }
+  },
+  "source_snapshot_directories": [
+    "source_initial",
+    "source_final"
+  ],
+  "metadata_note": "Initial benchmark driver lacked property.status; its summary label was corrected from raw saddle_order, with raw search/property/connection data unchanged and initial source archived."
+}

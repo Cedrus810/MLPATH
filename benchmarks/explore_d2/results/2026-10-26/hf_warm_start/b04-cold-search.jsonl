@@ -1,0 +1,4 @@
+{"arm": "HF-perf", "host": "kasuga01", "t": 1792941638.510575, "event": "open", "task": "b04", "attempt": 0, "stage": "ts_branches_ef", "reserve": null}
+{"arm": "HF-perf", "host": "kasuga01", "t": 1792941669.3883276, "event": "close", "task": "b04", "attempt": 0, "stage": "ts_branches_ef", "forwards": 333, "requests": 666, "cache_hits": 333, "wall_s": 30.838730503994157, "outcome": "continuous_maximum", "artifact": null}
+{"arm": "HF-perf", "host": "kasuga01", "t": 1792941669.4016745, "event": "open", "task": "b04", "attempt": 0, "stage": "ts_search_ef", "reserve": null}
+{"arm": "HF-perf", "host": "kasuga01", "t": 1792941676.3599546, "event": "close", "task": "b04", "attempt": 0, "stage": "ts_search_ef", "forwards": 80, "requests": 160, "cache_hits": 80, "wall_s": 6.9534620530030224, "outcome": "converged_candidate", "artifact": null}

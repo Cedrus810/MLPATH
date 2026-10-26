@@ -1,0 +1,6 @@
+model load 4.2 s
+b04 connected reactive 90 fw 9 s same_as_old: True [('low', 'ef_stable', 'branch_frame', 16), ('high', 'ef_stable', 'branch_frame', 17)] old check fw: {'warm_run': 173, 'tau1e-3_run': 44}
+b05_r1_sA_6-9 connected dissociation 330 fw 30 s same_as_old: True [('low', 'ef_stable', 'branch_frame', 85), ('high', 'ef_stable', 'tangent', 103)] old check fw: {'warm_run': 715, 'tau1e-3_run': 775}
+b05_r1_sA_10-13 connected dissociation 410 fw 37 s same_as_old: True [('low', 'ef_stable', 'branch_frame', 83), ('high', 'ef_stable', 'branch_frame', 184)] old check fw: {'warm_run': None, 'tau1e-3_run': 2120}
+b05_r1_sB_10-13 connected dissociation 362 fw 35 s same_as_old: True [('low', 'ef_stable', 'branch_frame', 85), ('high', 'ef_stable', 'branch_frame', 128)] old check fw: {'warm_run': None, 'tau1e-3_run': 1144}
+b05_fp32_sA_10-13 connected dissociation 400 fw 37 s same_as_old: True [('low', 'ef_stable', 'branch_frame', 83), ('high', 'ef_stable', 'branch_frame', 190)] old check fw: {'warm_run': None, 'tau1e-3_run': 1593}

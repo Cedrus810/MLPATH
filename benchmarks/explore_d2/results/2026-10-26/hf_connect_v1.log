@@ -1,0 +1,6 @@
+model load 72.0 s
+b04 unresolved:endpoint_unstable None 171 fw 17 s same_as_old: None [('low', 'ef_unstable', 'branch_frame', 0), ('high', 'ef_stable', 'branch_frame', 17)] old check fw: {'warm_run': 173, 'tau1e-3_run': 44}
+b05_r1_sA_6-9 unresolved:endpoint_unstable None 562 fw 51 s same_as_old: None [('low', 'ef_stable', 'branch_frame', 85), ('high', 'ef_unstable', 'branch_frame', 0)] old check fw: {'warm_run': 715, 'tau1e-3_run': 775}
+b05_r1_sA_10-13 connected dissociation 339 fw 30 s same_as_old: True [('low', 'ef_stable', 'branch_frame', 82), ('high', 'ef_stable', 'branch_frame', 143)] old check fw: {'warm_run': None, 'tau1e-3_run': 2120}
+b05_r1_sB_10-13 unresolved:endpoint_unstable None 830 fw 73 s same_as_old: None [('low', 'ef_unstable', 'branch_frame', 0), ('high', 'ef_unstable', 'branch_frame', 0)] old check fw: {'warm_run': None, 'tau1e-3_run': 1144}
+b05_fp32_sA_10-13 unresolved:endpoint_unstable None 397 fw 59 s same_as_old: None [('low', 'ef_stable', 'branch_frame', 93), ('high', 'ef_unstable', 'branch_frame', 200)] old check fw: {'warm_run': None, 'tau1e-3_run': 1593}

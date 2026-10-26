@@ -1,0 +1,186 @@
+{
+ "run": "results/2026-10-23/b05_fp32_sA",
+ "rule_version": "D2-v1",
+ "basin_rule": {
+  "basin_energy_eV": 0.05,
+  "basin_rmsd_A": 0.15
+ },
+ "l4_items": 322,
+ "l4_forwards": 233125,
+ "l4_status": {
+  "unresolved:descent_failed": 94,
+  "unresolved:saddle_not_converged": 112,
+  "unresolved:relayed": 40,
+  "unresolved:saddle_wrong_index": 17,
+  "c2": 3,
+  "budget_exhausted": 12,
+  "unresolved:both_sides_same_basin": 8,
+  "unresolved:saddle_trivial_mode_floor_above_tolerance": 8,
+  "unresolved:hessian_internal_mode_recheck_disagrees": 1,
+  "unresolved:saddle_seed_above_ceiling": 26,
+  "unresolved:hessian_trivial_mode_floor_above_tolerance": 1
+ },
+ "duplicate_c2_forwards": 0,
+ "no_endpoint_items": {
+  "not_minimum": 33,
+  "budget_exhausted": 6,
+  "no_L3": 201
+ },
+ "policies": {
+  "first_1_per_endpoint_group": {
+   "l4_items_run": 254,
+   "l4_items_skipped": 68,
+   "forwards_skipped": 55592,
+   "forwards_skipped_fraction": 0.23846434316353887,
+   "skipped_status": {
+    "unresolved:saddle_not_converged": 36,
+    "unresolved:descent_failed": 22,
+    "c2": 1,
+    "budget_exhausted": 3,
+    "unresolved:relayed": 6
+   },
+   "events_kept": 2,
+   "events_total": 3
+  },
+  "first_2_per_endpoint_group": {
+   "l4_items_run": 264,
+   "l4_items_skipped": 58,
+   "forwards_skipped": 48264,
+   "forwards_skipped_fraction": 0.20703056300268097,
+   "skipped_status": {
+    "unresolved:saddle_not_converged": 29,
+    "c2": 1,
+    "budget_exhausted": 2,
+    "unresolved:descent_failed": 20,
+    "unresolved:relayed": 6
+   },
+   "events_kept": 2,
+   "events_total": 3
+  }
+ },
+ "endpoint_groups": {
+  "groups": 14,
+  "items": 82,
+  "size_histogram": {
+   "1": 4,
+   "3": 3,
+   "4": 1,
+   "5": 1,
+   "7": 1,
+   "11": 2,
+   "15": 1,
+   "16": 1
+  },
+  "groups_returning_to_pose_graph": 13,
+  "largest": [
+   {
+    "size": 16,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:saddle_not_converged": 10,
+     "c2": 1,
+     "unresolved:descent_failed": 4,
+     "unresolved:relayed": 1
+    },
+    "forwards": 11888
+   },
+   {
+    "size": 15,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:descent_failed": 4,
+     "unresolved:saddle_not_converged": 10,
+     "budget_exhausted": 1
+    },
+    "forwards": 11586
+   },
+   {
+    "size": 11,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:saddle_not_converged": 2,
+     "unresolved:descent_failed": 6,
+     "unresolved:relayed": 3
+    },
+    "forwards": 10913
+   },
+   {
+    "size": 11,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:saddle_not_converged": 9,
+     "budget_exhausted": 1,
+     "unresolved:descent_failed": 1
+    },
+    "forwards": 7932
+   },
+   {
+    "size": 7,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:descent_failed": 5,
+     "unresolved:saddle_not_converged": 2
+    },
+    "forwards": 6575
+   },
+   {
+    "size": 5,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:relayed": 2,
+     "budget_exhausted": 1,
+     "unresolved:descent_failed": 2
+    },
+    "forwards": 5754
+   },
+   {
+    "size": 4,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:descent_failed": 3,
+     "unresolved:relayed": 1
+    },
+    "forwards": 4215
+   },
+   {
+    "size": 3,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:saddle_not_converged": 3
+    },
+    "forwards": 1443
+   },
+   {
+    "size": 3,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:saddle_not_converged": 3
+    },
+    "forwards": 1443
+   },
+   {
+    "size": 3,
+    "returns_to_pose_graph": true,
+    "release_label": "rearrangement",
+    "l4_status": {
+     "unresolved:saddle_not_converged": 3
+    },
+    "forwards": 1443
+   }
+  ]
+ },
+ "duplicate_c2_in_original_endpoint_group": {
+  "same": 0,
+  "different": 0
+ },
+ "events_n": 3
+}

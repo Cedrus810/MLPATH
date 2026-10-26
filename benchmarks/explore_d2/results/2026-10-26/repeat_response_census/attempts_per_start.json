@@ -1,0 +1,606 @@
+[
+ {
+  "run": "b05_v11_sA",
+  "total_forwards": 140126.0,
+  "events_total": 4,
+  "radii": [
+   {
+    "radius_A": 0.0114,
+    "radius_over_jitter": 2,
+    "clusters": 220,
+    "cluster_size_max": 18,
+    "clusters_with_event": [
+     {
+      "size": 9,
+      "found": 6,
+      "first_found_at": 2
+     },
+     {
+      "size": 18,
+      "found": 1,
+      "first_found_at": 8
+     },
+     {
+      "size": 7,
+      "found": 3,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 2,
+      "first_found_at": 1
+     },
+     {
+      "size": 6,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 3,
+      "first_found_at": 1
+     },
+     {
+      "size": 2,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     }
+    ],
+    "policies": [
+     {
+      "attempts_per_cluster": 1,
+      "items_run": 220,
+      "forwards_skipped_fraction": 0.3847608580848665,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 2,
+      "items_run": 259,
+      "forwards_skipped_fraction": 0.25826755919672295,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 3,
+      "items_run": 278,
+      "forwards_skipped_fraction": 0.18063742631631532,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 5,
+      "items_run": 299,
+      "forwards_skipped_fraction": 0.07753735923383241,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 10,
+      "items_run": 316,
+      "forwards_skipped_fraction": 0.01763412928364472,
+      "events_kept": 4
+     }
+    ]
+   },
+   {
+    "radius_A": 0.0228,
+    "radius_over_jitter": 4,
+    "clusters": 171,
+    "cluster_size_max": 18,
+    "clusters_with_event": [
+     {
+      "size": 9,
+      "found": 6,
+      "first_found_at": 2
+     },
+     {
+      "size": 18,
+      "found": 1,
+      "first_found_at": 8
+     },
+     {
+      "size": 9,
+      "found": 4,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 2,
+      "first_found_at": 1
+     },
+     {
+      "size": 7,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 3,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     }
+    ],
+    "policies": [
+     {
+      "attempts_per_cluster": 1,
+      "items_run": 171,
+      "forwards_skipped_fraction": 0.5372093687110172,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 2,
+      "items_run": 228,
+      "forwards_skipped_fraction": 0.3748911693761329,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 3,
+      "items_run": 254,
+      "forwards_skipped_fraction": 0.2708919115653055,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 5,
+      "items_run": 286,
+      "forwards_skipped_fraction": 0.11999914362787777,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 10,
+      "items_run": 316,
+      "forwards_skipped_fraction": 0.01763412928364472,
+      "events_kept": 4
+     }
+    ]
+   },
+   {
+    "radius_A": 0.057,
+    "radius_over_jitter": 10,
+    "clusters": 136,
+    "cluster_size_max": 20,
+    "clusters_with_event": [
+     {
+      "size": 9,
+      "found": 6,
+      "first_found_at": 2
+     },
+     {
+      "size": 20,
+      "found": 1,
+      "first_found_at": 9
+     },
+     {
+      "size": 9,
+      "found": 4,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 2,
+      "first_found_at": 1
+     },
+     {
+      "size": 9,
+      "found": 1,
+      "first_found_at": 3
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 3,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     }
+    ],
+    "policies": [
+     {
+      "attempts_per_cluster": 1,
+      "items_run": 136,
+      "forwards_skipped_fraction": 0.6491015229150907,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 2,
+      "items_run": 191,
+      "forwards_skipped_fraction": 0.4681286841842342,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 3,
+      "items_run": 229,
+      "forwards_skipped_fraction": 0.3607396200562351,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 5,
+      "items_run": 268,
+      "forwards_skipped_fraction": 0.19932774788404722,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 10,
+      "items_run": 314,
+      "forwards_skipped_fraction": 0.02432810470576481,
+      "events_kept": 4
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "run": "b05_v11_sB",
+  "total_forwards": 152547.0,
+  "events_total": 4,
+  "radii": [
+   {
+    "radius_A": 0.0114,
+    "radius_over_jitter": 2,
+    "clusters": 219,
+    "cluster_size_max": 19,
+    "clusters_with_event": [
+     {
+      "size": 4,
+      "found": 1,
+      "first_found_at": 4
+     },
+     {
+      "size": 6,
+      "found": 4,
+      "first_found_at": 1
+     },
+     {
+      "size": 5,
+      "found": 1,
+      "first_found_at": 5
+     },
+     {
+      "size": 10,
+      "found": 4,
+      "first_found_at": 2
+     },
+     {
+      "size": 3,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 3,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 2,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 2,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     }
+    ],
+    "policies": [
+     {
+      "attempts_per_cluster": 1,
+      "items_run": 219,
+      "forwards_skipped_fraction": 0.408942817623421,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 2,
+      "items_run": 259,
+      "forwards_skipped_fraction": 0.2466977390574708,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 3,
+      "items_run": 280,
+      "forwards_skipped_fraction": 0.16758113892767476,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 5,
+      "items_run": 304,
+      "forwards_skipped_fraction": 0.07458684864336892,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 10,
+      "items_run": 320,
+      "forwards_skipped_fraction": 0.02095092004431421,
+      "events_kept": 4
+     }
+    ]
+   },
+   {
+    "radius_A": 0.0228,
+    "radius_over_jitter": 4,
+    "clusters": 175,
+    "cluster_size_max": 24,
+    "clusters_with_event": [
+     {
+      "size": 12,
+      "found": 6,
+      "first_found_at": 2
+     },
+     {
+      "size": 11,
+      "found": 1,
+      "first_found_at": 11
+     },
+     {
+      "size": 3,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 12,
+      "found": 5,
+      "first_found_at": 2
+     },
+     {
+      "size": 3,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 5,
+      "found": 2,
+      "first_found_at": 3
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 2,
+      "found": 1,
+      "first_found_at": 2
+     }
+    ],
+    "policies": [
+     {
+      "attempts_per_cluster": 1,
+      "items_run": 175,
+      "forwards_skipped_fraction": 0.5246448635502501,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 2,
+      "items_run": 217,
+      "forwards_skipped_fraction": 0.40905425868748646,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 3,
+      "items_run": 247,
+      "forwards_skipped_fraction": 0.28762283099634867,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 5,
+      "items_run": 272,
+      "forwards_skipped_fraction": 0.17805659894983186,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 10,
+      "items_run": 307,
+      "forwards_skipped_fraction": 0.06079437812608573,
+      "events_kept": 4
+     }
+    ]
+   },
+   {
+    "radius_A": 0.057,
+    "radius_over_jitter": 10,
+    "clusters": 141,
+    "cluster_size_max": 24,
+    "clusters_with_event": [
+     {
+      "size": 12,
+      "found": 6,
+      "first_found_at": 2
+     },
+     {
+      "size": 6,
+      "found": 2,
+      "first_found_at": 3
+     },
+     {
+      "size": 11,
+      "found": 1,
+      "first_found_at": 11
+     },
+     {
+      "size": 6,
+      "found": 1,
+      "first_found_at": 5
+     },
+     {
+      "size": 3,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 12,
+      "found": 5,
+      "first_found_at": 2
+     },
+     {
+      "size": 3,
+      "found": 1,
+      "first_found_at": 2
+     },
+     {
+      "size": 8,
+      "found": 2,
+      "first_found_at": 5
+     },
+     {
+      "size": 4,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 1,
+      "found": 1,
+      "first_found_at": 1
+     },
+     {
+      "size": 2,
+      "found": 1,
+      "first_found_at": 2
+     }
+    ],
+    "policies": [
+     {
+      "attempts_per_cluster": 1,
+      "items_run": 141,
+      "forwards_skipped_fraction": 0.6033419208506231,
+      "events_kept": 2
+     },
+     {
+      "attempts_per_cluster": 2,
+      "items_run": 190,
+      "forwards_skipped_fraction": 0.48259225025729774,
+      "events_kept": 3
+     },
+     {
+      "attempts_per_cluster": 3,
+      "items_run": 226,
+      "forwards_skipped_fraction": 0.3515178928461392,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 5,
+      "items_run": 259,
+      "forwards_skipped_fraction": 0.23241361678695746,
+      "events_kept": 4
+     },
+     {
+      "attempts_per_cluster": 10,
+      "items_run": 306,
+      "forwards_skipped_fraction": 0.06772339016827601,
+      "events_kept": 4
+     }
+    ]
+   }
+  ]
+ }
+]

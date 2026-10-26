@@ -1,0 +1,6 @@
+resident fp32 model loaded in 4.3 s
+b04 warm converged_candidate 215 18.9 s steps 4.0 {'rmsd_kabsch_A': 0.0007033961375682165, 'dE_eV': -0.00041527980647515506} index_one connected
+b05_r1_sA_6-9 warm converged_candidate 284 25.5 s steps 6.0 {'rmsd_kabsch_A': 0.0018116451544273723, 'dE_eV': -0.0031137259684328455} index_one connected
+b05_r1_sA_10-13 warm converged_candidate 259 25.1 s steps 7.0 {'rmsd_kabsch_A': 0.00017536024281401635, 'dE_eV': -0.002016650490986649} not_run not_run
+b05_r1_sB_10-13 warm converged_candidate 244 22.2 s steps 5.0 {'rmsd_kabsch_A': 0.0030662381570495086, 'dE_eV': -0.0015497033309657127} not_run not_run
+b05_fp32_sA_10-13 warm converged_candidate 256 23.6 s steps 7.0 {'rmsd_kabsch_A': 0.007864616345164896, 'dE_eV': 0.0} not_run not_run

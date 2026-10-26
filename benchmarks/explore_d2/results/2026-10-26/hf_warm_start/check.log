@@ -1,0 +1,11 @@
+make: Entering directory '/home/ruigengji/MLPATH/explore'
+../.venv-tools/bin/ruff format --check src/explore tests
+30 files already formatted
+../.venv-tools/bin/ruff check src/explore tests
+All checks passed!
+/home/ruigengji/miniforge3/envs/openmm_dev/bin/python -m pytest -q
+........................................................................ [ 36%]
+........................................................................ [ 73%]
+.....................................................                    [100%]
+197 passed in 89.05s (0:01:29)
+make: Leaving directory '/home/ruigengji/MLPATH/explore'

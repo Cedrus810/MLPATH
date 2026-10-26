@@ -1,0 +1,55 @@
+[
+ {
+  "run": "results/2026-10-26/b05_hf_sA",
+  "radius_A": 0.014,
+  "first_round": 1,
+  "promoted": 325,
+  "clusters": 203,
+  "cluster_sizes": {
+   "1": 160,
+   "2": 19,
+   "3": 8,
+   "4": 7,
+   "5": 3,
+   "7": 1,
+   "9": 4,
+   "17": 1
+  },
+  "clustering_wall_s": 97.48577156098327,
+  "hs_ran_in_v1": 236,
+  "of_which_round_one": 141,
+  "refine_forwards_v1": 237127,
+  "refine_forwards_round_one": 143247,
+  "round_two_fraction": 0.39590599130423776,
+  "events_distinct": 2,
+  "events_with_round_one_member": 2
+ },
+ {
+  "run": "results/2026-10-26/b05_hf_sB",
+  "radius_A": 0.014,
+  "first_round": 1,
+  "promoted": 336,
+  "clusters": 202,
+  "cluster_sizes": {
+   "1": 155,
+   "2": 22,
+   "3": 13,
+   "4": 3,
+   "5": 2,
+   "6": 1,
+   "7": 1,
+   "9": 2,
+   "11": 1,
+   "12": 1,
+   "22": 1
+  },
+  "clustering_wall_s": 111.92893375101266,
+  "hs_ran_in_v1": 240,
+  "of_which_round_one": 140,
+  "refine_forwards_v1": 238176,
+  "refine_forwards_round_one": 137534,
+  "round_two_fraction": 0.4225530699986565,
+  "events_distinct": 2,
+  "events_with_round_one_member": 2
+ }
+]
