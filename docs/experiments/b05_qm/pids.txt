@@ -1,0 +1,7 @@
+ 18:57:16 up 6 days,  5:18,  1 user,  load average: 0.08, 0.24, 0.51
+67009 ts_new_10-12
+67010 ts_ctrl_6-9
+92004 chain_new_10-12
+92005 chain_ctrl_6-9
+235826 chain2_new_10-12
+235827 chain2_ctrl_6-9

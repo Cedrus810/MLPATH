@@ -1,0 +1,98 @@
+{
+ "task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k1:f2.4:L0-v1|distance:10-12:+1:+:L0-v1",
+ "saddle_energy_eV": -18880.41015625,
+ "fmax_eV_A": 0.005956345237791538,
+ "provenance": {
+  "source": "analytic",
+  "members": 1,
+  "finite_difference_deviation": 0.0062036045130405134,
+  "finite_difference_deviations": [
+   0.0062036045130405134,
+   0.002948804565847101,
+   0.0031484454108732175
+  ],
+  "probe_directions": 3,
+  "asymmetry": 2.819823356933709e-05,
+  "meaning": "backend second derivative, cross-checked against seeded random HVPs; this bounds the error along the directions tried, it does not certify the matrix"
+ },
+ "eigenvalue_tol": 0.001,
+ "floor_gate_limit": 0.0005,
+ "trivial_mode_floor_worst_residual": 2.569626692363228e-05,
+ "internal_eigenvalues_lowest": [
+  -1.9520522326512089,
+  0.011205326071513928,
+  0.027065054395888577,
+  0.03608646814084125,
+  0.2091740555166151,
+  0.23781796129561578,
+  0.26906345702095824,
+  0.3035618692264043
+ ],
+ "negative_internal": [
+  -1.9520522326512089
+ ],
+ "internal_mode_recheck": {
+  "performed": true,
+  "agree": true,
+  "resolution_stable": true,
+  "fits_h2_law": false,
+  "resolution_diagnosis": "stable",
+  "modes": [
+   {
+    "index": 0,
+    "eigenvalue": -1.9520522326512089,
+    "rigid_body_overlap": 6.203091967815128e-16,
+    "subspace": "internal",
+    "steps_A": [
+     0.005,
+     0.01,
+     0.02
+    ],
+    "curvature_by_step": [
+     -1.619023307886018,
+     -2.033315023617212,
+     -1.9991502608526563
+    ],
+    "extrapolated_to_zero_step": -1.762814673590509,
+    "h2_coefficient": -691.5134696844963,
+    "fits_h2_law": false,
+    "compared_against": "smallest_step",
+    "reference_curvature": -1.619023307886018,
+    "classification_agrees": true,
+    "classification_steady_across_step": true
+   },
+   {
+    "index": 7,
+    "eigenvalue": 0.011205326071513928,
+    "rigid_body_overlap": 2.647337801116695e-13,
+    "subspace": "internal",
+    "steps_A": [
+     0.005,
+     0.01,
+     0.02
+    ],
+    "curvature_by_step": [
+     0.02536649858126616,
+     0.012585648073868801,
+     0.014434771526522724
+    ],
+    "extrapolated_to_zero_step": 0.020798027836691386,
+    "h2_coefficient": -19.061267292221867,
+    "fits_h2_law": false,
+    "compared_against": "smallest_step",
+    "reference_curvature": 0.02536649858126616,
+    "classification_agrees": true,
+    "classification_steady_across_step": true
+   }
+  ],
+  "gate_step_A": 0.01,
+  "hessian_source": "analytic",
+  "boundary_mode_index": 7,
+  "internal_modes_available": 42,
+  "force_evaluations": 12,
+  "fits_h2_law_meaning": "the ladder is a quadratic in h, so the extrapolate is meaningful. NOT evidence that the surface is smooth: a gaussian narrower than the probe fits the same law to within half a percent over a twenty-fivefold span",
+  "meaning": "agree gates matrix assembly against a truncation-extrapolated direct product; resolution_diagnosis is reported only, and says just whether the classification held across the ladder -- nothing here can decide why it moved"
+ },
+ "forwards": 20,
+ "wall_s": 7.309228288941085
+}

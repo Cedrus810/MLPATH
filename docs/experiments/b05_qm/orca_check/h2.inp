@@ -1,0 +1,6 @@
+! r2SCAN-3c TightSCF
+%pal nprocs 2 end
+* xyz 0 1
+H 0 0 0
+H 0 0 0.74
+*

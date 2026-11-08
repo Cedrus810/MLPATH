@@ -1,0 +1,1858 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ,####,    ,#,          
+            ##       ##  ##   ,#'  ##            #'  '#       #'       ,# #          
+            ##       ##  #######   ##           ,######,      #####,      #          
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,     #,   #      #          
+             '#######'   ##     ##  '#######'  #'      '#     '####' #    #          
+
+
+
+                #########################################################
+                #                        -***-                          #
+                #          Department of theory and spectroscopy        #
+                #                                                       #
+                #                      Frank Neese                      #
+                #                                                       #
+                #     Directorship, Architecture, Infrastructure        #
+                #                    SHARK, DRIVERS                     #
+                #        Core code/Algorithms in most modules           #
+                #                                                       #
+                #        Max Planck Institute fuer Kohlenforschung      #
+                #                Kaiser Wilhelm Platz 1                 #
+                #                 D-45470 Muelheim/Ruhr                 #
+                #                      Germany                          #
+                #                                                       #
+                #                  All rights reserved                  #
+                #                        -***-                          #
+                #########################################################
+
+
+                         Program Version 6.1.1  -  RELEASE   -
+                                (GIT: $487d211c$)
+                          ($2025-11-21 10:33:24 +0100$)
+
+
+ With contributions from (in alphabetic order):
+[Max-Planck-Institut fuer Kohlenforschung]                               
+  Daniel Aravena         : Magnetic Suceptibility                        
+  Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+  Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum      
+  Ute Becker             : All parallelization in ORCA, NUMFREQ, NUMCALC 
+  Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD           
+  Dmytro Bykov           : pre 5.0 version of the SCF Hessian            
+  Marcos Casanova-Páez   : Triplet and SCS-CIS(D). UHF-(DLPNO)-IP/EA/STEOM-CCSD. UHF-CVS-IP/STEOM-CCSD   
+  Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE 
+  Pauline Colinet        : FMM embedding                                 
+  Dipayan Datta          : RHF DLPNO-CCSD density                        
+  Achintya Kumar Dutta   : EOM-CC, STEOM-CC                              
+  Nicolas Foglia         : Exact transition moments, OPA infrastructure, MCD improvements    
+  Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI      
+  Miquel Garcia-Rates    : C-PCM and meta-GGA Hessian, CCSD/C-PCM, Gaussian charge scheme 
+  Tiago L. C. Gouveia    : GS-ROHF, GS-ROCIS                             
+  Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization        
+  Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods 
+  Ingolf Harden          : AUTO-CI MPn and infrastructure                
+  Benjamin Helmich-Paris : MC-RPA, TRAH-(SCF,CASSCF), AVAS, COSX integrals, SCF dyn. polar., MC-PDFT, srDFT 
+  Lee Huntington         : MR-EOM, pCC                                   
+  Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM     
+  Riya Kayal             : Wick's Theorem for AUTO-CI, AUTO-CI UHF-CCSDT 
+  Emily Kempfer          : AUTO-CI RHF CISDT and CCSDT, approximate NEVPT4
+  Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K, improved NEVPT2 
+  Axel Koslowski         : Symmetry handling                             
+  Simone Kossmann        : meta-GGA functionals, TD-DFT gradient, OOMP2, (MP2 Hessian; deprecated post 5.0) 
+  Lucas Lang             : DCDCAS, Hyperfine gauge corrections, ICE-SOC+SSC
+  Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC        
+  Spencer Leger          : CASSCF response                               
+  Dagmar Lenk            : GEPOL surface, SMD, ORCA-2-JSON               
+  Dimitrios Liakos       : Extrapolation schemes; Compound Job, Property file
+  Dimitrios Manganas     : Further ROCIS development; embedding schemes. LFT, Crystal Embedding 
+  Dimitrios Pantazis     : SARC Basis sets                               
+  Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients 
+  Taras Petrenko         : pre 6.0 DFT Hessian and TD-DFT gradient,  ECA, NRVS 
+  Petra Pikulova         : Analytic Raman intensities                    
+  Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient                 
+  Shashank Vittal Rao    : ES-AILFT, MagRelax                            
+  Christoph Reimann      : Effective Core Potentials                     
+  Marius Retegan         : Local ZFS, SOC                                
+  Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples 
+  Michael Roemelt        : Original ROCIS implementation, recursive CI coupling coefficients
+  Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density      
+  Barbara Sandhoefer     : DKH picture change effects                    
+  Yorick L. A. Schmerwitz: GMF and freeze-and-release deltaSCF, NEB S-IDPP initial path                    
+  Kantharuban Sivalingam : CASSCF convergence/infrastructure, NEVPT2, NEVPT3, NEVPT4(SD), FIC-MRCI and CEPA variants
+  Bernardo de Souza      : ESD, SOC TD-DFT                               
+  Georgi L. Stoychev     : AutoAux, RI-MP2 NMR, DLPNO-MP2 response, X2C  
+  Van Anh Tran           : RI-MP2 g-tensors                              
+  Willem Van den Heuvel  : Paramagnetic NMR                              
+  Zikuan Wang            : NOTCH, Electric field optimization            
+  Frank Wennmohs         : Technical directorship and infrastructure     
+  Hang Xu                : AUTO-CI-Response properties                   
+                                                                         
+[FACCTs GmbH]                                                            
+  Markus Bursch, Nicolas Foglia, Miquel Garcia-Rates, Ingolf Harden, Hagen Neugebauer, Anastasios Papadopoulos, 
+  Christoph Riplinger, Bernardo de Souza, Georgi L. Stoychev                                                    
+                                                                 
+  APM, various basis sets, CI-OPT, improved COSX, DLPNO-Multilevel,           
+  DOCKER, DRACO, updates on ESD, Fragmentator, GOAT, IRC, LR-CPCM, L-BFGS, MBIS, meta-GGA TD-DFT gradient, ML-optimized integration grids, 
+  MM, NACMEs, nearIR, NEB, NEB-TS, NL-DFT gradient (VV10), 2- and 3-layer-ONIOM, interface openCOSMO-RS, QMMM,   
+  Crystal-QMMM, RESP, rigid body optimization, SF, symmetry and pop. for TD-DFT, various functionals, SOLVATOR                                   
+                                                                         
+[Other institutions]                                                     
+  V. Asgeirsson          : NEB                                           
+  Christoph Bannwarth    : sTDA-DFT, sTD-DFT, PBEh-3c, B97-3c, D3        
+  Giovanni Bistoni       : ETS/NOCV, ADLD/ADEX, COVALED                  
+  Martin Brehm           : Molecular dynamics                            
+  Ronald Cardenas        : ETS/NOCV                                      
+  Martina Colucci        : COVALED                                       
+  Sebastian Ehlert       : rSCAN, r2SCAN, r2SCAN-3c, D4, dhf basis sets  
+  Marvin Friede          : D4 for Fr, Ra, Ac-Lr                          
+  Lars Goerigk           : TD-DFT with DH, B97 family of functionals     
+  Stefan Grimme          : VdW corrections, initial TS optimization, DFT functionals, gCP, sTDA/sTD-DF 
+  Waldemar Hujo          : DFT-NL                                        
+  H. Jonsson             : NEB                                           
+  Holger Kruse           : gCP                                           
+  Marcel Mueller         : wB97X-3c, vDZP basis set                      
+  Hagen Neugebauer       : wr2SCAN, Native XTB                           
+  Gianluca Regni         : ADLD/ADEX                                     
+  Tobias Risthaus        : pre 6.0 range-separated hybrid DFT and stability analysis
+  Lukas Wittmann         : regularized MP2, r2SCAN double-hybrids, wr2SCAN        
+                                                                         
+We gratefully acknowledge several colleagues who have allowed us to      
+interface, adapt or use parts of their codes:                            
+  Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods 
+  Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG                   
+  Ulf Ekstrom                                   : XCFun DFT Library      
+  Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+  Frank Weinhold                                : gennbo (NPA and NBO analysis)           
+  Simon Mueller                                 : openCOSMO-RS                            
+  Christopher J. Cramer and Donald G. Truhlar   : smd solvation model                     
+  S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library                           
+  Liviu Ungur et al                             : ANISO software                          
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 7.0.0
+ For citations please refer to: https://libxc.gitlab.io
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX SINGLE_THREADED
+        Core in use  :  SkylakeX
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+  ***********************************
+  * Starting time: Sun Nov  1 12:16:37 2026
+  * Host name:     yayoi13.cluster.local
+  * Process ID:    206517
+  * Working dir.:  /home/ruigengji/MLPATH/docs/experiments/b05_qm
+  ***********************************
+
+NOTE: MaxCore=2100 MB was set to SCF,MP2,MDCI,CIPSI,MRCI,RASCI and CIS
+      => If you want to overwrite this, your respective input block should be placed after the MaxCore statement
+
+
+***************************************
+The coordinates will be read from file: ep2_ctrl_6-9_prod.xyz
+***************************************
+
+
+Your calculation utilizes the DFT-NL dispersion correction.
+Cite in your paper:
+Vydrov, O. A.; Van Voorhis, T. J. Chem. Phys. 2010, 133, 244103
+Hujo, W.; Grimme, S. J. Chem. Theory Comput. 2011, 7, 3866 
+   
+
+Warning: RI is on but no J-basis has been assigned. Assigning Def2/J (nothing to worry about!)
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVPD
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+   D. Rappoport and F. Furche, J. Chem. Phys. 133, 134105 (2010)
+   D. Rappoport, J. Chem. Phys. 155, 124102 (2021).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   H-Rn: F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+   Fr-Lr: K. Eichkorn, F. Weigend, O. Treutler, R. Ahlrichs; Theor. Chem. Acc. 97, 119 (1997).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: B97M-V or wB97M-V functional requested.
+  ===> : libXC variant has now been activated.
+         Any manually given DFX/HFX/RangeSep scaling parameters are IGNORED!
+
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = wb_ep2_ctrl_6-9_prod.inp
+|  1> ! wB97M-V def2-TZVPD DEFGRID2 TightSCF
+|  2> %pal nprocs 16 end
+|  3> %maxcore 2100
+|  4> * xyzfile -1 1 ep2_ctrl_6-9_prod.xyz
+|  5> 
+|  6>                          ****END OF INPUT****
+================================================================================
+
+                       ****************************
+                       * Single Point Calculation *
+                       ****************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.329956   -0.108066   -0.751122
+  Cl     0.660308   -1.498094    2.881033
+  C      1.002614    0.364301   -0.253323
+  H      1.115650    0.070306    0.803103
+  H      1.813851   -0.135084   -0.800195
+  H      1.116969    1.447679   -0.357116
+  C     -1.252382    0.727604   -1.243153
+  H     -1.063918    1.795986   -1.317744
+  H     -2.227711    0.368318   -1.562775
+  H     -1.637411    0.612802    1.366211
+  C     -0.577850   -1.577121   -0.585246
+  H     -1.577328   -1.864289   -0.926077
+  H      0.169851   -2.156204   -1.143964
+  H     -0.446974   -1.845940    0.475595
+  O     -1.780150    0.571020    2.318686
+  H     -1.070042   -0.044697    2.608680
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 C     6.0000    0    12.011   -0.623527   -0.204216   -1.419414
+   1 Cl   17.0000    0    35.453    1.247802   -2.830987    5.444363
+   2 C     6.0000    0    12.011    1.894666    0.688429   -0.478712
+   3 H     1.0000    0     1.008    2.108273    0.132860    1.517645
+   4 H     1.0000    0     1.008    3.427682   -0.255272   -1.512149
+   5 H     1.0000    0     1.008    2.110766    2.735716   -0.674851
+   6 C     6.0000    0    12.011   -2.366659    1.374972   -2.349220
+   7 H     1.0000    0     1.008   -2.010514    3.393922   -2.490176
+   8 H     1.0000    0     1.008   -4.209764    0.696020   -2.953216
+   9 H     1.0000    0     1.008   -3.094259    1.158027    2.581764
+  10 C     6.0000    0    12.011   -1.091979   -2.980327   -1.105954
+  11 H     1.0000    0     1.008   -2.980718   -3.522995   -1.750032
+  12 H     1.0000    0     1.008    0.320972   -4.074636   -2.161778
+  13 H     1.0000    0     1.008   -0.844659   -3.488321    0.898745
+  14 O     8.0000    0    15.999   -3.363997    1.079072    4.381681
+  15 H     1.0000    0     1.008   -2.022086   -0.084465    4.929691
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ C      0   0   0     0.000000000000     0.00000000     0.00000000
+ Cl     1   0   0     4.013146392231     0.00000000     0.00000000
+ C      1   2   0     1.498891886801    65.74490968     0.00000000
+ H      3   1   2     1.102382388903   108.98860815   350.93405910
+ H      3   1   2     1.098434932526   110.36302749   107.27570261
+ H      3   1   2     1.094329541390   111.92507049   228.86842012
+ C      1   2   3     1.338398092686   135.97660667   247.48140377
+ H      7   1   2     1.087438738254   121.27931182    88.67569937
+ H      7   1   2     1.087433514090   121.32627929   270.09158762
+ H      1   2   3     2.590788741935    58.75045603   247.15117370
+ C      1   2   3     1.499029008437    66.49762442   134.20384713
+ H     11   1   2     1.094343087439   111.94614758   131.65999903
+ H     11   1   2     1.098435953886   110.35255874   253.20126844
+ H     11   1   2     1.102168723200   109.01967082     9.55739844
+ O     10   1   2     0.964016897270   150.47406703   359.60985001
+ H     15  10   1     0.983594490031   102.21230389     0.74524509
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ C      0   0   0     0.000000000000     0.00000000     0.00000000
+ Cl     1   0   0     7.583747616651     0.00000000     0.00000000
+ C      1   2   0     2.832495170411    65.74490968     0.00000000
+ H      3   1   2     2.083200809884   108.98860815   350.93405910
+ H      3   1   2     2.075741198407   110.36302749   107.27570261
+ H      3   1   2     2.067983133487   111.92507049   228.86842012
+ C      1   2   3     2.529205853339   135.97660667   247.48140377
+ H      7   1   2     2.054961402717   121.27931182    88.67569937
+ H      7   1   2     2.054951530478   121.32627929   270.09158762
+ H      1   2   3     4.895881193104    58.75045603   247.15117370
+ C      1   2   3     2.832754292749    66.49762442   134.20384713
+ H     11   1   2     2.068008731810   111.94614758   131.65999903
+ H     11   1   2     2.075743128497   110.35255874   253.20126844
+ H     11   1   2     2.082797040222   109.01967082     9.55739844
+ O     10   1   2     1.821727924313   150.47406703   359.60985001
+ H     15  10   1     1.858724212992   102.21230389     0.74524509
+
+---------------------
+BASIS SET INFORMATION
+---------------------
+There are 4 groups of distinct atoms
+
+ Group   1 Type C   : 12s6p3d1f contracted to 6s3p3d1f pattern {621111/411/111/1}
+ Group   2 Type Cl  : 15s10p4d1f contracted to 6s6p3d1f pattern {732111/511111/211/1}
+ Group   3 Type H   : 5s2p contracted to 3s2p pattern {311/11}
+ Group   4 Type O   : 12s7p3d1f contracted to 6s4p3d1f pattern {621111/4111/111/1}
+
+Atom   0C    basis set group =>   1
+Atom   1Cl   basis set group =>   2
+Atom   2C    basis set group =>   1
+Atom   3H    basis set group =>   3
+Atom   4H    basis set group =>   3
+Atom   5H    basis set group =>   3
+Atom   6C    basis set group =>   1
+Atom   7H    basis set group =>   3
+Atom   8H    basis set group =>   3
+Atom   9H    basis set group =>   3
+Atom  10C    basis set group =>   1
+Atom  11H    basis set group =>   3
+Atom  12H    basis set group =>   3
+Atom  13H    basis set group =>   3
+Atom  14O    basis set group =>   4
+Atom  15H    basis set group =>   3
+---------------------------------
+AUXILIARY/J BASIS SET INFORMATION
+---------------------------------
+There are 4 groups of distinct atoms
+
+ Group   1 Type C   : 12s5p4d2f1g contracted to 6s4p3d1f1g pattern {711111/2111/211/2/1}
+ Group   2 Type Cl  : 14s5p5d2f1g contracted to 8s4p3d1f1g pattern {71111111/2111/311/2/1}
+ Group   3 Type H   : 5s2p1d contracted to 3s1p1d pattern {311/2/1}
+ Group   4 Type O   : 12s5p4d2f1g contracted to 6s4p3d1f1g pattern {711111/2111/211/2/1}
+
+Atom   0C    basis set group =>   1
+Atom   1Cl   basis set group =>   2
+Atom   2C    basis set group =>   1
+Atom   3H    basis set group =>   3
+Atom   4H    basis set group =>   3
+Atom   5H    basis set group =>   3
+Atom   6C    basis set group =>   1
+Atom   7H    basis set group =>   3
+Atom   8H    basis set group =>   3
+Atom   9H    basis set group =>   3
+Atom  10C    basis set group =>   1
+Atom  11H    basis set group =>   3
+Atom  12H    basis set group =>   3
+Atom  13H    basis set group =>   3
+Atom  14O    basis set group =>   4
+Atom  15H    basis set group =>   3
+[yayoi13.cluster.local:206520] pmix_mca_base_component_repository_open: unable to open /home/apps/openmpi/5.0.7_gcc13.3.0/lib/prte/prte_mca_plm_tm: 
+    dlopen error: libtorque.so.2: cannot open shared object file: No such file or directory
+    Perhaps a missing symbol, or compiled for a different version of prte? (ignored)
+[yayoi13.cluster.local:206523] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206524] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206525] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206526] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206529] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206527] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206528] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206537] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206531] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206535] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206533] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206530] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206536] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206534] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206532] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206538] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206523] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206523] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206523] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206537] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206537] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206537] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206536] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206536] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206536] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206527] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206527] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206527] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206534] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206535] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206534] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206535] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206535] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206534] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206533] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206533] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206533] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206529] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206529] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206529] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206528] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206528] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206530] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206526] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206528] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206530] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206526] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206530] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206532] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206532] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206532] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206538] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206538] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206524] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206538] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206524] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206525] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206525] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206524] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206525] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206531] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206526] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206531] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206531] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+------------------------------------------------------------------------------
+                             ORCA STARTUP CALCULATIONS
+                           -- RI-GTO INTEGRALS CHOSEN --
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+                   ___                                                        
+                  /   \      - P O W E R E D   B Y -                         
+                 /     \                                                     
+                 |  |  |   _    _      __       _____    __    __             
+                 |  |  |  | |  | |    /  \     |  _  \  |  |  /  |          
+                  \  \/   | |  | |   /    \    | | | |  |  | /  /          
+                 / \  \   | |__| |  /  /\  \   | |_| |  |  |/  /          
+                |  |  |   |  __  | /  /__\  \  |    /   |      \           
+                |  |  |   | |  | | |   __   |  |    \   |  |\   \          
+                \     /   | |  | | |  |  |  |  | |\  \  |  | \   \       
+                 \___/    |_|  |_| |__|  |__|  |_| \__\ |__|  \__/        
+                                                                              
+                      - O R C A' S   B I G   F R I E N D -                    
+                                      &                                       
+                       - I N T E G R A L  F E E D E R -                       
+                                                                              
+ v1 FN, 2020, v2 2021, v3 2022-2024                                           
+------------------------------------------------------------------------------
+
+
+----------------------
+SHARK INTEGRAL PACKAGE
+----------------------
+
+Number of atoms                             ...     16
+Number of basis functions                   ...    324
+Number of shells                            ...    132
+Maximum angular momentum                    ...      3
+Integral batch strategy                     ... SHARK/LIBINT Hybrid
+RI-J (if used) integral strategy            ... SPLIT-RIJ (Revised 2003 algorithm where possible)
+Printlevel                                  ...      1
+Contraction scheme used                     ... SEGMENTED contraction
+Prescreening option                         ... SCHWARTZ
+   Thresh                                   ... 2.500e-11
+   Tcut                                     ... 2.500e-12
+   Tpresel                                  ... 2.500e-12 
+Coulomb Range Separation                    ... NOT USED
+Exchange Range Separation                   ... Long Range
+   Mu parameter                             ... 3.000e-01
+   Scaling (regular/separated)              ... 1.500e-01 8.500e-01
+Robust (split-)RI terms used:
+  metric    (central integrals)             ... YES
+  density   (r.h.s.  integrals)             ... YES
+  potential (l.h.s.  integrals)             ... YES
+Multipole approximations                    ... NOT USED
+Finite Nucleus Model                        ... NOT USED
+CABS basis                                  ... NOT available
+Auxiliary Coulomb fitting basis             ... AVAILABLE
+   # of basis functions in Aux-J            ...    406
+   # of shells in Aux-J                     ...    142
+   Maximum angular momentum in Aux-J        ...      4
+Auxiliary J/K fitting basis                 ... NOT available
+Auxiliary Correlation fitting basis         ... NOT available
+Auxiliary 'external' fitting basis          ... NOT available
+
+Checking pre-screening integrals            ... done (  0.1 sec) Dimension = 132
+   => SHARK Basis and OBASIS are compatible. Storing Pre-screening
+Shell pair information
+Shell pair cut-off parameter TPreSel        ...   2.5e-12
+Total number of shell pairs                 ...      8778
+Shell pairs after pre-screening             ...      8221
+Total number of primitive shell pairs       ...     22542
+Primitive shell pairs kept                  ...     16664
+          la=0 lb=0:   2008 shell pairs
+          la=1 lb=0:   2597 shell pairs
+          la=1 lb=1:    871 shell pairs
+          la=2 lb=0:   1124 shell pairs
+          la=2 lb=1:    733 shell pairs
+          la=2 lb=2:    167 shell pairs
+          la=3 lb=0:    356 shell pairs
+          la=3 lb=1:    238 shell pairs
+          la=3 lb=2:    106 shell pairs
+          la=3 lb=3:     21 shell pairs
+
+Checking whether 4 symmetric matrices of dimension 324 fit in memory
+:Max Core in MB      =   2100.00
+ MB in use           =     13.22
+ MB left             =   2086.78
+ MB needed           =      1.61
+ Data fit in memory  = YES
+Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.8 sec)
+Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    276.246891850379 Eh
+
+Diagonalization of the overlap matrix:
+Smallest eigenvalue                        ... 4.695e-06
+Time for diagonalization                   ...    0.072 sec
+Threshold for overlap eigenvalues          ... 1.000e-07
+Number of eigenvalues below threshold      ... 0
+Time for construction of square roots      ...    0.127 sec
+Total time needed                          ...    0.480 sec
+
+-------------------
+DFT GRID GENERATION
+-------------------
+
+General Integration Accuracy     IntAcc      ... 4.388
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 4 (Lebedev-302)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+Diffuse basis detected: some atoms will have their outermost
+                        angular grid increased by 1.
+
+Total number of grid points                  ...    73310
+Total number of batches                      ...     1154
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...     4582
+
+--------------------
+COSX GRID GENERATION
+--------------------
+
+GRIDX 1
+-------
+General Integration Accuracy     IntAcc      ... 3.816
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 1 (Lebedev-50)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+Diffuse basis detected: some atoms will have their outermost
+                        angular grid increased by 1.
+
+Total number of grid points                  ...    10382
+Total number of batches                      ...       90
+Average number of points per batch           ...      115
+Average number of grid points per atom       ...      649
+UseSFitting                                  ... on
+
+GRIDX 2
+-------
+General Integration Accuracy     IntAcc      ... 4.020
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 2 (Lebedev-110)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+Diffuse basis detected: some atoms will have their outermost
+                        angular grid increased by 1.
+
+Total number of grid points                  ...    21169
+Total number of batches                      ...      174
+Average number of points per batch           ...      121
+Average number of grid points per atom       ...     1323
+UseSFitting                                  ... on
+
+GRIDX 3
+-------
+General Integration Accuracy     IntAcc      ... 4.338
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 3 (Lebedev-194)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+Diffuse basis detected: some atoms will have their outermost
+                        angular grid increased by 1.
+
+Total number of grid points                  ...    48215
+Total number of batches                      ...      384
+Average number of points per batch           ...      125
+Average number of grid points per atom       ...     3013
+UseSFitting                                  ... on
+Grids setup in  10.3 sec
+Initializing property integral containers    ... done (  0.3 sec)
+
+SHARK setup successfully completed in  14.0 seconds
+
+Maximum memory used throughout the entire STARTUP-calculation: 27.6 MB
+[yayoi13.cluster.local:206669] pmix_mca_base_component_repository_open: unable to open /home/apps/openmpi/5.0.7_gcc13.3.0/lib/prte/prte_mca_plm_tm: 
+    dlopen error: libtorque.so.2: cannot open shared object file: No such file or directory
+    Perhaps a missing symbol, or compiled for a different version of prte? (ignored)
+[yayoi13.cluster.local:206673] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206675] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206681] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206674] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206679] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206672] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206676] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206682] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206687] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206684] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206680] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206677] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206683] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206685] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206686] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206678] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206673] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206673] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206673] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206681] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206686] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206681] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206686] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206675] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206676] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206679] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206676] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206675] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206679] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206672] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206674] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206685] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206681] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206674] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206672] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206679] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206686] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206685] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206675] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206676] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206674] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206677] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206672] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206684] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206680] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206682] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206677] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206684] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206680] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206682] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206685] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206682] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206684] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206680] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206678] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206677] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206678] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206687] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206678] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206683] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206687] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206683] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206687] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206683] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+-------------------------------------------------------------------------------
+                                 ORCA GUESS
+                   Start orbitals & Density for SCF / CASSCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Density Functional     Method          .... DFT(GTOs)
+  Functional kind                       .... Exchange-Correlation
+  Functional name                       .... wB97M-V exchange-correlation functional
+  Functional family                     .... Hybrid MGGA
+  Functional refs                              
+    [ 0] N. Mardirossian and M. Head-Gordon.,  J. Chem. Phys. 144, 214110 (2016), doi: 10.1063/1.4952647
+  Fraction of HF Exchange (short range) .... 0.1500
+  Fraction of HF Exchange ( int64 range )  .... 1.0000
+  Range separation parameter mu         .... 0.3000
+  Functional external parameters        .... 17
+    Parameter  0 _cx00      =  8.500000e-01 : u^00 coefficient for exchange
+    Parameter  1 _cx01      =  1.007000e+00 : u^01 coefficient for exchange
+    Parameter  2 _cx10      =  2.590000e-01 : u^10 coefficient for exchange
+    Parameter  3 _css00     =  4.430000e-01 : u^00 coefficient for same-spin correlation
+    Parameter  4 _css04     = -1.437000e+00 : u^04 coefficient for same-spin correlation
+    Parameter  5 _css10     = -4.535000e+00 : u^10 coefficient for same-spin correlation
+    Parameter  6 _css20     = -3.390000e+00 : u^20 coefficient for same-spin correlation
+    Parameter  7 _css43     =  4.278000e+00 : u^43 coefficient for same-spin correlation
+    Parameter  8 _cos00     =  1.000000e+00 : u^00 coefficient for opposite-spin correlation
+    Parameter  9 _cos10     =  1.358000e+00 : u^10 coefficient for opposite-spin correlation
+    Parameter 10 _cos20     =  2.924000e+00 : u^20 coefficient for opposite-spin correlation
+    Parameter 11 _cos21     = -8.812000e+00 : u^21 coefficient for opposite-spin correlation
+    Parameter 12 _cos60     = -1.390000e+00 : u^60 coefficient for opposite-spin correlation
+    Parameter 13 _cos61     =  9.142000e+00 : u^61 coefficient for opposite-spin correlation
+    Parameter 14 _alpha     =  1.000000e+00 : fraction of HF exchange
+    Parameter 15 _beta      = -8.500000e-01 : fraction of short-range exchange
+    Parameter 16 _omega     =  3.000000e-01 : range-separation constant
+ Long-range corrected/Screened/Range-Separated Hybrid DFT is turned on
+   Amount of maximum screened exact exchange              ....  0.850000
+   Range separation parameter mu (erf(mu*r12)/r12)        ....  0.300000
+   NL short-range parameter             ....  6.000000
+   NL long-range parameter              ....  0.010000
+ RI-approximation to the Coulomb term is turned on
+   Number of AuxJ basis functions       .... 406
+   RIJ-COSX (HFX calculated with COS-X)).... on
+
+
+General Settings:
+ Integral files         IntName         .... wb_ep2_ctrl_6-9_prod
+ Hartree-Fock type      HFTyp           .... RHF
+ Total Charge           Charge          ....   -1
+ Multiplicity           Mult            ....    1
+ Number of Electrons    NEL             ....   60
+ Basis Dimension        Dim             ....  324
+ Nuclear Repulsion      ENuc            ....    276.2468918504 Eh
+
+Convergence Acceleration:
+ AO-DIIS                CNVDIIS         .... on
+   Start iteration      DIISMaxIt       ....    12
+   Startup error        DIISStart       ....  0.200000
+   # of expansion vecs  DIISMaxEq       ....     5
+   Bias factor          DIISBfac        ....   1.050
+   Max. coefficient     DIISMaxC        ....  10.000
+ MO-DIIS                CNVKDIIS        .... off
+ Trust-Rad. Augm. Hess. CNVTRAH         .... auto
+   Auto Start mean grad. ratio tolernc. ....  1.125000
+   Auto Start start iteration           ....    50
+   Auto Start num. interpolation iter.  ....    10
+   Max. Number of Micro iterations      ....    24
+   Max. Number of Macro iterations      .... Maxiter - #DIIS iter
+   Number of Davidson start vectors     ....     2
+   Converg. threshold    (grad. norm)   ....   1.000e-05
+   Grad. Scal. Fac. for Micro threshold ....   0.100
+   Minimum threshold for Micro iter.    ....   1.000e-02
+   NR start threshold (gradient norm)   ....   1.000e-04
+   Initial trust radius                 ....   0.400
+   Minimum AH scaling param. (alpha)    ....   1.000
+   Maximum AH scaling param. (alpha)    .... 1000.000
+   Quad. conv. algorithm                .... NR
+   White noise on init. David. guess    .... on
+   Maximum white noise                  ....   0.010
+   Pseudo random numbers                .... off
+   Inactive MOs                         .... canonical
+   Orbital update algorithm             .... Taylor
+   Preconditioner                       .... Diag
+   Full preconditioner red. dimension   ....   250
+ SOSCF                 CNVSOSCF           .... on
+   Start iteration     SOSCFMaxIt         ....   150
+   Startup grad/error  SOSCFStart         ....  0.003300
+   Hessian update      SOSCFHessUp        .... L-BFGS
+   Autom. constraints  SOSCFAutoConstrain .... off
+ Level Shifting         CNVShift        .... on
+   Level shift para.    LevelShift      ....    0.2500
+   Turn off err/grad.   ShiftErr        ....    0.0010
+ Zerner damping         CNVZerner       .... off
+ Static damping         CNVDamp         .... on
+   Fraction old density DampFac         ....    0.7000
+   Max. Damping (<1)    DampMax         ....    0.9800
+   Min. Damping (>=0)   DampMin         ....    0.0000
+   Turn off err/grad.   DampErr         ....    0.1000
+
+SCF Procedure:
+ Maximum # iterations   MaxIter         ....   125
+ SCF integral mode      SCFMode         .... Direct
+   Integral package                     .... SHARK and LIBINT hybrid scheme
+ Reset frequency        DirectResetFreq ....    20
+ Integral Threshold     Thresh          ....  2.500e-11 Eh
+ Primitive CutOff       TCut            ....  2.500e-12 Eh
+
+Convergence Tolerance:
+ Convergence Check Mode ConvCheckMode   .... Total+1el-Energy
+ Convergence forced     ConvForced      .... 0
+ Energy Change          TolE            ....  1.000e-08 Eh
+ 1-El. energy change                    ....  1.000e-05 Eh
+ Orbital Gradient       TolG            ....  1.000e-05
+ Orbital Rotation angle TolX            ....  1.000e-05
+ DIIS Error             TolErr          ....  5.000e-07
+
+------------------------------
+INITIAL GUESS: MODEL POTENTIAL
+------------------------------
+Loading Hartree-Fock densities                     ... done
+Calculating cut-offs                               ... done
+Initializing the effective Hamiltonian             ... done
+Setting up the integral package (SHARK)            ... done
+Starting the Coulomb interaction                   ... done (   0.8 sec)
+Making the grid                                    ... done (   4.4 sec)
+Mapping shells                                     ... done
+Starting the XC term evaluation                    ... done (   0.0 sec)
+  promolecular density results
+     # of electrons  =     58.997522574
+     EX              =    -58.851987203
+     EC              =     -1.995233784
+     EX+EC           =    -60.847220988
+Transforming the Hamiltonian                       ... done (   0.5 sec)
+Diagonalizing the Hamiltonian                      ... done (   0.6 sec)
+Back transforming the eigenvectors                 ... done (   0.4 sec)
+Now organizing SCF variables                       ... done
+                      ------------------
+                      INITIAL GUESS DONE (   7.9 sec)
+                      ------------------
+             **** ENERGY FILE WAS UPDATED (wb_ep2_ctrl_6-9_prod.en.tmp) ****
+Finished Guess after  10.4 sec
+Maximum memory used throughout the entire GUESS-calculation: 18.6 MB
+[yayoi13.cluster.local:206708] pmix_mca_base_component_repository_open: unable to open /home/apps/openmpi/5.0.7_gcc13.3.0/lib/prte/prte_mca_plm_tm: 
+    dlopen error: libtorque.so.2: cannot open shared object file: No such file or directory
+    Perhaps a missing symbol, or compiled for a different version of prte? (ignored)
+[yayoi13.cluster.local:206712] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206716] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206715] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206722] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206720] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206718] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206721] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206711] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206723] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206724] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206726] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206719] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206713] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206717] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206725] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206714] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206713] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206713] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206713] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206712] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206712] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206712] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206721] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206721] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206721] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206720] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206716] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206720] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206720] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206716] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206716] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206725] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206725] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206725] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206718] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206718] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206718] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206724] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206724] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206724] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206714] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206714] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206714] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206719] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206715] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206719] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206715] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206719] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206715] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206726] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206726] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206726] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206711] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206717] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206717] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206717] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206711] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206711] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206723] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206723] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206723] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206722] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206722] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:206722] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+
+-------------------------------------------------------------------------------------------
+                                      ORCA LEAN-SCF
+                              memory conserving SCF solver
+-------------------------------------------------------------------------------------------
+
+----------------------------------------D-I-I-S--------------------------------------------
+Iteration    Energy (Eh)           Delta-E    RMSDP     MaxDP     DIISErr   Damp  Time(sec)
+-------------------------------------------------------------------------------------------
+               ***  Starting incremental Fock matrix formation  ***
+    1    -693.8355371747170466     0.00e+00  1.26e-02  1.47e-01  3.23e-01  0.700  26.2
+    2    -693.9649287405727591    -1.29e-01  1.04e-02  9.38e-02  1.59e-01  0.700  16.7
+                               ***Turning on AO-DIIS***
+    3    -694.0303132993644795    -6.54e-02  7.60e-03  6.84e-02  6.05e-02  0.700  28.2
+    4    -694.0690520637385816    -3.87e-02  1.79e-02  1.68e-01  4.45e-02  0.000  18.4
+    5    -694.1525051649814486    -8.35e-02  1.26e-03  1.22e-02  7.70e-03  0.000  20.0
+    6    -694.1526727251889497    -1.68e-04  6.48e-04  1.40e-02  4.29e-03  0.000  15.0
+                              *** Initializing SOSCF ***
+---------------------------------------S-O-S-C-F--------------------------------------
+Iteration    Energy (Eh)           Delta-E    RMSDP     MaxDP     MaxGrad    Time(sec)
+--------------------------------------------------------------------------------------
+    7    -694.1527058580627454    -3.31e-05  4.69e-04  1.02e-02  5.49e-04    10.3
+               *** Restarting incremental Fock matrix formation ***
+    8    -694.1526926820490644     1.32e-05  1.04e-03  1.53e-02  1.46e-04    19.5
+    9    -694.1526941753802475    -1.49e-06  3.81e-04  5.41e-03  4.94e-05    22.0
+   10    -694.1526943333469717    -1.58e-07  1.50e-04  2.37e-03  3.48e-05    23.5
+   11    -694.1526943979934003    -6.46e-08  3.38e-05  4.30e-04  6.12e-06    25.2
+   12    -694.1526944000411277    -2.05e-09  1.89e-05  5.07e-04  3.35e-06    27.6
+                 **** Energy Check signals convergence ****
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER  12 CYCLES          *
+               *****************************************************
+
+
+------------------
+NL GRID GENERATION
+------------------
+
+General Integration Accuracy     IntAcc      ... 4.004
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 2 (Lebedev-110)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-10
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+Diffuse basis detected: some atoms will have their outermost
+                        angular grid increased by 1.
+
+Total number of grid points                  ...    23422
+Total number of batches                      ...      374
+Average number of points per batch           ...       62
+Average number of grid points per atom       ...     1464
+Final grid set up in    2.1 sec
+
+-------------------------------------------------------------------------------
+                    post-SCF DFT-NL dispersion correction                      
+-------------------------------------------------------------------------------
+
+SCF Energy:     -694.152694403 
+NL    Energy:      0.236922743 
+SC+NL Energy:   -693.915771660 
+NL done in  :              1.3 sec
+-------------------------------------------------------------------------------
+Recomputing exchange energy using gridx3       ... done (    5.553 sec)
+Old exchange energy                            :    -17.026438053 Eh
+New exchange energy                            :    -17.026440949 Eh
+Exchange energy change after final integration :     -0.000002896 Eh
+Total energy after final integration           :   -693.915774556 Eh
+             **** ENERGY FILE WAS UPDATED (wb_ep2_ctrl_6-9_prod.en.tmp) ****
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :       -693.91577455587844 Eh          -18882.40819 eV
+
+Components:
+Nuclear Repulsion  :        276.24689185037897 Eh            7517.06009 eV
+Electronic Energy  :       -970.39958625327222 Eh          -26405.91519 eV
+One Electron Energy:      -1510.23446242909131 Eh          -41095.56898 eV
+Two Electron Energy:        539.83487617581909 Eh           14689.65379 eV
+
+Virial components:
+Potential Energy   :      -1386.30639520067552 Eh          -37723.31483 eV
+Kinetic Energy     :        692.39062064479697 Eh           18840.90664 eV
+Virial Ratio       :          2.00220273623820
+
+DFT components:
+N(Alpha)           :       29.999977100590 electrons
+N(Beta)            :       29.999977100590 electrons
+N(Total)           :       59.999954201180 electrons
+NL Energy, E(C,NL) :        0.236922742743 Eh       
+E(XC)              :      -45.316925439561 Eh       
+
+---------------
+SCF CONVERGENCE
+---------------
+
+  Last Energy change         ...    2.0477e-09  Tolerance :   1.0000e-08
+  Last MAX-Density change    ...    5.0694e-04  Tolerance :   1.0000e-07
+  Last RMS-Density change    ...    1.8923e-05  Tolerance :   5.0000e-09
+  Last DIIS Error            ...    5.4879e-04  Tolerance :   5.0000e-07
+  Last Orbital Gradient      ...    3.3527e-06  Tolerance :   1.0000e-05
+  Last Orbital Rotation      ...    3.5548e-06  Tolerance :   1.0000e-05
+
+
+----------------
+ORBITAL ENERGIES
+----------------
+
+  NO   OCC          E(Eh)            E(eV) 
+   0   2.0000    -101.590526     -2764.4187 
+   1   2.0000     -19.161106      -521.4002 
+   2   2.0000     -10.246790      -278.8293 
+   3   2.0000     -10.217466      -278.0314 
+   4   2.0000     -10.211750      -277.8758 
+   5   2.0000     -10.211057      -277.8570 
+   6   2.0000      -9.362681      -254.7715 
+   7   2.0000      -7.062151      -192.1709 
+   8   2.0000      -7.061846      -192.1626 
+   9   2.0000      -7.061840      -192.1624 
+  10   2.0000      -0.962458       -26.1898 
+  11   2.0000      -0.818526       -22.2732 
+  12   2.0000      -0.690044       -18.7771 
+  13   2.0000      -0.686605       -18.6835 
+  14   2.0000      -0.645914       -17.5762 
+  15   2.0000      -0.520230       -14.1562 
+  16   2.0000      -0.457326       -12.4445 
+  17   2.0000      -0.446822       -12.1586 
+  18   2.0000      -0.436861       -11.8876 
+  19   2.0000      -0.418289       -11.3822 
+  20   2.0000      -0.360983        -9.8229 
+  21   2.0000      -0.352052        -9.5798 
+  22   2.0000      -0.348096        -9.4722 
+  23   2.0000      -0.336264        -9.1502 
+  24   2.0000      -0.322189        -8.7672 
+  25   2.0000      -0.255102        -6.9417 
+  26   2.0000      -0.232499        -6.3266 
+  27   2.0000      -0.168552        -4.5865 
+  28   2.0000      -0.164743        -4.4829 
+  29   2.0000      -0.163850        -4.4586 
+  30   0.0000       0.136100         3.7035 
+  31   0.0000       0.159718         4.3462 
+  32   0.0000       0.164363         4.4725 
+  33   0.0000       0.176939         4.8147 
+  34   0.0000       0.183094         4.9822 
+  35   0.0000       0.190694         5.1890 
+  36   0.0000       0.199895         5.4394 
+  37   0.0000       0.205558         5.5935 
+  38   0.0000       0.207933         5.6581 
+  39   0.0000       0.210912         5.7392 
+  40   0.0000       0.235460         6.4072 
+*Only the first 10 virtual orbitals were printed.
+
+                    ********************************
+                    * MULLIKEN POPULATION ANALYSIS *
+                    ********************************
+
+-----------------------
+MULLIKEN ATOMIC CHARGES
+-----------------------
+   0 C :    0.644391
+   1 Cl:   -0.845795
+   2 C :   -0.951675
+   3 H :    0.166899
+   4 H :    0.300315
+   5 H :    0.274138
+   6 C :   -0.825794
+   7 H :    0.254627
+   8 H :    0.254418
+   9 H :    0.337604
+  10 C :   -0.962515
+  11 H :    0.277597
+  12 H :    0.299308
+  13 H :    0.174121
+  14 O :   -0.661272
+  15 H :    0.263634
+Sum of atomic charges:   -1.0000000
+
+--------------------------------
+MULLIKEN REDUCED ORBITAL CHARGES
+--------------------------------
+  0 C s       :     3.323122  s :     3.323122
+      pz      :     0.888972  p :     2.164777
+      px      :     0.649743
+      py      :     0.626062
+      dz2     :     0.004490  d :    -0.142070
+      dxz     :     0.012520
+      dyz     :     0.013543
+      dx2y2   :    -0.081051
+      dxy     :    -0.091573
+      f0      :     0.000836  f :     0.009780
+      f+1     :     0.001470
+      f-1     :     0.000998
+      f+2     :     0.001578
+      f-2     :     0.000777
+      f+3     :     0.002401
+      f-3     :     0.001719
+
+  1 Cls       :     5.986886  s :     5.986886
+      pz      :     3.946412  p :    11.853897
+      px      :     3.951625
+      py      :     3.955859
+      dz2     :     0.000798  d :     0.004951
+      dxz     :     0.001124
+      dyz     :     0.001251
+      dx2y2   :     0.000502
+      dxy     :     0.001277
+      f0      :     0.000005  f :     0.000062
+      f+1     :     0.000012
+      f-1     :     0.000012
+      f+2     :     0.000005
+      f-2     :     0.000006
+      f+3     :     0.000008
+      f-3     :     0.000013
+
+  2 C s       :     3.466030  s :     3.466030
+      pz      :     1.225530  p :     3.417188
+      px      :     0.930694
+      py      :     1.260964
+      dz2     :     0.034950  d :     0.065933
+      dxz     :     0.014548
+      dyz     :     0.005963
+      dx2y2   :     0.004019
+      dxy     :     0.006452
+      f0      :     0.000509  f :     0.002524
+      f+1     :     0.000385
+      f-1     :     0.000153
+      f+2     :     0.000246
+      f-2     :    -0.000034
+      f+3     :     0.000484
+      f-3     :     0.000781
+
+  3 H s       :     0.735114  s :     0.735114
+      pz      :     0.035179  p :     0.097986
+      px      :     0.009934
+      py      :     0.052873
+
+  4 H s       :     0.626989  s :     0.626989
+      pz      :     0.019593  p :     0.072695
+      px      :     0.028755
+      py      :     0.024348
+
+  5 H s       :     0.643376  s :     0.643376
+      pz      :     0.024769  p :     0.082486
+      px      :     0.015292
+      py      :     0.042426
+
+  6 C s       :     3.425523  s :     3.425523
+      pz      :     1.082146  p :     3.360196
+      px      :     1.087780
+      py      :     1.190271
+      dz2     :     0.014318  d :     0.035243
+      dxz     :     0.007747
+      dyz     :     0.005768
+      dx2y2   :     0.016680
+      dxy     :    -0.009269
+      f0      :     0.000497  f :     0.004832
+      f+1     :     0.001019
+      f-1     :     0.000684
+      f+2     :     0.000480
+      f-2     :     0.000415
+      f+3     :     0.000817
+      f-3     :     0.000919
+
+  7 H s       :     0.683699  s :     0.683699
+      pz      :     0.019648  p :     0.061675
+      px      :     0.003356
+      py      :     0.038671
+
+  8 H s       :     0.683707  s :     0.683707
+      pz      :     0.021300  p :     0.061875
+      px      :     0.037619
+      py      :     0.002955
+
+  9 H s       :     0.639839  s :     0.639839
+      pz      :     0.007039  p :     0.022557
+      px      :     0.003700
+      py      :     0.011818
+
+ 10 C s       :     3.473713  s :     3.473713
+      pz      :     1.253519  p :     3.419702
+      px      :     1.293044
+      py      :     0.873139
+      dz2     :     0.027443  d :     0.066573
+      dxz     :     0.024028
+      dyz     :     0.007332
+      dx2y2   :     0.002202
+      dxy     :     0.005569
+      f0      :     0.000685  f :     0.002527
+      f+1     :     0.000084
+      f-1     :     0.000245
+      f+2     :     0.000302
+      f-2     :    -0.000233
+      f+3     :     0.000758
+      f-3     :     0.000687
+
+ 11 H s       :     0.641261  s :     0.641261
+      pz      :     0.028460  p :     0.081142
+      px      :     0.038375
+      py      :     0.014307
+
+ 12 H s       :     0.629023  s :     0.629023
+      pz      :     0.024548  p :     0.071669
+      px      :     0.031205
+      py      :     0.015916
+
+ 13 H s       :     0.731129  s :     0.731129
+      pz      :     0.040591  p :     0.094751
+      px      :     0.040871
+      py      :     0.013289
+
+ 14 O s       :     3.794179  s :     3.794179
+      pz      :     1.380946  p :     4.849759
+      px      :     1.700750
+      py      :     1.768063
+      dz2     :     0.007540  d :     0.016135
+      dxz     :     0.002453
+      dyz     :     0.000898
+      dx2y2   :     0.002179
+      dxy     :     0.003066
+      f0      :     0.000520  f :     0.001198
+      f+1     :     0.000058
+      f-1     :     0.000048
+      f+2     :     0.000011
+      f-2     :     0.000159
+      f+3     :     0.000139
+      f-3     :     0.000263
+
+ 15 H s       :     0.688183  s :     0.688183
+      pz      :     0.011377  p :     0.048183
+      px      :     0.016056
+      py      :     0.020749
+
+
+
+                     *******************************
+                     * LOEWDIN POPULATION ANALYSIS *
+                     *******************************
+
+----------------------
+LOEWDIN ATOMIC CHARGES
+----------------------
+   0 C :   -0.451402
+   1 Cl:   -0.496602
+   2 C :   -0.092083
+   3 H :    0.008471
+   4 H :    0.077109
+   5 H :    0.069395
+   6 C :   -0.005430
+   7 H :    0.049608
+   8 H :    0.049496
+   9 H :   -0.021487
+  10 C :   -0.090797
+  11 H :    0.069239
+  12 H :    0.077087
+  13 H :    0.013028
+  14 O :   -0.142814
+  15 H :   -0.112818
+
+-------------------------------
+LOEWDIN REDUCED ORBITAL CHARGES
+-------------------------------
+  0 C s       :     2.656281  s :     2.656281
+      pz      :     0.737959  p :     2.629959
+      px      :     0.936197
+      py      :     0.955804
+      dz2     :     0.147948  d :     1.106262
+      dxz     :     0.170122
+      dyz     :     0.186629
+      dx2y2   :     0.312435
+      dxy     :     0.289128
+      f0      :     0.004718  f :     0.058900
+      f+1     :     0.005552
+      f-1     :     0.005016
+      f+2     :     0.009426
+      f-2     :     0.007015
+      f+3     :     0.015875
+      f-3     :     0.011297
+
+  1 Cls       :     5.838710  s :     5.838710
+      pz      :     3.857296  p :    11.604996
+      px      :     3.868287
+      py      :     3.879413
+      dz2     :     0.015047  d :     0.052765
+      dxz     :     0.007839
+      dyz     :     0.010897
+      dx2y2   :     0.003541
+      dxy     :     0.015441
+      f0      :     0.000010  f :     0.000131
+      f+1     :     0.000026
+      f-1     :     0.000024
+      f+2     :     0.000006
+      f-2     :     0.000011
+      f+3     :     0.000014
+      f-3     :     0.000039
+
+  2 C s       :     2.724008  s :     2.724008
+      pz      :     0.982616  p :     2.861999
+      px      :     0.935872
+      py      :     0.943511
+      dz2     :     0.101262  d :     0.480018
+      dxz     :     0.107046
+      dyz     :     0.042290
+      dx2y2   :     0.124284
+      dxy     :     0.105135
+      f0      :     0.003215  f :     0.026058
+      f+1     :     0.002723
+      f-1     :     0.002670
+      f+2     :     0.003235
+      f-2     :     0.004695
+      f+3     :     0.003403
+      f-3     :     0.006117
+
+  3 H s       :     0.667231  s :     0.667231
+      pz      :     0.166173  p :     0.324298
+      px      :     0.062835
+      py      :     0.095289
+
+  4 H s       :     0.701561  s :     0.701561
+      pz      :     0.071641  p :     0.221330
+      px      :     0.077961
+      py      :     0.071728
+
+  5 H s       :     0.705590  s :     0.705590
+      pz      :     0.059800  p :     0.225015
+      px      :     0.058249
+      py      :     0.106966
+
+  6 C s       :     2.757803  s :     2.757803
+      pz      :     0.872942  p :     2.796855
+      px      :     0.961192
+      py      :     0.962721
+      dz2     :     0.050500  d :     0.422627
+      dxz     :     0.059634
+      dyz     :     0.039742
+      dx2y2   :     0.190851
+      dxy     :     0.081900
+      f0      :     0.002481  f :     0.028144
+      f+1     :     0.002674
+      f-1     :     0.003255
+      f+2     :     0.002906
+      f-2     :     0.004404
+      f+3     :     0.006232
+      f-3     :     0.006192
+
+  7 H s       :     0.719224  s :     0.719224
+      pz      :     0.065806  p :     0.231168
+      px      :     0.063892
+      py      :     0.101470
+
+  8 H s       :     0.719391  s :     0.719391
+      pz      :     0.068378  p :     0.231114
+      px      :     0.093136
+      py      :     0.069599
+
+  9 H s       :     0.609511  s :     0.609511
+      pz      :     0.198635  p :     0.411976
+      px      :     0.107407
+      py      :     0.105935
+
+ 10 C s       :     2.724043  s :     2.724043
+      pz      :     0.982121  p :     2.861829
+      px      :     0.943526
+      py      :     0.936182
+      dz2     :     0.085348  d :     0.478873
+      dxz     :     0.046270
+      dyz     :     0.114544
+      dx2y2   :     0.096267
+      dxy     :     0.136443
+      f0      :     0.004173  f :     0.026051
+      f+1     :     0.000885
+      f-1     :     0.003055
+      f+2     :     0.003848
+      f-2     :     0.003548
+      f+3     :     0.005800
+      f-3     :     0.004741
+
+ 11 H s       :     0.705709  s :     0.705709
+      pz      :     0.064076  p :     0.225053
+      px      :     0.101944
+      py      :     0.059032
+
+ 12 H s       :     0.701541  s :     0.701541
+      pz      :     0.072165  p :     0.221372
+      px      :     0.084686
+      py      :     0.064521
+
+ 13 H s       :     0.667813  s :     0.667813
+      pz      :     0.179247  p :     0.319159
+      px      :     0.077941
+      py      :     0.061972
+
+ 14 O s       :     3.401404  s :     3.401404
+      pz      :     1.384096  p :     4.670372
+      px      :     1.626079
+      py      :     1.660197
+      dz2     :     0.029625  d :     0.068810
+      dxz     :     0.007230
+      dyz     :     0.003498
+      dx2y2   :     0.003467
+      dxy     :     0.024988
+      f0      :     0.001119  f :     0.002228
+      f+1     :     0.000244
+      f-1     :     0.000050
+      f+2     :     0.000008
+      f-2     :     0.000276
+      f+3     :     0.000154
+      f-3     :     0.000376
+
+ 15 H s       :     0.605427  s :     0.605427
+      pz      :     0.096551  p :     0.507391
+      px      :     0.218595
+      py      :     0.192245
+
+
+
+                      *****************************
+                      * MAYER POPULATION ANALYSIS *
+                      *****************************
+
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0 C      5.3556     6.0000     0.6444     2.1710     2.1710    -0.0000
+  1 Cl    17.8458    17.0000    -0.8458     0.3107     0.3107    -0.0000
+  2 C      6.9517     6.0000    -0.9517     3.4398     3.4398    -0.0000
+  3 H      0.8331     1.0000     0.1669     1.2035     1.2035    -0.0000
+  4 H      0.6997     1.0000     0.3003     1.0456     1.0456    -0.0000
+  5 H      0.7259     1.0000     0.2741     1.0699     1.0699    -0.0000
+  6 C      6.8258     6.0000    -0.8258     3.5632     3.5632     0.0000
+  7 H      0.7454     1.0000     0.2546     1.0104     1.0104     0.0000
+  8 H      0.7456     1.0000     0.2544     1.0115     1.0115     0.0000
+  9 H      0.6624     1.0000     0.3376     0.8488     0.8488     0.0000
+ 10 C      6.9625     6.0000    -0.9625     3.4448     3.4448     0.0000
+ 11 H      0.7224     1.0000     0.2776     1.0630     1.0630     0.0000
+ 12 H      0.7007     1.0000     0.2993     1.0444     1.0444     0.0000
+ 13 H      0.8259     1.0000     0.1741     1.1957     1.1957     0.0000
+ 14 O      8.6613     8.0000    -0.6613     1.5334     1.5334    -0.0000
+ 15 H      0.7364     1.0000     0.2636     1.0406     1.0406     0.0000
+
+  Mayer bond orders larger than 0.100000
+B(  0-C ,  2-C ) :   0.4734 B(  0-C ,  6-C ) :   1.5304 B(  0-C , 10-C ) :   0.4749 
+B(  1-Cl,  3-H ) :   0.1291 B(  1-Cl, 13-H ) :   0.1208 B(  1-Cl, 14-O ) :  -0.1252 
+B(  1-Cl, 15-H ) :   0.2712 B(  2-C ,  3-H ) :   0.9797 B(  2-C ,  4-H ) :   0.9819 
+B(  2-C ,  5-H ) :   1.0278 B(  6-C ,  7-H ) :   1.0186 B(  6-C ,  8-H ) :   1.0195 
+B(  9-H , 14-O ) :   0.8633 B( 10-C , 11-H ) :   1.0256 B( 10-C , 12-H ) :   0.9812 
+B( 10-C , 13-H ) :   0.9827 B( 14-O , 15-H ) :   0.7634 
+
+-------
+TIMINGS
+-------
+
+Total SCF time: 0 days 0 hours 4 min 51 sec 
+
+Total time                  ....     291.894 sec
+Sum of individual times     ....     272.347 sec  ( 93.3%)
+
+SCF preparation             ....       8.092 sec  (  2.8%)
+Fock matrix formation       ....     193.075 sec  ( 66.1%)
+  Startup                   ....       1.152 sec  (  0.6% of F)
+  Split-RI-J                ....      10.203 sec  (  5.3% of F)
+  Chain of spheres X        ....      82.195 sec  ( 42.6% of F)
+  XC integration            ....      81.532 sec  ( 42.2% of F)
+    XC Preparation          ....       0.000 sec  (  0.0% of XC)
+    Basis function eval.    ....       0.865 sec  (  1.1% of XC)
+    Density eval.           ....       2.379 sec  (  2.9% of XC)
+    XC-Functional eval.     ....       0.360 sec  (  0.4% of XC)
+    XC-Potential eval.      ....       2.915 sec  (  3.6% of XC)
+Diagonalization             ....       0.000 sec  (  0.0%)
+Density matrix formation    ....       9.614 sec  (  3.3%)
+Total Energy calculation    ....       6.639 sec  (  2.3%)
+Population analysis         ....       2.765 sec  (  0.9%)
+Orbital Transformation      ....       4.854 sec  (  1.7%)
+Orbital Orthonormalization  ....       0.000 sec  (  0.0%)
+DIIS solution               ....      20.909 sec  (  7.2%)
+SOSCF solution              ....      24.291 sec  (  8.3%)
+Grid generation             ....       2.108 sec  (  0.7%)
+Finished LeanSCF after 292.4 sec
+
+Maximum memory used throughout the entire LEANSCF-calculation: 28.8 MB
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -693.915774555878
+-------------------------   --------------------
+
+[yayoi13.cluster.local:208235] pmix_mca_base_component_repository_open: unable to open /home/apps/openmpi/5.0.7_gcc13.3.0/lib/prte/prte_mca_plm_tm: 
+    dlopen error: libtorque.so.2: cannot open shared object file: No such file or directory
+    Perhaps a missing symbol, or compiled for a different version of prte? (ignored)
+[yayoi13.cluster.local:208240] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208248] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208242] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208246] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208241] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208238] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208243] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208250] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208253] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208245] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208244] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208239] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208251] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208247] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208252] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208249] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208242] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208242] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208242] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208243] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208244] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208243] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208244] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208243] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208244] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208251] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208241] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208241] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208251] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208241] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208251] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208252] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208252] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208252] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208238] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208246] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208238] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208238] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208246] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208246] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208249] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208249] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208249] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208239] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208239] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208239] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208245] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208240] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208240] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208240] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208245] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208253] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208253] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208245] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208248] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208253] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208248] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208248] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208247] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208247] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208247] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208250] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208250] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208250] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+
+------------------------------------------------------------------------------
+                              ORCA PROPERTY CALCULATIONS
+------------------------------------------------------------------------------
+
+GBWName                                 ... wb_ep2_ctrl_6-9_prod.gbw
+Number of atoms                         ...     16
+Number of basis functions               ...    324
+Max core memory                         ...   2100 MB
+
+Electric properties:
+Dipole moment                           ... YES
+Quadrupole moment                       ...  NO
+Static polarizability (Dipole/Dipole)   ...  NO
+Static polarizability (Dipole/Quad.)    ...  NO
+Static polarizability (Quad./Quad.)     ...  NO
+Static polarizability (Velocity)        ...  NO
+Static hyperpolarizability              ...  NO
+
+Atomic electric properties:
+Dipole moment                           ...  NO
+Quadrupole moment                       ...  NO
+Static polarizability                   ...  NO
+
+Choice of electric origin               ... Center of mass
+Position of electric origin             ...    -0.393409    -0.911738     1.799625
+
+General magnetic properties:
+Magnetizability                         ...  NO
+
+EPR properties:
+g-Tensor (aka g-matrix)                 ...  NO
+Zero-Field splitting spin-orbit         ...  NO
+Zero-field splitting spin-spin          ...  NO
+Hyperfine couplings                     ...  NO (   0 nuclei)
+Quadrupole couplings                    ...  NO (   0 nuclei)
+Contact density                         ...  NO (   0 nuclei)
+
+NMR properties:
+Chemical shifts                         ...  NO (   0 nuclei)
+Spin-rotation constants                 ...  NO (   0 nuclei)
+Spin-spin couplings                     ...  NO (   0 nuclei,    0 pairs)
+
+Choice of magnetic origin               ... GIAO
+Position of magnetic origin             ...     0.000000     0.000000     0.000000
+
+Properties with geometric perturbations:
+SCF Hessian                             ...  NO
+IR spectrum                             ...  NO
+VCD spectrum                            ...  NO
+X-ray spectroscopy properties:
+SCF XES/XAS/RIXS spectra                ...  NO
+
+SCF SOC stabilization energy            ...  NO
+Diagonal Born-Oppenheimer correction    ...  NO
+
+-------------
+DIPOLE MOMENT
+-------------
+
+Method             : SCF
+Type of density    : Electron Density
+Multiplicity       :   1
+Irrep              :   0
+Energy             :  -693.9157745558784427 Eh
+Basis              : AO
+                                X                 Y                 Z
+Electronic contribution:      2.498519635      -3.503682861       9.161854087
+Nuclear contribution   :     -2.807515932       4.262320891     -12.304438639
+                        -----------------------------------------
+Total Dipole Moment    :     -0.308996297       0.758638030      -3.142584552
+                        -----------------------------------------
+Magnitude (a.u.)       :      3.247591113
+Magnitude (Debye)      :      8.254720597
+
+
+
+--------------------
+Rotational spectrum 
+--------------------
+ 
+Rotational constants in cm-1:             0.089301             0.039559             0.033521 
+Rotational constants in MHz :          2677.189838          1185.963419          1004.925276 
+
+Dipole components along the rotational axes: 
+x,y,z [a.u.] :    -3.189889    -0.609457    -0.004459 
+x,y,z [Debye]:    -8.108053    -1.549116    -0.011333 
+
+ 
+
+Dipole moment calculation done in   0.4 sec 
+
+Maximum memory used throughout the entire PROP-calculation: 16.9 MB
+[yayoi13.cluster.local:208272] pmix_mca_base_component_repository_open: unable to open /home/apps/openmpi/5.0.7_gcc13.3.0/lib/prte/prte_mca_plm_tm: 
+    dlopen error: libtorque.so.2: cannot open shared object file: No such file or directory
+    Perhaps a missing symbol, or compiled for a different version of prte? (ignored)
+[yayoi13.cluster.local:208279] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208289] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208277] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208275] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208281] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208276] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208287] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208280] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208285] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208282] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208284] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208288] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208286] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208283] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208278] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208290] mca_base_component_repository_open: unable to open mca_accelerator_cuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208282] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208282] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208282] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208290] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208290] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208290] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208278] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208278] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208278] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208286] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208286] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208286] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208289] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208276] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208289] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208276] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208289] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208276] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208284] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208279] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208277] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208284] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208277] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208284] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208277] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208280] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208280] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208280] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208288] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208288] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208288] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208275] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208279] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208275] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208279] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208285] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208275] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208285] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208285] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208281] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208287] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208281] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208287] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208287] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208283] mca_base_component_repository_open: unable to open mca_rcache_gpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208283] mca_base_component_repository_open: unable to open mca_rcache_rgpusm: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208283] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+[yayoi13.cluster.local:208281] mca_base_component_repository_open: unable to open mca_btl_smcuda: libcuda.so.1: cannot open shared object file: No such file or directory (ignored)
+
+--------------------------------
+SUGGESTED CITATIONS FOR THIS RUN
+--------------------------------
+
+Below you find a list of papers that are relevant to this ORCA run
+We neither can nor want to force you to cite these papers, but we appreciate if you do
+You receive ORCA, which is the product of decades of hard work by many enthusiastic individuals, for free
+The only thing we kindly ask in return is that you cite our papers,
+We deeply appreciate it, if you show your appreciation for ORCA by not just citing the generic ORCA reference.
+
+Please note that relegating all ORCA citations to the supporting information does *not* help us.
+SI sections are not indexed - citations you put there will not count into any citation statistics
+But we need these citations in order to attract the funding resources that allow us to do what we are doing
+
+Therefore, if you are a happy ORCA user, please consider citing a few of the papers listed below in the main body of your paper
+
+In addition to the list printed below, the program has created the file wb_ep2_ctrl_6-9_prod.bibtex that contains the list in bibtex format
+You can import this file easily into all common literature databanks and citation aid programs
+
+It goes without saying that in many instances, there are alternative algorithms to achieve similar
+results as the ones you have gotten from ORCA. It is, of course, also the case that in some instances
+ORCA just re-implements algorithms worked out by others. We are fully aware of that and we are also
+fully appreciative of our colleagues work. Hence this citation list should not be read as indicating
+that the listed papers, which are focused on our own work, are the only ones worth citing. It simply
+meant to make it easier for users to cite ORCA specific papers. It is not a substitute for doing your
+own literature research and citing the relevant literature in a scientifically appropriate manner.
+
+List of essential papers. We consider these as the minimum necessary citations
+
+  1. Neese, F.
+     Software update: the ORCA program system, version 6.0
+     WIRES Comput. Molec. Sci. 2025 15(1), e70019
+     doi.org/10.1002/wcms.70019
+
+List of papers to cite with high priority. The work reported in these papers was absolutely
+necessary for this run to complete.
+Our perspective: the developers of density functionals and basis sets usually get cited in chemistry papers
+Good! But without the algorithms to do something with them, the functionals or basis sets would not do anything.
+Hence, in our opinion, the algorithm design and method developments papers are equally worthy of getting cited
+
+  1. Neese, F.
+     An improvement of the resolution of the identity approximation for the formation of the Coulomb matrix
+     J. Comp. Chem. 2003 24(14), 1740-1747
+     doi.org/10.1002/jcc.10318
+  2. Neese, F.; Wennmohs, F.; Hansen, A.; Becker, U.
+     Efficient, approximate and parallel Hartree-Fock and hybrid DFT calculations. A 'chain-of-spheres' algorithm for the Hartree-Fock exchange
+     Chem. Phys. 2009 356(1-3), 98-109
+     doi.org/10.1016/j.chemphys.2008.10.036
+  3. Lehtola, S.; Steigemann, C.; Oliveira, M.; Marques, M.
+     Recent developments in Libxc - A comprehensive library of functionals for density functional theory
+     Software X 2018 7 , 
+     doi.org/10.1016/j.softx.2017.11.002
+  4. Helmich-Paris, B.; de Souza, B.; Neese, F.; Izsák, R.
+     An improved chain of spheres for exchange algorithm
+     J. Chem. Phys. 2021 155(10), 104109
+     doi.org/10.1063/5.0058766
+  5. Neese, F.
+     The SHARK Integral Generation and Digestion System
+     J. Comp. Chem. 2022 44(3), 381
+     doi.org/10.1002/jcc.26942
+
+List of suggested additional citations. These are papers that are important in the 'surrounding' of 
+of this run, or papers that preceded the highly important papers. If you like your results we are grateful for a citation.
+
+  1. Izsak, R.; Neese, F.
+     An overlap fitted chain of spheres exchange method
+     J. Chem. Phys. 2011 135 , 144105
+     doi.org/10.1063/1.3646921
+  2. Izsak, R.; Hansen, A.; Neese, F.
+     The resolution of identity and chain of spheres approximations for the LPNO-CCSD singles Fock term
+     Molec. Phys. 2012 110 , 2413-2417
+     doi.org/10.1080/00268976.2012.687466
+  3. Neese, F.
+     The ORCA program system
+     WIRES Comput. Molec. Sci. 2012 2(1), 73-78
+     doi.org/10.1002/wcms.81
+  4. Izsak, R.; Neese, F.; Klopper, W.
+     Robust fitting techniques in the chain of spheres approximation to the Fock exchange: The role of the complementary space
+     J. Chem. Phys. 2013 139 , 
+     doi.org/10.1063/1.4819264
+  5. Neese, F.
+     Software update: the ORCA program system, version 4.0
+     WIRES Comput. Molec. Sci. 2018 8(1), 1-6
+     doi.org/10.1002/wcms.1327
+  6. Neese, F.; Wennmohs, F.; Becker, U.; Riplinger, C.
+     The ORCA quantum chemistry program package
+     J. Chem. Phys. 2020 152(22), 224108
+     doi.org/10.1063/5.0004608
+  7. Neese, F.
+     Software update: The ORCA program system—Version 5.0
+     WIRES Comput. Molec. Sci. 2022 12(1), e1606
+     doi.org/10.1002/wcms.1606
+
+List of optional additional citations
+
+  1. Neese, F.
+     Approximate second-order SCF convergence for spin unrestricted wavefunctions
+     Chem. Phys. Lett. 2000 325(1-3), 93-98
+     doi.org/10.1016/s0009-2614(00)00662-x
+
+Timings for individual modules:
+
+Sum of individual times          ...      320.342 sec (=   5.339 min)
+Startup calculation              ...       14.742 sec (=   0.246 min)   4.6 %
+SCF iterations                   ...      303.379 sec (=   5.056 min)  94.7 %
+Property calculations            ...        2.221 sec (=   0.037 min)   0.7 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 5 minutes 27 seconds 224 msec

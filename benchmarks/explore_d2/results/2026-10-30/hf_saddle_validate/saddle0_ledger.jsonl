@@ -1,0 +1,4 @@
+{"arm": "HF", "host": "kasuga01", "t": 1793333977.6562219, "event": "open", "task": "saddle0", "attempt": 0, "stage": "hessian", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1793333990.6245809, "event": "close", "task": "saddle0", "attempt": 0, "stage": "hessian", "forwards": 31, "requests": 61, "cache_hits": 31, "wall_s": 12.838404923968483, "outcome": "1", "artifact": null}
+{"arm": "HF", "host": "kasuga01", "t": 1793333990.948181, "event": "open", "task": "saddle0", "attempt": 0, "stage": "descent", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1793334065.855266, "event": "close", "task": "saddle0", "attempt": 0, "stage": "descent", "forwards": 720, "requests": 1438, "cache_hits": 720, "wall_s": 74.78837685199687, "outcome": "done", "artifact": null}

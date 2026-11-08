@@ -1,0 +1,5 @@
+! r2SCAN-3c TightSCF IRC
+%pal nprocs 16 end
+%maxcore 2100
+%irc MaxIter 100 InitHess read Hess_Filename "ts_new_10-12.hess" end
+* xyzfile -1 1 ts_new_10-12.xyz

@@ -1,0 +1,2 @@
+{"task": ":L0-v1|distance:6-9:+1:+:L0-v1", "saddle_order": 1, "reason": null, "connection": "descent_failed", "label": null, "forwards": 751}
+{"task": "0-v1|distance:10-12:+1:+:L0-v1", "saddle_order": null, "reason": "trivial_mode_floor_above_tolerance", "connection": null, "label": null, "forwards": 104}

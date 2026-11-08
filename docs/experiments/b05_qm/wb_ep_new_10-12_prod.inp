@@ -1,0 +1,4 @@
+! wB97M-V def2-TZVPD DEFGRID2 TightSCF
+%pal nprocs 24 end
+%maxcore 2100
+* xyzfile -1 1 ep_new_10-12_prod.xyz

@@ -1,0 +1,549 @@
+[
+ {
+  "task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+  "saddle_energy_eV_run": -18880.01953125,
+  "run_event": {
+   "label": "dissociation",
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     6,
+     9
+    ]
+   ],
+   "formed": [
+    [
+     9,
+     14
+    ]
+   ]
+  },
+  "checks": {
+   "property": {
+    "method": "hessian",
+    "provenance": {
+     "source": "analytic",
+     "members": 1,
+     "finite_difference_deviation": 0.008544898630986614,
+     "finite_difference_deviations": [
+      0.003448587668622703,
+      0.008544898630986614,
+      0.0034986616413200315
+     ],
+     "probe_directions": 3,
+     "asymmetry": 5.232760397438117e-05,
+     "meaning": "backend second derivative, cross-checked against seeded random HVPs; this bounds the error along the directions tried, it does not certify the matrix"
+    },
+    "eigenvalue_tol": 0.001,
+    "lowest_eigenvalues": [
+     -2.8768452504392927,
+     -6.016501460821969e-15,
+     -5.3322160238779176e-15,
+     -1.1717518396742663e-15,
+     5.15189307385003e-16,
+     5.465792727911106e-15
+    ],
+    "negative_eigenvalues": [
+     -2.8768452504392927
+    ],
+    "saddle_order": 1,
+    "trivial_mode_floor": [
+     {
+      "kind": "translation",
+      "measured": 2.355729212856528e-06,
+      "gradient_expectation": 0.0,
+      "residual": 2.355729212856528e-06
+     },
+     {
+      "kind": "rotation",
+      "measured": 8.250278147063932e-06,
+      "gradient_expectation": 2.3916350379849063e-07,
+      "residual": 8.011114643265442e-06
+     },
+     {
+      "kind": "translation",
+      "measured": 2.2776809157011389e-07,
+      "gradient_expectation": 0.0,
+      "residual": 2.2776809157011389e-07
+     },
+     {
+      "kind": "rotation",
+      "measured": 2.2789602834922854e-05,
+      "gradient_expectation": 4.564187057950006e-06,
+      "residual": 1.8225415776972847e-05
+     },
+     {
+      "kind": "translation",
+      "measured": -2.2131692365009057e-07,
+      "gradient_expectation": 0.0,
+      "residual": -2.2131692365009057e-07
+     },
+     {
+      "kind": "rotation",
+      "measured": -5.003109533882201e-07,
+      "gradient_expectation": 8.005384262337153e-06,
+      "residual": -8.505695215725373e-06
+     }
+    ],
+    "trivial_mode_floor_worst_residual": 1.8225415776972847e-05,
+    "imaginary_wavenumbers_icm": [
+     -884.4806356599865
+    ],
+    "units": "eV/(Angstrom^2 amu)",
+    "meaning": "rigid-body modes projected out; negative curvature means saddle",
+    "floor_gate": "necessary_condition_only",
+    "floor_gate_meaning": "rigid-body residual bounds only errors that break translational or rotational invariance; it says nothing about the internal subspace",
+    "internal_mode_recheck": {
+     "performed": true,
+     "agree": true,
+     "resolution_stable": true,
+     "fits_h2_law": true,
+     "resolution_diagnosis": "stable",
+     "modes": [
+      {
+       "index": 0,
+       "eigenvalue": -2.8768452504392927,
+       "rigid_body_overlap": 1.202041957109742e-15,
+       "subspace": "internal",
+       "steps_A": [
+        0.005,
+        0.01,
+        0.02
+       ],
+       "curvature_by_step": [
+        -3.20493319830321,
+        -3.0663351751242867,
+        -3.235443102751969
+       ],
+       "extrapolated_to_zero_step": -3.130549202638954,
+       "h2_coefficient": -219.1692728811446,
+       "fits_h2_law": true,
+       "compared_against": "extrapolate",
+       "reference_curvature": -3.130549202638954,
+       "classification_agrees": true,
+       "classification_steady_across_step": true
+      },
+      {
+       "index": 7,
+       "eigenvalue": 0.018878240679019647,
+       "rigid_body_overlap": 9.41578344244527e-14,
+       "subspace": "internal",
+       "steps_A": [
+        0.005,
+        0.01,
+        0.02
+       ],
+       "curvature_by_step": [
+        0.029630887676246907,
+        0.029030162172768728,
+        0.02241627295182767
+       ],
+       "extrapolated_to_zero_step": 0.030532960711911025,
+       "h2_coefficient": -20.041065399790032,
+       "fits_h2_law": true,
+       "compared_against": "extrapolate",
+       "reference_curvature": 0.030532960711911025,
+       "classification_agrees": true,
+       "classification_steady_across_step": true
+      }
+     ],
+     "gate_step_A": 0.01,
+     "hessian_source": "analytic",
+     "boundary_mode_index": 7,
+     "internal_modes_available": 42,
+     "force_evaluations": 12,
+     "fits_h2_law_meaning": "the ladder is a quadratic in h, so the extrapolate is meaningful. NOT evidence that the surface is smooth: a gaussian narrower than the probe fits the same law to within half a percent over a twenty-fivefold span",
+     "meaning": "agree gates matrix assembly against a truncation-extrapolated direct product; resolution_diagnosis is reported only, and says just whether the classification held across the ladder -- nothing here can decide why it moved"
+    },
+    "response": {
+     "kappa": -10.254351970696543,
+     "sigma": 3.729137049178351,
+     "anharmonicity": 800.5242628639423,
+     "band_A_sqrt_amu": [
+      0.01,
+      0.1
+     ],
+     "samples": [
+      [
+       0.01,
+       -19.53125
+      ],
+      [
+       0.01778279410038923,
+       -6.176323555016364
+      ],
+      [
+       0.03162277660168379,
+       -5.859375000000001
+      ],
+      [
+       0.056234132519034905,
+       -4.323426488511457
+      ],
+      [
+       0.1,
+       -3.710937499999999
+      ]
+     ],
+     "sign_stable": true,
+     "retraction": "cartesian_chord",
+     "bond_strain_by_amplitude": [
+      0.00027180933991208315,
+      0.00048338316808538127,
+      0.0008596858285336374,
+      0.0015290632699245872,
+      0.0027200538990402633
+     ],
+     "worst_bond_strain": 0.0027200538990402633,
+     "retraction_meaning": "probe endpoints are R +/- a v in Cartesian coordinates, not the arc of an internal coordinate; kappa_0 is exact because a chord has no second-order term, but bond_strain says how far the finite-amplitude samples have travelled from the motion they are named after",
+     "exceeds_residual_scale": false,
+     "sigma_meaning": "OLS residual scale of the a^2 fit, not a calibrated uncertainty; blind to a wrong direction",
+     "residual_rms": 5.075342224816759,
+     "units": "eV/(Angstrom^2 amu); amplitude A*sqrt(amu)",
+     "meaning": "band-regressed response curvature; NOT an eigenvalue"
+    }
+   },
+   "connection": {
+    "sides": [
+     {
+      "sign": 1,
+      "reached_minimum": true,
+      "energy_eV": -18880.39453125,
+      "relays": 0,
+      "diagnostics": {
+       "method": "hessian",
+       "provenance": {
+        "source": "analytic",
+        "members": 1,
+        "finite_difference_deviation": 0.0024818689673408974,
+        "finite_difference_deviations": [
+         0.0023622754294126747,
+         0.0024818689673408974,
+         0.0019538148536726676
+        ],
+        "probe_directions": 3,
+        "asymmetry": 1.528584114409176e-05,
+        "meaning": "backend second derivative, cross-checked against seeded random HVPs; this bounds the error along the directions tried, it does not certify the matrix"
+       },
+       "eigenvalue_tol": 0.001,
+       "lowest_eigenvalues": [
+        -2.3912461002627126e-15,
+        -1.153219487728052e-16,
+        6.114203638836731e-16,
+        2.4390055616897702e-15,
+        3.6503988921097806e-15,
+        5.8646833663454826e-15
+       ],
+       "negative_eigenvalues": [],
+       "saddle_order": 0,
+       "trivial_mode_floor": [
+        {
+         "kind": "translation",
+         "measured": 9.587081669460536e-08,
+         "gradient_expectation": 0.0,
+         "residual": 9.587081669460536e-08
+        },
+        {
+         "kind": "rotation",
+         "measured": -5.756312036533687e-06,
+         "gradient_expectation": 5.627709168344277e-06,
+         "residual": -1.1384021204877963e-05
+        },
+        {
+         "kind": "translation",
+         "measured": -8.614120783157247e-08,
+         "gradient_expectation": 0.0,
+         "residual": -8.614120783157247e-08
+        },
+        {
+         "kind": "rotation",
+         "measured": -0.0001482178176069573,
+         "gradient_expectation": -0.00013543027003247327,
+         "residual": -1.2787547574484045e-05
+        },
+        {
+         "kind": "translation",
+         "measured": -2.2941594416588008e-07,
+         "gradient_expectation": 0.0,
+         "residual": -2.2941594416588008e-07
+        },
+        {
+         "kind": "rotation",
+         "measured": -0.00022213080777736633,
+         "gradient_expectation": -0.0002262964062966784,
+         "residual": 4.165598519312059e-06
+        }
+       ],
+       "trivial_mode_floor_worst_residual": 1.2787547574484045e-05,
+       "imaginary_wavenumbers_icm": [],
+       "units": "eV/(Angstrom^2 amu)",
+       "meaning": "rigid-body modes projected out; negative curvature means saddle",
+       "floor_gate": "necessary_condition_only",
+       "floor_gate_meaning": "rigid-body residual bounds only errors that break translational or rotational invariance; it says nothing about the internal subspace",
+       "internal_mode_recheck": {
+        "performed": true,
+        "agree": true,
+        "resolution_stable": true,
+        "fits_h2_law": false,
+        "resolution_diagnosis": "stable",
+        "modes": [
+         {
+          "index": 6,
+          "eigenvalue": 0.009547775135989475,
+          "rigid_body_overlap": 4.98915883940449e-13,
+          "subspace": "internal",
+          "steps_A": [
+           0.005,
+           0.01,
+           0.02
+          ],
+          "curvature_by_step": [
+           0.01865346887770788,
+           0.007999150309582282,
+           0.012994950207382068
+          ],
+          "extrapolated_to_zero_step": 0.01426939603869938,
+          "h2_coefficient": -6.020226136049372,
+          "fits_h2_law": false,
+          "compared_against": "smallest_step",
+          "reference_curvature": 0.01865346887770788,
+          "classification_agrees": true,
+          "classification_steady_across_step": true
+         }
+        ],
+        "gate_step_A": 0.01,
+        "hessian_source": "analytic",
+        "boundary_mode_index": 6,
+        "internal_modes_available": 42,
+        "force_evaluations": 6,
+        "fits_h2_law_meaning": "the ladder is a quadratic in h, so the extrapolate is meaningful. NOT evidence that the surface is smooth: a gaussian narrower than the probe fits the same law to within half a percent over a twenty-fivefold span",
+        "meaning": "agree gates matrix assembly against a truncation-extrapolated direct product; resolution_diagnosis is reported only, and says just whether the classification held across the ladder -- nothing here can decide why it moved"
+       }
+      }
+     },
+     {
+      "sign": -1,
+      "reached_minimum": false,
+      "energy_eV": null,
+      "relays": 0,
+      "diagnostics": {
+       "method": "hessian",
+       "provenance": {
+        "source": "analytic",
+        "members": 1,
+        "finite_difference_deviation": 0.0032128406160406016,
+        "finite_difference_deviations": [
+         0.00164204807105162,
+         0.0032128406160406016,
+         0.0026994517308444516
+        ],
+        "probe_directions": 3,
+        "asymmetry": 6.405094964641701e-06,
+        "meaning": "backend second derivative, cross-checked against seeded random HVPs; this bounds the error along the directions tried, it does not certify the matrix"
+       },
+       "eigenvalue_tol": 0.001,
+       "lowest_eigenvalues": [
+        -5.911995687245372e-15,
+        -4.2606843401475845e-15,
+        -2.517359009645534e-16,
+        1.4494033623953906e-15,
+        2.0736856207657974e-15,
+        5.8351400804388295e-15
+       ],
+       "negative_eigenvalues": [],
+       "saddle_order": null,
+       "trivial_mode_floor": [
+        {
+         "kind": "translation",
+         "measured": -1.4401446416371217e-07,
+         "gradient_expectation": 0.0,
+         "residual": -1.4401446416371217e-07
+        },
+        {
+         "kind": "rotation",
+         "measured": -7.411535704809181e-05,
+         "gradient_expectation": -7.701782990504774e-05,
+         "residual": 2.9024728569559364e-06
+        },
+        {
+         "kind": "translation",
+         "measured": 2.2411035796831884e-07,
+         "gradient_expectation": 0.0,
+         "residual": 2.2411035796831884e-07
+        },
+        {
+         "kind": "rotation",
+         "measured": 0.00013485418992782646,
+         "gradient_expectation": 0.00013568454841656963,
+         "residual": -8.303584887431705e-07
+        },
+        {
+         "kind": "translation",
+         "measured": -1.9736515619978387e-07,
+         "gradient_expectation": 0.0,
+         "residual": -1.9736515619978387e-07
+        },
+        {
+         "kind": "rotation",
+         "measured": 0.0006959902428631895,
+         "gradient_expectation": 0.0006882985111153273,
+         "residual": 7.691731747862165e-06
+        }
+       ],
+       "trivial_mode_floor_worst_residual": 7.691731747862165e-06,
+       "imaginary_wavenumbers_icm": [],
+       "units": "eV/(Angstrom^2 amu)",
+       "meaning": "rigid-body modes projected out; negative curvature means saddle",
+       "floor_gate": "necessary_condition_only",
+       "floor_gate_meaning": "rigid-body residual bounds only errors that break translational or rotational invariance; it says nothing about the internal subspace",
+       "internal_mode_recheck": {
+        "performed": true,
+        "agree": false,
+        "resolution_stable": false,
+        "fits_h2_law": false,
+        "resolution_diagnosis": "classification_moves_with_step",
+        "modes": [
+         {
+          "index": 6,
+          "eigenvalue": 0.004891252117898813,
+          "rigid_body_overlap": 1.2038375127315262e-12,
+          "subspace": "internal",
+          "steps_A": [
+           0.005,
+           0.01,
+           0.02
+          ],
+          "curvature_by_step": [
+           -0.0035732936301334614,
+           0.0009426368960976472,
+           0.006038150719856814
+          ],
+          "extrapolated_to_zero_step": -0.0029172357586829544,
+          "h2_coefficient": 23.16038335594259,
+          "fits_h2_law": false,
+          "compared_against": "smallest_step",
+          "reference_curvature": -0.0035732936301334614,
+          "classification_agrees": false,
+          "classification_steady_across_step": false
+         }
+        ],
+        "gate_step_A": 0.01,
+        "hessian_source": "analytic",
+        "boundary_mode_index": 6,
+        "internal_modes_available": 42,
+        "force_evaluations": 6,
+        "fits_h2_law_meaning": "the ladder is a quadratic in h, so the extrapolate is meaningful. NOT evidence that the surface is smooth: a gaussian narrower than the probe fits the same law to within half a percent over a twenty-fivefold span",
+        "meaning": "agree gates matrix assembly against a truncation-extrapolated direct product; resolution_diagnosis is reported only, and says just whether the classification held across the ladder -- nothing here can decide why it moved"
+       },
+       "reason": "internal_mode_recheck_disagrees"
+      }
+     }
+    ],
+    "status": "descent_failed"
+   }
+  },
+  "forwards": 751,
+  "wall_s": 88.77425287797814
+ },
+ {
+  "task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k1:f2.4:L0-v1|distance:10-12:+1:+:L0-v1",
+  "saddle_energy_eV_run": -18880.41015625,
+  "run_event": {
+   "label": "dissociation",
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     10,
+     12
+    ]
+   ],
+   "formed": [
+    [
+     12,
+     14
+    ]
+   ]
+  },
+  "checks": {
+   "property": {
+    "method": "hessian",
+    "provenance": {
+     "source": "fd",
+     "step_A": 0.01,
+     "force_evaluations": 96,
+     "meaning": "central differences; truncation error is O(step^2)",
+     "analytic_unavailable": "analytic Hessian disagrees with a finite difference by 1.086e-02 relative, above 0.01"
+    },
+    "eigenvalue_tol": 0.001,
+    "lowest_eigenvalues": [
+     -1.8869278972861323,
+     -7.686954605833155e-15,
+     -7.282065283445136e-15,
+     -4.888324625119909e-15,
+     -2.0977731458787757e-15,
+     9.747153949833185e-18
+    ],
+    "negative_eigenvalues": [
+     -1.8869278972861323
+    ],
+    "saddle_order": null,
+    "trivial_mode_floor": [
+     {
+      "kind": "translation",
+      "measured": -1.8644723427201993e-05,
+      "gradient_expectation": 0.0,
+      "residual": -1.8644723427201993e-05
+     },
+     {
+      "kind": "rotation",
+      "measured": 0.0006979471337319981,
+      "gradient_expectation": -1.0535684321706789e-05,
+      "residual": 0.0007084828180537049
+     },
+     {
+      "kind": "translation",
+      "measured": 1.2734291200025956e-05,
+      "gradient_expectation": 0.0,
+      "residual": 1.2734291200025956e-05
+     },
+     {
+      "kind": "rotation",
+      "measured": 0.001130577934598522,
+      "gradient_expectation": -9.6310110883052e-06,
+      "residual": 0.0011402089456868272
+     },
+     {
+      "kind": "translation",
+      "measured": -2.0144978037336112e-05,
+      "gradient_expectation": 0.0,
+      "residual": -2.0144978037336112e-05
+     },
+     {
+      "kind": "rotation",
+      "measured": -0.0002544252515662911,
+      "gradient_expectation": -2.021310647001089e-05,
+      "residual": -0.0002342121450962802
+     }
+    ],
+    "trivial_mode_floor_worst_residual": 0.0011402089456868272,
+    "imaginary_wavenumbers_icm": [
+     -716.3210789905213
+    ],
+    "units": "eV/(Angstrom^2 amu)",
+    "meaning": "rigid-body modes projected out; negative curvature means saddle",
+    "floor_gate": "necessary_condition_only",
+    "floor_gate_meaning": "rigid-body residual bounds only errors that break translational or rotational invariance; it says nothing about the internal subspace",
+    "reason": "trivial_mode_floor_above_tolerance"
+   },
+   "connection": null
+  },
+  "forwards": 104,
+  "wall_s": 14.024580387980677
+ }
+]

@@ -1,0 +1,2 @@
+{"arm": "HF", "host": "kasuga01", "t": 1793334066.8101122, "event": "open", "task": "saddle1", "attempt": 0, "stage": "hessian", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1793334080.7388484, "event": "close", "task": "saddle1", "attempt": 0, "stage": "hessian", "forwards": 104, "requests": 206, "cache_hits": 103, "wall_s": 13.715307959995698, "outcome": "None", "artifact": null}
