@@ -27,3 +27,8 @@ cs-2025-090935.pdf
 # External reference papers, not project source
 ja5c13906.pdf
 ja5c13906_si_001 (1).pdf
+
+# internal local-agent working notes and run debris (never published)
+.commit_drafts/
+researchd.plan.toml
+/*.o[0-9]*

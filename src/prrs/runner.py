@@ -1445,12 +1445,12 @@ def follow_min_mode(
                         target_overlap = selected_overlap
                     if selected_overlap < config.min_mode_overlap:
                         return None, {
+                            **bounds,
                             "reason": "lost_target_mode",
                             "steps": step,
                             "mode_overlap": selected_overlap,
                             "selected_mode_index": order,
                             "target_overlap": target_overlap,
-                            **bounds,
                             "meaning": _LOST_TARGET_MODE_MEANING,
                         }
             # Carried on every return path, not only the successful one: which mode was
