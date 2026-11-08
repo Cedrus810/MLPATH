@@ -1,0 +1,72 @@
+{
+ "runs": 4,
+ "items": {
+  "failed": 1,
+  "control": 1
+ },
+ "recheck": [],
+ "first_run_transitions": {
+  "failed: converged_candidate -> converged_candidate": 1,
+  "control: converged_candidate -> converged_candidate": 1
+ },
+ "first_run_cost": {
+  "failed_v5_forward": 288,
+  "failed_v5_wall_s": 27.93165767303435,
+  "failed_v6_forward": 293,
+  "failed_v6_wall_s": 26.236642439034767,
+  "failed_v5_fine_after_coarse_candidate": 19,
+  "control_v5_forward": 230,
+  "control_v5_wall_s": 20.694879492977634,
+  "control_v6_forward": 207,
+  "control_v6_wall_s": 18.671923037036322,
+  "control_v5_fine_after_coarse_candidate": 29
+ },
+ "v6_candidates_reached_at": {
+  "failed: coarse": 1,
+  "control: coarse": 1
+ },
+ "rows": [
+  {
+   "item": 0,
+   "group": "failed",
+   "intent": "k0:distance:10-12",
+   "run": "b05_hf_v4_sB",
+   "v5_status": [
+    "converged_candidate"
+   ],
+   "v6_status": [
+    "converged_candidate"
+   ],
+   "v6_candidate_origin": [
+    "from_right_coarse"
+   ],
+   "first_run_agreement": {
+    "dE_eV": 0.001953125,
+    "rmsd_A": 0.00180007312298054,
+    "symmetric_rmsd_A": 0.0018000731229806013
+   },
+   "v6_first_run_stop": null
+  },
+  {
+   "item": 1,
+   "group": "control",
+   "intent": "k2:distance:10-13",
+   "run": "b05_hf_v4_sA",
+   "v5_status": [
+    "converged_candidate"
+   ],
+   "v6_status": [
+    "converged_candidate"
+   ],
+   "v6_candidate_origin": [
+    "from_right_coarse"
+   ],
+   "first_run_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0007637554949658929,
+    "symmetric_rmsd_A": 0.0007637554949654909
+   },
+   "v6_first_run_stop": null
+  }
+ ]
+}

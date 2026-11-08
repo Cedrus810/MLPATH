@@ -1,0 +1,5 @@
+{"file": "failed_00_v5.json", "status": "converged_candidate", "spent": 288, "wall_s": 27.9, "mids": [["coarse", -1, "bfgs"], ["coarse", -1, "bfgs"], ["coarse", -1, "bfgs"], ["coarse", -1, "bfgs"], ["coarse", 0, "bfgs"], ["coarse", 0, "bfgs"], ["m_left", null, "fire"], ["_right", null, "fire"], ["coarse", 0, "bfgs"], ["coarse", 0, "bfgs"], ["m_left", null, "fire"], ["_right", null, "fire"]]}
+{"file": "failed_00_v6.json", "status": "converged_candidate", "spent": 293, "wall_s": 26.2, "mids": [["coarse", -1, "bfgs"], ["coarse", -1, "bfgs"], ["coarse", -1, "bfgs"], ["coarse", -1, "bfgs"], ["coarse", 0, "bfgs"], ["coarse", 0, "bfgs"], ["m_left", null, "fire"], ["_right", null, "fire"], ["coarse", 0, "bfgs"], ["coarse", 0, "bfgs"]]}
+{"file": "control_01_v5.json", "status": "converged_candidate", "spent": 230, "wall_s": 20.7, "mids": [["coarse", 0, "bfgs"], ["coarse", 0, "bfgs"], ["m_left", null, "fire"], ["_right", null, "fire"]]}
+{"file": "control_01_v6.json", "status": "converged_candidate", "spent": 207, "wall_s": 18.7, "mids": [["coarse", 0, "bfgs"], ["coarse", 0, "bfgs"]]}
+{"recheck": []}

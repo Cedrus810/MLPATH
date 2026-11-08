@@ -1,0 +1,931 @@
+{
+ "automorphisms": 1296,
+ "basin_rmsd_A": 0.15,
+ "basin_energy_eV": 0.05,
+ "reference_events": 22,
+ "reference_classes": [
+  {
+   "source": "2026-10-26/b05_hf_sA",
+   "intent": "k6:distance:6-9",
+   "energy_eV": -18880.01953125,
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     6,
+     9
+    ]
+   ],
+   "formed": [
+    [
+     9,
+     14
+    ]
+   ],
+   "cluster": 0,
+   "members": 11,
+   "sources": [
+    "2026-10-26/b05_hf_sA",
+    "2026-10-26/b05_hf_sB",
+    "2026-10-28/b05_hf_v11_sA",
+    "2026-10-28/b05_hf_v11_sB",
+    "2026-10-28/b05_hf_v11r_sA",
+    "2026-10-28/b05_hf_v11r_sB",
+    "2026-10-29/b05_hf_v4_sA",
+    "2026-10-29/b05_hf_v4_sB"
+   ]
+  },
+  {
+   "source": "2026-10-26/b05_hf_sA",
+   "intent": "k2:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "formed": [
+    [
+     3,
+     14
+    ]
+   ],
+   "cluster": 1,
+   "members": 10,
+   "sources": [
+    "2026-10-26/b05_hf_sA",
+    "2026-10-26/b05_hf_sB",
+    "2026-10-28/b05_hf_v11_sA",
+    "2026-10-28/b05_hf_v11_sB",
+    "2026-10-28/b05_hf_v11r_sA",
+    "2026-10-29/b05_hf_v4_sA",
+    "2026-10-29/b05_hf_v4_sB"
+   ]
+  },
+  {
+   "source": "2026-10-29/b05_hf_v4_sA",
+   "intent": "k1:distance:10-12",
+   "energy_eV": -18880.41015625,
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     10,
+     12
+    ]
+   ],
+   "formed": [
+    [
+     12,
+     14
+    ]
+   ],
+   "cluster": 2,
+   "members": 1,
+   "sources": [
+    "2026-10-29/b05_hf_v4_sA"
+   ]
+  }
+ ],
+ "class_to_class_rmsd_A": [
+  [
+   0.0,
+   0.5741,
+   1.4058
+  ],
+  [
+   0.5741,
+   0.0,
+   1.4001
+  ],
+  [
+   1.4058,
+   1.4001,
+   0.0
+  ]
+ ],
+ "candidates": 70,
+ "candidates_by_class": {
+  "0": [
+   "k2:distance:10-13",
+   "k3:distance:10-13",
+   "k4:distance:2-5",
+   "k5:distance:10-13",
+   "k5:distance:6-9",
+   "k6:distance:6-9"
+  ],
+  "1": [
+   "k2:distance:2-3",
+   "k2:distance:3-14",
+   "k3:distance:2-3",
+   "k4:distance:6-7",
+   "k5:distance:10-11",
+   "k5:distance:2-3",
+   "k5:distance:3-14",
+   "k6:distance:10-11",
+   "k7:distance:10-11"
+  ],
+  "2": [
+   "k0:distance:10-12",
+   "k0:distance:2-4",
+   "k0:distance:8-14",
+   "k1:distance:10-12",
+   "k1:distance:6-8",
+   "k2:distance:10-12",
+   "k2:distance:2-4",
+   "k2:distance:6-8",
+   "k2:distance:8-14",
+   "k3:distance:10-12",
+   "k3:distance:2-4",
+   "k3:distance:4-14",
+   "k3:distance:6-8",
+   "k3:distance:8-14",
+   "k4:distance:7-14",
+   "k5:distance:11-14",
+   "k7:distance:10-12",
+   "k7:distance:6-8"
+  ]
+ },
+ "unmatched_groups": [],
+ "rows": [
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_22_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k2:distance:10-13",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0022991177032237143,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_22_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k2:distance:10-13",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0016903829363891728,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_23_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k2:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0005272741040189069,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_23_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k2:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0007264762605615875,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_24_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k2:distance:3-14",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0007770043881532216,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_24_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k2:distance:3-14",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.003334464979780652,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_25_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k3:distance:10-13",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0024594540505018135,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_25_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k3:distance:10-13",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0022092536833428584,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_26_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k3:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0013264627866346943,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_26_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k3:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0017056635338027044,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_27_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k4:distance:2-5",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.002376798729474272,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_27_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k4:distance:2-5",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.002752657603215553,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_28_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k4:distance:6-7",
+   "energy_eV": -18880.021484375,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0020845014951952575,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_28_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k4:distance:6-7",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.005745101982771165,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_29_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k5:distance:10-11",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0019277348998600744,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_29_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k5:distance:10-11",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.002282815924193819,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_30_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k5:distance:10-13",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0018333672766561164,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_30_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k5:distance:10-13",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0017332236685095384,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_31_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k5:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0009474531247420067,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_31_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k5:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0012927518368057492,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_32_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k5:distance:3-14",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.003556346361504616,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_32_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k5:distance:3-14",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0006513154265318338,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_33_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k5:distance:6-9",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.005815544012172635,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_33_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k5:distance:6-9",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.002571246880888842,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_34_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k6:distance:10-11",
+   "energy_eV": -18880.021484375,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0031736683804637266,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_34_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k6:distance:10-11",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0032948933531071205,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_35_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k6:distance:6-9",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0004119831135987232,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_35_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k6:distance:6-9",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 0,
+   "nearest_rmsd_A": 0.0011658276463143008,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_36_v5.json",
+   "group": "control",
+   "arm": "v5",
+   "intent": "k7:distance:10-11",
+   "energy_eV": -18880.01953125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0018450714532876687,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/control_36_v6.json",
+   "group": "control",
+   "arm": "v6",
+   "intent": "k7:distance:10-11",
+   "energy_eV": -18880.017578125,
+   "nearest_class": 1,
+   "nearest_rmsd_A": 0.0033427706063682053,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_00_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k0:distance:10-12",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.019122930406117334,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_00_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k0:distance:10-12",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.020367956740882157,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_01_v5_r2.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k0:distance:2-4",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.005935523986403791,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_01_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k0:distance:2-4",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.005156171446776238,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_01_v6_r1.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k0:distance:2-4",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.006701553955350152,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_01_v6_r2.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k0:distance:2-4",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.003697739555612515,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_03_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k0:distance:8-14",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.00801958372597842,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_03_v6_r1.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k0:distance:8-14",
+   "energy_eV": -18880.408203125,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.009293724228387671,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_04_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k1:distance:10-12",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.0014002310885267905,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_04_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k1:distance:10-12",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.002177019156988786,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_07_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k1:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.02884273090635341,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_07_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k1:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.02687925953659202,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_09_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k2:distance:10-12",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.0050876443730414975,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_09_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k2:distance:10-12",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.0036650778168352796,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_10_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k2:distance:2-4",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.005636482096345359,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_10_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k2:distance:2-4",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.008590344628057257,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_11_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k2:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.01544141493781676,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_11_v6_r1.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k2:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.019452324072007858,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_11_v6_r2.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k2:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.015587450335551969,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_12_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k2:distance:8-14",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.02907204944882942,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_12_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k2:distance:8-14",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.030390047281760327,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_13_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k3:distance:10-12",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.006339304021138375,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_13_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k3:distance:10-12",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.006836209472381479,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_14_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k3:distance:2-4",
+   "energy_eV": -18880.40625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.0035472622828669476,
+   "nearest_dE_eV": 0.00390625,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_14_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k3:distance:2-4",
+   "energy_eV": -18880.408203125,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.005743901545371517,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_15_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k3:distance:4-14",
+   "energy_eV": -18880.408203125,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.005002843010192,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_15_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k3:distance:4-14",
+   "energy_eV": -18880.408203125,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.004659199164069855,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_16_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k3:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.03289566182324944,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_16_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k3:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.03493078010195616,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_17_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k3:distance:8-14",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.026485909911848227,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_17_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k3:distance:8-14",
+   "energy_eV": -18880.408203125,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.026652292961078076,
+   "nearest_dE_eV": 0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_18_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k4:distance:7-14",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.03746539101963177,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_18_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k4:distance:7-14",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.036767760094956525,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_19_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k5:distance:11-14",
+   "energy_eV": -18880.41796875,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.01738095714628543,
+   "nearest_dE_eV": -0.0078125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_19_v6_r1.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k5:distance:11-14",
+   "energy_eV": -18880.416015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.016274228657661097,
+   "nearest_dE_eV": -0.005859375,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_19_v6_r2.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k5:distance:11-14",
+   "energy_eV": -18880.41796875,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.017533052887624512,
+   "nearest_dE_eV": -0.0078125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_20_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k7:distance:10-12",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.01671471113818193,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_20_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k7:distance:10-12",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.0173486340721267,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_21_v5.json",
+   "group": "failed",
+   "arm": "v5",
+   "intent": "k7:distance:6-8",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.030852779874747677,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  },
+  {
+   "source": "midpoint_coarse_candidate_validate/full/failed_21_v6_r1.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k7:distance:6-8",
+   "energy_eV": -18880.412109375,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.029588580238061626,
+   "nearest_dE_eV": -0.001953125,
+   "matches_class": true
+  }
+ ]
+}
