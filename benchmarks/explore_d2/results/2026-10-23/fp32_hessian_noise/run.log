@@ -1,0 +1,68 @@
+TS-2OMe: None s, forwards so far 8
+TS-2OMe-cis: None s, forwards so far 16
+Dimethoxycarbene: 22.628524200059474 s, forwards so far 87
+Cyclohexene-carboxaldehyde: 31.4951507486403 s, forwards so far 141
+b09-complex: None s, forwards so far 157
+TS-CCl2-C4: 44.30777886509895 s, forwards so far 211
+TS-CCl2: 48.26477304287255 s, forwards so far 282
+b04-ts0000: None s, forwards so far 290
+b05-sB-E2-saddle: None s, forwards so far 314
+{
+  "note": "reported only; PRRS defaults are not changed",
+  "structures_used": [
+    "Dimethoxycarbene",
+    "Cyclohexene-carboxaldehyde",
+    "TS-CCl2-C4",
+    "TS-CCl2"
+  ],
+  "current": {
+    "minimum_check_eigenvalue_tol": 0.001,
+    "minimum_check_step_A": 0.01,
+    "analytic_hessian_check": 0.01
+  },
+  "minimum_check_eigenvalue_tol": {
+    "value": 0.01,
+    "inputs": {
+      "max_sigma_lambda_over_structures": 0.0042328345187673064,
+      "3x": 0.01269850355630192
+    },
+    "formula": "max(1e-3, round_1_sig_fig(3 * max over structures and the lowest 12 internal modes of std_ddof1(lambda over 5 rotations)))"
+  },
+  "minimum_check_step_A": {
+    "value": 1.8314482192291226,
+    "value_rounded_up_1sf": 2.0,
+    "inputs": {
+      "max_sigma_F_eV_A": 0.004351298969502036,
+      "min_mass_amu": 1.008,
+      "tol_new": 0.01,
+      "h_needed": 1.8314482192291226
+    },
+    "formula": "max(0.01, 3*sqrt(2)*sigma_F_max / (m_min * tol_new)); from sqrt(2)*sigma_F/(h*m_min) <= tol_new/3 (FD column noise sqrt(2)*sigma_F/h in eV/A^2, divided by the lightest mass to be in the mass-weighted units of tol)"
+  },
+  "analytic_hessian_check": {
+    "value_literal": 0.0006455831168737452,
+    "value_not_tighter_than_current": 0.01,
+    "inputs": {
+      "fd_column_noise_eV_A2_at_h_new": 0.00336,
+      "noise_over_typical_hvp_per_structure": {
+        "Dimethoxycarbene": 0.00016893065542451446,
+        "Cyclohexene-carboxaldehyde": 0.00017846171413410638,
+        "TS-CCl2-C4": 0.00020152616687950847,
+        "TS-CCl2": 0.00021519437229124838
+      },
+      "max_ratio": 0.00021519437229124838
+    },
+    "formula": "3 * max over structures of [sqrt(2)*sigma_F_max/h_new / typical_hvp]; typical_hvp = median over 200 random unit directions of max|H d| (raw eV/A^2, the reference of prrs' own relative check)"
+  },
+  "reported_only_not_changed": {
+    "trivial_floor_fraction_triggers": 0,
+    "internal_mode_recheck_triggers": 1,
+    "of_confirm_minimum_runs": 4,
+    "confirm_reasons": {
+      "Dimethoxycarbene": null,
+      "Cyclohexene-carboxaldehyde": null,
+      "TS-CCl2-C4": "internal_mode_recheck_disagrees",
+      "TS-CCl2": null
+    }
+  }
+}

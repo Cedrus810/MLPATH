@@ -1,0 +1,13 @@
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+Traceback (most recent call last):
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/run_b05_d2.py", line 322, in <module>
+    main()
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/run_b05_d2.py", line 316, in main
+    measure_noise(args)
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/run_b05_d2.py", line 251, in measure_noise
+    outcomes, _ = scan_many(jobs, batch, args.max_active) if jobs else ([], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/explore/src/explore/parallel.py", line 81, in scan_many
+    if max_active < 1:
+       ^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'NoneType' and 'int'

@@ -1,0 +1,220 @@
+WARNING:root:Default dtype float64 does not match model dtype float32, converting models to float64.
+{
+  "rule_version": "D2-v1",
+  "population": {
+    "ready": 932,
+    "domain_truncated": 113
+  },
+  "l1_status": {
+    "completed": 629,
+    "censored_energy": 228,
+    "budget_exhausted": 6
+  },
+  "l2_status": {
+    "completed": 13
+  },
+  "promotion": {
+    "ridge_suspected": 223,
+    "audit": 57,
+    "branch_bracketed": 13
+  },
+  "deferred": {
+    "no_trigger": 557,
+    "jump_unchecked": 13
+  },
+  "release_status": {},
+  "certify_status": {
+    "c2": 2,
+    "unresolved:descent_failed": 10,
+    "unresolved:saddle_not_converged": 18,
+    "budget_exhausted": 2,
+    "unresolved:relayed": 11,
+    "unresolved:saddle_wrong_index": 5
+  },
+  "c1": [],
+  "c1_by_label": {},
+  "c2": [
+    {
+      "task": "L4|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+      "cumulative_spent": 300826,
+      "saddle_energy_eV": -18880.01837064903,
+      "chemical_pair": [
+        "7c667b0983110769c8f7eddbb30b6d3e99fc9c16c784836c366624a601a7bb3e",
+        "a4cc3716d8bb73fe8664b99b54bed0c2d2b0c359be753dd42edfbba5dcb0a2ee"
+      ],
+      "event": {
+        "label": "reactive",
+        "fingerprint": {
+          "broken": [
+            [
+              9,
+              14
+            ]
+          ],
+          "formed": [
+            [
+              0,
+              1
+            ],
+            [
+              6,
+              9
+            ]
+          ],
+          "active_subset": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "delta_coordination": [
+            0.7319125156968198,
+            0.9439732838753563,
+            0.030909716562059764,
+            0.003829461978511861,
+            0.0012171294720794146,
+            -0.00044613426217599006,
+            0.7774051460128719,
+            -0.009776616510931868,
+            -0.013320890530580942,
+            -0.039765225326890086,
+            0.012998131892670628,
+            -0.012235242037058724,
+            -0.0008320753693678018,
+            0.001539703746968768,
+            -0.8660741707562488,
+            0.014096892853805332
+          ],
+          "active_atoms": [
+            0,
+            1,
+            6,
+            9,
+            14
+          ],
+          "aligned_rmsd_A": 1.2309957563977634,
+          "energy_change_eV": 1.9948791570095636,
+          "components_before": 3,
+          "components_after": 2
+        }
+      },
+      "class": "ridge_suspected",
+      "audit_release": false
+    },
+    {
+      "task": "L4|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-13:+1:+:L0-v1",
+      "cumulative_spent": 322385,
+      "saddle_energy_eV": -18880.01751459951,
+      "chemical_pair": [
+        "7c667b0983110769c8f7eddbb30b6d3e99fc9c16c784836c366624a601a7bb3e",
+        "a4cc3716d8bb73fe8664b99b54bed0c2d2b0c359be753dd42edfbba5dcb0a2ee"
+      ],
+      "event": {
+        "label": "reactive",
+        "fingerprint": {
+          "broken": [
+            [
+              13,
+              14
+            ]
+          ],
+          "formed": [
+            [
+              0,
+              1
+            ],
+            [
+              10,
+              13
+            ]
+          ],
+          "active_subset": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "delta_coordination": [
+            0.7318136174502006,
+            0.943717843822919,
+            0.01404678836118256,
+            -0.01119063553518862,
+            -0.0008710367065177804,
+            0.001785757302721902,
+            0.031488561986569685,
+            0.0037739500531847048,
+            0.0012798827338451613,
+            -0.00018333458116681633,
+            0.776938573048267,
+            -0.009710065890138009,
+            -0.013005524573096006,
+            -0.0405307326130826,
+            -0.8659248795623418,
+            0.014073495590392393
+          ],
+          "active_atoms": [
+            0,
+            1,
+            10,
+            13,
+            14
+          ],
+          "aligned_rmsd_A": 1.243993159075488,
+          "energy_change_eV": 1.9964879785948142,
+          "components_before": 3,
+          "components_after": 2
+        }
+      },
+      "class": "ridge_suspected",
+      "audit_release": false
+    }
+  ],
+  "attempts": {},
+  "hosts": [
+    "yayoi42.cluster.local"
+  ],
+  "skips": {
+    "L1_skipped:search_budget": 69,
+    "L2_skipped:search_budget": 15,
+    "L3_skipped:search_budget": 293,
+    "L4_skipped:certify_budget": 245
+  },
+  "accounts": {
+    "search": {
+      "budget": 300000,
+      "spent": 299866,
+      "held": 0
+    },
+    "certify": {
+      "budget": 40000,
+      "spent": 38560,
+      "held": 0
+    }
+  },
+  "ledger_total": 338426,
+  "unreconciled": []
+}

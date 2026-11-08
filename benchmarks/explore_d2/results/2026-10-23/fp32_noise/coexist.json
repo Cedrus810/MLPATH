@@ -1,0 +1,19 @@
+{
+  "fp64_same_process_minus_alone_eV": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "fp64_force_maxdiff_eV_A": 2.51941956880275e-12,
+  "fp32_after_minus_before_eV": [
+    0.0,
+    0.001953125,
+    0.0
+  ],
+  "fp32_force_maxdiff_after_before_eV_A": 0.0008103352738544345,
+  "fp32_minus_fp64_eV": [
+    -0.0008887686672096606,
+    -0.00036998554423917085,
+    -0.0006142614911368582
+  ]
+}

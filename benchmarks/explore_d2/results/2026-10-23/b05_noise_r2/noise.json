@@ -1,0 +1,112 @@
+{
+  "host": "kasuga",
+  "system": "b05",
+  "seed": 20261023,
+  "sigma_A": 0.02,
+  "repeats": 5,
+  "load_s": 38.295906943967566,
+  "l0": {
+    "prepare_forwards": 52,
+    "unqualified_fragments": [
+      "HO|20e0501a2ce64366,e7ef864bc9081975"
+    ],
+    "conformer_counts": {
+      "C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831": 1,
+      "HO|20e0501a2ce64366,e7ef864bc9081975": 1
+    },
+    "pose_status_counts": {
+      "placed": 1
+    }
+  },
+  "pose_id": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1",
+  "scan_wall_s": 14.945782756898552,
+  "noise_wall_s": 15.384359353920445,
+  "intents": [
+    {
+      "intent_id": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:9-11:+1:-:L0-v1",
+      "sign": -1,
+      "scan_forwards": 156,
+      "scan_status": "completed",
+      "scan_error": null,
+      "energies_eV": [
+        -18880.634765625,
+        -18880.63671875,
+        -18880.638671875,
+        -18880.63671875,
+        -18880.63671875
+      ],
+      "failed": [],
+      "forwards": 171,
+      "q_target": 2.0303517623731206,
+      "base_eV": -18880.63671875,
+      "ptp_eV": 0.00390625,
+      "std_eV": 0.0013810679320049757,
+      "fp32_quantum_eV": 0.001953125
+    },
+    {
+      "intent_id": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:5-11:+1:+:L0-v1",
+      "sign": 1,
+      "scan_forwards": 150,
+      "scan_status": "completed",
+      "scan_error": null,
+      "energies_eV": [
+        -18880.126953125,
+        -18880.126953125,
+        -18880.126953125,
+        -18880.126953125,
+        -18880.125
+      ],
+      "failed": [],
+      "forwards": 163,
+      "q_target": 4.801095080386857,
+      "base_eV": -18880.126953125,
+      "ptp_eV": 0.001953125,
+      "std_eV": 0.0008734640537108553,
+      "fp32_quantum_eV": 0.001953125
+    },
+    {
+      "intent_id": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:0-1:+1:+:L0-v1",
+      "sign": 1,
+      "scan_forwards": 151,
+      "scan_status": "completed",
+      "scan_error": null,
+      "energies_eV": [
+        -18880.326171875,
+        -18880.330078125,
+        -18880.328125,
+        -18880.330078125,
+        -18880.328125
+      ],
+      "failed": [],
+      "forwards": 136,
+      "q_target": 2.323443481582345,
+      "base_eV": -18880.328125,
+      "ptp_eV": 0.00390625,
+      "std_eV": 0.0016341016143243663,
+      "fp32_quantum_eV": 0.001953125
+    },
+    {
+      "intent_id": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:3-13:+1:+:L0-v1",
+      "sign": 1,
+      "scan_forwards": 160,
+      "scan_status": "completed",
+      "scan_error": null,
+      "energies_eV": [
+        -18880.6484375,
+        -18880.6484375,
+        -18880.6484375,
+        -18880.6484375,
+        -18880.6484375
+      ],
+      "failed": [],
+      "forwards": 169,
+      "q_target": 3.030348032333176,
+      "base_eV": -18880.6484375,
+      "ptp_eV": 0.0,
+      "std_eV": 0.0,
+      "fp32_quantum_eV": 0.001953125
+    }
+  ],
+  "noise_eV_rule": 0.00390625,
+  "fp32_quantum_eV": 0.001953125
+}
