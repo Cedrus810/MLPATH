@@ -1,11 +1,20 @@
 import json
+import threading
 
 import numpy as np
 import pytest
 from ase import Atoms
 from ase.calculators.calculator import Calculator, all_changes
+from ase.calculators.lj import LennardJones
 
-from explore.ledger import BudgetExhausted, Ledger, counted_factory, instrument
+from explore.ledger import (
+    BudgetExhausted,
+    Ledger,
+    counted_factory,
+    instrument,
+    tally,
+    view_factory,
+)
 from prrs.calculators import double_well_factory
 
 
@@ -229,3 +238,167 @@ def test_analytic_hessian_is_charged(tmp_path):
     with ledger.segment(task="t", stage="hessian"):
         calc.get_hessian(dimer(1.3))
     assert ledger.spent == 1
+
+
+def test_cache_hits_are_counted_per_segment(tmp_path):
+    ledger = Ledger(tmp_path / "l.jsonl", arm="t", budget=100)
+    atoms = dimer(1.0)
+    atoms.calc = instrument(LennardJones(), ledger)
+    with ledger.segment(task="a", stage="probe"):
+        atoms.get_potential_energy()  # forward
+        atoms.get_potential_energy()  # cache hit
+        atoms.get_forces()  # cache hit (LJ computes both)
+    ledger.close()
+    close = [e for e in lines(tmp_path / "l.jsonl") if e["event"] == "close"][0]
+    assert close["forwards"] == 1 and close["cache_hits"] == 2
+
+
+def test_reused_factory_builds_once_and_still_counts_every_forward(tmp_path):
+    from explore.ledger import reused_counted_factory
+
+    builds = {"n": 0}
+
+    def factory():
+        builds["n"] += 1
+        return LennardJones()
+
+    ledger = Ledger(tmp_path / "l.jsonl", arm="t", budget=100)
+    make = reused_counted_factory(factory, ledger)
+    first, second = make(), make()
+    assert first is second and builds["n"] == 1
+    a, b = dimer(1.0), dimer(1.2)
+    a.calc, b.calc = first, second
+    a.get_potential_energy()
+    b.get_potential_energy()
+    a.get_potential_energy()  # positions differ from b: a real forward again
+    assert ledger.spent == 3
+
+
+def test_reused_factory_drops_cached_results_on_each_call(tmp_path):
+    # Two callers with the same positions but different info (e.g. charge) must not
+    # share a cached result: ASE's state check ignores atoms.info.
+    from explore.ledger import reused_counted_factory
+
+    ledger = Ledger(tmp_path / "l.jsonl", arm="t", budget=100)
+    make = reused_counted_factory(LennardJones, ledger)
+    a = dimer(1.0)
+    a.calc = make()
+    a.get_potential_energy()
+    b = dimer(1.0)
+    b.info["charge"] = -1
+    b.calc = make()
+    b.get_potential_energy()
+    assert ledger.spent == 2
+
+
+class ChargeAware(Calculator):
+    implemented_properties = ["energy", "forces"]
+
+    def __init__(self):
+        super().__init__()
+        self.calls = 0
+
+    def calculate(self, atoms=None, properties=("energy",), system_changes=all_changes):
+        super().calculate(atoms, properties, system_changes)
+        self.calls += 1
+        charge = float(self.atoms.info.get("charge", 0))
+        self.results = {
+            "energy": charge + float(self.atoms.positions.sum()),
+            "forces": np.zeros((len(self.atoms), 3)),
+        }
+
+
+def test_replay_false_starts_from_zero_on_a_shared_file(tmp_path):
+    path = tmp_path / "l.jsonl"
+    first = Ledger(path, arm="D2", budget=5, replay=False)
+    with first.segment(task="a", stage="probe"):
+        first.charge()
+        first.charge()
+    second = Ledger(path, arm="D2", budget=5, replay=False)
+    assert second.spent == 0 and second.remaining == 5
+    assert Ledger(path, arm="D2").spent == 2
+
+
+def test_concurrent_task_ledgers_share_one_file(tmp_path):
+    path = tmp_path / "l.jsonl"
+
+    def work(k):
+        ledger = Ledger(path, arm="D2", budget=1000, replay=False)
+        for _ in range(50):
+            with ledger.segment(task=f"t{k}", stage="probe"):
+                ledger.charge()
+        ledger.close()
+
+    threads = [threading.Thread(target=work, args=(k,)) for k in range(8)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    rows = tally(path)
+    assert {key: row["forwards"] for key, row in rows.items()} == {
+        (f"t{k}", 0): 50 for k in range(8)
+    }
+    assert all(row["open"] == 0 for row in rows.values())
+
+
+def test_tally_reports_open_segments_and_ignores_a_torn_last_line(tmp_path):
+    path = tmp_path / "l.jsonl"
+    ledger = Ledger(path, arm="D2", replay=False)
+    with ledger.segment(task="done", stage="probe"):
+        ledger.charge()
+    ledger._write(
+        {"event": "open", "task": "cut", "attempt": 1, "stage": "probe", "reserve": None}
+    )
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write('{"event": "close", "task": "cut"')
+    rows = tally(path)
+    assert rows[("done", 0)] == {"forwards": 1, "open": 0}
+    assert rows[("cut", 1)] == {"forwards": 0, "open": 1}
+
+
+def test_counted_view_charges_real_forwards_only(tmp_path):
+    inner = ChargeAware()
+    ledger = Ledger(tmp_path / "l.jsonl", arm="D2", budget=10, replay=False)
+    atoms = Atoms("H2", positions=[[0, 0, 0], [0, 0, 0.74]])
+    atoms.calc = view_factory(inner, ledger)()
+    with ledger.segment(task="t", stage="probe") as seg:
+        atoms.get_potential_energy()
+        atoms.get_forces()
+        atoms.positions[1, 2] += 0.1
+        atoms.get_potential_energy()
+    assert inner.calls == 2 and ledger.spent == 2 and seg.forwards == 2
+    assert seg.cache_hits >= 1
+
+
+def test_views_never_share_a_result_across_electronic_states(tmp_path):
+    inner = ChargeAware()
+    ledger = Ledger(tmp_path / "l.jsonl", arm="D2", replay=False)
+    make = view_factory(inner, ledger)
+    a = Atoms("H", positions=[[0, 0, 0]])
+    a.info["charge"] = -1
+    a.calc = make()
+    b = a.copy()
+    b.info["charge"] = 0
+    b.calc = make()
+    assert a.get_potential_energy() == -1.0
+    assert b.get_potential_energy() == 0.0
+    assert ledger.spent == 2
+
+
+def test_counted_view_refuses_before_the_model_runs(tmp_path):
+    inner = ChargeAware()
+    ledger = Ledger(tmp_path / "l.jsonl", arm="D2", budget=1, replay=False)
+    atoms = Atoms("H", positions=[[0, 0, 0]])
+    atoms.calc = view_factory(inner, ledger)()
+    atoms.get_potential_energy()
+    atoms.positions += 0.1
+    with pytest.raises(BudgetExhausted):
+        atoms.get_potential_energy()
+    assert inner.calls == 1
+
+
+def test_view_factory_refuses_an_already_counted_calculator(tmp_path):
+    ledger = Ledger(tmp_path / "l.jsonl", arm="D2", replay=False)
+    inner = instrument(ChargeAware(), ledger)
+    with pytest.raises(ValueError):
+        view_factory(inner, ledger)

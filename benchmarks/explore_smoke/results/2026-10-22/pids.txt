@@ -1,0 +1,8 @@
+1032892
+python b04_certify (1032892 = bash -c wrapper)
+1033221
+python factory_reuse (1033221 = bash -c wrapper)
+1033435
+bash chain fp32_vs_fp64 (run float64 -> run float32 -> compare); 1033435 = wrapper
+1033656
+bash chain fp32_hessian_softmodes (1033656 = wrapper)

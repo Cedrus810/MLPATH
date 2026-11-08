@@ -1,0 +1,8 @@
+{"arm": "smoke", "host": "kasuga02", "t": 1792665590.5304952, "event": "open", "task": "certify", "attempt": 0, "stage": "prepare", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665886.7124333, "event": "close", "task": "certify", "attempt": 0, "stage": "prepare", "forwards": 1, "requests": 1, "cache_hits": 0, "wall_s": 296.17174123204313, "outcome": "guess_energy", "artifact": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665886.802148, "event": "open", "task": "certify", "attempt": 0, "stage": "saddle_refine", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665918.195005, "event": "close", "task": "certify", "attempt": 0, "stage": "saddle_refine", "forwards": 27, "requests": 50, "cache_hits": 25, "wall_s": 31.353304291027598, "outcome": "converged", "artifact": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665918.995788, "event": "open", "task": "certify", "attempt": 0, "stage": "hessian", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665928.8177202, "event": "close", "task": "certify", "attempt": 0, "stage": "hessian", "forwards": 30, "requests": 58, "cache_hits": 29, "wall_s": 9.789207572001033, "outcome": "order_1", "artifact": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665931.593225, "event": "open", "task": "certify", "attempt": 0, "stage": "descent", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792665989.7392633, "event": "close", "task": "certify", "attempt": 0, "stage": "descent", "forwards": 142, "requests": 280, "cache_hits": 140, "wall_s": 58.08564795192797, "outcome": "done", "artifact": null}

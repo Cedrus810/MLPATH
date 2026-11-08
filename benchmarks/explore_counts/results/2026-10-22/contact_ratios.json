@@ -1,0 +1,22 @@
+{
+  "b04": {
+    "contact_ratio": 2.0224719101123596,
+    "n_fragments": 2,
+    "note": ""
+  },
+  "b05": {
+    "contact_ratio": 2.400823904486229,
+    "n_fragments": 2,
+    "note": ""
+  },
+  "n1": {
+    "contact_ratio": 3.6673597086526155,
+    "n_fragments": 2,
+    "note": "MMFF geometry, counting only, not a POLAR-1 minimum; the contact ratio is an artefact of placing the MMFF fragments 8 A apart, not a complex contact ratio"
+  },
+  "b09": {
+    "contact_ratio": 2.0551230136282825,
+    "n_fragments": 2,
+    "note": "biased toward TS-2OMe; counting only, not a blind-search start"
+  }
+}

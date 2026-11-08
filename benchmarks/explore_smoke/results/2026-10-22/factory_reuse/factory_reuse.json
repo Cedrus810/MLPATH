@@ -1,0 +1,77 @@
+{
+  "host": "kasuga02",
+  "loads_s": [
+    30.53275707201101,
+    1.4042742870515212,
+    0.8148384519154206
+  ],
+  "arms": {
+    "fresh": {
+      "status": "c2",
+      "saddle_energy_eV": -26132.200801954565,
+      "certify_wall_s": 39.49063807504717,
+      "certify_spent": 199,
+      "factory_calls_total": 13,
+      "stages": [
+        {
+          "stage": "certify_prepare",
+          "forwards": 1,
+          "wall_s": 0.7884806219954044,
+          "outcome": null
+        },
+        {
+          "stage": "saddle_refine",
+          "forwards": 27,
+          "wall_s": 9.954311846988276,
+          "outcome": "converged"
+        },
+        {
+          "stage": "hessian",
+          "forwards": 30,
+          "wall_s": 6.972990193986334,
+          "outcome": "order_1"
+        },
+        {
+          "stage": "descent",
+          "forwards": 142,
+          "wall_s": 22.524520037928596,
+          "outcome": "done"
+        }
+      ]
+    },
+    "cached": {
+      "status": "c2",
+      "saddle_energy_eV": -26132.200801954565,
+      "certify_wall_s": 31.272760260966606,
+      "certify_spent": 199,
+      "factory_calls_total": 13,
+      "stages": [
+        {
+          "stage": "certify_prepare",
+          "forwards": 1,
+          "wall_s": 0.21369055705145001,
+          "outcome": null
+        },
+        {
+          "stage": "saddle_refine",
+          "forwards": 27,
+          "wall_s": 7.20668854797259,
+          "outcome": "converged"
+        },
+        {
+          "stage": "hessian",
+          "forwards": 30,
+          "wall_s": 4.861704426002689,
+          "outcome": "order_1"
+        },
+        {
+          "stage": "descent",
+          "forwards": 142,
+          "wall_s": 19.13570735405665,
+          "outcome": "done"
+        }
+      ]
+    }
+  },
+  "same_result": true
+}

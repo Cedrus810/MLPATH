@@ -1,0 +1,1105 @@
+{
+  "rule_version": "L0-v1",
+  "params": {
+    "steps_per_turn": 6,
+    "conformer cap": 1000000,
+    "seed": 0,
+    "n_samples": [
+      8,
+      32
+    ],
+    "shells": "measured f of the input, f-0.4, f+0.4 (the +-0.4 are sensitivity only, not proposals)",
+    "intent poses per (system, shell, n_samples=32)": 16,
+    "n_far": 0,
+    "pair locality rules": [
+      "shared_atom",
+      "adjacent",
+      "all"
+    ],
+    "scan points per intent": 18,
+    "forwards per point": 8.7,
+    "seconds per point": 1.07,
+    "systems": [
+      "b04",
+      "b05",
+      "n1",
+      "b09"
+    ],
+    "grid0_note": "Per-pose intent counts come from grid-0 conformer-pair poses only (the first 16 placed poses); est. poses/intents = placed poses x conformer pairs, i.e. they assume every conformer pair has the same per-pose count (matters for b09 x210, n1 x6)",
+    "pair_cost_assumption": "ASSUMPTION: every pair intent is charged the same 18 points x 1.07 s as a single-distance scan; a pair intent may cost more"
+  },
+  "cost_note": "b04 (6 atoms) measured, extrapolated; larger systems likely slower per point (more BFGS steps, slower forward); order of magnitude only",
+  "timing_s": {
+    "b04:conformers": 0.0011246204376220703,
+    "b04:poses_intents": 0.23575735092163086,
+    "b04": 0.24382591247558594,
+    "b05:conformers": 0.0019683837890625,
+    "b05:poses_intents": 2.106769323348999,
+    "b05": 2.110584259033203,
+    "n1:conformers": 0.0051076412200927734,
+    "n1:poses_intents": 0.8475773334503174,
+    "n1": 0.927926778793335,
+    "b09:conformers": 0.0492556095123291,
+    "b09:poses_intents": 8.408677339553833,
+    "b09": 8.461488485336304
+  },
+  "systems": [
+    {
+      "system": "b04",
+      "note": "",
+      "charge": -1,
+      "n_atoms": 6,
+      "n_fragments": 2,
+      "fragments": [
+        {
+          "key": "CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963",
+          "n_atoms": 5
+        },
+        {
+          "key": "Cl|e1734f3e5568970e",
+          "n_atoms": 1
+        }
+      ],
+      "conformers": [
+        {
+          "genuine_torsions": 0,
+          "rotors_not_enumerated": 0,
+          "rings_not_enumerated": true,
+          "grid_size": 1,
+          "censored": 0,
+          "status_counts": {
+            "generated": 1
+          },
+          "fragment": "CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963",
+          "generated": 1
+        },
+        {
+          "genuine_torsions": 0,
+          "rotors_not_enumerated": 0,
+          "rings_not_enumerated": true,
+          "grid_size": 1,
+          "censored": 0,
+          "status_counts": {
+            "generated": 1
+          },
+          "fragment": "Cl|e1734f3e5568970e",
+          "generated": 1
+        }
+      ],
+      "conformer_pairs": 1,
+      "grid_input_conformer_status": [
+        "generated",
+        "generated"
+      ],
+      "ratio": 2.0224719101123596,
+      "rows": [
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 1.622472,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 3.41650250549891
+        },
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 1.622472,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 3.554034341275756,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 14.625,
+            "bonded": 8.0,
+            "near": 6.625,
+            "intra": 8.0,
+            "inter": 6.625,
+            "far_classes": 1.0625,
+            "pair_intents": {
+              "shared_atom": 66.0,
+              "adjacent": 97.5,
+              "all": 97.5
+            },
+            "pair_combinations": {
+              "shared_atom": 16.5,
+              "adjacent": 24.375,
+              "all": 24.375
+            }
+          },
+          "far_classes_total_per_pose_mean": 1.0625,
+          "total_poses_est": 32,
+          "total_intents_est": {
+            "single": 468.0,
+            "single+pair[shared_atom]": 2580.0,
+            "single+pair[adjacent]": 3588.0,
+            "single+pair[all]": 3588.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 73288.79999999999,
+              "wall_s": 9013.68,
+              "gpu_hours_one_2080ti": 2.5038
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 404027.99999999994,
+              "wall_s": 49690.8,
+              "gpu_hours_one_2080ti": 13.803
+            },
+            "single+pair[adjacent]": {
+              "forwards": 561880.7999999999,
+              "wall_s": 69104.88,
+              "gpu_hours_one_2080ti": 19.195800000000002
+            },
+            "single+pair[all]": {
+              "forwards": 561880.7999999999,
+              "wall_s": 69104.88,
+              "gpu_hours_one_2080ti": 19.195800000000002
+            }
+          }
+        },
+        {
+          "label": "measured f",
+          "shell": 2.022472,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 4.2183580353249255
+        },
+        {
+          "label": "measured f",
+          "shell": 2.022472,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 4.334689942387263,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 11.125,
+            "bonded": 8.0,
+            "near": 3.125,
+            "intra": 8.0,
+            "inter": 3.125,
+            "far_classes": 2.4375,
+            "pair_intents": {
+              "shared_atom": 42.5,
+              "adjacent": 55.25,
+              "all": 55.25
+            },
+            "pair_combinations": {
+              "shared_atom": 10.625,
+              "adjacent": 13.8125,
+              "all": 13.8125
+            }
+          },
+          "far_classes_total_per_pose_mean": 2.4375,
+          "total_poses_est": 32,
+          "total_intents_est": {
+            "single": 356.0,
+            "single+pair[shared_atom]": 1716.0,
+            "single+pair[adjacent]": 2124.0,
+            "single+pair[all]": 2124.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 55749.6,
+              "wall_s": 6856.56,
+              "gpu_hours_one_2080ti": 1.9046
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 268725.6,
+              "wall_s": 33050.16,
+              "gpu_hours_one_2080ti": 9.1806
+            },
+            "single+pair[adjacent]": {
+              "forwards": 332618.39999999997,
+              "wall_s": 40908.240000000005,
+              "gpu_hours_one_2080ti": 11.363400000000002
+            },
+            "single+pair[all]": {
+              "forwards": 332618.39999999997,
+              "wall_s": 40908.240000000005,
+              "gpu_hours_one_2080ti": 11.363400000000002
+            }
+          }
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 2.422472,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 5.022743993221876
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 2.422472,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 5.129360728881531,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 9.0,
+            "bonded": 8.0,
+            "near": 1.0,
+            "intra": 8.0,
+            "inter": 1.0,
+            "far_classes": 3.0,
+            "pair_intents": {
+              "shared_atom": 26.25,
+              "adjacent": 32.25,
+              "all": 32.25
+            },
+            "pair_combinations": {
+              "shared_atom": 6.5625,
+              "adjacent": 8.0625,
+              "all": 8.0625
+            }
+          },
+          "far_classes_total_per_pose_mean": 3.0,
+          "total_poses_est": 32,
+          "total_intents_est": {
+            "single": 288.0,
+            "single+pair[shared_atom]": 1128.0,
+            "single+pair[adjacent]": 1320.0,
+            "single+pair[all]": 1320.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 45100.799999999996,
+              "wall_s": 5546.88,
+              "gpu_hours_one_2080ti": 1.5408
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 176644.8,
+              "wall_s": 21725.280000000002,
+              "gpu_hours_one_2080ti": 6.034800000000001
+            },
+            "single+pair[adjacent]": {
+              "forwards": 206711.99999999997,
+              "wall_s": 25423.2,
+              "gpu_hours_one_2080ti": 7.062
+            },
+            "single+pair[all]": {
+              "forwards": 206711.99999999997,
+              "wall_s": 25423.2,
+              "gpu_hours_one_2080ti": 7.062
+            }
+          }
+        }
+      ]
+    },
+    {
+      "system": "b05",
+      "note": "",
+      "charge": -1,
+      "n_atoms": 16,
+      "n_fragments": 2,
+      "fragments": [
+        {
+          "key": "C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831",
+          "n_atoms": 14
+        },
+        {
+          "key": "HO|20e0501a2ce64366,e7ef864bc9081975",
+          "n_atoms": 2
+        }
+      ],
+      "conformers": [
+        {
+          "genuine_torsions": 0,
+          "rotors_not_enumerated": 3,
+          "rings_not_enumerated": true,
+          "grid_size": 1,
+          "censored": 0,
+          "status_counts": {
+            "generated": 1
+          },
+          "fragment": "C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831",
+          "generated": 1
+        },
+        {
+          "genuine_torsions": 0,
+          "rotors_not_enumerated": 0,
+          "rings_not_enumerated": true,
+          "grid_size": 1,
+          "censored": 0,
+          "status_counts": {
+            "generated": 1
+          },
+          "fragment": "HO|20e0501a2ce64366,e7ef864bc9081975",
+          "generated": 1
+        }
+      ],
+      "conformer_pairs": 1,
+      "grid_input_conformer_status": [
+        "generated",
+        "generated"
+      ],
+      "ratio": 2.400823904486229,
+      "rows": [
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 2.000824,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 3.800269039771571
+        },
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 2.000824,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 4.108370358822722,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 97.875,
+            "bonded": 28.0,
+            "near": 69.875,
+            "intra": 76.0,
+            "inter": 21.875,
+            "far_classes": 6.75,
+            "pair_intents": {
+              "shared_atom": 1135.5,
+              "adjacent": 2270.0,
+              "all": 4768.5
+            },
+            "pair_combinations": {
+              "shared_atom": 283.875,
+              "adjacent": 567.5,
+              "all": 1192.125
+            }
+          },
+          "far_classes_total_per_pose_mean": 6.75,
+          "total_poses_est": 32,
+          "total_intents_est": {
+            "single": 3132.0,
+            "single+pair[shared_atom]": 39468.0,
+            "single+pair[adjacent]": 75772.0,
+            "single+pair[all]": 155724.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 490471.19999999995,
+              "wall_s": 60322.32000000001,
+              "gpu_hours_one_2080ti": 16.756200000000003
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 6180688.8,
+              "wall_s": 760153.68,
+              "gpu_hours_one_2080ti": 211.15380000000002
+            },
+            "single+pair[adjacent]": {
+              "forwards": 11865895.2,
+              "wall_s": 1459368.72,
+              "gpu_hours_one_2080ti": 405.3802
+            },
+            "single+pair[all]": {
+              "forwards": 24386378.4,
+              "wall_s": 2999244.24,
+              "gpu_hours_one_2080ti": 833.1234000000001
+            }
+          }
+        },
+        {
+          "label": "measured f",
+          "shell": 2.400824,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 4.367473235737611
+        },
+        {
+          "label": "measured f",
+          "shell": 2.400824,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 4.692137446808969,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 90.5,
+            "bonded": 28.0,
+            "near": 62.5,
+            "intra": 76.0,
+            "inter": 14.5,
+            "far_classes": 8.375,
+            "pair_intents": {
+              "shared_atom": 971.75,
+              "adjacent": 1933.25,
+              "all": 4050.5
+            },
+            "pair_combinations": {
+              "shared_atom": 242.9375,
+              "adjacent": 483.3125,
+              "all": 1012.625
+            }
+          },
+          "far_classes_total_per_pose_mean": 8.375,
+          "total_poses_est": 32,
+          "total_intents_est": {
+            "single": 2896.0,
+            "single+pair[shared_atom]": 33992.0,
+            "single+pair[adjacent]": 64760.0,
+            "single+pair[all]": 132512.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 453513.6,
+              "wall_s": 55776.96000000001,
+              "gpu_hours_one_2080ti": 15.493600000000002
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 5323147.199999999,
+              "wall_s": 654685.92,
+              "gpu_hours_one_2080ti": 181.8572
+            },
+            "single+pair[adjacent]": {
+              "forwards": 10141416.0,
+              "wall_s": 1247277.6,
+              "gpu_hours_one_2080ti": 346.466
+            },
+            "single+pair[all]": {
+              "forwards": 20751379.2,
+              "wall_s": 2552181.12,
+              "gpu_hours_one_2080ti": 708.9392
+            }
+          }
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 2.800824,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 5.026151832507336
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 2.800824,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 5.316145474338894,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 84.5,
+            "bonded": 28.0,
+            "near": 56.5,
+            "intra": 76.0,
+            "inter": 8.5,
+            "far_classes": 8.9375,
+            "pair_intents": {
+              "shared_atom": 850.5,
+              "adjacent": 1673.5,
+              "all": 3505.0
+            },
+            "pair_combinations": {
+              "shared_atom": 212.625,
+              "adjacent": 418.375,
+              "all": 876.25
+            }
+          },
+          "far_classes_total_per_pose_mean": 8.9375,
+          "total_poses_est": 32,
+          "total_intents_est": {
+            "single": 2704.0,
+            "single+pair[shared_atom]": 29920.0,
+            "single+pair[adjacent]": 56256.0,
+            "single+pair[all]": 114864.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 423446.39999999997,
+              "wall_s": 52079.04,
+              "gpu_hours_one_2080ti": 14.4664
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 4685472.0,
+              "wall_s": 576259.2000000001,
+              "gpu_hours_one_2080ti": 160.07200000000003
+            },
+            "single+pair[adjacent]": {
+              "forwards": 8809689.6,
+              "wall_s": 1083490.56,
+              "gpu_hours_one_2080ti": 300.9696
+            },
+            "single+pair[all]": {
+              "forwards": 17987702.4,
+              "wall_s": 2212280.64,
+              "gpu_hours_one_2080ti": 614.5224000000001
+            }
+          }
+        }
+      ]
+    },
+    {
+      "system": "n1",
+      "note": "MMFF geometry, counting only, not a POLAR-1 minimum; the contact ratio is an artefact of placing the MMFF fragments 8 A apart, not a complex contact ratio",
+      "charge": 0,
+      "n_atoms": 19,
+      "n_fragments": 2,
+      "fragments": [
+        {
+          "key": "C3H4O|045321b2a7074753,527e2029728d6f31,8e188e7ac74b0248,8fbe24ba235ac7a7,9a4d550cdcff4f84,9a4d550cdcff4f84,b2e0df8e05daf177,f661a844ddab4f7a",
+          "n_atoms": 8
+        },
+        {
+          "key": "C5H6|00e24f2b7b923640,00e24f2b7b923640,57e895b0f4df58ba,57e895b0f4df58ba,6058023ca7356ad0,6058023ca7356ad0,632ff7d0ab4f4d75,632ff7d0ab4f4d75,e3f2d767ccd57a61,f9994bdb4f4b194d,f9994bdb4f4b194d",
+          "n_atoms": 11
+        }
+      ],
+      "conformers": [
+        {
+          "genuine_torsions": 1,
+          "rotors_not_enumerated": 1,
+          "rings_not_enumerated": true,
+          "grid_size": 6,
+          "censored": 0,
+          "status_counts": {
+            "generated": 6
+          },
+          "fragment": "C3H4O|045321b2a7074753,527e2029728d6f31,8e188e7ac74b0248,8fbe24ba235ac7a7,9a4d550cdcff4f84,9a4d550cdcff4f84,b2e0df8e05daf177,f661a844ddab4f7a",
+          "generated": 6
+        },
+        {
+          "genuine_torsions": 0,
+          "rotors_not_enumerated": 0,
+          "rings_not_enumerated": true,
+          "grid_size": 1,
+          "censored": 0,
+          "status_counts": {
+            "generated": 1
+          },
+          "fragment": "C5H6|00e24f2b7b923640,00e24f2b7b923640,57e895b0f4df58ba,57e895b0f4df58ba,6058023ca7356ad0,6058023ca7356ad0,632ff7d0ab4f4d75,632ff7d0ab4f4d75,e3f2d767ccd57a61,f9994bdb4f4b194d,f9994bdb4f4b194d",
+          "generated": 1
+        }
+      ],
+      "conformer_pairs": 6,
+      "grid_input_conformer_status": [
+        "generated",
+        "generated"
+      ],
+      "ratio": 3.6673597086526155,
+      "rows": [
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 3.26736,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 6.459948382231944
+        },
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 3.26736,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 6.351108334891796,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 45.5,
+            "bonded": 36.0,
+            "near": 9.5,
+            "intra": 42.0,
+            "inter": 3.5,
+            "far_classes": 45.8125,
+            "pair_intents": {
+              "shared_atom": 169.25,
+              "adjacent": 378.5,
+              "all": 992.5
+            },
+            "pair_combinations": {
+              "shared_atom": 42.3125,
+              "adjacent": 94.625,
+              "all": 248.125
+            }
+          },
+          "far_classes_total_per_pose_mean": 45.8125,
+          "total_poses_est": 192,
+          "total_intents_est": {
+            "single": 8736.0,
+            "single+pair[shared_atom]": 41232.0,
+            "single+pair[adjacent]": 81408.0,
+            "single+pair[all]": 199296.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 1368057.5999999999,
+              "wall_s": 168255.36000000002,
+              "gpu_hours_one_2080ti": 46.73760000000001
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 6456931.199999999,
+              "wall_s": 794128.3200000001,
+              "gpu_hours_one_2080ti": 220.59120000000001
+            },
+            "single+pair[adjacent]": {
+              "forwards": 12748492.799999999,
+              "wall_s": 1567918.08,
+              "gpu_hours_one_2080ti": 435.5328
+            },
+            "single+pair[all]": {
+              "forwards": 31209753.599999998,
+              "wall_s": 3838440.9600000004,
+              "gpu_hours_one_2080ti": 1066.2336
+            }
+          }
+        },
+        {
+          "label": "placement f (8 A artificial)",
+          "shell": 3.66736,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 7.073599687724524
+        },
+        {
+          "label": "placement f (8 A artificial)",
+          "shell": 3.66736,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 6.970505001683082,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 42.625,
+            "bonded": 36.0,
+            "near": 6.625,
+            "intra": 42.0,
+            "inter": 0.625,
+            "far_classes": 46.0,
+            "pair_intents": {
+              "shared_atom": 145.0,
+              "adjacent": 326.75,
+              "all": 866.75
+            },
+            "pair_combinations": {
+              "shared_atom": 36.25,
+              "adjacent": 81.6875,
+              "all": 216.6875
+            }
+          },
+          "far_classes_total_per_pose_mean": 46.0,
+          "total_poses_est": 192,
+          "total_intents_est": {
+            "single": 8184.0,
+            "single+pair[shared_atom]": 36024.0,
+            "single+pair[adjacent]": 70920.0,
+            "single+pair[all]": 174600.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 1281614.4,
+              "wall_s": 157623.84,
+              "gpu_hours_one_2080ti": 43.7844
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 5641358.399999999,
+              "wall_s": 693822.24,
+              "gpu_hours_one_2080ti": 192.7284
+            },
+            "single+pair[adjacent]": {
+              "forwards": 11106072.0,
+              "wall_s": 1365919.2000000002,
+              "gpu_hours_one_2080ti": 379.422
+            },
+            "single+pair[all]": {
+              "forwards": 27342359.999999996,
+              "wall_s": 3362796.0,
+              "gpu_hours_one_2080ti": 934.11
+            }
+          }
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 4.06736,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 7.684025087906204
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 4.06736,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 7.587110998549354,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 42.0,
+            "bonded": 36.0,
+            "near": 6.0,
+            "intra": 42.0,
+            "inter": 0.0,
+            "far_classes": 46.0,
+            "pair_intents": {
+              "shared_atom": 140.0,
+              "adjacent": 316.0,
+              "all": 840.0
+            },
+            "pair_combinations": {
+              "shared_atom": 35.0,
+              "adjacent": 79.0,
+              "all": 210.0
+            }
+          },
+          "far_classes_total_per_pose_mean": 46.0,
+          "total_poses_est": 192,
+          "total_intents_est": {
+            "single": 8064.0,
+            "single+pair[shared_atom]": 34944.0,
+            "single+pair[adjacent]": 68736.0,
+            "single+pair[all]": 169344.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 1262822.4,
+              "wall_s": 155312.64,
+              "gpu_hours_one_2080ti": 43.1424
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 5472230.399999999,
+              "wall_s": 673021.4400000001,
+              "gpu_hours_one_2080ti": 186.95040000000003
+            },
+            "single+pair[adjacent]": {
+              "forwards": 10764057.6,
+              "wall_s": 1323855.36,
+              "gpu_hours_one_2080ti": 367.73760000000004
+            },
+            "single+pair[all]": {
+              "forwards": 26519270.4,
+              "wall_s": 3261565.4400000004,
+              "gpu_hours_one_2080ti": 905.9904000000001
+            }
+          }
+        }
+      ]
+    },
+    {
+      "system": "b09",
+      "note": "biased toward TS-2OMe; counting only, not a blind-search start",
+      "charge": 0,
+      "n_atoms": 29,
+      "n_fragments": 2,
+      "fragments": [
+        {
+          "key": "C3H6O2|160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,8a417c8fb2244bc8,a405b93c64b249c6,a405b93c64b249c6,cb8466acff5d1b7d,cb8466acff5d1b7d",
+          "n_atoms": 11
+        },
+        {
+          "key": "C7H10O|01256f6732f4c71d,0354ffd8f06c9f07,1052608a33bf4096,1f924b524573e6f8,1f924b524573e6f8,294fb5ecf1c18af5,2bd822de086ae05b,2bd822de086ae05b,55a8b9e06d0ade61,5d2fbfb851416e6c,5d2fbfb851416e6c,761cf636d30cacc4,813ab01d5d1f0cc6,845b96621157d7a9,983c5bcc9ceb29c6,999d760494cdcc5e,e659b45834915507,e659b45834915507",
+          "n_atoms": 18
+        }
+      ],
+      "conformers": [
+        {
+          "genuine_torsions": 2,
+          "rotors_not_enumerated": 2,
+          "rings_not_enumerated": true,
+          "grid_size": 36,
+          "censored": 0,
+          "status_counts": {
+            "generated": 35,
+            "graph_changed": 1
+          },
+          "fragment": "C3H6O2|160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,160add52eb764b0e,8a417c8fb2244bc8,a405b93c64b249c6,a405b93c64b249c6,cb8466acff5d1b7d,cb8466acff5d1b7d",
+          "generated": 35
+        },
+        {
+          "genuine_torsions": 1,
+          "rotors_not_enumerated": 0,
+          "rings_not_enumerated": true,
+          "grid_size": 6,
+          "censored": 0,
+          "status_counts": {
+            "generated": 6
+          },
+          "fragment": "C7H10O|01256f6732f4c71d,0354ffd8f06c9f07,1052608a33bf4096,1f924b524573e6f8,1f924b524573e6f8,294fb5ecf1c18af5,2bd822de086ae05b,2bd822de086ae05b,55a8b9e06d0ade61,5d2fbfb851416e6c,5d2fbfb851416e6c,761cf636d30cacc4,813ab01d5d1f0cc6,845b96621157d7a9,983c5bcc9ceb29c6,999d760494cdcc5e,e659b45834915507,e659b45834915507",
+          "generated": 6
+        }
+      ],
+      "conformer_pairs": 210,
+      "grid_input_conformer_status": [
+        "generated",
+        "generated"
+      ],
+      "ratio": 2.0551230136282825,
+      "rows": [
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 1.655123,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 4.715765072140306
+        },
+        {
+          "label": "f-0.4 (sensitivity only, not a proposal)",
+          "shell": 1.655123,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 4.844998034619673,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 216.25,
+            "bonded": 56.0,
+            "near": 160.25,
+            "intra": 126.0,
+            "inter": 90.25,
+            "far_classes": 75.625,
+            "pair_intents": {
+              "shared_atom": 3488.0,
+              "adjacent": 8893.0,
+              "all": 23764.5
+            },
+            "pair_combinations": {
+              "shared_atom": 872.0,
+              "adjacent": 2223.25,
+              "all": 5941.125
+            }
+          },
+          "far_classes_total_per_pose_mean": 75.625,
+          "total_poses_est": 6720,
+          "total_intents_est": {
+            "single": 1453200.0,
+            "single+pair[shared_atom]": 24892560.0,
+            "single+pair[adjacent]": 61214160.0,
+            "single+pair[all]": 161150640.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 227571119.99999997,
+              "wall_s": 27988632.0,
+              "gpu_hours_one_2080ti": 7774.62
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 3898174895.9999995,
+              "wall_s": 479430705.6,
+              "gpu_hours_one_2080ti": 133175.196
+            },
+            "single+pair[adjacent]": {
+              "forwards": 9586137456.0,
+              "wall_s": 1178984721.6000001,
+              "gpu_hours_one_2080ti": 327495.75600000005
+            },
+            "single+pair[all]": {
+              "forwards": 25236190223.999996,
+              "wall_s": 3103761326.4,
+              "gpu_hours_one_2080ti": 862155.924
+            }
+          }
+        },
+        {
+          "label": "measured f",
+          "shell": 2.055123,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 5.223996353513487
+        },
+        {
+          "label": "measured f",
+          "shell": 2.055123,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 5.3889116898172045,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 185.25,
+            "bonded": 56.0,
+            "near": 129.25,
+            "intra": 126.0,
+            "inter": 59.25,
+            "far_classes": 78.375,
+            "pair_intents": {
+              "shared_atom": 2485.5,
+              "adjacent": 6135.75,
+              "all": 17298.0
+            },
+            "pair_combinations": {
+              "shared_atom": 621.375,
+              "adjacent": 1533.9375,
+              "all": 4324.5
+            }
+          },
+          "far_classes_total_per_pose_mean": 78.375,
+          "total_poses_est": 6720,
+          "total_intents_est": {
+            "single": 1244880.0,
+            "single+pair[shared_atom]": 17947440.0,
+            "single+pair[adjacent]": 42477120.0,
+            "single+pair[all]": 117487440.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 194948207.99999997,
+              "wall_s": 23976388.8,
+              "gpu_hours_one_2080ti": 6660.108
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 2810569104.0,
+              "wall_s": 345667694.40000004,
+              "gpu_hours_one_2080ti": 96018.804
+            },
+            "single+pair[adjacent]": {
+              "forwards": 6651916991.999999,
+              "wall_s": 818109331.2,
+              "gpu_hours_one_2080ti": 227252.592
+            },
+            "single+pair[all]": {
+              "forwards": 18398533104.0,
+              "wall_s": 2262808094.4,
+              "gpu_hours_one_2080ti": 628557.804
+            }
+          }
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 2.455123,
+          "n_samples": 8,
+          "poses": 8,
+          "placed": 8,
+          "status_counts": {
+            "placed": 8
+          },
+          "t_A_mean": 5.7932803607957695
+        },
+        {
+          "label": "f+0.4 (sensitivity only, not a proposal)",
+          "shell": 2.455123,
+          "n_samples": 32,
+          "poses": 32,
+          "placed": 32,
+          "status_counts": {
+            "placed": 32
+          },
+          "t_A_mean": 5.997619763631155,
+          "intents_poses_used": 16,
+          "per_pose_mean": {
+            "singles": 159.625,
+            "bonded": 56.0,
+            "near": 103.625,
+            "intra": 126.0,
+            "inter": 33.625,
+            "far_classes": 80.0,
+            "pair_intents": {
+              "shared_atom": 1757.5,
+              "adjacent": 4242.0,
+              "all": 12709.5
+            },
+            "pair_combinations": {
+              "shared_atom": 439.375,
+              "adjacent": 1060.5,
+              "all": 3177.375
+            }
+          },
+          "far_classes_total_per_pose_mean": 80.0,
+          "total_poses_est": 6720,
+          "total_intents_est": {
+            "single": 1072680.0,
+            "single+pair[shared_atom]": 12883080.0,
+            "single+pair[adjacent]": 29578920.0,
+            "single+pair[all]": 86480520.0
+          },
+          "cost_extrapolated": {
+            "single": {
+              "forwards": 167981688.0,
+              "wall_s": 20659816.8,
+              "gpu_hours_one_2080ti": 5738.838000000001
+            },
+            "single+pair[shared_atom]": {
+              "forwards": 2017490327.9999998,
+              "wall_s": 248128120.8,
+              "gpu_hours_one_2080ti": 68924.478
+            },
+            "single+pair[adjacent]": {
+              "forwards": 4632058872.0,
+              "wall_s": 569689999.2,
+              "gpu_hours_one_2080ti": 158247.222
+            },
+            "single+pair[all]": {
+              "forwards": 13542849431.999998,
+              "wall_s": 1665614815.2,
+              "gpu_hours_one_2080ti": 462670.782
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

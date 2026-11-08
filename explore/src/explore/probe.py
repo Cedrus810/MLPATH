@@ -92,6 +92,7 @@ class ScanSettings:
     fmax_eV_A: float
     max_steps_per_point: int
     max_rise_eV: float
+    reuse_curvature: bool = True
 
     def __post_init__(self):
         if not self.deltas_A or self.deltas_A[0] != 0.0:
@@ -119,17 +120,64 @@ class ScanResult:
     q0: float
     points: list
     status: str
+    rejected_positions: np.ndarray | None = None
 
 
-def _feasible(intent, q0, deltas):
-    # single-pair intents: a target distance must stay positive
-    if len(intent.pairs) == 1:
-        c = intent.coefs[0]
-        return all((q0 + d) / c > 0 for d in deltas)
+def _feasible(intent, q0, deltas, numbers, config):
+    """Design §3.2: reject an unreachable constraint before any evaluation. Every distance
+    is bounded below by the existing overlap guard, r_k >= min_distance_ratio *
+    (R_i + R_j), so with all coefficients positive q cannot go below sum c_k floor_k
+    (all negative: above it). Mixed signs leave q unbounded both ways."""
+    from ase.data import covalent_radii
+
+    floors = [
+        config.min_distance_ratio * (covalent_radii[numbers[i]] + covalent_radii[numbers[j]])
+        for i, j in intent.pairs
+    ]
+    bound = sum(c * f for c, f in zip(intent.coefs, floors))
+    if all(c > 0 for c in intent.coefs):
+        return all(q0 + d > bound for d in deltas)
+    if all(c < 0 for c in intent.coefs):
+        return all(q0 + d < bound for d in deltas)
     return True
 
 
-def constrained_scan(atoms, intent, settings, factory, config, ledger, task):
+def feasible_prefix(intent, q0, deltas, numbers, config):
+    """The longest leading part of ``deltas`` inside the overlap-floor domain (design
+    §3.2). ``deltas`` start at 0 and move away monotonically, so once a target is
+    infeasible every later one is too. Fewer than two points left means no scan."""
+    k = len(deltas)
+    while k > 0 and not _feasible(intent, q0, deltas[:k], numbers, config):
+        k -= 1
+    return tuple(deltas[:k])
+
+
+def reverse_plan(points, jump, settings):
+    """Start positions and settings of the reverse scan that checks a jump for
+    hysteresis: from the post-jump point back to the pre-jump target."""
+    before, after = points[jump["before"]], points[jump["after"]]
+    back = ScanSettings(
+        deltas_A=(0.0, before.delta_A - after.delta_A),
+        fmax_eV_A=settings.fmax_eV_A,
+        max_steps_per_point=settings.max_steps_per_point,
+        max_rise_eV=settings.max_rise_eV,
+        reuse_curvature=settings.reuse_curvature,
+    )
+    return after.positions.copy(), back
+
+
+def constrained_scan(
+    atoms,
+    intent,
+    settings,
+    factory,
+    config,
+    ledger,
+    task,
+    attempt=0,
+    reserve=None,
+    artifact=None,
+):
     from prrs.reliability import GateRejected, GuardedCalculator
     from prrs.state import encode
 
@@ -137,52 +185,73 @@ def constrained_scan(atoms, intent, settings, factory, config, ledger, task):
     work.set_constraint()
     q0 = intent.value(work.positions)
     points = []
-    if not _feasible(intent, q0, settings.deltas_A):
+    if not _feasible(intent, q0, settings.deltas_A, work.numbers, config):
         return ScanResult(intent.intent_id, q0, points, "infeasible")
     work.calc = GuardedCalculator(factory(), config)
     status = "completed"
     e_start = None
+    rejected = None
+    hessian = None
     try:
-        with ledger.segment(task=task, stage="probe") as seg:
-            for delta in settings.deltas_A:
-                target = q0 + delta
-                work.set_constraint(FixBondCombo(intent, target))
-                # BFGS only applies the constraint on a step; a point with zero projected
-                # force would otherwise never be moved onto the target.
-                work.set_positions(work.positions)
-                opt = BFGS(work, logfile=None, maxstep=_MAX_STEP_A)
-                converged = bool(
-                    opt.run(fmax=settings.fmax_eV_A, steps=settings.max_steps_per_point)
-                )
-                energy = float(work.get_potential_energy())
-                f_pes = work.get_forces(apply_constraint=False)
-                g = intent.gradient(work.positions)
-                point = ScanPoint(
-                    delta_A=float(delta),
-                    q_target=float(target),
-                    q_actual=intent.value(work.positions),
-                    energy_eV=energy,
-                    reaction_force=-float(np.vdot(f_pes, g) / np.vdot(g, g)),
-                    fmax_projected=float(np.max(np.linalg.norm(work.get_forces(), axis=1))),
-                    converged=converged,
-                    steps=int(opt.nsteps),
-                    edges=sorted(map(list, encode(work, config.bond_scale).edges)),
-                    positions=work.positions.copy(),
-                    forces_pes=f_pes.copy(),
-                )
-                points.append(point)
-                e_start = energy if e_start is None else e_start
-                if energy - e_start > settings.max_rise_eV:
-                    status = "censored_energy"
-                    break
+        with ledger.segment(task=task, stage="probe", attempt=attempt, reserve=reserve) as seg:
+            seg.artifact = artifact
+            try:
+                for delta in settings.deltas_A:
+                    target = q0 + delta
+                    work.set_constraint(FixBondCombo(intent, target))
+                    # BFGS only applies the constraint on a step; a point with zero projected
+                    # force would otherwise never be moved onto the target.
+                    work.set_positions(work.positions)
+                    opt = BFGS(work, logfile=None, maxstep=_MAX_STEP_A)
+                    if settings.reuse_curvature and hessian is not None:
+                        # Only transfer curvature. A new optimizer has no secant
+                        # history, so the target move never enters a BFGS update.
+                        # Reset the constraint-normal block to ASE's own alpha;
+                        # retain curvature on the NEW tangent space.
+                        normal = intent.gradient(work.positions).ravel()
+                        normal /= np.linalg.norm(normal)
+                        nn = np.outer(normal, normal)
+                        tangent = np.eye(len(normal)) - nn
+                        opt.H0 = tangent @ hessian @ tangent + opt.alpha * nn
+                    converged = bool(
+                        opt.run(fmax=settings.fmax_eV_A, steps=settings.max_steps_per_point)
+                    )
+                    # ASE versions expose H as either an attribute or a property
+                    # of an initialized state. Zero-step points may have neither.
+                    learned = getattr(opt, "H", None)
+                    hessian = learned.copy() if converged and learned is not None else None
+                    energy = float(work.get_potential_energy())
+                    f_pes = work.get_forces(apply_constraint=False)
+                    g = intent.gradient(work.positions)
+                    point = ScanPoint(
+                        delta_A=float(delta),
+                        q_target=float(target),
+                        q_actual=intent.value(work.positions),
+                        energy_eV=energy,
+                        reaction_force=-float(np.vdot(f_pes, g) / np.vdot(g, g)),
+                        fmax_projected=float(np.max(np.linalg.norm(work.get_forces(), axis=1))),
+                        converged=converged,
+                        steps=int(opt.nsteps),
+                        edges=sorted(map(list, encode(work, config.bond_scale).edges)),
+                        positions=work.positions.copy(),
+                        forces_pes=f_pes.copy(),
+                    )
+                    points.append(point)
+                    e_start = energy if e_start is None else e_start
+                    if energy - e_start > settings.max_rise_eV:
+                        status = "censored_energy"
+                        break
+            except BudgetExhausted:
+                status = "budget_exhausted"
+            except GateRejected as exc:
+                status = f"gate_rejected:{exc.code}"
+                rejected = exc.atoms.positions.copy()
             seg.outcome = status
-    except BudgetExhausted:
+    except BudgetExhausted:  # the reservation itself was refused: no segment opened
         status = "budget_exhausted"
-    except GateRejected as exc:
-        status = f"gate_rejected:{exc.code}"
     finally:
         work.set_constraint()
-    return ScanResult(intent.intent_id, q0, points, status)
+    return ScanResult(intent.intent_id, q0, points, status, rejected)
 
 
 def read_scan(points, noise_eV):
@@ -192,8 +261,14 @@ def read_scan(points, noise_eV):
     for k in range(1, len(points) - 1):
         if not all(p.converged for p in points[: k + 2]):
             break
+        # F3 (TS_HESSIAN_FREE_DESIGN_RECORD_2026-10-24 §4): the drop must come from the
+        # contiguous converged run right after the peak; a later unconverged point is kept
+        # in the scan but is not evidence of a descent.
+        end = k + 1
+        while end + 1 < len(points) and points[end + 1].converged:
+            end += 1
         rises = energies[k] - energies[0] > noise_eV
-        falls = energies[k] - min(energies[k + 1 :]) > noise_eV
+        falls = energies[k] - min(energies[k + 1 : end + 1]) > noise_eV
         flips = points[k - 1].reaction_force * points[k + 1].reaction_force < 0
         if (
             rises
@@ -230,26 +305,59 @@ def bracket_jump(points, jump, reverse_point):
 
 
 def reverse_check(
-    atoms_template, points, jump, intent, settings, factory, config, ledger, task
+    atoms_template,
+    points,
+    jump,
+    intent,
+    settings,
+    factory,
+    config,
+    ledger,
+    task,
+    attempt=0,
+    reserve=None,
+    artifact=None,
 ):
-    before, after = points[jump["before"]], points[jump["after"]]
+    positions, back = reverse_plan(points, jump, settings)
     start = atoms_template.copy()
-    start.positions = after.positions.copy()
-    back = ScanSettings(
-        deltas_A=(0.0, before.delta_A - after.delta_A),
-        fmax_eV_A=settings.fmax_eV_A,
-        max_steps_per_point=settings.max_steps_per_point,
-        max_rise_eV=settings.max_rise_eV,
+    start.positions = positions
+    result = constrained_scan(
+        start,
+        intent,
+        back,
+        factory,
+        config,
+        ledger,
+        task,
+        attempt=attempt,
+        reserve=reserve,
+        artifact=artifact,
     )
-    result = constrained_scan(start, intent, back, factory, config, ledger, task)
     if result.status != "completed" or len(result.points) < 2:
         return None
     return bracket_jump(points, jump, result.points[-1])
 
 
-def release(positions, template, source, factory, config, ledger, task, seed):
+def release(
+    positions,
+    template,
+    source,
+    factory,
+    config,
+    ledger,
+    task,
+    seed,
+    attempt=0,
+    reserve=None,
+    artifact=None,
+):
     """Drop every external constraint, quench on the unbiased PES, confirm the minimum,
-    classify against the source. Static: no momenta, no claim of a thermal crossing."""
+    classify against the source. Static: no momenta, no claim of a thermal crossing.
+
+    ``reserve`` is held back for each of the two sequential segments (quench,
+    minimum_check) in turn. It guarantees availability, it does not cap spending: forwards
+    draw it down first, then continue against the global remaining budget. The first
+    segment's unused part is returned before the second opens."""
     from prrs.io import snapshot
     from prrs.reliability import GateRejected, GuardedCalculator
     from prrs.runner import confirm_minimum, quench
@@ -274,18 +382,43 @@ def release(positions, template, source, factory, config, ledger, task, seed):
     try:
         guard = GuardedCalculator(factory(), config)
         atoms.calc = guard
-        with ledger.segment(task=task, stage="quench") as seg:
-            out["release_forces_pes"] = atoms.get_forces().copy()
-            converged, _ = quench(atoms, guard, config)
+        seg_args = {"task": task, "attempt": attempt, "reserve": reserve}
+        with ledger.segment(stage="quench", **seg_args) as seg:
+            seg.artifact = artifact
+            try:
+                out["release_forces_pes"] = atoms.get_forces().copy()
+                converged, _ = quench(atoms, guard, config)
+            except BudgetExhausted:
+                seg.outcome = "budget_exhausted"
+                raise
+            except GateRejected as exc:
+                seg.outcome = f"gate_rejected:{exc.code}"
+                raise
             seg.outcome = "converged" if converged else "quench_failed"
             if converged:
                 endpoint = snapshot(atoms, guard)
         if not converged:
             out["status"] = "quench_failed"
             return out
-        with ledger.segment(task=task, stage="minimum_check") as seg:
-            confirmed, _ = confirm_minimum(endpoint, factory, config, seed)
-            seg.outcome = "minimum" if confirmed else "not_minimum"
+        with ledger.segment(stage="minimum_check", **seg_args) as seg:
+            seg.artifact = artifact
+            try:
+                confirmed, info = confirm_minimum(endpoint, factory, config, seed)
+            except BudgetExhausted:
+                seg.outcome = "budget_exhausted"
+                raise
+            except GateRejected as exc:
+                seg.outcome = f"gate_rejected:{exc.code}"
+                raise
+            reason = str((info or {}).get("reason", ""))
+            gated = not confirmed and reason.startswith("gate_")
+            if gated:
+                seg.outcome = f"gate_rejected:{reason[len('gate_') :]}"
+            else:
+                seg.outcome = "minimum" if confirmed else "not_minimum"
+        if gated:
+            out["status"] = seg.outcome
+            return out
         if not confirmed:
             out["status"] = "not_minimum"
             return out

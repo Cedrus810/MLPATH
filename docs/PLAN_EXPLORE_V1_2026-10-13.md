@@ -10,7 +10,9 @@
 
 **Spec:** [评估协议设计](EVALUATION_PROTOCOL_DESIGN_2026-10-13.md)（按其“v1 范围”）、[发现层设计](DISCOVERY_LAYER_DESIGN_2026-10-13.md)（按其 §1.1）。两份均为用户 2026-10-13 审定。
 
-状态：**用户 2026-10-13 审定并选择 Subagent-driven 执行；M1–M2（Task 1–6）已完成，b04 冒烟跑通（未做验收），见 DONE_LOG 末节。** M3 起开工前另写逐步计划给用户审。执行中的偏离：约束改为自写单标量投影 `FixBondCombo`（ASE `FixInternals` 在线性几何上报错）；冒烟改在 181 上跑（183 的 GPU 被他人占用）。
+状态：**用户 2026-10-13 审定并选择 Subagent-driven 执行；M1–M2（Task 1–6）已完成，b04 冒烟跑通（未做验收），见 DONE_LOG 末节。** M3 逐步计划见 [PLAN_EXPLORE_M3_2026-10-22](PLAN_EXPLORE_M3_2026-10-22.md)，2026-10-22 已施工完成（用户说“先推主线”）；纯几何计数表待用户定 L1 规模（U1/U3/U4/U5），见 DONE_LOG 末节。M4 逐步计划见 [PLAN_EXPLORE_M4_2026-10-22](PLAN_EXPLORE_M4_2026-10-22.md)，2026-10-22 已施工完成，b04 真实模型冒烟得 c2（与已认证 TS 重合），见 DONE_LOG 末节。M5 起开工前另写逐步计划给用户审：M5 逐步计划草稿见 [PLAN_EXPLORE_M5_2026-10-23](PLAN_EXPLORE_M5_2026-10-23.md)，2026-10-23 已施工完成（两账户、固定分级、均匀抽查、kill→resume；解析台出口通过，b04 冒烟得 c2），见 DONE_LOG 末节；M6 起开工前另写逐步计划。执行中的偏离：约束改为自写单标量投影 `FixBondCombo`（ASE `FixInternals` 在线性几何上报错）；冒烟改在 181 上跑（183 的 GPU 被他人占用）。
+
+**2026-10-24 主线澄清：** 用户明确当前核心是面向 MLP 的 Hessian-free TS 搜索，路径在 TS 后。下一轮先读 [HF TS 设计记录与接手路线](TS_HESSIAN_FREE_DESIGN_RECORD_2026-10-24.md)：当前 `certify → follow_min_mode` 的精修仍用完整 Hessian，需补独立 E/F 定位。下文保留已审定 v1 计划与 M 编号；HF 修法、搜索指标和新调度尚未施工，旧 C1/C2 与冻结协议不回写。
 
 ## 必读（开工前全部读完）
 
@@ -89,7 +91,15 @@ benchmarks/explore_refs/    M7 参照认证脚本与参照注册表
 | M9 选择比较 | 四臂：随机 K / 最低能量 K / 现行 PARS / 修订 PARS；冻结池后全池 oracle | M6、M8 | 解析台上跑通，口径同双鞍点台 | 本机 CPU |
 | M10 零号批 | 每开发体系 6 配对块，其中 2 块同 seed 重跑 | M5–M7、M9 | 成本分布、噪声、可行性报告交用户；用户据此冻结 B*、δ、正式块数 | 183 GPU，**先报计划** |
 
+**M5 起的执行约束（用户 2026-10-22 同意）：** 一个长寿命进程守一张 GPU，连续处理多个候选，不为每个候选起新进程（冷启动实测 30 s，另一次 296 s）；进程内用 `explore.ledger.reused_counted_factory`，calculator 只建一次（b04 认证实测省 21%）。见 DONE_LOG 2026-10-22“模型常驻”一节。**精度（2026-10-23 更正，以此为准）：** 用户 2026-10-23 原话：「你就那么 喜欢fp64嘛？？？？」「哪里 精度 都没fp64  你给我变猜啊  猜内存给你 随机数生成器一个 fp64嘛？」事实：POLAR-1 权重以 float32 存储（加载日志 `model dtype float32, converting models to float64`），“float64”只是把 float32 权重升格计算，不提供更高的模型精度。2026-10-23 核实（CPU 上 `torch.load` 逐个查）：MACE-POLAR-1-M 共 158 个参数张量（15 238 498 个参数）全部 `torch.float32`，浮点 buffer 157 个全部 `float32`，没有任何 float64。用户原话「你告诉我我们计算一大圈  MLP： 本身就他妈没有fp64」。（Claude 理解，待用户确认：搜索、释放、认证全部用 float32。）~~以下 10-22 的 float64 认证规定作废~~：~~**精度（用户 2026-10-22 同意）：** 搜索段（L1 约束扫描、MD 筛选）用 float32，C2 认证与最终报告能量用 float64，~~四臂同一套精度方案并写进 manifest；M5 计划须先在 float32 下重测扫描噪声，再定 `read_scan` 的噪声门（float32 相对能量误差实测约 2–3 meV，见 DONE_LOG“float32 vs float64”一节）。
+
 v1 不做（v2 再议）：四账户、π_i 外推、认证反馈自适应、角/扭转/片段运动意图族、ART、committee/batching、mature A1 臂与 mature 预算预留修正（mature 进入比较时再做）。
+
+**性能执行层例外（用户 2026-10-23 明确指示）：** 已单独实现并冒烟验证相邻点曲率复用、
+常驻单模型与独立扫描合批，见 [性能实现与结果](SCAN_THROUGHPUT_2026-10-23.md)。
+`scan_many` 按结构逐个计费，不能一批只记一次。该性能施工交付时仅完成执行原语；
+随后 M5 已将扫描接入分级、两账户与恢复（见 M5 完成记录）。当前 D2 的释放／认证仍逐项调用，
+不能把扫描合批收益推广为完整 TS 工作流收益，也不表示四臂评估协议已执行。
 
 D0 的阶段归属说明：D0 走 `prrs` 内部流程，`explore` 只能在 calculator 层计数，所以 D0 的账本阶段统一记 `d0_search`，不细分 quench/Hessian。这与协议 v1 的最小字段一致，在报告里注明。
 
