@@ -1,0 +1,153 @@
+[
+ {
+  "file": "item_03_r0.json",
+  "intent": "f2.4:distance:8-14:",
+  "status": "unresolved:transverse_not_converged",
+  "spent": 775,
+  "refine_spent": 266,
+  "midpoints": [
+   [
+    "from_left_coarse",
+    1.3344,
+    "bfgs",
+    true,
+    1,
+    0.0082,
+    0.00196,
+    0.0098
+   ],
+   [
+    "from_right_coarse",
+    1.3344,
+    "bfgs",
+    true,
+    59,
+    0.0117,
+    0.00197,
+    0.0122
+   ],
+   [
+    "from_left",
+    1.3344,
+    "fire",
+    false,
+    200,
+    0.01,
+    0.00142,
+    0.0101
+   ]
+  ],
+  "coarse_pairs": [
+   {
+    "q": 1.3344031924569286,
+    "coarse_sign": 0,
+    "rf": [
+     0.008231323454444116,
+     0.011742097106790743
+    ],
+    "fmax": [
+     0.009762509725987911,
+     0.012211441993713379
+    ],
+    "candidate_in_hand": [
+     true,
+     false
+    ],
+    "pair_rmsd_A": 0.010586238899931672
+   }
+  ],
+  "fire": [
+   {
+    "origin": "from_left",
+    "q": 1.3344031924569286,
+    "steps": 200,
+    "converged": false,
+    "fproj_min": 0.0011466123849948019,
+    "fproj_last50_median": 0.00178657206331234,
+    "frames_le_1p5e-3": 7,
+    "log_fproj_slope_last100": -0.0002880627094758236,
+    "rf_last50_range": 0.00605518734250497,
+    "v_normal_fraction_median": 2.680546927009727e-06,
+    "v_normal_fraction_p90": 1.2784938699529665e-05,
+    "step_removed_fraction_median": 1.083315414477437e-11,
+    "step_removed_fraction_p90": 2.0431706650361112e-05,
+    "step_normal_fraction_old_median": 1.8517162165403843e-06,
+    "clipped_fraction": 0.0,
+    "resets": 18,
+    "dt_last": 0.024155251097467346,
+    "step_actual_max_atom_median_A": 4.254878152104661e-05
+   }
+  ],
+  "diagnosis": [
+   {
+    "midpoint": 2,
+    "origin": "from_left",
+    "best_frame": 199,
+    "best": {
+     "recorded_fproj": 0.0011466123849948019,
+     "fproj_of_mean": 0.0013813107603105686,
+     "component_std_max": 0.001045611217794871,
+     "component_std_median": 0.00013700176621396444,
+     "energy_spread_eV": 0.0,
+     "transverse_eigs_lowest": [
+      0.01985788805491877,
+      0.145417119897617,
+      0.16526011648483252,
+      0.25940009232380784,
+      0.34236360704500984
+     ],
+     "mean_force_fraction_soft": 0.2822208271791825,
+     "mean_force_soft_only_atom_max": 0.0008956424327514759,
+     "mean_force_rest_atom_max": 0.0011378043585838706,
+     "soft_position_error_A": 0.053383444618237456,
+     "soft_noise_position_A": 0.011022994748738644,
+     "noise_std_on_modes_lowest": [
+      0.00021889339575040947,
+      0.00010105496528421473,
+      5.792586468169437e-05,
+      6.562661957972154e-05,
+      3.925856965636729e-05
+     ],
+     "roughness_on_soft_std": 0.00023411160293871752,
+     "fproj_each_median_max": [
+      0.0015485723895291728,
+      0.002603001970396972
+     ],
+     "fproj_noise_only_median_max": [
+      0.0008655629753105082,
+      0.001719061090981317
+     ],
+     "rf_each_median_max": [
+      0.012205616068946722,
+      0.014189156132458048
+     ],
+     "roughness_fproj_median_max": [
+      0.001450371238209528,
+      0.003045339694955285
+     ],
+     "rf_std": 0.000793163499589922
+    },
+    "last": {
+     "recorded_fproj": 0.0014227320978958764,
+     "fproj_of_mean": 0.0015033935387808322,
+     "component_std_max": 0.001501019394295876,
+     "component_std_median": 0.00014435742180656465,
+     "energy_spread_eV": 0.001953125,
+     "fproj_each_median_max": [
+      0.0015914360344806533,
+      0.002372334313363861
+     ],
+     "fproj_noise_only_median_max": [
+      0.0009634401444258108,
+      0.0018301653377127893
+     ],
+     "rf_each_median_max": [
+      0.009646850176580637,
+      0.01084839850298518
+     ],
+     "rf_std": 0.0011916481102503802
+    }
+   }
+  ]
+ }
+]

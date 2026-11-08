@@ -1,0 +1,446 @@
+{
+ "items": 22,
+ "hs_status": {
+  "converged_candidate": 15,
+  "unresolved:walk_relax_unconverged": 4,
+  "unresolved:transverse_not_converged": 3
+ },
+ "hc_status": {
+  "connected": 13,
+  "unresolved:endpoint_unstable": 2
+ },
+ "connected_pair_matches_reference": 13,
+ "hs_spent": 14373,
+ "hc_spent": 4393,
+ "rows": [
+  {
+   "file": "failed_00.json",
+   "intent": "k0:distance:10-12",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 322,
+   "saddle_energy_eV": -18880.412109375,
+   "hc_status": "connected",
+   "hc_spent": 274,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.013671875
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_01.json",
+   "intent": "k0:distance:2-4",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 686,
+   "saddle_energy_eV": -18880.4140625,
+   "hc_status": "connected",
+   "hc_spent": 236,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.021484375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_02.json",
+   "intent": "k0:distance:6-8",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "unresolved:walk_relax_unconverged",
+   "hs_spent": 518,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_03.json",
+   "intent": "k0:distance:8-14",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "unresolved:transverse_not_converged",
+   "hs_spent": 1023,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_04.json",
+   "intent": "k1:distance:10-12",
+   "run": "b05_hf_v11r_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 512,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "connected",
+   "hc_spent": 259,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.021484375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_05.json",
+   "intent": "k1:distance:12-14",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "unresolved:walk_relax_unconverged",
+   "hs_spent": 727,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_06.json",
+   "intent": "k1:distance:2-4",
+   "run": "b05_hf_v11_sB",
+   "hs_status": "unresolved:transverse_not_converged",
+   "hs_spent": 689,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_07.json",
+   "intent": "k1:distance:6-8",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 452,
+   "saddle_energy_eV": -18880.408203125,
+   "hc_status": "connected",
+   "hc_spent": 229,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.740234375
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.0234375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_08.json",
+   "intent": "k1:distance:8-14",
+   "run": "b05_hf_v11_sB",
+   "hs_status": "unresolved:transverse_not_converged",
+   "hs_spent": 1233,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_09.json",
+   "intent": "k2:distance:10-12",
+   "run": "b05_hf_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 303,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "connected",
+   "hc_spent": 237,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.021484375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_10.json",
+   "intent": "k2:distance:2-4",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 651,
+   "saddle_energy_eV": -18880.412109375,
+   "hc_status": "unresolved:endpoint_unstable",
+   "hc_spent": 365,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.744140625
+    },
+    {
+     "side": "high",
+     "status": "ef_unstable",
+     "end_energy_eV": -18880.41015625
+    }
+   ],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_11.json",
+   "intent": "k2:distance:6-8",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 766,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "unresolved:endpoint_unstable",
+   "hc_spent": 373,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_unstable",
+     "end_energy_eV": -18880.41015625
+    }
+   ],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_12.json",
+   "intent": "k2:distance:8-14",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 437,
+   "saddle_energy_eV": -18880.412109375,
+   "hc_status": "connected",
+   "hc_spent": 398,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.0703125
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.744140625
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_13.json",
+   "intent": "k3:distance:10-12",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 439,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "connected",
+   "hc_spent": 257,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.021484375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_14.json",
+   "intent": "k3:distance:2-4",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 392,
+   "saddle_energy_eV": -18880.40625,
+   "hc_status": "connected",
+   "hc_spent": 216,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.0234375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_15.json",
+   "intent": "k3:distance:4-14",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 954,
+   "saddle_energy_eV": -18880.408203125,
+   "hc_status": "connected",
+   "hc_spent": 233,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.0234375
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.740234375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_16.json",
+   "intent": "k3:distance:6-8",
+   "run": "b05_hf_v11_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 359,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "connected",
+   "hc_spent": 555,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.740234375
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.34375
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_17.json",
+   "intent": "k3:distance:8-14",
+   "run": "b05_hf_v4_sA",
+   "hs_status": "converged_candidate",
+   "hs_spent": 811,
+   "saddle_energy_eV": -18880.408203125,
+   "hc_status": "connected",
+   "hc_spent": 258,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.044921875
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_18.json",
+   "intent": "k4:distance:7-14",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 841,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "connected",
+   "hc_spent": 260,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.021484375
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.7421875
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_19.json",
+   "intent": "k5:distance:11-14",
+   "run": "b05_hf_v11_sB",
+   "hs_status": "unresolved:walk_relax_unconverged",
+   "hs_spent": 1151,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  },
+  {
+   "file": "failed_20.json",
+   "intent": "k7:distance:10-12",
+   "run": "b05_hf_v4_sB",
+   "hs_status": "converged_candidate",
+   "hs_spent": 250,
+   "saddle_energy_eV": -18880.41015625,
+   "hc_status": "connected",
+   "hc_spent": 243,
+   "sides": [
+    {
+     "side": "low",
+     "status": "ef_stable",
+     "end_energy_eV": -18880.744140625
+    },
+    {
+     "side": "high",
+     "status": "ef_stable",
+     "end_energy_eV": -18882.017578125
+    }
+   ],
+   "pair_matches_reference": true
+  },
+  {
+   "file": "failed_21.json",
+   "intent": "k7:distance:6-8",
+   "run": "b05_hf_v11_sB",
+   "hs_status": "unresolved:walk_relax_unconverged",
+   "hs_spent": 857,
+   "saddle_energy_eV": null,
+   "hc_status": null,
+   "hc_spent": null,
+   "sides": [],
+   "pair_matches_reference": false
+  }
+ ]
+}

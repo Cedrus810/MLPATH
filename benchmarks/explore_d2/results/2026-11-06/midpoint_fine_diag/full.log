@@ -1,0 +1,10 @@
+{"file": "item_03_r0.json", "status": "unresolved:transverse_not_converged", "spent": 842, "wall_s": 77.1, "stuck": 1}
+{"file": "item_03_r1.json", "status": "unresolved:transverse_not_converged", "spent": 1044, "wall_s": 92.3, "stuck": 1}
+{"file": "item_06_r0.json", "status": "unresolved:transverse_not_converged", "spent": 901, "wall_s": 80.1, "stuck": 1}
+{"file": "item_06_r1.json", "status": "unresolved:walk_relax_unconverged", "spent": 668, "wall_s": 59.4, "stuck": 0}
+{"file": "item_08_r0.json", "status": "unresolved:transverse_not_converged", "spent": 1305, "wall_s": 116.0, "stuck": 1}
+{"file": "item_08_r1.json", "status": "unresolved:transverse_not_converged", "spent": 1513, "wall_s": 134.8, "stuck": 0}
+{"file": "item_11_r0.json", "status": "unresolved:transverse_not_converged", "spent": 416, "wall_s": 37.1, "stuck": 1}
+{"file": "item_11_r1.json", "status": "converged_candidate", "spent": 719, "wall_s": 64.0, "stuck": 0}
+{"file": "item_12_r0.json", "status": "converged_candidate", "spent": 425, "wall_s": 37.7, "stuck": 0}
+{"file": "item_12_r1.json", "status": "converged_candidate", "spent": 414, "wall_s": 36.9, "stuck": 0}
