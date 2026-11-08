@@ -1,0 +1,9 @@
+ 14:26:37 up 20:35,  1 user,  load average: 0.00, 0.00, 0.00
+0 %, 1 MiB
+d406ff960732bc39150a2de58252fdfd  explore/src/explore/ts_ef.py
+1eab7a9b5b382e2e5d272e20d3d4be8a  benchmarks/explore_d2/midpoint_fire_validate.py
+8183afd3696f95d9b459162e11dfa05c  benchmarks/explore_d2/midpoint_coarse_validate.py
+smoke 6415
+ 14:34:31 up 20:43,  1 user,  load average: 3.24, 3.18, 1.46
+0 %, 1 MiB
+full 6622
