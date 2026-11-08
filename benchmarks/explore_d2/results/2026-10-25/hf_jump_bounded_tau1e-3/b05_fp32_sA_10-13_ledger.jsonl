@@ -1,0 +1,8 @@
+{"arm": "HF", "host": "kasuga01", "t": 1792940550.4384747, "event": "open", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "ts_branches_ef", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940706.2521577, "event": "close", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "ts_branches_ef", "forwards": 706, "requests": 1412, "cache_hits": 706, "wall_s": 155.79604447301244, "outcome": "continuous_maximum", "artifact": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940706.2685065, "event": "open", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "ts_search_ef", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940734.8797615, "event": "close", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "ts_search_ef", "forwards": 134, "requests": 268, "cache_hits": 134, "wall_s": 28.606402125995373, "outcome": "converged_candidate", "artifact": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940734.9297268, "event": "open", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "hessian", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940745.5568666, "event": "close", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "hessian", "forwards": 31, "requests": 61, "cache_hits": 31, "wall_s": 10.491444134997437, "outcome": "1", "artifact": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940745.5712779, "event": "open", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "descent", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792940920.2013834, "event": "close", "task": "b05_fp32_sA_10-13", "attempt": 0, "stage": "descent", "forwards": 1562, "requests": 3124, "cache_hits": 1563, "wall_s": 174.62513317800767, "outcome": "done", "artifact": null}

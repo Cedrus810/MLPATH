@@ -1,0 +1,2 @@
+{"arm": "HF", "host": "kasuga01", "t": 1792907956.068602, "event": "open", "task": "b04", "attempt": 0, "stage": "ts_search_ef", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792907973.385991, "event": "close", "task": "b04", "attempt": 0, "stage": "ts_search_ef", "forwards": 166, "requests": 332, "cache_hits": 166, "wall_s": 17.26227642899903, "outcome": "unresolved:branch_force_disagreement", "artifact": null}

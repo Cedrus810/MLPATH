@@ -1,0 +1,2 @@
+model load 13.1 s
+b04 converged_candidate search 159 fw 19 s {'rmsd_kabsch_A': 0.0002071205585702613, 'dE_eV': -0.00041527980647515506} 1 connected reactive

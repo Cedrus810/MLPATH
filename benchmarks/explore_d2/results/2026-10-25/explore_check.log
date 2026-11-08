@@ -1,0 +1,9 @@
+../.venv-tools/bin/ruff format --check src/explore tests
+27 files already formatted
+../.venv-tools/bin/ruff check src/explore tests
+All checks passed!
+/home/ruigengji/miniforge3/envs/openmm_dev/bin/python -m pytest -q
+........................................................................ [ 40%]
+........................................................................ [ 81%]
+.................................                                        [100%]
+177 passed in 72.43s (0:01:12)

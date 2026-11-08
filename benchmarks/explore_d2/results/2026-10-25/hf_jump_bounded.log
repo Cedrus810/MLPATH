@@ -1,0 +1,6 @@
+model load 40.6 s
+b04 continuous_maximum unresolved:branch_force_disagreement 370 fw 93 s [('low', 'terminated', 2.2694913960527727, 12), ('high', 'reached_end', None, 12)] None [{'terminated_last_vs_old_saddle_A': 0.04839603609252305, 'terminated_last_E_minus_old_eV': -0.002368404806475155}] None None None
+b05_r1_sA_6-9 continuous_maximum unresolved:branch_force_disagreement 753 fw 158 s [('low', 'reached_end', None, 16)] None None None None None
+b05_r1_sA_10-13 continuous_maximum unresolved:branch_force_disagreement 780 fw 143 s [('low', 'reached_end', None, 16)] None None None None None
+b05_r1_sB_10-13 continuous_maximum unresolved:branch_force_disagreement 723 fw 64 s [('low', 'reached_end', None, 16)] None None None None None
+b05_fp32_sA_10-13 continuous_maximum unresolved:branch_force_disagreement 707 fw 63 s [('low', 'reached_end', None, 16)] None None None None None

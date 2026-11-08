@@ -1,0 +1,35 @@
+{
+  "scope": "HF-2/3 independent E/F primitive; no molecular/GPU run, D2 integration, or b05 acceptance",
+  "checks": {
+    "explore": {
+      "passed": 177,
+      "new": 19,
+      "log": "explore_check.log"
+    },
+    "prrs_related": {
+      "passed": 96,
+      "log": "prrs_related_tests.log"
+    },
+    "digest": {
+      "before": "digest_before.log",
+      "after": "digest_after.log",
+      "files": 332,
+      "frames": 2136,
+      "event_pairs": 4,
+      "unchanged": true
+    }
+  },
+  "source_sha256": {
+    "explore/src/explore/ts_ef.py": "5f2b863973fc25b925c7b5d091fcce1b07a98f8084175e09d8fcf2ef41c69e25",
+    "explore/tests/test_ts_ef.py": "52123c2d0be587c1e50cd386e5d1dba29bd523b60f05d679083225730dbcee02",
+    "src/prrs/runner.py": "5aa57c346a6a6ec80ea05266d00abe3fb5a55221589db53ae7fd161bb4097fdf",
+    "tests/test_lost_mode_diagnostics.py": "6bd1ba772d6f172ed74703dd2e08cdfa127249ad94a6753674e7082928d11dcf",
+    "benchmarks/explore_d2/hf_f1_audit.py": "760c5584b73fd9c24b53c5b0e28035aa90234843ca91b3b6e5239cd156fbec8c"
+  },
+  "log_sha256": {
+    "explore_check.log": "cc63651b80d8b50727e4c29b66ac403038d79d8e199b1f8fe5bfdacc8f4da5bf",
+    "prrs_related_tests.log": "47640a9763635d8dfc82002e0708bf5331e816c23fa6b6fe188ea81dd80be1aa",
+    "digest_before.log": "5dc3db795a2a98c6292e7f0c30e6283a5edcae3fe5e2269b95de63118e4d7e25",
+    "digest_after.log": "5dc3db795a2a98c6292e7f0c30e6283a5edcae3fe5e2269b95de63118e4d7e25"
+  }
+}

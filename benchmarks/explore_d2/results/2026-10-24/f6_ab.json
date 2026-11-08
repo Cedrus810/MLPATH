@@ -1,0 +1,866 @@
+[
+  {
+    "old": "results/2026-10-23/b05_fp32_sA",
+    "new": "results/2026-10-24/b05_v11_sA",
+    "old_summary": {
+      "certified": 322,
+      "forward": 233125,
+      "wall_h": 7.298534477286869,
+      "status": {
+        "unresolved:descent_failed": 94,
+        "unresolved:saddle_not_converged": 112,
+        "unresolved:relayed": 40,
+        "unresolved:saddle_wrong_index": 17,
+        "c2": 3,
+        "budget_exhausted": 12,
+        "unresolved:both_sides_same_basin": 8,
+        "unresolved:saddle_trivial_mode_floor_above_tolerance": 8,
+        "unresolved:hessian_internal_mode_recheck_disagrees": 1,
+        "unresolved:saddle_seed_above_ceiling": 26,
+        "unresolved:hessian_trivial_mode_floor_above_tolerance": 1
+      },
+      "c2_labels": {
+        "rearrangement": 2,
+        "reactive": 1
+      },
+      "saddle_energies": [
+        [
+          -18880.352,
+          1
+        ],
+        [
+          -18880.02,
+          1
+        ],
+        [
+          -18880.5,
+          1
+        ]
+      ],
+      "lost_target_mode": {
+        "n": 0,
+        "target_overlap_none": 0,
+        "target_overlap_median": null,
+        "steps_median": null
+      }
+    },
+    "new_summary": {
+      "certified": 324,
+      "forward": 140126,
+      "wall_h": 12.968440032998721,
+      "status": {
+        "unresolved:saddle_lost_target_mode": 122,
+        "unresolved:saddle_not_converged": 68,
+        "unresolved:descent_failed": 35,
+        "unresolved:relayed": 17,
+        "budget_exhausted": 6,
+        "unresolved:hessian_internal_mode_recheck_disagrees": 3,
+        "c2": 4,
+        "duplicate_c2": 17,
+        "unresolved:saddle_wrong_index": 6,
+        "unresolved:saddle_ceiling_blocked": 17,
+        "unresolved:both_sides_same_basin": 3,
+        "unresolved:saddle_seed_above_ceiling": 26
+      },
+      "c2_labels": {
+        "rearrangement": 4
+      },
+      "saddle_energies": [
+        [
+          -18880.5,
+          15
+        ],
+        [
+          -18879.631,
+          2
+        ],
+        [
+          -18880.502,
+          2
+        ],
+        [
+          -18880.496,
+          1
+        ],
+        [
+          -18880.352,
+          1
+        ]
+      ],
+      "lost_target_mode": {
+        "n": 122,
+        "target_overlap_none": 30,
+        "target_overlap_median": 0.7250846613835298,
+        "steps_median": 35
+      }
+    },
+    "old_c2_now": {
+      "distance:4-9:+1:-:L0-v1": [
+        "c2",
+        "unresolved:saddle_lost_target_mode"
+      ],
+      "distance:10-13:+1:+:L0-v1": [
+        "c2",
+        "unresolved:saddle_lost_target_mode"
+      ],
+      "distance:6-15:+1:-:L0-v1": [
+        "c2",
+        "unresolved:saddle_lost_target_mode"
+      ]
+    },
+    "transitions": [
+      [
+        "unresolved:descent_failed",
+        "unresolved:saddle_lost_target_mode",
+        41
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_lost_target_mode",
+        39
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_not_converged",
+        33
+      ],
+      [
+        "unresolved:saddle_seed_above_ceiling",
+        "unresolved:saddle_seed_above_ceiling",
+        26
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:descent_failed",
+        19
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:saddle_lost_target_mode",
+        17
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "duplicate_c2",
+        14
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:saddle_not_converged",
+        12
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_ceiling_blocked",
+        12
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:relayed",
+        8
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:saddle_not_converged",
+        7
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:descent_failed",
+        7
+      ],
+      [
+        "-",
+        "unresolved:saddle_lost_target_mode",
+        7
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:descent_failed",
+        6
+      ],
+      [
+        "unresolved:descent_failed",
+        "-",
+        6
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_not_converged",
+        5
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:saddle_not_converged",
+        4
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:relayed",
+        4
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:saddle_lost_target_mode",
+        4
+      ],
+      [
+        "unresolved:relayed",
+        "-",
+        4
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_lost_target_mode",
+        4
+      ],
+      [
+        "-",
+        "unresolved:saddle_not_converged",
+        3
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:saddle_ceiling_blocked",
+        3
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:saddle_lost_target_mode",
+        3
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_lost_target_mode",
+        3
+      ],
+      [
+        "c2",
+        "unresolved:saddle_lost_target_mode",
+        3
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_not_converged",
+        3
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_wrong_index",
+        2
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:both_sides_same_basin",
+        2
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:relayed",
+        2
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "budget_exhausted",
+        2
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "c2",
+        2
+      ],
+      [
+        "-",
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        1
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "c2",
+        1
+      ],
+      [
+        "unresolved:descent_failed",
+        "duplicate_c2",
+        1
+      ],
+      [
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        "unresolved:saddle_wrong_index",
+        1
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "budget_exhausted",
+        1
+      ],
+      [
+        "unresolved:hessian_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_lost_target_mode",
+        1
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:saddle_not_converged",
+        1
+      ],
+      [
+        "unresolved:descent_failed",
+        "c2",
+        1
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:relayed",
+        1
+      ],
+      [
+        "unresolved:relayed",
+        "duplicate_c2",
+        1
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "-",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_wrong_index",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "budget_exhausted",
+        1
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "-",
+        1
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        1
+      ],
+      [
+        "-",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "-",
+        "unresolved:saddle_ceiling_blocked",
+        1
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:both_sides_same_basin",
+        1
+      ],
+      [
+        "-",
+        "unresolved:relayed",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "duplicate_c2",
+        1
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:relayed",
+        1
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:saddle_wrong_index",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_ceiling_blocked",
+        1
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:saddle_wrong_index",
+        1
+      ],
+      [
+        "unresolved:descent_failed",
+        "budget_exhausted",
+        1
+      ],
+      [
+        "unresolved:relayed",
+        "budget_exhausted",
+        1
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        1
+      ]
+    ]
+  },
+  {
+    "old": "results/2026-10-23/b05_fp32_sB",
+    "new": "results/2026-10-24/b05_v11_sB",
+    "old_summary": {
+      "certified": 318,
+      "forward": 239403,
+      "wall_h": 7.6706228414509035,
+      "status": {
+        "unresolved:saddle_not_converged": 114,
+        "unresolved:saddle_wrong_index": 18,
+        "budget_exhausted": 25,
+        "unresolved:descent_failed": 78,
+        "unresolved:relayed": 35,
+        "unresolved:both_sides_same_basin": 8,
+        "unresolved:saddle_trivial_mode_floor_above_tolerance": 8,
+        "unresolved:hessian_internal_mode_recheck_disagrees": 9,
+        "unresolved:hessian_trivial_mode_floor_above_tolerance": 4,
+        "c2": 2,
+        "duplicate_c2": 1,
+        "unresolved:saddle_seed_above_ceiling": 16
+      },
+      "c2_labels": {
+        "rearrangement": 2
+      },
+      "saddle_energies": [
+        [
+          -18880.352,
+          1
+        ],
+        [
+          -18880.355,
+          1
+        ],
+        [
+          -18879.795,
+          1
+        ]
+      ],
+      "lost_target_mode": {
+        "n": 0,
+        "target_overlap_none": 0,
+        "target_overlap_median": null,
+        "steps_median": null
+      }
+    },
+    "new_summary": {
+      "certified": 329,
+      "forward": 152547,
+      "wall_h": 14.747916895680957,
+      "status": {
+        "unresolved:saddle_not_converged": 88,
+        "unresolved:saddle_lost_target_mode": 111,
+        "c2": 4,
+        "unresolved:descent_failed": 39,
+        "unresolved:saddle_wrong_index": 8,
+        "unresolved:saddle_trivial_mode_floor_above_tolerance": 2,
+        "budget_exhausted": 9,
+        "unresolved:relayed": 10,
+        "unresolved:saddle_ceiling_blocked": 13,
+        "duplicate_c2": 18,
+        "unresolved:hessian_internal_mode_recheck_disagrees": 3,
+        "unresolved:both_sides_same_basin": 2,
+        "unresolved:saddle_seed_above_ceiling": 21,
+        "unresolved:hessian_trivial_mode_floor_above_tolerance": 1
+      },
+      "c2_labels": {
+        "rearrangement": 4
+      },
+      "saddle_energies": [
+        [
+          -18880.5,
+          10
+        ],
+        [
+          -18880.502,
+          6
+        ],
+        [
+          -18880.229,
+          2
+        ],
+        [
+          -18880.355,
+          1
+        ],
+        [
+          -18880.504,
+          1
+        ],
+        [
+          -18880.227,
+          1
+        ],
+        [
+          -18879.635,
+          1
+        ]
+      ],
+      "lost_target_mode": {
+        "n": 111,
+        "target_overlap_none": 29,
+        "target_overlap_median": 0.7019608427478319,
+        "steps_median": 25
+      }
+    },
+    "old_c2_now": {
+      "distance:4-11:+1:-:L0-v1": [
+        "c2",
+        "unresolved:saddle_not_converged"
+      ],
+      "distance:0-10:+1:-:L0-v1": [
+        "duplicate_c2",
+        "unresolved:relayed"
+      ],
+      "distance:4-13:+1:+:L0-v1": [
+        "c2",
+        "unresolved:saddle_lost_target_mode"
+      ]
+    },
+    "transitions": [
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_not_converged",
+        41
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:saddle_lost_target_mode",
+        33
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_lost_target_mode",
+        31
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:saddle_not_converged",
+        19
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "duplicate_c2",
+        15
+      ],
+      [
+        "unresolved:saddle_seed_above_ceiling",
+        "unresolved:saddle_seed_above_ceiling",
+        14
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:descent_failed",
+        13
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:saddle_lost_target_mode",
+        10
+      ],
+      [
+        "-",
+        "unresolved:saddle_lost_target_mode",
+        10
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_lost_target_mode",
+        10
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:descent_failed",
+        10
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:descent_failed",
+        9
+      ],
+      [
+        "-",
+        "unresolved:saddle_seed_above_ceiling",
+        7
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_not_converged",
+        7
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:saddle_lost_target_mode",
+        6
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:saddle_lost_target_mode",
+        5
+      ],
+      [
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        "unresolved:saddle_not_converged",
+        5
+      ],
+      [
+        "unresolved:relayed",
+        "-",
+        5
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:saddle_not_converged",
+        5
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "-",
+        4
+      ],
+      [
+        "-",
+        "unresolved:saddle_not_converged",
+        4
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "budget_exhausted",
+        4
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:relayed",
+        4
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:saddle_not_converged",
+        4
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_ceiling_blocked",
+        4
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:saddle_wrong_index",
+        3
+      ],
+      [
+        "unresolved:descent_failed",
+        "-",
+        3
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        3
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "c2",
+        3
+      ],
+      [
+        "-",
+        "unresolved:saddle_ceiling_blocked",
+        3
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:saddle_ceiling_blocked",
+        3
+      ],
+      [
+        "unresolved:descent_failed",
+        "budget_exhausted",
+        2
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "unresolved:descent_failed",
+        2
+      ],
+      [
+        "unresolved:hessian_trivial_mode_floor_above_tolerance",
+        "budget_exhausted",
+        2
+      ],
+      [
+        "unresolved:descent_failed",
+        "unresolved:both_sides_same_basin",
+        2
+      ],
+      [
+        "budget_exhausted",
+        "-",
+        2
+      ],
+      [
+        "unresolved:descent_failed",
+        "duplicate_c2",
+        2
+      ],
+      [
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        "unresolved:saddle_wrong_index",
+        2
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_lost_target_mode",
+        2
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_wrong_index",
+        2
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:saddle_ceiling_blocked",
+        2
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:relayed",
+        2
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:relayed",
+        2
+      ],
+      [
+        "unresolved:saddle_seed_above_ceiling",
+        "unresolved:saddle_lost_target_mode",
+        2
+      ],
+      [
+        "unresolved:saddle_wrong_index",
+        "-",
+        1
+      ],
+      [
+        "unresolved:relayed",
+        "unresolved:saddle_wrong_index",
+        1
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        1
+      ],
+      [
+        "unresolved:hessian_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_lost_target_mode",
+        1
+      ],
+      [
+        "c2",
+        "unresolved:saddle_lost_target_mode",
+        1
+      ],
+      [
+        "unresolved:saddle_not_converged",
+        "unresolved:saddle_trivial_mode_floor_above_tolerance",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "-",
+        "unresolved:hessian_trivial_mode_floor_above_tolerance",
+        1
+      ],
+      [
+        "duplicate_c2",
+        "unresolved:relayed",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "duplicate_c2",
+        1
+      ],
+      [
+        "c2",
+        "unresolved:saddle_not_converged",
+        1
+      ],
+      [
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "unresolved:hessian_trivial_mode_floor_above_tolerance",
+        "unresolved:saddle_not_converged",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:saddle_ceiling_blocked",
+        1
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "budget_exhausted",
+        "unresolved:relayed",
+        1
+      ],
+      [
+        "unresolved:hessian_internal_mode_recheck_disagrees",
+        "budget_exhausted",
+        1
+      ],
+      [
+        "unresolved:descent_failed",
+        "c2",
+        1
+      ],
+      [
+        "-",
+        "unresolved:descent_failed",
+        1
+      ],
+      [
+        "unresolved:both_sides_same_basin",
+        "unresolved:saddle_not_converged",
+        1
+      ]
+    ]
+  }
+]

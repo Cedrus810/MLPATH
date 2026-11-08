@@ -1,0 +1,6 @@
+model load 40.1 s
+b04 continuous_maximum converged_candidate 389 fw 45 s [('low', 'terminated', 2.269491402372072, 12), ('high', 'maximum_bracketed', None, 12)] {'rmsd_kabsch_A': 0.00025074120412497676, 'dE_eV': -0.00041527980647515506} [{'terminated_last_vs_old_saddle_A': 0.04866298955504271, 'terminated_last_E_minus_old_eV': -0.002368404806475155}] None None None
+b05_r1_sA_6-9 continuous_maximum converged_candidate 854 fw 314 s [('low', 'maximum_bracketed', None, 16)] {'rmsd_kabsch_A': 0.0019880945193395906, 'dE_eV': -0.0011606009684328455} None 1 connected reactive
+b05_r1_sA_10-13 continuous_maximum converged_candidate 856 fw 743 s [('low', 'maximum_bracketed', None, 16)] {'rmsd_kabsch_A': 0.0009226077207409593, 'dE_eV': -6.352549098664895e-05} None 1 descent_failed None
+b05_r1_sB_10-13 continuous_maximum converged_candidate 861 fw 226 s [('low', 'maximum_bracketed', None, 16)] {'rmsd_kabsch_A': 0.0022576745121691217, 'dE_eV': -0.0015497033309657127} None 1 descent_failed None
+b05_fp32_sA_10-13 continuous_maximum converged_candidate 840 fw 370 s [('low', 'maximum_bracketed', None, 16)] {'rmsd_kabsch_A': 0.007304870440114531, 'dE_eV': 0.0} None 1 descent_failed None

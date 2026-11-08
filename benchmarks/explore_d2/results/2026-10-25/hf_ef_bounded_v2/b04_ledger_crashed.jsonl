@@ -1,0 +1,4 @@
+{"arm": "HF", "host": "kasuga01", "t": 1792908714.1560848, "event": "open", "task": "b04", "attempt": 0, "stage": "ts_search_ef", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792908732.735927, "event": "close", "task": "b04", "attempt": 0, "stage": "ts_search_ef", "forwards": 168, "requests": 336, "cache_hits": 168, "wall_s": 18.408898683992447, "outcome": "converged_candidate", "artifact": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792908732.7460074, "event": "open", "task": "b04", "attempt": 0, "stage": "hessian", "reserve": null}
+{"arm": "HF", "host": "kasuga01", "t": 1792908737.1748815, "event": "close", "task": "b04", "attempt": 0, "stage": "hessian", "forwards": 7, "requests": 12, "cache_hits": 6, "wall_s": 4.423899802990491, "outcome": "error:RuntimeError", "artifact": null}

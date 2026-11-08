@@ -1,0 +1,684 @@
+{
+  "sA": {
+    "lost_total": 122,
+    "lost_at_step_zero": 30,
+    "null_initial_overlap_steps": {
+      "0": 30
+    },
+    "lost_after_initial_selection": 92,
+    "old_hits": {
+      "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k3:f2.4:L0-v1|distance:4-9:+1:-:L0-v1": {
+        "old_status": "c2",
+        "old_event": {
+          "label": "rearrangement",
+          "fingerprint": {
+            "broken": [],
+            "formed": [],
+            "active_subset": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "delta_coordination": [
+              -0.03422122037298925,
+              -0.09397608643256083,
+              -0.013300189084267888,
+              -0.0014344320205758043,
+              -0.004463693397223634,
+              -0.0014850510987054477,
+              -0.0051434871060584975,
+              -0.0012497927219509153,
+              -0.0015241717109369946,
+              -0.0036800998690014186,
+              -0.0043447448649098774,
+              -0.001274159299276767,
+              -0.0039016724110949585,
+              -0.001465205047072371,
+              -0.006937723853360445,
+              0.0041296457433563916
+            ],
+            "active_atoms": [],
+            "aligned_rmsd_A": 2.626485618783251,
+            "energy_change_eV": -0.9609375,
+            "components_before": 2,
+            "components_after": 2
+          }
+        },
+        "new_status": "unresolved:saddle_lost_target_mode",
+        "new_refine": {
+          "reason": "lost_target_mode",
+          "steps": 10,
+          "mode_overlap": 0.47062974996430557,
+          "selected_mode_index": 14,
+          "target_overlap": 0.537598291507598,
+          "initial_rise_eV": 0.193359375,
+          "max_rise_eV": 0.193359375,
+          "backtracks": 0,
+          "ceiling_hit_step": null,
+          "target_supplied": true,
+          "meaning": "no eigenvector still resembles the coordinate being followed, so continuing would climb a different reaction"
+        }
+      },
+      "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-13:+1:+:L0-v1": {
+        "old_status": "c2",
+        "old_event": {
+          "label": "reactive",
+          "fingerprint": {
+            "broken": [
+              [
+                13,
+                14
+              ]
+            ],
+            "formed": [
+              [
+                0,
+                1
+              ],
+              [
+                10,
+                13
+              ]
+            ],
+            "active_subset": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "delta_coordination": [
+              0.732075408250155,
+              0.9443243673065368,
+              0.01075247539024149,
+              -0.014330535643427789,
+              -0.0007694614994357973,
+              0.0013166746787734995,
+              0.03108662869376433,
+              0.0033883741187266114,
+              0.0015194870125775362,
+              -0.0003491282283325514,
+              0.7734054934264085,
+              -0.009878013717159573,
+              -0.013310924921069,
+              -0.03062600460581999,
+              -0.8662891433044303,
+              0.0006247269357153584
+            ],
+            "active_atoms": [
+              0,
+              1,
+              10,
+              13,
+              14
+            ],
+            "aligned_rmsd_A": 1.224932299783865,
+            "energy_change_eV": 2.0,
+            "components_before": 3,
+            "components_after": 2
+          }
+        },
+        "new_status": "unresolved:saddle_lost_target_mode",
+        "new_refine": {
+          "reason": "lost_target_mode",
+          "steps": 80,
+          "mode_overlap": 0.018175290727440323,
+          "selected_mode_index": 7,
+          "target_overlap": 0.7030330004477625,
+          "initial_rise_eV": 0.380859375,
+          "max_rise_eV": 0.4921875,
+          "backtracks": 0,
+          "ceiling_hit_step": null,
+          "target_supplied": true,
+          "meaning": "no eigenvector still resembles the coordinate being followed, so continuing would climb a different reaction"
+        }
+      },
+      "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:6-15:+1:-:L0-v1": {
+        "old_status": "c2",
+        "old_event": {
+          "label": "rearrangement",
+          "fingerprint": {
+            "broken": [],
+            "formed": [],
+            "active_subset": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "delta_coordination": [
+              7.264392063310865e-05,
+              -0.0001229119665185907,
+              -0.0009592876456494537,
+              -0.0001255220085062403,
+              -0.0013824349888711396,
+              6.961724345111442e-05,
+              0.00019088320123294977,
+              0.006466597719902767,
+              -0.006478509949646494,
+              4.816778236815811e-05,
+              0.0010513836090431106,
+              -6.090973970396263e-05,
+              0.0013065711499683497,
+              0.00020187730800258485,
+              0.00017717062924316185,
+              0.00017603512411146216
+            ],
+            "active_atoms": [],
+            "aligned_rmsd_A": 0.7313771771201727,
+            "energy_change_eV": 0.0,
+            "components_before": 2,
+            "components_after": 2
+          }
+        },
+        "new_status": "unresolved:saddle_lost_target_mode",
+        "new_refine": {
+          "reason": "lost_target_mode",
+          "steps": 40,
+          "mode_overlap": 0.04149226527275596,
+          "selected_mode_index": 7,
+          "target_overlap": 0.8355313547784062,
+          "initial_rise_eV": 0.6953125,
+          "max_rise_eV": 0.6953125,
+          "backtracks": 0,
+          "ceiling_hit_step": null,
+          "target_supplied": true,
+          "meaning": "no eigenvector still resembles the coordinate being followed, so continuing would climb a different reaction"
+        }
+      }
+    }
+  },
+  "sB": {
+    "lost_total": 111,
+    "lost_at_step_zero": 29,
+    "null_initial_overlap_steps": {
+      "0": 29
+    },
+    "lost_after_initial_selection": 82,
+    "old_hits": {
+      "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:4-11:+1:-:L0-v1": {
+        "old_status": "c2",
+        "old_event": {
+          "label": "rearrangement",
+          "fingerprint": {
+            "broken": [],
+            "formed": [],
+            "active_subset": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "delta_coordination": [
+              9.120800592299361e-05,
+              0.00011780272793648905,
+              -0.00016981797047721514,
+              0.0003836658876935628,
+              0.009084094288651312,
+              -0.009653641651083067,
+              5.372471368580989e-05,
+              0.00011754709657429974,
+              -4.771827176375254e-05,
+              3.4669950149557316e-05,
+              0.00014359522138018832,
+              1.968487587311607e-05,
+              4.4345204787132886e-05,
+              7.358901231491188e-05,
+              -1.675006763568465e-05,
+              -2.011721825800894e-05
+            ],
+            "active_atoms": [],
+            "aligned_rmsd_A": 0.7687506942924295,
+            "energy_change_eV": -0.001953125,
+            "components_before": 2,
+            "components_after": 2
+          }
+        },
+        "new_status": "unresolved:saddle_not_converged",
+        "new_refine": {
+          "reason": "not_converged",
+          "steps": 200,
+          "history": [
+            {
+              "step": 0,
+              "fmax_eV_A": 0.5090327262878418,
+              "lowest_eigenvalue": -7.362646168300681e-15,
+              "followed_eigenvalue": 0.1611120833446755,
+              "followed_order": 9,
+              "mode_overlap": 0.5028017369880101,
+              "climbing": true
+            },
+            {
+              "step": 196,
+              "fmax_eV_A": 0.32053396105766296,
+              "lowest_eigenvalue": -6.6783301115260875e-15,
+              "followed_eigenvalue": 0.3139397766773523,
+              "followed_order": 11,
+              "mode_overlap": 0.6966549103714255,
+              "climbing": true
+            },
+            {
+              "step": 197,
+              "fmax_eV_A": 0.3448675870895386,
+              "lowest_eigenvalue": -6.6783301115260875e-15,
+              "followed_eigenvalue": 0.3139397766773523,
+              "followed_order": 11,
+              "mode_overlap": 0.6966549103714255,
+              "climbing": true
+            },
+            {
+              "step": 198,
+              "fmax_eV_A": 0.39185309410095215,
+              "lowest_eigenvalue": -6.6783301115260875e-15,
+              "followed_eigenvalue": 0.3139397766773523,
+              "followed_order": 11,
+              "mode_overlap": 0.6966549103714255,
+              "climbing": true
+            },
+            {
+              "step": 199,
+              "fmax_eV_A": 0.43339937925338745,
+              "lowest_eigenvalue": -6.6783301115260875e-15,
+              "followed_eigenvalue": 0.3139397766773523,
+              "followed_order": 11,
+              "mode_overlap": 0.6966549103714255,
+              "climbing": true
+            }
+          ],
+          "initial_rise_eV": 0.193359375,
+          "max_rise_eV": 0.330078125,
+          "backtracks": 0,
+          "ceiling_hit_step": null,
+          "target_supplied": true,
+          "target_overlap": 0.5028017369880101,
+          "selected_mode_index": 11
+        }
+      },
+      "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:0-10:+1:-:L0-v1": {
+        "old_status": "duplicate_c2",
+        "old_event": {
+          "label": "rearrangement",
+          "fingerprint": {
+            "broken": [],
+            "formed": [],
+            "active_subset": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "delta_coordination": [
+              -0.03504054355156816,
+              -0.09482107434573506,
+              -0.00563713358535356,
+              -0.001400489451210074,
+              -0.003011570466413538,
+              -0.0013903535299378822,
+              -0.007726408680002628,
+              -0.0009535840126407846,
+              -0.004774349549665824,
+              -0.0014111215378815878,
+              -0.008019824832865563,
+              -0.0013339427374202684,
+              -0.004843171662732737,
+              -0.0008634688467675788,
+              -0.010538195302320696,
+              0.0032643069505873257
+            ],
+            "active_atoms": [],
+            "aligned_rmsd_A": 2.693113645903895,
+            "energy_change_eV": -0.951171875,
+            "components_before": 2,
+            "components_after": 2
+          }
+        },
+        "new_status": "unresolved:relayed",
+        "new_refine": {
+          "steps": 73,
+          "fmax_eV_A": 0.009829409420490265,
+          "followed_order": 0,
+          "final_mode_overlap": 0.9832506505974783,
+          "saddle_order": 1,
+          "negative_eigenvalues": [
+            -0.030749292281579046
+          ],
+          "imaginary_wavenumbers_icm": [
+            -91.44240522160153
+          ],
+          "trivial_mode_floor_worst_residual": 1.7943239997378945e-05,
+          "provenance": {
+            "source": "analytic",
+            "members": 1,
+            "finite_difference_deviation": 0.00459868850471806,
+            "finite_difference_deviations": [
+              0.001541053102112885,
+              0.00459868850471806,
+              0.001924417861555645
+            ],
+            "probe_directions": 3,
+            "asymmetry": 1.5400517665135098e-05,
+            "meaning": "backend second derivative, cross-checked against seeded random HVPs; this bounds the error along the directions tried, it does not certify the matrix"
+          },
+          "history": [
+            {
+              "step": 0,
+              "fmax_eV_A": 17.74713706970215,
+              "lowest_eigenvalue": -0.4956680180559609,
+              "followed_eigenvalue": 0.04620450417026484,
+              "followed_order": 8,
+              "mode_overlap": 0.5110349085792796,
+              "climbing": true
+            },
+            {
+              "step": 69,
+              "fmax_eV_A": 0.042719900608062744,
+              "lowest_eigenvalue": -0.01200706862263677,
+              "followed_eigenvalue": -0.01200706862263677,
+              "followed_order": 0,
+              "mode_overlap": 0.9950741436123305,
+              "climbing": false
+            },
+            {
+              "step": 70,
+              "fmax_eV_A": 0.0582934208214283,
+              "lowest_eigenvalue": -0.029634638567857224,
+              "followed_eigenvalue": -0.029634638567857224,
+              "followed_order": 0,
+              "mode_overlap": 0.9832506505974783,
+              "climbing": false
+            },
+            {
+              "step": 71,
+              "fmax_eV_A": 0.04384487122297287,
+              "lowest_eigenvalue": -0.029634638567857224,
+              "followed_eigenvalue": -0.029634638567857224,
+              "followed_order": 0,
+              "mode_overlap": 0.9832506505974783,
+              "climbing": false
+            },
+            {
+              "step": 72,
+              "fmax_eV_A": 0.009829409420490265,
+              "lowest_eigenvalue": -0.029634638567857224,
+              "followed_eigenvalue": -0.029634638567857224,
+              "followed_order": 0,
+              "mode_overlap": 0.9832506505974783,
+              "climbing": false
+            }
+          ],
+          "initial_rise_eV": 2.0234375,
+          "max_rise_eV": 2.0234375,
+          "backtracks": 0,
+          "ceiling_hit_step": null,
+          "target_supplied": true,
+          "target_overlap": 0.5110349085792796,
+          "selected_mode_index": 0,
+          "meaning": "Newton walk in the analytic Hessian eigenbasis; index confirmed",
+          "unstable_mode": [
+            [
+              -0.05071370884424181,
+              -0.006960401694329441,
+              0.04100167398010715
+            ],
+            [
+              0.0911323227815223,
+              0.02072564531319918,
+              0.021622214617022947
+            ],
+            [
+              -0.10175278028648428,
+              -0.027561822918792243,
+              -0.07471379898532335
+            ],
+            [
+              -0.07812741516365815,
+              -0.027261257011545866,
+              -0.12201483285039028
+            ],
+            [
+              -0.1928389305639824,
+              -0.045170137645082105,
+              -0.06459809453728356
+            ],
+            [
+              -0.0777668425516146,
+              -0.02658584052118218,
+              -0.12146873382360869
+            ],
+            [
+              -0.07660060801874718,
+              -0.006304188732033469,
+              0.11088227520520277
+            ],
+            [
+              0.03141990747915283,
+              0.006743653356477551,
+              -0.07513800425838607
+            ],
+            [
+              -0.3346545397089622,
+              -0.1551476526900403,
+              0.15561434578314193
+            ],
+            [
+              0.003927214207575058,
+              0.11893185412613926,
+              0.36348846809031127
+            ],
+            [
+              -0.07727787496815951,
+              -0.006161908911174902,
+              0.1105762727410409
+            ],
+            [
+              0.03672339630681117,
+              -0.045296505032350685,
+              0.3734872353510556
+            ],
+            [
+              -0.3708755799011298,
+              0.03308299617241585,
+              0.1398896087443479
+            ],
+            [
+              0.030650836745283214,
+              -0.00585579855250373,
+              -0.07198245609024255
+            ],
+            [
+              0.07866508513541808,
+              -0.0011471167001979418,
+              -0.20018886661374757
+            ],
+            [
+              0.1482740170607655,
+              -0.004229672961175723,
+              -0.39742447804086567
+            ]
+          ],
+          "response": {
+            "kappa": 0.039487652161480986,
+            "sigma": 0.0335802615042763,
+            "anharmonicity": -40.337691938650565,
+            "band_A_sqrt_amu": [
+              0.01,
+              0.1
+            ],
+            "samples": [
+              [
+                0.01,
+                0.0
+              ],
+              [
+                0.01778279410038923,
+                0.0
+              ],
+              [
+                0.03162277660168379,
+                0.0
+              ],
+              [
+                0.05623413251903491,
+                0.0
+              ],
+              [
+                0.1,
+                -0.39062499999999994
+              ]
+            ],
+            "sign_stable": false,
+            "retraction": "cartesian_chord",
+            "bond_strain_by_amplitude": [
+              2.6766044702128593e-05,
+              4.94901536027727e-05,
+              9.39920165861562e-05,
+              0.00018606696305202244,
+              0.00039070285711617024
+            ],
+            "worst_bond_strain": 0.00039070285711617024,
+            "retraction_meaning": "probe endpoints are R +/- a v in Cartesian coordinates, not the arc of an internal coordinate; kappa_0 is exact because a chord has no second-order term, but bond_strain says how far the finite-amplitude samples have travelled from the motion they are named after",
+            "exceeds_residual_scale": false,
+            "sigma_meaning": "OLS residual scale of the a^2 fit, not a calibrated uncertainty; blind to a wrong direction",
+            "residual_rms": 0.045702616150992297,
+            "units": "eV/(Angstrom^2 amu); amplitude A*sqrt(amu)",
+            "meaning": "band-regressed response curvature; NOT an eigenvalue"
+          },
+          "guess_to_saddle": {
+            "max_atom_displacement_A": 1.0866654593414855,
+            "rmsd_kabsch_A": 0.44733607230096645
+          }
+        }
+      },
+      "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:4-13:+1:+:L0-v1": {
+        "old_status": "c2",
+        "old_event": {
+          "label": "rearrangement",
+          "fingerprint": {
+            "broken": [],
+            "formed": [],
+            "active_subset": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "delta_coordination": [
+              0.034390599316437065,
+              0.09239933009081547,
+              0.006191267472776207,
+              0.003098164684968152,
+              0.0015964153023009242,
+              0.0012611386213575715,
+              0.008885464265112386,
+              0.0017213199410524016,
+              0.0048596133548396425,
+              0.0013300124528375923,
+              0.005938421058782062,
+              0.0029248217833609536,
+              0.0015116289909397063,
+              0.0014886009104967401,
+              0.007590695728851515,
+              -0.0038256860473884213
+            ],
+            "active_atoms": [],
+            "aligned_rmsd_A": 2.7318143428788666,
+            "energy_change_eV": 0.943359375,
+            "components_before": 2,
+            "components_after": 2
+          }
+        },
+        "new_status": "unresolved:saddle_lost_target_mode",
+        "new_refine": {
+          "reason": "lost_target_mode",
+          "steps": 0,
+          "mode_overlap": 0.4746072588164394,
+          "selected_mode_index": null,
+          "target_overlap": null,
+          "initial_rise_eV": null,
+          "max_rise_eV": null,
+          "backtracks": 0,
+          "ceiling_hit_step": null,
+          "target_supplied": true,
+          "meaning": "no eigenvector still resembles the coordinate being followed, so continuing would climb a different reaction"
+        }
+      }
+    }
+  },
+  "interpretation": {
+    "initial_null": "All null target_overlap records exit at step 0; stale **bounds overwrote measured target_overlap and selected_mode_index. Historical values are not reconstructed.",
+    "tracking": "After initial selection the anchor is the previous eigenvector, not the fixed scan tangent. Loss of overlap alone does not establish physical direction loss or methyl rotation.",
+    "acceptance": "F6 alone did not recover the reactive E2 hit; the new E/F locator needs separate molecular validation."
+  }
+}

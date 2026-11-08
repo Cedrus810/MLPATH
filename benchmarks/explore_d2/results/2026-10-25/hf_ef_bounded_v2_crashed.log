@@ -1,0 +1,25 @@
+model load 46.1 s
+Traceback (most recent call last):
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 226, in <module>
+    main()
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 205, in main
+    r = run_case(name, run_dir, suffix, calc, out_dir, settings_ef)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 176, in run_case
+    record["checks"] = check(cand, factory, config, ledger, name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 89, in check
+    _, checked = confirm_minimum(candidate, factory, config, SEED)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 2625, in confirm_minimum
+    eigenvalues, vectors, floor, provenance = curvature_spectrum(
+                                              ^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 799, in curvature_spectrum
+    mass_weighted, basis, provenance = _mass_weighted_hessian(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/src/prrs/runner.py", line 749, in _mass_weighted_hessian
+    guard = GuardedCalculator(physical, config, candidate.get_potential_energy())
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/miniforge3/envs/openmm_dev/lib/python3.12/site-packages/ase/atoms.py", line 1966, in get_potential_energy
+    raise RuntimeError('Atoms object has no calculator.')
+RuntimeError: Atoms object has no calculator.

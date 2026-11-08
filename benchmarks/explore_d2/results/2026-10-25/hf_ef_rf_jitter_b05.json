@@ -1,0 +1,172 @@
+{
+  "case": "b05_fp32_sA_10-13",
+  "q": 1.3893038330308691,
+  "saved_rf": [
+    0.4663721450645386,
+    -3.688938111628931
+  ],
+  "A_rigid_rf": {
+    "values": [
+      0.480900598067312,
+      0.4842396937404105,
+      0.45740859272847384,
+      0.4741889116638257,
+      0.47349575047002135,
+      0.46763722938426455,
+      0.45997062518334103,
+      0.4732880020315773,
+      0.4680745818655205,
+      0.47908919624547136
+    ],
+    "spread": 0.026831101011936642,
+    "std": 0.0082446429991528
+  },
+  "B_repeats": {
+    "0.003": {
+      "runs": [
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 26,
+          "reaction_force": 0.46803898607149363,
+          "fmax_projected": 0.0028646726228052006,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 28,
+          "reaction_force": 0.4671016942494485,
+          "fmax_projected": 0.002760991889531343,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 38,
+          "reaction_force": 0.4664687581311945,
+          "fmax_projected": 0.0025694938211492345,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 33,
+          "reaction_force": 0.4711071234799099,
+          "fmax_projected": 0.0014611621315372642,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 37,
+          "reaction_force": 0.46239061402243375,
+          "fmax_projected": 0.002590485570409403,
+          "energy_eV": -18880.029296875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 22,
+          "reaction_force": 0.467249910978361,
+          "fmax_projected": 0.0026015660848096598,
+          "energy_eV": -18880.029296875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 26,
+          "reaction_force": 0.47013367774420944,
+          "fmax_projected": 0.00282723670852589,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 26,
+          "reaction_force": 0.46810862389603336,
+          "fmax_projected": 0.002598654167708097,
+          "energy_eV": -18880.02734375
+        }
+      ],
+      "rf_spread": 0.008716509457476151,
+      "rf_std": 0.0024483181933842445,
+      "max_pair_rmsd_A": 0.006983857843499842
+    },
+    "0.001": {
+      "runs": [
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 47,
+          "reaction_force": 0.4696940230285669,
+          "fmax_projected": 0.0008128496666196049,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 45,
+          "reaction_force": 0.46965580193063156,
+          "fmax_projected": 0.00098155314121102,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 44,
+          "reaction_force": 0.47285946069477536,
+          "fmax_projected": 0.0008304307646883345,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 47,
+          "reaction_force": 0.4695342389656319,
+          "fmax_projected": 0.0009159229479980449,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 47,
+          "reaction_force": 0.4695871814703387,
+          "fmax_projected": 0.0008669574576959837,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 42,
+          "reaction_force": 0.469245753146857,
+          "fmax_projected": 0.0008336246500884484,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 65,
+          "reaction_force": 0.47188153695769935,
+          "fmax_projected": 0.0008470945042532434,
+          "energy_eV": -18880.02734375
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 72,
+          "reaction_force": 0.4706929782992507,
+          "fmax_projected": 0.0007467429607681898,
+          "energy_eV": -18880.02734375
+        }
+      ],
+      "rf_spread": 0.0036137075479183434,
+      "rf_std": 0.0012310651227646283,
+      "max_pair_rmsd_A": 0.004439389454031802
+    }
+  },
+  "C_tighten": [],
+  "C_skipped": "continuations 1.038 A apart: two branches",
+  "forwards": 671,
+  "wall_s": 100.05132243499975
+}

@@ -1,0 +1,15 @@
+model load 72.8 s
+b04 unresolved:branch_force_disagreement search 34 fw 6 s None None None None
+Traceback (most recent call last):
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 214, in <module>
+    main()
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 193, in main
+    r = run_case(name, run_dir, suffix, calc, out_dir)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 124, in run_case
+    settings, config, row, pose, l1, l4 = frozen(run_dir, suffix)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ruigengji/MLPATH/benchmarks/explore_d2/hf_ef_bounded.py", line 76, in frozen
+    return settings, config, row, pose, settles["L1"], settles["L4"]
+                                                       ~~~~~~~^^^^^^
+KeyError: 'L4'

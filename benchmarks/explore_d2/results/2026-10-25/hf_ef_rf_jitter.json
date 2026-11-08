@@ -1,0 +1,235 @@
+{
+  "case": "b04",
+  "q": 2.2813663990582436,
+  "saved_rf": [
+    -0.057075285392169516,
+    -0.06506395902978163
+  ],
+  "A_rigid_rf": {
+    "values": [
+      -0.05554916150223284,
+      -0.051107918190577396,
+      -0.03272380644044827,
+      -0.026941793661513766,
+      -0.07448536216180539,
+      -0.03241129556238454,
+      -0.0335706309106157,
+      -0.03201597347822679,
+      -0.06950133437526951,
+      -0.055874001645859234
+    ],
+    "spread": 0.04754356850029162,
+    "std": 0.016281649593395002
+  },
+  "B_repeats": {
+    "0.003": {
+      "runs": [
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 18,
+          "reaction_force": -0.06464788550783639,
+          "fmax_projected": 0.002886612504404147,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 21,
+          "reaction_force": -0.07060120254251905,
+          "fmax_projected": 0.002303274705205255,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 16,
+          "reaction_force": -0.06186110350432699,
+          "fmax_projected": 0.0024891861764576124,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 18,
+          "reaction_force": -0.06829849135252777,
+          "fmax_projected": 0.0029947871342567204,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 16,
+          "reaction_force": -0.06433823480878838,
+          "fmax_projected": 0.001853058399825901,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 19,
+          "reaction_force": -0.05963548930160488,
+          "fmax_projected": 0.0012957931123792703,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 19,
+          "reaction_force": -0.062065186965703845,
+          "fmax_projected": 0.001893273894318505,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.003,
+          "converged": true,
+          "steps": 18,
+          "reaction_force": -0.06292282883718683,
+          "fmax_projected": 0.002452706827788875,
+          "energy_eV": -26132.201171875
+        }
+      ],
+      "rf_spread": 0.010965713240914166,
+      "rf_std": 0.0033617764897456532,
+      "max_pair_rmsd_A": 0.0006200050329521486
+    },
+    "0.001": {
+      "runs": [
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 20,
+          "reaction_force": -0.06203743115071835,
+          "fmax_projected": 0.0002699018639114499,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 21,
+          "reaction_force": -0.06230295566025653,
+          "fmax_projected": 0.0008467030722033587,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 18,
+          "reaction_force": -0.060488459592091245,
+          "fmax_projected": 0.0009646325647684879,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 24,
+          "reaction_force": -0.061216925879853126,
+          "fmax_projected": 0.0006032292830058293,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 23,
+          "reaction_force": -0.06717887362124471,
+          "fmax_projected": 0.0004490782228930026,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 18,
+          "reaction_force": -0.06888930536534506,
+          "fmax_projected": 0.0008969945693782555,
+          "energy_eV": -26132.203125
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 21,
+          "reaction_force": -0.060245815787687576,
+          "fmax_projected": 0.0005828816116194649,
+          "energy_eV": -26132.201171875
+        },
+        {
+          "tau": 0.001,
+          "converged": true,
+          "steps": 22,
+          "reaction_force": -0.06538618627018591,
+          "fmax_projected": 0.0008692816262725725,
+          "energy_eV": -26132.201171875
+        }
+      ],
+      "rf_spread": 0.008643489577657482,
+      "rf_std": 0.0030531110233722575,
+      "max_pair_rmsd_A": 0.00042796902291786557
+    }
+  },
+  "C_tighten": [
+    {
+      "tau": 0.001,
+      "left": {
+        "tau": 0.001,
+        "converged": true,
+        "steps": 6,
+        "reaction_force": -0.0635206683402936,
+        "fmax_projected": 0.0009766441925052663,
+        "energy_eV": -26132.201171875
+      },
+      "right": {
+        "tau": 0.001,
+        "converged": true,
+        "steps": 1,
+        "reaction_force": -0.06669312584104392,
+        "fmax_projected": 0.0008873744908564424,
+        "energy_eV": -26132.201171875
+      },
+      "d_rf": 0.0031724575007503197,
+      "rmsd_A": 0.00020655337083579268
+    },
+    {
+      "tau": 0.0003,
+      "left": {
+        "tau": 0.0003,
+        "converged": true,
+        "steps": 11,
+        "reaction_force": -0.06192521643438137,
+        "fmax_projected": 0.00028459136153699376,
+        "energy_eV": -26132.201171875
+      },
+      "right": {
+        "tau": 0.0003,
+        "converged": true,
+        "steps": 20,
+        "reaction_force": -0.06553802278144116,
+        "fmax_projected": 0.00021574667046123352,
+        "energy_eV": -26132.201171875
+      },
+      "d_rf": 0.0036128063470597938,
+      "rmsd_A": 0.0001654435352666879
+    },
+    {
+      "tau": 0.0001,
+      "left": {
+        "tau": 0.0001,
+        "converged": false,
+        "steps": 400,
+        "reaction_force": -0.06682821737047413,
+        "fmax_projected": 0.000541352387390145,
+        "energy_eV": -26132.201171875
+      },
+      "right": {
+        "tau": 0.0001,
+        "converged": false,
+        "steps": 400,
+        "reaction_force": -0.06253053851305826,
+        "fmax_projected": 0.0008161996318041585,
+        "energy_eV": -26132.201171875
+      },
+      "d_rf": 0.004297678857415874,
+      "rmsd_A": 0.00019644345472475557
+    }
+  ],
+  "forwards": 1182,
+  "wall_s": 145.2238574380026
+}

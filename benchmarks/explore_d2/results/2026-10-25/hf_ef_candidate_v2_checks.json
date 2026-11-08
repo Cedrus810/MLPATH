@@ -1,0 +1,243 @@
+{
+  "evidence_kind": "offline_rule_audit_of_saved_frames",
+  "date": "2026-10-25",
+  "algorithm": "HF-EF-bracket-v2",
+  "candidate_rule": "branch_agreement_then_any_full_force_converged",
+  "new_model_evaluations": 0,
+  "property_status": "not_run",
+  "connection_status": "not_run",
+  "source_sha256": {
+    "explore/src/explore/ts_ef.py": "2c3b9d0c56bc4f56ad5a17022cd7fe968e1c590ebde6322f2cb53b7e523523c5",
+    "explore/tests/test_ts_ef.py": "269f6ab0ec846d578dc26de7387a1f8edd7d4eb8189b0d1a86c91ce20eb7ff7d",
+    "benchmarks/explore_d2/results/2026-10-25/hf_ef_bounded_sigma/b04.json": "146519db3907a2f4718a6782a8ece7147f204a2b7ea5b60c3838d6606e6c3420"
+  },
+  "branch_force_limit": 0.01442497833620557,
+  "midpoints": [
+    {
+      "midpoint": 1,
+      "q_target": 2.2813663990498783,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.006168674611729805,
+      "branch_rmsd_A": 0.0003563038872155947,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": -0.06324317212356814,
+          "fmax_eV_A": 0.06379762291908264,
+          "fmax_projected": 0.0019295787933319456,
+          "constraint_residual": 1.3687762034919615e-09
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": -0.06941184673529795,
+          "fmax_eV_A": 0.06996186822652817,
+          "fmax_projected": 0.0014861357405449608,
+          "constraint_residual": 2.171149038332487e-09
+        }
+      ],
+      "eligible_origins": [],
+      "would_pass_candidate_rule": false
+    },
+    {
+      "midpoint": 2,
+      "q_target": 2.2313663987957106,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.0017144801229578288,
+      "branch_rmsd_A": 0.0006193337697459866,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": 1.289943032428954,
+          "fmax_eV_A": 1.2900974750518799,
+          "fmax_projected": 0.0009895569758049758,
+          "constraint_residual": 1.6263439484021092e-09
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": 1.2916575125519119,
+          "fmax_eV_A": 1.2917556762695312,
+          "fmax_projected": 0.001271182201451715,
+          "constraint_residual": 4.697917166396337e-09
+        }
+      ],
+      "eligible_origins": [],
+      "would_pass_candidate_rule": false
+    },
+    {
+      "midpoint": 3,
+      "q_target": 2.2563663974252344,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.00047016450498227336,
+      "branch_rmsd_A": 0.0005088510823925194,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": 1.1068352002799615,
+          "fmax_eV_A": 1.1068572998046875,
+          "fmax_projected": 0.0008745652942302743,
+          "constraint_residual": 7.74554331783861e-09
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": 1.1073053647849438,
+          "fmax_eV_A": 1.1073611974716187,
+          "fmax_projected": 0.001873016838896048,
+          "constraint_residual": 3.1452911386509186e-09
+        }
+      ],
+      "eligible_origins": [],
+      "would_pass_candidate_rule": false
+    },
+    {
+      "midpoint": 4,
+      "q_target": 2.2688664014259396,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.0003607029252049587,
+      "branch_rmsd_A": 0.00043266881040512667,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": 0.8738365460161113,
+          "fmax_eV_A": 0.8743212819099426,
+          "fmax_projected": 0.0008300718462598896,
+          "constraint_residual": 3.314238217200227e-09
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": 0.8741972489413162,
+          "fmax_eV_A": 0.8749515414237976,
+          "fmax_projected": 0.002422783028437664,
+          "constraint_residual": 0.0
+        }
+      ],
+      "eligible_origins": [],
+      "would_pass_candidate_rule": false
+    },
+    {
+      "midpoint": 5,
+      "q_target": 2.2751163978964017,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.009176192932322552,
+      "branch_rmsd_A": 0.000692877853132699,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": 0.13139775217895666,
+          "fmax_eV_A": 0.13412602245807648,
+          "fmax_projected": 0.0028333706649777317,
+          "constraint_residual": 0.0
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": 0.1405739451112792,
+          "fmax_eV_A": 0.14061231911182404,
+          "fmax_projected": 0.002412564563782043,
+          "constraint_residual": 7.908556920455112e-09
+        }
+      ],
+      "eligible_origins": [],
+      "would_pass_candidate_rule": false
+    },
+    {
+      "midpoint": 6,
+      "q_target": 2.2782413977887517,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.003074980536585309,
+      "branch_rmsd_A": 0.00021501049511942974,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": 0.0397762559827825,
+          "fmax_eV_A": 0.040484700351953506,
+          "fmax_projected": 0.0013218414182764818,
+          "constraint_residual": 0.0
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": 0.04285123651936781,
+          "fmax_eV_A": 0.04332327842712402,
+          "fmax_projected": 0.002166017873207158,
+          "constraint_residual": 1.8536399082336175e-09
+        }
+      ],
+      "eligible_origins": [],
+      "would_pass_candidate_rule": false
+    },
+    {
+      "midpoint": 7,
+      "q_target": 2.2798038977349266,
+      "branch_agreement": true,
+      "reaction_force_difference": 0.008357648197990236,
+      "branch_rmsd_A": 0.00036956235839426894,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": -0.013687409472765002,
+          "fmax_eV_A": 0.014077120460569859,
+          "fmax_projected": 0.0019338936107372166,
+          "constraint_residual": 1.4151346761082095e-11
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": -0.005329761274774766,
+          "fmax_eV_A": 0.0058062076568603516,
+          "fmax_projected": 0.0025781546209277468,
+          "constraint_residual": 0.0
+        }
+      ],
+      "eligible_origins": [
+        "from_right"
+      ],
+      "would_pass_candidate_rule": true
+    },
+    {
+      "midpoint": 8,
+      "q_target": 2.2790226477547635,
+      "branch_agreement": false,
+      "reaction_force_difference": 0.04318587796071471,
+      "branch_rmsd_A": 0.0023445961939755435,
+      "continuations": [
+        {
+          "origin": "from_left",
+          "reaction_force": 0.03848335078426979,
+          "fmax_eV_A": 0.04132267087697983,
+          "fmax_projected": 0.002898390580683565,
+          "constraint_residual": 3.0961011532326665e-11
+        },
+        {
+          "origin": "from_right",
+          "reaction_force": -0.004702527176444917,
+          "fmax_eV_A": 0.007492643315345049,
+          "fmax_projected": 0.002911441826750521,
+          "constraint_residual": 1.2640626323445758e-09
+        }
+      ],
+      "eligible_origins": [
+        "from_right"
+      ],
+      "would_pass_candidate_rule": false
+    }
+  ],
+  "checks": [
+    {
+      "command": "/home/ruigengji/miniforge3/envs/openmm_dev/bin/python -m pytest -q tests/test_ts_ef.py",
+      "cwd": "/home/ruigengji/MLPATH/explore",
+      "exit_code": 0,
+      "passed": 24
+    },
+    {
+      "command": "make -C explore check",
+      "cwd": "/home/ruigengji/MLPATH",
+      "exit_code": 0,
+      "format": "passed",
+      "lint": "passed",
+      "passed": 182,
+      "pytest_wall_s": 73.33
+    }
+  ],
+  "gpu_check": {
+    "command": "nvidia-smi --query-gpu=index,name,memory.used,memory.total --format=csv",
+    "exit_code": 9,
+    "error": "NVIDIA-SMI could not communicate with the NVIDIA driver"
+  }
+}
