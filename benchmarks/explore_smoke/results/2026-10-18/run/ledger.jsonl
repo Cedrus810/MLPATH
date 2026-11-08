@@ -1,0 +1,8 @@
+{"arm": "smoke", "host": "kasuga02", "t": 1792328039.152174, "event": "open", "task": "forward", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328058.482813, "event": "close", "task": "forward", "attempt": 0, "stage": "probe", "forwards": 157, "requests": 314, "wall_s": 19.31386397301685, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328059.1114588, "event": "open", "task": "reverse", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328073.9942985, "event": "close", "task": "reverse", "attempt": 0, "stage": "probe", "forwards": 148, "requests": 296, "wall_s": 14.86903932603309, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328074.3850608, "event": "open", "task": "fine_fwd", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328093.9827986, "event": "close", "task": "fine_fwd", "attempt": 0, "stage": "probe", "forwards": 196, "requests": 392, "wall_s": 19.572128296014853, "outcome": "completed", "artifact": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328094.2770107, "event": "open", "task": "fine_rev", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "smoke", "host": "kasuga02", "t": 1792328113.9311788, "event": "close", "task": "fine_rev", "attempt": 0, "stage": "probe", "forwards": 197, "requests": 394, "wall_s": 19.613129351986572, "outcome": "completed", "artifact": null}

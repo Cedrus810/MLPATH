@@ -1,0 +1,127 @@
+{
+  "reference": "runs/b04_probe2_openceiling/ts_candidates/ts0000.extxyz",
+  "ts_energy_eV": -26132.20080188988,
+  "ts_r_C_Cl": [
+    2.2804679469749143,
+    2.282690471958745
+  ],
+  "points": [
+    {
+      "scan": "forward",
+      "q_target": 2.3,
+      "energy_minus_ts_eV": -0.007571691166958772,
+      "reaction_force": -0.7017891278855353,
+      "r_C_Clnuc": 2.299999991346433,
+      "r_C_Clleave": 2.180300148356621,
+      "rmsd_to_ts_A": 0.033415752756698246
+    },
+    {
+      "scan": "fine_fwd",
+      "q_target": 2.3000000000000007,
+      "energy_minus_ts_eV": -0.007572529349999968,
+      "reaction_force": -0.7059208615590653,
+      "r_C_Clnuc": 2.3000000001108054,
+      "r_C_Clleave": 2.179593143706024,
+      "rmsd_to_ts_A": 0.03372921273480514
+    },
+    {
+      "scan": "fine_fwd",
+      "q_target": 2.290000000000001,
+      "energy_minus_ts_eV": -0.0012723683757940307,
+      "reaction_force": -0.5290413776840487,
+      "r_C_Clnuc": 2.28999999840654,
+      "r_C_Clleave": 2.207188905188386,
+      "rmsd_to_ts_A": 0.02539476719659804
+    },
+    {
+      "scan": "fine_fwd",
+      "q_target": 2.2800000000000007,
+      "energy_minus_ts_eV": -0.00010037409811047837,
+      "reaction_force": 0.07611927176444616,
+      "r_C_Clnuc": 2.279999998866269,
+      "r_C_Clleave": 2.292547309827175,
+      "rmsd_to_ts_A": 0.003828059836970982
+    },
+    {
+      "scan": "fine_fwd",
+      "q_target": 2.270000000000001,
+      "energy_minus_ts_eV": -0.003756415273528546,
+      "reaction_force": 0.9174786451190114,
+      "r_C_Clnuc": 2.2700000028584584,
+      "r_C_Clleave": 2.43813990600872,
+      "rmsd_to_ts_A": 0.051614592905563715
+    },
+    {
+      "scan": "fine_fwd",
+      "q_target": 2.2600000000000007,
+      "energy_minus_ts_eV": -0.014015563854627544,
+      "reaction_force": 1.096143226489166,
+      "r_C_Clnuc": 2.260000005660223,
+      "r_C_Clleave": 2.4835027784773045,
+      "rmsd_to_ts_A": 0.06507148207123127
+    },
+    {
+      "scan": "fine_fwd",
+      "q_target": 2.250000000000001,
+      "energy_minus_ts_eV": -0.025432152036955813,
+      "reaction_force": 1.1836762334064939,
+      "r_C_Clnuc": 2.2499999947491087,
+      "r_C_Clleave": 2.508260700115495,
+      "rmsd_to_ts_A": 0.0719489700898198
+    },
+    {
+      "scan": "fine_rev",
+      "q_target": 2.2500000000000004,
+      "energy_minus_ts_eV": -0.025462755853368435,
+      "reaction_force": 1.1909441702921753,
+      "r_C_Clnuc": 2.250000003671205,
+      "r_C_Clleave": 2.5121209053342834,
+      "rmsd_to_ts_A": 0.07293881333231533
+    },
+    {
+      "scan": "fine_rev",
+      "q_target": 2.2600000000000007,
+      "energy_minus_ts_eV": -0.014042406477528857,
+      "reaction_force": 1.100690696112299,
+      "r_C_Clnuc": 2.2599999991593993,
+      "r_C_Clleave": 2.484549635205841,
+      "rmsd_to_ts_A": 0.06552954206744478
+    },
+    {
+      "scan": "fine_rev",
+      "q_target": 2.2700000000000005,
+      "energy_minus_ts_eV": -0.0037950781770632602,
+      "reaction_force": 0.9219206456980172,
+      "r_C_Clnuc": 2.2699999974771186,
+      "r_C_Clleave": 2.4389418768914526,
+      "rmsd_to_ts_A": 0.05191170194430607
+    },
+    {
+      "scan": "fine_rev",
+      "q_target": 2.2800000000000007,
+      "energy_minus_ts_eV": -0.0001019885421555955,
+      "reaction_force": 0.0882841433314265,
+      "r_C_Clnuc": 2.2800000004886845,
+      "r_C_Clleave": 2.292800343324139,
+      "rmsd_to_ts_A": 0.004499592051038287
+    },
+    {
+      "scan": "fine_rev",
+      "q_target": 2.2900000000000005,
+      "energy_minus_ts_eV": -0.00126087843455025,
+      "reaction_force": -0.4842073848594354,
+      "r_C_Clnuc": 2.2900000013232114,
+      "r_C_Clleave": 2.212978662248073,
+      "rmsd_to_ts_A": 0.02324192519478723
+    },
+    {
+      "scan": "fine_rev",
+      "q_target": 2.3000000000000007,
+      "energy_minus_ts_eV": -0.0075301572869648226,
+      "reaction_force": -0.7087824631863813,
+      "r_C_Clnuc": 2.3000000010725365,
+      "r_C_Clleave": 2.178659410658147,
+      "rmsd_to_ts_A": 0.033842999140552533
+    }
+  ]
+}
