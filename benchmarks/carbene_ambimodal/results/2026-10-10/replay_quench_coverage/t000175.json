@@ -1,0 +1,25 @@
+{
+ "label": "t000175",
+ "raw_endpoint": "runs/b09_compress_coverage/trials/t000175/raw_endpoint.extxyz",
+ "quench_steps_cap": 1500,
+ "converged": true,
+ "steps": 571,
+ "reason": null,
+ "force_converged": true,
+ "polish_rounds": 3,
+ "fmax_eV_A": 0.008847046861012859,
+ "dE_eV": -0.21371245366026415,
+ "markers": {
+  "C:-Ca": 3.589078217222129,
+  "C:-Cb": 3.200972818915849,
+  "C:-O_ald": 4.25504141138153
+ },
+ "quench_seconds": 100.03293657302856,
+ "classification": "rearrangement",
+ "formed": [],
+ "broken": [],
+ "minimum": true,
+ "saddle_order": 0,
+ "rmsd_to_source": 0.2928245294461973,
+ "total_seconds": 114.72199606895447
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "run": "benchmarks/explore_d2/results/2026-10-23/b05_d2_sA",
+    "noise_eV": 0.00390625,
+    "counts": {
+      "ridge_both_rules": 223,
+      "no_ridge": 640
+    },
+    "l4_of_false_ridges": {},
+    "l4_of_ridges_kept": {
+      "not_certified": 175,
+      "unresolved:descent_failed": 10,
+      "unresolved:relayed": 11,
+      "unresolved:saddle_not_converged": 18,
+      "c2": 2,
+      "unresolved:saddle_wrong_index": 5,
+      "budget_exhausted": 2
+    },
+    "examples_false": []
+  },
+  {
+    "run": "benchmarks/explore_d2/results/2026-10-23/b05_d2_sB",
+    "noise_eV": 0.00390625,
+    "counts": {
+      "no_ridge": 624,
+      "ridge_both_rules": 237
+    },
+    "l4_of_false_ridges": {},
+    "l4_of_ridges_kept": {
+      "not_certified": 187,
+      "unresolved:relayed": 14,
+      "unresolved:saddle_not_converged": 25,
+      "unresolved:descent_failed": 6,
+      "c2": 2,
+      "unresolved:saddle_wrong_index": 1,
+      "budget_exhausted": 2
+    },
+    "examples_false": []
+  },
+  {
+    "run": "benchmarks/explore_d2/results/2026-10-23/b05_fp32_sA",
+    "noise_eV": 0.00390625,
+    "counts": {
+      "ridge_both_rules": 234,
+      "no_ridge": 698
+    },
+    "l4_of_false_ridges": {},
+    "l4_of_ridges_kept": {
+      "unresolved:descent_failed": 75,
+      "unresolved:relayed": 27,
+      "unresolved:saddle_not_converged": 88,
+      "unresolved:saddle_wrong_index": 16,
+      "unresolved:saddle_trivial_mode_floor_above_tolerance": 8,
+      "c2": 2,
+      "budget_exhausted": 11,
+      "unresolved:both_sides_same_basin": 6,
+      "unresolved:hessian_internal_mode_recheck_disagrees": 1
+    },
+    "examples_false": []
+  },
+  {
+    "run": "benchmarks/explore_d2/results/2026-10-23/b05_fp32_sB",
+    "noise_eV": 0.00390625,
+    "counts": {
+      "no_ridge": 643,
+      "ridge_both_rules": 251
+    },
+    "l4_of_false_ridges": {},
+    "l4_of_ridges_kept": {
+      "unresolved:saddle_not_converged": 98,
+      "unresolved:descent_failed": 61,
+      "budget_exhausted": 21,
+      "unresolved:both_sides_same_basin": 8,
+      "unresolved:relayed": 23,
+      "unresolved:saddle_wrong_index": 18,
+      "unresolved:hessian_internal_mode_recheck_disagrees": 9,
+      "unresolved:hessian_trivial_mode_floor_above_tolerance": 4,
+      "unresolved:saddle_trivial_mode_floor_above_tolerance": 8,
+      "c2": 1
+    },
+    "examples_false": []
+  }
+]
