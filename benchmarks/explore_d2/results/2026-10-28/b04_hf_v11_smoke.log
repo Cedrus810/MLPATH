@@ -1,0 +1,126 @@
+{
+  "rule_version": "D2-HF-v1.1",
+  "population": {
+    "ready": 34,
+    "domain_truncated": 8
+  },
+  "l1_status": {
+    "completed": 19,
+    "censored_energy": 15
+  },
+  "l2_status": {},
+  "promotion": {
+    "ridge_suspected": 3,
+    "audit": 3
+  },
+  "deferred": {
+    "no_trigger": 28
+  },
+  "release_status": {
+    "not_minimum": 1,
+    "c1_candidate": 5
+  },
+  "certify_status": {},
+  "c1": [
+    {
+      "task": "L3|f0|CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963:t:L0-v1+f1|Cl|e1734f3e5568970e:t:L0-v1:k0:f2:L0-v1|distance:0-1:+1:+:L0-v1",
+      "label": "reactive",
+      "class": "ridge_suspected",
+      "audit_release": false
+    },
+    {
+      "task": "L3|f0|CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963:t:L0-v1+f1|Cl|e1734f3e5568970e:t:L0-v1:k0:f2:L0-v1|distance:0-5:+1:-:L0-v1",
+      "label": "reactive",
+      "class": "ridge_suspected",
+      "audit_release": false
+    },
+    {
+      "task": "L3|f0|CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963:t:L0-v1+f1|Cl|e1734f3e5568970e:t:L0-v1:k1:f2:L0-v1|distance:0-2:+1:-:L0-v1",
+      "label": "rearrangement",
+      "class": "audit",
+      "audit_release": true
+    },
+    {
+      "task": "L3|f0|CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963:t:L0-v1+f1|Cl|e1734f3e5568970e:t:L0-v1:k1:f2:L0-v1|distance:0-4:+1:+:L0-v1",
+      "label": "rearrangement",
+      "class": "audit",
+      "audit_release": true
+    },
+    {
+      "task": "L3|f0|CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963:t:L0-v1+f1|Cl|e1734f3e5568970e:t:L0-v1:k0:f2:L0-v1|distance:1-5:+1:+:L0-v1",
+      "label": "elastic",
+      "class": "audit",
+      "audit_release": true
+    }
+  ],
+  "c1_by_label": {
+    "reactive": 2,
+    "rearrangement": 2,
+    "elastic": 1
+  },
+  "c2": [],
+  "attempts": {},
+  "hosts": [
+    "kasuga01"
+  ],
+  "skips": {},
+  "accounts": {
+    "search": {
+      "budget": 8000,
+      "spent": 5286,
+      "held": 0
+    },
+    "refine": {
+      "budget": 20000,
+      "spent": 740,
+      "held": 0
+    }
+  },
+  "ledger_total": 6026,
+  "unreconciled": [],
+  "start_clusters": {
+    "clusters": 6,
+    "first_round": 6,
+    "second_round": 0,
+    "radius_A": 0.00124
+  },
+  "hs_status": {
+    "unresolved:hysteresis": 2,
+    "converged_candidate": 2,
+    "unresolved:above_ceiling": 2
+  },
+  "hc_status": {
+    "connected": 1,
+    "hf_duplicate": 1
+  },
+  "property_status": "not_run",
+  "hf_forwards": {
+    "HS": 552,
+    "HC": 188
+  },
+  "hf_events": [
+    {
+      "task": "HC|f0|CH3Cl|2b70d83c1c80f735,3e9540dc663201cf,c4e3929869b32963,c4e3929869b32963,c4e3929869b32963:t:L0-v1+f1|Cl|e1734f3e5568970e:t:L0-v1:k0:f2:L0-v1|distance:0-1:+1:+:L0-v1",
+      "cumulative_spent": 5331,
+      "saddle_energy_eV": -26132.201171875,
+      "chemical_pair": [
+        "eeccc12ca351f92c851901a77a55105abdaca30ad9e5ceef47ba2dcd6601f975",
+        "eeccc12ca351f92c851901a77a55105abdaca30ad9e5ceef47ba2dcd6601f975"
+      ],
+      "label": "reactive",
+      "broken": [
+        [
+          0,
+          1
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          5
+        ]
+      ],
+      "class": "ridge_suspected"
+    }
+  ]
+}

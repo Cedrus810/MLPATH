@@ -1,0 +1,598 @@
+{
+  "date": "2026-10-28",
+  "method": "Read-only local NFS persisted files; no calculator/model instantiated. Writer-node live check unavailable: yayoi04.cluster.local DNS resolution failed.",
+  "pairs": {
+    "sA": {
+      "old_run": "/home/ruigengji/MLPATH/benchmarks/explore_d2/results/2026-10-26/b05_hf_sA",
+      "new_run": "/home/ruigengji/MLPATH/benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sA",
+      "settings_equal": true,
+      "hf_equal": true,
+      "config_equal": true,
+      "l0_metadata_equal": true,
+      "old_refine_forwards": 237127,
+      "new_refine_forwards": 237635,
+      "old_hs_settled": 236,
+      "new_hs_settled": 290,
+      "new_hs_paid": 283,
+      "old_clusters_covered_saved_replay": 141,
+      "new_clusters_dispatched": 203,
+      "new_clusters_with_nonzero_forward": 196,
+      "new_deferred": 42,
+      "old_distinct_events_saved_replay": 2,
+      "new_events": 2,
+      "event_matching": {
+        "group_size": 1296,
+        "overflow": {
+          "enumerated": true,
+          "count": 1296,
+          "complete_candidates": 1296,
+          "colour_class_sizes": [
+            9,
+            3
+          ],
+          "search_nodes": 2332,
+          "budget_unit": "search_nodes",
+          "limit": 20000
+        },
+        "old_to_new_rmsd_A": [
+          [
+            0.0007184929155460789,
+            0.5740349380853128
+          ],
+          [
+            0.002002407247090965,
+            0.5746574587403291
+          ],
+          [
+            0.5738544260587491,
+            0.0003338043224564952
+          ],
+          [
+            0.5741621354675936,
+            0.0027461412904790016
+          ]
+        ],
+        "matches": [
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rmsd_A": 0.0007184929155460789,
+            "energy_delta_eV": 0.0,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-13:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rmsd_A": 0.002002407247090965,
+            "energy_delta_eV": 0.001953125,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:2-3:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:2-3:+1:+:L0-v1",
+            "rmsd_A": 0.0003338043224564952,
+            "energy_delta_eV": 0.0,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:10-11:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:2-3:+1:+:L0-v1",
+            "rmsd_A": 0.0027461412904790016,
+            "energy_delta_eV": 0.001953125,
+            "chemical_pair_equal": true
+          }
+        ],
+        "new_events_cluster_leaders": [
+          {
+            "event_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rank": 0,
+            "leader_hs_status": "converged_candidate",
+            "leader_hc_status": "connected"
+          },
+          {
+            "event_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:2-3:+1:+:L0-v1",
+            "rank": 0,
+            "leader_hs_status": "converged_candidate",
+            "leader_hc_status": "connected"
+          }
+        ],
+        "newly_run_nonzero_cost_hs": 69
+      },
+      "old_wall_journal_hours": 8.528300328320928,
+      "new_wall_journal_hours": 9.272512784401576,
+      "errors": [
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k7:f2.4:L0-v1|distance:0-10:+1:-:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482427,
+          "t": 1793150235.9929678,
+          "elapsed_s": 0.03129267692565918,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k7:f2.4:L0-v1|distance:0-10:+1:-:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k7:f2.4:L0-v1|distance:0-10:+1:-:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:7-13:+1:+:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482427,
+          "t": 1793150236.0920382,
+          "elapsed_s": 0.033737897872924805,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:7-13:+1:+:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:7-13:+1:+:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:0-6:+1:-:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482502,
+          "t": 1793150243.9341075,
+          "elapsed_s": 0.0334324836730957,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:0-6:+1:-:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k6:f2.4:L0-v1|distance:0-6:+1:-:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k7:f2.4:L0-v1|distance:5-9:+1:+:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482502,
+          "t": 1793150244.2340207,
+          "elapsed_s": 0.05196881294250488,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k7:f2.4:L0-v1|distance:5-9:+1:+:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k7:f2.4:L0-v1|distance:5-9:+1:+:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:3-9:+1:+:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482571,
+          "t": 1793150250.7733755,
+          "elapsed_s": 0.030555009841918945,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:3-9:+1:+:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:3-9:+1:+:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:7-13:+1:+:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482839,
+          "t": 1793150276.37092,
+          "elapsed_s": 0.025904178619384766,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:7-13:+1:+:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:7-13:+1:+:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 482839,
+          "t": 1793150276.445361,
+          "elapsed_s": 0.02519512176513672,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k2:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+              "rank": 0
+            }
+          }
+        }
+      ],
+      "ledger_verified": true
+    },
+    "sB": {
+      "old_run": "/home/ruigengji/MLPATH/benchmarks/explore_d2/results/2026-10-26/b05_hf_sB",
+      "new_run": "/home/ruigengji/MLPATH/benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sB",
+      "settings_equal": true,
+      "hf_equal": true,
+      "config_equal": true,
+      "l0_metadata_equal": true,
+      "old_refine_forwards": 238176,
+      "new_refine_forwards": 237193,
+      "old_hs_settled": 240,
+      "new_hs_settled": 275,
+      "new_hs_paid": 271,
+      "old_clusters_covered_saved_replay": 140,
+      "new_clusters_dispatched": 205,
+      "new_clusters_with_nonzero_forward": 201,
+      "new_deferred": 55,
+      "old_distinct_events_saved_replay": 2,
+      "new_events": 2,
+      "event_matching": {
+        "group_size": 1296,
+        "overflow": {
+          "enumerated": true,
+          "count": 1296,
+          "complete_candidates": 1296,
+          "colour_class_sizes": [
+            9,
+            3
+          ],
+          "search_nodes": 2332,
+          "budget_unit": "search_nodes",
+          "limit": 20000
+        },
+        "old_to_new_rmsd_A": [
+          [
+            0.0005202816250263953,
+            0.5760641317011762
+          ],
+          [
+            0.5757144070905148,
+            0.002863729159794357
+          ],
+          [
+            0.5756288463547661,
+            0.0009503382381321921
+          ],
+          [
+            0.0021796565204994654,
+            0.5761064288770642
+          ],
+          [
+            0.005845257291528967,
+            0.5735474231027212
+          ],
+          [
+            0.5744747914044529,
+            0.0026929724402287446
+          ]
+        ],
+        "matches": [
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-11:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-11:+1:+:L0-v1",
+            "rmsd_A": 0.0005202816250263953,
+            "energy_delta_eV": 0.001953125,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k3:f2.4:L0-v1|distance:10-13:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rmsd_A": 0.002863729159794357,
+            "energy_delta_eV": 0.001953125,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rmsd_A": 0.0009503382381321921,
+            "energy_delta_eV": 0.0,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k3:f2.4:L0-v1|distance:2-3:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-11:+1:+:L0-v1",
+            "rmsd_A": 0.0021796565204994654,
+            "energy_delta_eV": 0.0,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k4:f2.4:L0-v1|distance:6-7:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-11:+1:+:L0-v1",
+            "rmsd_A": 0.005845257291528967,
+            "energy_delta_eV": 0.001953125,
+            "chemical_pair_equal": true
+          },
+          {
+            "old_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k4:f2.4:L0-v1|distance:2-5:+1:+:L0-v1",
+            "new_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rmsd_A": 0.0026929724402287446,
+            "energy_delta_eV": 0.001953125,
+            "chemical_pair_equal": true
+          }
+        ],
+        "new_events_cluster_leaders": [
+          {
+            "event_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:10-11:+1:+:L0-v1",
+            "rank": 0,
+            "leader_hs_status": "converged_candidate",
+            "leader_hc_status": "connected"
+          },
+          {
+            "event_task": "HC|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:6-9:+1:+:L0-v1",
+            "rank": 1,
+            "leader_hs_status": "converged_candidate",
+            "leader_hc_status": "failed:tangent_no_resolved_drop"
+          }
+        ],
+        "newly_run_nonzero_cost_hs": 61
+      },
+      "old_wall_journal_hours": 8.814425838655895,
+      "new_wall_journal_hours": 9.709887344572278,
+      "errors": [
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k4:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 495034,
+          "t": 1793152941.2961257,
+          "elapsed_s": 0.015125274658203125,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k4:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k4:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:3-9:+1:+:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 495034,
+          "t": 1793152941.417946,
+          "elapsed_s": 0.02240157127380371,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:3-9:+1:+:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k5:f2.4:L0-v1|distance:3-9:+1:+:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k1:f2.4:L0-v1|distance:1-14:+1:-:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 495034,
+          "t": 1793152941.5613873,
+          "elapsed_s": 0.010691642761230469,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k1:f2.4:L0-v1|distance:1-14:+1:-:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k1:f2.4:L0-v1|distance:1-14:+1:-:L0-v1",
+              "rank": 0
+            }
+          }
+        },
+        {
+          "task": "HS|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k3:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+          "status": "error:ValueError",
+          "spent": 0,
+          "cumulative_spent": 495110,
+          "t": 1793152948.5699096,
+          "elapsed_s": 0.009541988372802734,
+          "cluster": {
+            "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k3:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+            "rank": 0
+          },
+          "class": "branch_bracketed",
+          "payload": {
+            "error": "bracket must have positive width",
+            "traceback": "Traceback (most recent call last):\n  File \"/home/ruigengji/MLPATH/explore/src/explore/d2.py\", line 703, in _hs_task\n    result = continue_branches_ef(\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ruigengji/MLPATH/explore/src/explore/ts_branch.py\", line 165, in continue_branches_ef\n    raise ValueError(\"bracket must have positive width\")\nValueError: bracket must have positive width\n",
+            "class": "branch_bracketed",
+            "audit_release": false,
+            "deferred_reason": null,
+            "start_cluster": {
+              "leader": "f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k3:f2.4:L0-v1|distance:0-2:+1:-:L0-v1",
+              "rank": 0
+            }
+          }
+        }
+      ],
+      "ledger_verified": true
+    }
+  },
+  "source_files": {
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sA/manifest.json": {
+      "size": 5821,
+      "mtime_ns": 1792973555000000000,
+      "sha256": "1e8782c507973d1845783b80f5d1d8bc7dc9c1ed9835e5f51bbd28a16a987fc0"
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sA/report.json": {
+      "size": 42189,
+      "mtime_ns": 1793004258000000000,
+      "sha256": "377ee3cb6dbe2d6077b88b0d4829b7777786e823ad8c91d528fba234bfeb35c5"
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sA/journal.jsonl": {
+      "size": 372905087,
+      "mtime_ns": 1793004258000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sA/ledger.jsonl": {
+      "size": 1585209,
+      "mtime_ns": 1793004254000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sA/manifest.json": {
+      "size": 5926,
+      "mtime_ns": 1793125423000000000,
+      "sha256": "79b562d85502fa01950497d27245a12ac1c175be50e7f54f8d3f76e3917ac26b"
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sA/report.json": {
+      "size": 39594,
+      "mtime_ns": 1793158805000000000,
+      "sha256": "a357ad2242eea47776d8dbcd8cbf4bf3a717f51ec189b8936ba125d2dcff37ca"
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sA/journal.jsonl": {
+      "size": 374866433,
+      "mtime_ns": 1793158804000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sA/ledger.jsonl": {
+      "size": 1653677,
+      "mtime_ns": 1793158803000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sB/manifest.json": {
+      "size": 5821,
+      "mtime_ns": 1792973555000000000,
+      "sha256": "3d10da7bd949960337172d3aca12bd32a2ee9ea259bc77d635829cc6d0368ade"
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sB/report.json": {
+      "size": 91001,
+      "mtime_ns": 1793005284000000000,
+      "sha256": "9a72df31d0107cebf40c596f9ccecc4b0ce69ca0bc43a9a0145708529477b278"
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sB/journal.jsonl": {
+      "size": 374725076,
+      "mtime_ns": 1793005284000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-26/b05_hf_sB/ledger.jsonl": {
+      "size": 1825979,
+      "mtime_ns": 1793005278000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sB/manifest.json": {
+      "size": 5926,
+      "mtime_ns": 1793125423000000000,
+      "sha256": "d031d3a0a4cf4191dd32fb676dc1fb9ca83041f143f94af148ca9eb961101094"
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sB/report.json": {
+      "size": 84406,
+      "mtime_ns": 1793160379000000000,
+      "sha256": "a3b81600d575b9047b4caf7500fd0ea7286df0989b3b0ed0866310dfc66ab039"
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sB/journal.jsonl": {
+      "size": 374023773,
+      "mtime_ns": 1793160379000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sB/ledger.jsonl": {
+      "size": 1853171,
+      "mtime_ns": 1793160377000000000
+    },
+    "benchmarks/explore_d2/results/2026-10-28/hf_v11_comparison/source_audit.py": {
+      "sha256": "e404eebdbb92fefdc6aee1edea7b770d836fd4a90a5a6577a20144bed0226fb7",
+      "size": 3502
+    },
+    "benchmarks/explore_d2/results/2026-10-28/hf_v11_comparison/source_match.py": {
+      "sha256": "1b8851029d30e98df4776acfb96f60b90cc3052c742ad16a5fa3a9cde8389e90",
+      "size": 2274
+    },
+    "benchmarks/explore_d2/results/2026-10-28/hf_v11_comparison/source_bracket.py": {
+      "sha256": "b8fa0908e46b7e0b168bd43a0fefef97ae5dcde6fd5eb766bee89e2fbf944c64",
+      "size": 1468
+    },
+    "explore/src/explore/d2.py": {
+      "sha256": "371845bc0c273633d7e07cdaa42bb89219d1c3f62c8e1384e38c6dd1181069a6",
+      "size": 41804
+    },
+    "explore/src/explore/probe.py": {
+      "sha256": "d7fd04e7aed439d0bd0f47baf1b4ef15436daabc331fd56beaec88ae2a3b1070",
+      "size": 16013
+    },
+    "explore/src/explore/ts_branch.py": {
+      "sha256": "27f303b0d76cb4c7bfda8904698a9b724d26268ab0d168b4ec4edc689643c31d",
+      "size": 9841
+    },
+    "benchmarks/explore_d2/results/2026-10-26/repeat_response_census/replay_start_clusters.json": {
+      "sha256": "072ac9da9ed9d90e9fd91c8e1d7613b99147c4653d85f657452442d55f9a55f8",
+      "size": 1066
+    }
+  }
+}
