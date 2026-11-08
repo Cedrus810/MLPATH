@@ -1,0 +1,9 @@
+{
+  "status": "incomplete_after_180s_timeout_window",
+  "last_live_elapsed_s": 167,
+  "last_live_state": "DNl",
+  "last_live_wchan": "rpc_wait_bit_killable",
+  "last_measurement": "model_load_started_not_finished",
+  "exit_code": null,
+  "note": "Supervisor PID 1034174 and Python PID 1034175 absent after timeout window; exit code was not captured"
+}

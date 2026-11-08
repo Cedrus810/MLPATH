@@ -1,0 +1,2 @@
+{"arm": "stress_on_0", "host": "kasuga02", "t": 1792682036.8129241, "event": "open", "task": "stress_on_0", "attempt": 0, "stage": "probe", "reserve": null}
+{"arm": "stress_on_0", "host": "kasuga02", "t": 1792682050.7892787, "event": "close", "task": "stress_on_0", "attempt": 0, "stage": "probe", "forwards": 158, "requests": 316, "cache_hits": 158, "wall_s": 13.451271116966382, "outcome": "completed", "artifact": null}

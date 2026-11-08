@@ -1,0 +1,72 @@
+{
+  "run_exit_code": 124,
+  "complete": false,
+  "load_s": 105.96086632704828,
+  "fixed_geometries": {
+    "b04": {
+      "n_atoms": 6,
+      "median_s": {
+        "stress_on": 0.07904815947404131,
+        "stress_off": 0.07521288801217452
+      },
+      "speedup": 1.050992211085499,
+      "max_abs_dE_eV": 0.0,
+      "max_abs_dF_eV_A": 0.00031936168670654297
+    },
+    "b09": {
+      "n_atoms": 29,
+      "median_s": {
+        "stress_on": 0.07669737801188603,
+        "stress_off": 0.07435184746282175
+      },
+      "speedup": 1.0315463654112578,
+      "max_abs_dE_eV": 0.001953125,
+      "max_abs_dF_eV_A": 0.001609206199645996
+    }
+  },
+  "completed_scans": [
+    {
+      "arm": "stress_on_0",
+      "wall_s_including_ledger": 15.023996231961064,
+      "spent": 158,
+      "status": "completed",
+      "n_points": 18,
+      "steps": [
+        6,
+        7,
+        7,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        6,
+        5,
+        8,
+        8,
+        10,
+        11,
+        10,
+        6
+      ],
+      "not_converged_points": []
+    }
+  ],
+  "incomplete_scans": [
+    {
+      "arm": "stress_off_1",
+      "ledger_closed": false,
+      "forwards": null,
+      "forwards_upper_bound": 400
+    }
+  ],
+  "not_started_scans": [
+    "stress_off_2",
+    "stress_on_3"
+  ],
+  "limitation": "ABBA incomplete; fixed-geometry timing only; no unchanged-backend repeat control for b09; no production change",
+  "measured_script_archived": "/home/ruigengji/MLPATH/benchmarks/explore_smoke/results/2026-10-23/scan_performance/measured_scan_performance.py",
+  "archive_matches_recorded_sha256": true
+}

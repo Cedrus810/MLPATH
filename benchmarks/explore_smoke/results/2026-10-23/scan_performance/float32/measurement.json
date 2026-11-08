@@ -1,0 +1,29 @@
+{
+  "host": "kasuga02",
+  "platform": "Linux-7.2.9-2-cachyos-x86_64-with-glibc2.44",
+  "dtype": "float32",
+  "started_utc": "2026-10-22T15:08:19Z",
+  "threads": {
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  },
+  "versions": {
+    "torch": "2.12.0",
+    "mace-torch": "0.3.16",
+    "ase": "3.29.0",
+    "numpy": "2.4.6"
+  },
+  "model": [
+    "/home/ruigengji/MLP/mace/MACE-POLAR-1-M.model",
+    "PolarMACE"
+  ],
+  "source_sha256": {
+    "/home/ruigengji/MLPATH/benchmarks/explore_smoke/scan_performance.py": "72948a740204347a63a8a20b2874d444f06d3af104649a143f33ce3268da72a1",
+    "/home/ruigengji/MLPATH/explore/src/explore/probe.py": "1f52ef038f6c1b0c3ca9569b7801f3a10da5b5eaed4779a00ec327aa2d895fda",
+    "/home/ruigengji/MLPATH/explore/src/explore/ledger.py": "3b80354533a1bc19b8e622711688064a86c1ba64b9d1da592980a70b9a5d4c93",
+    "/home/ruigengji/MLPATH/benchmarks/b04_sn2_chloride/calculator.py": "6c52e5ed449b1d0129bc10f91bb31d386047300872a63b302833f4126c2bcc1b"
+  },
+  "fixed_geometries": {},
+  "scans": [],
+  "complete": false
+}
