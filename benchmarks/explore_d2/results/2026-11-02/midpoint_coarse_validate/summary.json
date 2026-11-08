@@ -1,0 +1,1065 @@
+{
+ "items": {
+  "failed": 22,
+  "control": 15
+ },
+ "bound": 0.025,
+ "gate": 0.010606601717798215,
+ "transitions": {
+  "failed: unresolved:transverse_not_converged -> unresolved:transverse_not_converged": 16,
+  "failed: unresolved:branch_force_disagreement -> unresolved:transverse_not_converged": 1,
+  "failed: unresolved:transverse_not_converged -> unresolved:no_resolved_maximum_bracket": 2,
+  "failed: unresolved:no_resolved_maximum_bracket -> unresolved:transverse_not_converged": 1,
+  "failed: unresolved:transverse_not_converged -> converged_candidate": 2,
+  "control: converged_candidate -> converged_candidate": 15
+ },
+ "cost": {
+  "failed_v3": 13977,
+  "failed_v4": 14167,
+  "control_v3": 4225,
+  "control_v4": 4368
+ },
+ "coarse_stages": {
+  "decided": 27,
+  "below_bound_or_mixed": [
+   {
+    "item": 0,
+    "q": 1.3238377290421843,
+    "rf": [
+     -0.01022014171525147,
+     -0.011625353990173984
+    ],
+    "diff": 0.0014052122749225147
+   },
+   {
+    "item": 0,
+    "q": 1.3232127248146068,
+    "rf": [
+     0.0023375033038757365,
+     0.005590692395706344
+    ],
+    "diff": 0.0032531890918306074
+   },
+   {
+    "item": 1,
+    "q": 1.3238363676105416,
+    "rf": [
+     -0.017776768387310946,
+     -0.01700806634457937
+    ],
+    "diff": 0.0007687020427315748
+   },
+   {
+    "item": 3,
+    "q": 1.3344031905732887,
+    "rf": [
+     0.011918489391193908,
+     0.009026758152407586
+    ],
+    "diff": 0.002891731238786322
+   },
+   {
+    "item": 4,
+    "q": 1.3242147936378346,
+    "rf": [
+     -0.015545842705166353,
+     -0.014726544102953855
+    ],
+    "diff": 0.0008192986022124982
+   },
+   {
+    "item": 7,
+    "q": 1.3238372194912627,
+    "rf": [
+     -0.007480756497141779,
+     -0.0080574411233564
+    ],
+    "diff": 0.000576684626214621
+   },
+   {
+    "item": 8,
+    "q": 1.3368458832750014,
+    "rf": [
+     -0.002846338368998472,
+     -0.004209642648186699
+    ],
+    "diff": 0.0013633042791882273
+   },
+   {
+    "item": 9,
+    "q": 1.3238434227619074,
+    "rf": [
+     -0.013511175592159412,
+     -0.01735582568562445
+    ],
+    "diff": 0.0038446500934650393
+   },
+   {
+    "item": 10,
+    "q": 1.3238363799624782,
+    "rf": [
+     -0.015601773343901315,
+     -0.01560044118067678
+    ],
+    "diff": 1.3321632245343051e-06
+   },
+   {
+    "item": 11,
+    "q": 1.3238388379617203,
+    "rf": [
+     -0.02578601468168052,
+     -0.0190845339825664
+    ],
+    "diff": 0.00670148069911412
+   },
+   {
+    "item": 12,
+    "q": 1.335819824764645,
+    "rf": [
+     -0.0009348487019910192,
+     0.0007224633511386127
+    ],
+    "diff": 0.001657312053129632
+   },
+   {
+    "item": 13,
+    "q": 1.3238390049119377,
+    "rf": [
+     -0.004322275993081656,
+     -0.003829398779073485
+    ],
+    "diff": 0.0004928772140081715
+   },
+   {
+    "item": 14,
+    "q": 1.3238374838993958,
+    "rf": [
+     -0.016305191980603793,
+     -0.016654336285214316
+    ],
+    "diff": 0.00034914430461052345
+   },
+   {
+    "item": 15,
+    "q": 1.3359888960000226,
+    "rf": [
+     -0.008768331853301049,
+     -0.008404227147700146
+    ],
+    "diff": 0.00036410470560090287
+   },
+   {
+    "item": 16,
+    "q": 1.3238374745947095,
+    "rf": [
+     -0.018662363075220616,
+     -0.016435449313574546
+    ],
+    "diff": 0.0022269137616460696
+   },
+   {
+    "item": 17,
+    "q": 1.3366587971757347,
+    "rf": [
+     -0.011860802103624512,
+     -0.013034852846717968
+    ],
+    "diff": 0.001174050743093456
+   },
+   {
+    "item": 18,
+    "q": 1.3370401952802795,
+    "rf": [
+     -0.007912114254753114,
+     -0.0075544821788662495
+    ],
+    "diff": 0.0003576320758868646
+   },
+   {
+    "item": 18,
+    "q": 1.3345401952802796,
+    "rf": [
+     0.012299707960758237,
+     0.01122024109125887
+    ],
+    "diff": 0.001079466869499366
+   },
+   {
+    "item": 19,
+    "q": 1.3343555138630125,
+    "rf": [
+     0.013978411948692373,
+     0.01702378199316183
+    ],
+    "diff": 0.0030453700444694563
+   },
+   {
+    "item": 20,
+    "q": 1.3238377388297071,
+    "rf": [
+     -0.001822562798712745,
+     -0.00021983549049395124
+    ],
+    "diff": 0.0016027273082187938
+   },
+   {
+    "item": 22,
+    "q": 1.4343041092750943,
+    "rf": [
+     -0.007816070211553863,
+     -0.007488582337441539
+    ],
+    "diff": 0.00032748787411232376
+   },
+   {
+    "item": 23,
+    "q": 1.4343033248521277,
+    "rf": [
+     0.0012341613376561178,
+     0.0004922207796491401
+    ],
+    "diff": 0.0007419405580069777
+   },
+   {
+    "item": 24,
+    "q": 1.211562243949932,
+    "rf": [
+     -0.0022879557526548837,
+     -0.0011974429190628067
+    ],
+    "diff": 0.001090512833592077
+   },
+   {
+    "item": 25,
+    "q": 1.4343043532154829,
+    "rf": [
+     -0.007829838765741611,
+     -0.009611769131922097
+    ],
+    "diff": 0.0017819303661804863
+   },
+   {
+    "item": 26,
+    "q": 1.4343022717386797,
+    "rf": [
+     -0.0006003833033312443,
+     -0.0015001390351386365
+    ],
+    "diff": 0.0008997557318073923
+   },
+   {
+    "item": 27,
+    "q": 1.434307159248056,
+    "rf": [
+     -0.018850592691449376,
+     -0.01842032653536177
+    ],
+    "diff": 0.0004302661560876067
+   },
+   {
+    "item": 27,
+    "q": 1.4318071586254022,
+    "rf": [
+     -0.0004198577140213004,
+     -0.004686027779636178
+    ],
+    "diff": 0.004266170065614878
+   },
+   {
+    "item": 28,
+    "q": 1.4293049302709928,
+    "rf": [
+     0.010539708989611806,
+     0.011853692599853433
+    ],
+    "diff": 0.0013139836102416275
+   },
+   {
+    "item": 29,
+    "q": 1.4343038562425896,
+    "rf": [
+     0.017421558508673305,
+     0.017219502677373866
+    ],
+    "diff": 0.0002020558312994386
+   },
+   {
+    "item": 29,
+    "q": 1.4368038548354667,
+    "rf": [
+     0.0002870196654193704,
+     0.00326677314795991
+    ],
+    "diff": 0.0029797534825405396
+   },
+   {
+    "item": 30,
+    "q": 1.4343040975455685,
+    "rf": [
+     0.002100602673499675,
+     -0.0005817301710819482
+    ],
+    "diff": 0.0026823328445816233
+   },
+   {
+    "item": 31,
+    "q": 1.4343033301006582,
+    "rf": [
+     0.004047465899586244,
+     0.0061237067039175055
+    ],
+    "diff": 0.0020762408043312613
+   },
+   {
+    "item": 32,
+    "q": 1.2116238528855656,
+    "rf": [
+     -0.009164113797238091,
+     -0.006424308575361676
+    ],
+    "diff": 0.0027398052218764153
+   },
+   {
+    "item": 33,
+    "q": 1.4343045331610016,
+    "rf": [
+     0.028056038867436246,
+     0.020902130706937503
+    ],
+    "diff": 0.007153908160498743
+   },
+   {
+    "item": 33,
+    "q": 1.4368045380887073,
+    "rf": [
+     0.004473327707035703,
+     0.00782224341809302
+    ],
+    "diff": 0.0033489157110573172
+   },
+   {
+    "item": 34,
+    "q": 1.4341192482578733,
+    "rf": [
+     0.000669666859128202,
+     0.000179347442967927
+    ],
+    "diff": 0.000490319416160275
+   },
+   {
+    "item": 35,
+    "q": 1.4343033335859245,
+    "rf": [
+     0.0009888053213021157,
+     0.005511789774725938
+    ],
+    "diff": 0.004522984453423823
+   },
+   {
+    "item": 36,
+    "q": 1.4343038172081017,
+    "rf": [
+     -0.004976227974744075,
+     -0.006095321243070476
+    ],
+    "diff": 0.0011190932683264009
+   }
+  ],
+  "blocked_beyond_bound": [
+   {
+    "item": 2,
+    "q": 1.3250872235207996,
+    "rf": [
+     -0.06058307787531766,
+     -0.07227318039041114
+    ],
+    "diff": 0.011690102515093483
+   },
+   {
+    "item": 6,
+    "q": 1.3275889801137983,
+    "rf": [
+     -0.11631263779131894,
+     -0.13407160660062625
+    ],
+    "diff": 0.017758968809307316
+   }
+  ]
+ },
+ "rows": [
+  {
+   "item": 0,
+   "group": "failed",
+   "intent": "k0:distance:10-12",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 421
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 477,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 1,
+   "group": "failed",
+   "intent": "k0:distance:2-4",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 424
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 456,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 2,
+   "group": "failed",
+   "intent": "k0:distance:6-8",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 439
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 477,
+    "coarse_decisions": 1,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 3,
+   "group": "failed",
+   "intent": "k0:distance:8-14",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 1018
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 943,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 4,
+   "group": "failed",
+   "intent": "k1:distance:10-12",
+   "run": "b05_hf_v11r_sA",
+   "v3": {
+    "status": "unresolved:branch_force_disagreement",
+    "spent": 603
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 646,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 5,
+   "group": "failed",
+   "intent": "k1:distance:12-14",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 1064
+   },
+   "v4": {
+    "status": "unresolved:no_resolved_maximum_bracket",
+    "spent": 784,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 6,
+   "group": "failed",
+   "intent": "k1:distance:2-4",
+   "run": "b05_hf_v11_sB",
+   "v3": {
+    "status": "unresolved:no_resolved_maximum_bracket",
+    "spent": 385
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 635,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 7,
+   "group": "failed",
+   "intent": "k1:distance:6-8",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 220
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 652,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 8,
+   "group": "failed",
+   "intent": "k1:distance:8-14",
+   "run": "b05_hf_v11_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 1636
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 1460,
+    "coarse_decisions": 1,
+    "candidate_energy_eV": -18880.421875
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 9,
+   "group": "failed",
+   "intent": "k2:distance:10-12",
+   "run": "b05_hf_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 396
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 440,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 10,
+   "group": "failed",
+   "intent": "k2:distance:2-4",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 394
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 530,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 11,
+   "group": "failed",
+   "intent": "k2:distance:6-8",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 383
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 425,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 12,
+   "group": "failed",
+   "intent": "k2:distance:8-14",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 562
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 575,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 13,
+   "group": "failed",
+   "intent": "k3:distance:10-12",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 720
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 638,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 14,
+   "group": "failed",
+   "intent": "k3:distance:2-4",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 462
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 478,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 15,
+   "group": "failed",
+   "intent": "k3:distance:4-14",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 724
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 445,
+    "coarse_decisions": 1,
+    "candidate_energy_eV": -18880.408203125
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 16,
+   "group": "failed",
+   "intent": "k3:distance:6-8",
+   "run": "b05_hf_v11_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 422
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 442,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 17,
+   "group": "failed",
+   "intent": "k3:distance:8-14",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 890
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 1001,
+    "coarse_decisions": 1,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 18,
+   "group": "failed",
+   "intent": "k4:distance:7-14",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 984
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 1294,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 19,
+   "group": "failed",
+   "intent": "k5:distance:11-14",
+   "run": "b05_hf_v11_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 1021
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 744,
+    "coarse_decisions": 1,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 20,
+   "group": "failed",
+   "intent": "k7:distance:10-12",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 393
+   },
+   "v4": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 420,
+    "coarse_decisions": 2,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 21,
+   "group": "failed",
+   "intent": "k7:distance:6-8",
+   "run": "b05_hf_v11_sB",
+   "v3": {
+    "status": "unresolved:transverse_not_converged",
+    "spent": 416
+   },
+   "v4": {
+    "status": "unresolved:no_resolved_maximum_bracket",
+    "spent": 205,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": null
+   },
+   "candidate_agreement": null
+  },
+  {
+   "item": 22,
+   "group": "control",
+   "intent": "k2:distance:10-13",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 252
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 232,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0004011817830202958
+   }
+  },
+  {
+   "item": 23,
+   "group": "control",
+   "intent": "k2:distance:2-3",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 223
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 252,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.000555196911747943
+   }
+  },
+  {
+   "item": 24,
+   "group": "control",
+   "intent": "k2:distance:3-14",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 335
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 351,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0007048970165927709
+   }
+  },
+  {
+   "item": 25,
+   "group": "control",
+   "intent": "k3:distance:10-13",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 239
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 236,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.00029963709640059
+   }
+  },
+  {
+   "item": 26,
+   "group": "control",
+   "intent": "k3:distance:2-3",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 234
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 264,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0012319297636621926
+   }
+  },
+  {
+   "item": 27,
+   "group": "control",
+   "intent": "k4:distance:2-5",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 290
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 278,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.021484375
+   },
+   "candidate_agreement": {
+    "dE_eV": -0.001953125,
+    "rmsd_A": 0.0008025960457704887
+   }
+  },
+  {
+   "item": 28,
+   "group": "control",
+   "intent": "k4:distance:6-7",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 323
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 358,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.00018764297491223532
+   }
+  },
+  {
+   "item": 29,
+   "group": "control",
+   "intent": "k5:distance:10-11",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 282
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 258,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.017578125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0009678173078491237
+   }
+  },
+  {
+   "item": 30,
+   "group": "control",
+   "intent": "k5:distance:10-13",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 255
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 251,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.017578125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.00035076226833394384
+   }
+  },
+  {
+   "item": 31,
+   "group": "control",
+   "intent": "k5:distance:2-3",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 220
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 277,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0008597775470695287
+   }
+  },
+  {
+   "item": 32,
+   "group": "control",
+   "intent": "k5:distance:3-14",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 439
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 537,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0004788845018938892
+   }
+  },
+  {
+   "item": 33,
+   "group": "control",
+   "intent": "k5:distance:6-9",
+   "run": "b05_hf_v4_sB",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 340
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 277,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.017578125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.00035277433800481395
+   }
+  },
+  {
+   "item": 34,
+   "group": "control",
+   "intent": "k6:distance:10-11",
+   "run": "b05_hf_v11r_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 292
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 268,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.021484375
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.00043769803343735947
+   }
+  },
+  {
+   "item": 35,
+   "group": "control",
+   "intent": "k6:distance:6-9",
+   "run": "b05_hf_v4_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 282
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 280,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.021484375
+   },
+   "candidate_agreement": {
+    "dE_eV": -0.001953125,
+    "rmsd_A": 0.0002935616724357707
+   }
+  },
+  {
+   "item": 36,
+   "group": "control",
+   "intent": "k7:distance:10-11",
+   "run": "b05_hf_v11_sA",
+   "v3": {
+    "status": "converged_candidate",
+    "spent": 219
+   },
+   "v4": {
+    "status": "converged_candidate",
+    "spent": 249,
+    "coarse_decisions": 0,
+    "candidate_energy_eV": -18880.01953125
+   },
+   "candidate_agreement": {
+    "dE_eV": 0.0,
+    "rmsd_A": 0.0016524441288198583
+   }
+  }
+ ]
+}

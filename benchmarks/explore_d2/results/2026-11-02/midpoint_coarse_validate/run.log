@@ -1,0 +1,74 @@
+{"file": "failed_00_v3.json", "status": "unresolved:transverse_not_converged", "spent": 421, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_00_v4.json", "status": "unresolved:transverse_not_converged", "spent": 477, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "failed_01_v3.json", "status": "unresolved:transverse_not_converged", "spent": 424, "mids": [["m_left", null]]}
+{"file": "failed_01_v4.json", "status": "unresolved:transverse_not_converged", "spent": 456, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_02_v3.json", "status": "unresolved:transverse_not_converged", "spent": 439, "mids": [["m_left", null]]}
+{"file": "failed_02_v4.json", "status": "unresolved:transverse_not_converged", "spent": 477, "mids": [["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_03_v3.json", "status": "unresolved:transverse_not_converged", "spent": 1018, "mids": [["m_left", null]]}
+{"file": "failed_03_v4.json", "status": "unresolved:transverse_not_converged", "spent": 943, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_04_v3.json", "status": "unresolved:branch_force_disagreement", "spent": 603, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_04_v4.json", "status": "unresolved:transverse_not_converged", "spent": 646, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_05_v3.json", "status": "unresolved:transverse_not_converged", "spent": 1064, "mids": [["m_left", null]]}
+{"file": "failed_05_v4.json", "status": "unresolved:no_resolved_maximum_bracket", "spent": 784, "mids": []}
+{"file": "failed_06_v3.json", "status": "unresolved:no_resolved_maximum_bracket", "spent": 385, "mids": []}
+{"file": "failed_06_v4.json", "status": "unresolved:transverse_not_converged", "spent": 635, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_07_v3.json", "status": "unresolved:transverse_not_converged", "spent": 220, "mids": []}
+{"file": "failed_07_v4.json", "status": "unresolved:transverse_not_converged", "spent": 652, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "failed_08_v3.json", "status": "unresolved:transverse_not_converged", "spent": 1636, "mids": [["m_left", null]]}
+{"file": "failed_08_v4.json", "status": "converged_candidate", "spent": 1460, "mids": [["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "failed_09_v3.json", "status": "unresolved:transverse_not_converged", "spent": 396, "mids": [["m_left", null]]}
+{"file": "failed_09_v4.json", "status": "unresolved:transverse_not_converged", "spent": 440, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_10_v3.json", "status": "unresolved:transverse_not_converged", "spent": 394, "mids": [["m_left", null]]}
+{"file": "failed_10_v4.json", "status": "unresolved:transverse_not_converged", "spent": 530, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_11_v3.json", "status": "unresolved:transverse_not_converged", "spent": 383, "mids": [["m_left", null]]}
+{"file": "failed_11_v4.json", "status": "unresolved:transverse_not_converged", "spent": 425, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_12_v3.json", "status": "unresolved:transverse_not_converged", "spent": 562, "mids": [["m_left", null]]}
+{"file": "failed_12_v4.json", "status": "unresolved:transverse_not_converged", "spent": 575, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_13_v3.json", "status": "unresolved:transverse_not_converged", "spent": 720, "mids": [["m_left", null], ["_right", null], ["m_left", null], ["_right", null]]}
+{"file": "failed_13_v4.json", "status": "unresolved:transverse_not_converged", "spent": 638, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "failed_14_v3.json", "status": "unresolved:transverse_not_converged", "spent": 462, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_14_v4.json", "status": "unresolved:transverse_not_converged", "spent": 478, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_15_v3.json", "status": "unresolved:transverse_not_converged", "spent": 724, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_15_v4.json", "status": "converged_candidate", "spent": 445, "mids": [["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "failed_16_v3.json", "status": "unresolved:transverse_not_converged", "spent": 422, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_16_v4.json", "status": "unresolved:transverse_not_converged", "spent": 442, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "failed_17_v3.json", "status": "unresolved:transverse_not_converged", "spent": 890, "mids": [["m_left", null]]}
+{"file": "failed_17_v4.json", "status": "unresolved:transverse_not_converged", "spent": 1001, "mids": [["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_18_v3.json", "status": "unresolved:transverse_not_converged", "spent": 984, "mids": [["m_left", null]]}
+{"file": "failed_18_v4.json", "status": "unresolved:transverse_not_converged", "spent": 1294, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_19_v3.json", "status": "unresolved:transverse_not_converged", "spent": 1021, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_19_v4.json", "status": "unresolved:transverse_not_converged", "spent": 744, "mids": [["coarse", 1], ["coarse", 1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_20_v3.json", "status": "unresolved:transverse_not_converged", "spent": 393, "mids": [["m_left", null]]}
+{"file": "failed_20_v4.json", "status": "unresolved:transverse_not_converged", "spent": 420, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "failed_21_v3.json", "status": "unresolved:transverse_not_converged", "spent": 416, "mids": [["m_left", null], ["_right", null]]}
+{"file": "failed_21_v4.json", "status": "unresolved:no_resolved_maximum_bracket", "spent": 205, "mids": []}
+{"file": "control_22_v3.json", "status": "converged_candidate", "spent": 252, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_22_v4.json", "status": "converged_candidate", "spent": 232, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_23_v3.json", "status": "converged_candidate", "spent": 223, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_23_v4.json", "status": "converged_candidate", "spent": 252, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_24_v3.json", "status": "converged_candidate", "spent": 335, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_24_v4.json", "status": "converged_candidate", "spent": 351, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_25_v3.json", "status": "converged_candidate", "spent": 239, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_25_v4.json", "status": "converged_candidate", "spent": 236, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_26_v3.json", "status": "converged_candidate", "spent": 234, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_26_v4.json", "status": "converged_candidate", "spent": 264, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_27_v3.json", "status": "converged_candidate", "spent": 290, "mids": [["m_left", null], ["_right", null], ["m_left", null], ["_right", null]]}
+{"file": "control_27_v4.json", "status": "converged_candidate", "spent": 278, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_28_v3.json", "status": "converged_candidate", "spent": 323, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_28_v4.json", "status": "converged_candidate", "spent": 358, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_29_v3.json", "status": "converged_candidate", "spent": 282, "mids": [["m_left", null], ["_right", null], ["m_left", null], ["_right", null]]}
+{"file": "control_29_v4.json", "status": "converged_candidate", "spent": 258, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_30_v3.json", "status": "converged_candidate", "spent": 255, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_30_v4.json", "status": "converged_candidate", "spent": 251, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_31_v3.json", "status": "converged_candidate", "spent": 220, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_31_v4.json", "status": "converged_candidate", "spent": 277, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_32_v3.json", "status": "converged_candidate", "spent": 439, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_32_v4.json", "status": "converged_candidate", "spent": 537, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_33_v3.json", "status": "converged_candidate", "spent": 340, "mids": [["m_left", null], ["_right", null], ["m_left", null], ["_right", null]]}
+{"file": "control_33_v4.json", "status": "converged_candidate", "spent": 277, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null], ["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_34_v3.json", "status": "converged_candidate", "spent": 292, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_34_v4.json", "status": "converged_candidate", "spent": 268, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_35_v3.json", "status": "converged_candidate", "spent": 282, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_35_v4.json", "status": "converged_candidate", "spent": 280, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+{"file": "control_36_v3.json", "status": "converged_candidate", "spent": 219, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_36_v4.json", "status": "converged_candidate", "spent": 249, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}

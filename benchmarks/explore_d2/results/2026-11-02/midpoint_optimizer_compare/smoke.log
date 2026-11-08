@@ -1,0 +1,10 @@
+{"group": "N_hs", "spent": 423, "wall_s": 48.997869201004505, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.07659336098004, "item": 0, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.49082158296369, "item": 0, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 8, "spent": 9, "wall_s": 1.0395366239827126, "item": 0, "mid": 0, "rep": 0}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.001294380053878, "item": 0}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.093266719020903, "item": 0}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 79, "spent": 80, "wall_s": 8.351062279893085, "item": 0}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 3.6065133339725435, "item": 0}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 9, "spent": 10, "wall_s": 1.1808437020517886, "item": 0}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 16, "spent": 17, "wall_s": 1.8894839190179482, "item": 0}

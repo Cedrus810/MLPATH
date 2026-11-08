@@ -1,0 +1,2 @@
+# 2026-11-02 14:33 183，midpoint_coarse_validate_run.sh；python 本体 PID
+validate 247165

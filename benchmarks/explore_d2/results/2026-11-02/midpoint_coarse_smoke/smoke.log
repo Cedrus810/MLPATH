@@ -1,0 +1,10 @@
+Mon Nov  2 12:15:20 JST 2026
+{"file": "failed_00_v3.json", "status": "unresolved:transverse_not_converged", "spent": 405, "mids": [["m_left", null]]}
+{"file": "failed_00_v4.json", "status": "unresolved:transverse_not_converged", "spent": 442, "mids": [["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", -1], ["coarse", 0], ["coarse", 0], ["m_left", null]]}
+{"file": "control_01_v3.json", "status": "converged_candidate", "spent": 260, "mids": [["m_left", null], ["_right", null]]}
+{"file": "control_01_v4.json", "status": "converged_candidate", "spent": 252, "mids": [["coarse", 0], ["coarse", 0], ["m_left", null], ["_right", null]]}
+Mon Nov  2 12:19:46 JST 2026
+{"file": "S_00_r0.json", "rf_coarse": 0.0036272083509395993, "rf_fine": 0.004984342780413366, "coarse_step": 37, "steps": 50, "spent": 51}
+{"file": "F_00_r0.json", "rf_coarse": -0.11455125332075981, "rf_fine": null, "coarse_step": 54, "steps": 200, "spent": 201}
+Mon Nov  2 12:22:56 JST 2026
+SMOKE_DONE

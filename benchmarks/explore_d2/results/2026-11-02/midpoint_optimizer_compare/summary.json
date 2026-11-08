@@ -1,0 +1,1171 @@
+{
+ "arm_runs": 417,
+ "N_hs_status": {
+  "unresolved:transverse_not_converged": 19,
+  "unresolved:walk_relax_unconverged": 1,
+  "converged_candidate": 2
+ },
+ "arms": {
+  "N_A0": {
+   "converged": 3,
+   "runs": 38,
+   "steps": {
+    "p0": 8.0,
+    "p50": 12.0,
+    "p90": 12.8,
+    "p100": 13.0,
+    "n": 3
+   },
+   "spent": 7071
+  },
+  "N_A1": {
+   "converged": 5,
+   "runs": 38,
+   "steps": {
+    "p0": 3.0,
+    "p50": 31.0,
+    "p90": 61.0,
+    "p100": 79.0,
+    "n": 5
+   },
+   "spent": 6789
+  },
+  "N_A2": {
+   "converged": 33,
+   "runs": 38,
+   "steps": {
+    "p0": 4.0,
+    "p50": 19.0,
+    "p90": 86.20000000000002,
+    "p100": 188.0,
+    "n": 33
+   },
+   "spent": 2244
+  },
+  "F_A0": {
+   "converged": 3,
+   "runs": 71,
+   "steps": {
+    "p0": 32.0,
+    "p50": 41.0,
+    "p90": 52.2,
+    "p100": 55.0,
+    "n": 3
+   },
+   "spent": 13799
+  },
+  "F_A1": {
+   "converged": 4,
+   "runs": 71,
+   "steps": {
+    "p0": 31.0,
+    "p50": 45.0,
+    "p90": 126.00000000000003,
+    "p100": 159.0,
+    "n": 4
+   },
+   "spent": 13751
+  },
+  "F_A2": {
+   "converged": 54,
+   "runs": 71,
+   "steps": {
+    "p0": 12.0,
+    "p50": 73.0,
+    "p90": 178.4,
+    "p100": 198.0,
+    "n": 54
+   },
+   "spent": 8127
+  },
+  "S_A0": {
+   "converged": 23,
+   "runs": 30,
+   "steps": {
+    "p0": 2.0,
+    "p50": 28.0,
+    "p90": 44.2,
+    "p100": 67.0,
+    "n": 23
+   },
+   "spent": 2050
+  },
+  "S_A1": {
+   "converged": 24,
+   "runs": 30,
+   "steps": {
+    "p0": 6.0,
+    "p50": 27.5,
+    "p90": 39.3,
+    "p100": 70.0,
+    "n": 24
+   },
+   "spent": 1889
+  },
+  "S_A2": {
+   "converged": 28,
+   "runs": 30,
+   "steps": {
+    "p0": 7.0,
+    "p50": 35.0,
+    "p90": 91.6,
+    "p100": 171.0,
+    "n": 28
+   },
+   "spent": 1755
+  }
+ },
+ "N_repeat_rf_diff": {
+  "all_arms": {
+   "p0": 0.00017352944158803476,
+   "p50": 0.0010316719747965712,
+   "p90": 0.002235222401927385,
+   "p100": 0.003516008081137485,
+   "n": 17
+  }
+ },
+ "converged_rf_diff_between_arms": {
+  "S_A0_vs_A1": {
+   "p0": 5.5156378924947624e-05,
+   "p50": 0.001221633711649222,
+   "p90": 0.002505150358200628,
+   "p100": 0.0040017062342872535,
+   "n": 23
+  },
+  "S_A0_vs_A2": {
+   "p0": 1.531429463084641e-05,
+   "p50": 0.0010254928439338649,
+   "p90": 0.0023749632320432456,
+   "p100": 0.003885885780564702,
+   "n": 23
+  }
+ },
+ "N_frames": [
+  {
+   "item": 0,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k0:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.0050184560811338316
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.03178419201150237
+    }
+   ]
+  },
+  {
+   "item": 0,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k0:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.01776167311037892
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.047171974492944836
+    }
+   ]
+  },
+  {
+   "item": 0,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k0:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 17,
+     "rf": -0.014174197410749023
+    },
+    {
+     "converged": true,
+     "steps": 17,
+     "rf": -0.015282766563979443
+    }
+   ]
+  },
+  {
+   "item": 1,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k0:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.04728505159986936
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.03787453431203827
+    }
+   ]
+  },
+  {
+   "item": 1,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k0:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.005891538717930766
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.019036610858284397
+    }
+   ]
+  },
+  {
+   "item": 1,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k0:distance:2-4",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 89,
+     "rf": -0.01526523779158968
+    },
+    {
+     "converged": true,
+     "steps": 99,
+     "rf": -0.0168385634374625
+    }
+   ]
+  },
+  {
+   "item": 2,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k0:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.05685282593285312
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0009596901399257438
+    }
+   ]
+  },
+  {
+   "item": 2,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k0:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.06666107220620218
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.003652748205728271
+    }
+   ]
+  },
+  {
+   "item": 2,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k0:distance:6-8",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 75,
+     "rf": -0.010561926652304432
+    },
+    {
+     "converged": true,
+     "steps": 26,
+     "rf": -0.014077934733441917
+    }
+   ]
+  },
+  {
+   "item": 3,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k0:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.002434532081020831
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.032817201433775735
+    }
+   ]
+  },
+  {
+   "item": 3,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k0:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.006586155707932973
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.015505382766347773
+    }
+   ]
+  },
+  {
+   "item": 3,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k0:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.011010003096617862
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.008192110208098319
+    }
+   ]
+  },
+  {
+   "item": 4,
+   "midpoint": 3,
+   "arm": "A0",
+   "intent": "k1:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 12,
+     "rf": 0.00532357292231702
+    },
+    {
+     "converged": true,
+     "steps": 13,
+     "rf": 0.00496891474963757
+    }
+   ]
+  },
+  {
+   "item": 4,
+   "midpoint": 3,
+   "arm": "A1",
+   "intent": "k1:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 4,
+     "rf": 0.002212244057337195
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.019161591577375837
+    }
+   ]
+  },
+  {
+   "item": 4,
+   "midpoint": 3,
+   "arm": "A2",
+   "intent": "k1:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 5,
+     "rf": 0.00424967359046627
+    },
+    {
+     "converged": true,
+     "steps": 14,
+     "rf": 0.004629084231332448
+    }
+   ]
+  },
+  {
+   "item": 6,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k1:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.12748268755907732
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.18133421303368358
+    }
+   ]
+  },
+  {
+   "item": 6,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k1:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.21068634151963417
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.04781605337486677
+    }
+   ]
+  },
+  {
+   "item": 6,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k1:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.12001848605548969
+    },
+    {
+     "converged": true,
+     "steps": 188,
+     "rf": -0.11708603950154897
+    }
+   ]
+  },
+  {
+   "item": 8,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k1:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.00518744165832651
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.008432163049304296
+    }
+   ]
+  },
+  {
+   "item": 8,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k1:distance:8-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 31,
+     "rf": -0.005708733514071586
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.0050202929257787705
+    }
+   ]
+  },
+  {
+   "item": 8,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k1:distance:8-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 13,
+     "rf": -0.00403248740754249
+    },
+    {
+     "converged": true,
+     "steps": 15,
+     "rf": -0.005790442673660706
+    }
+   ]
+  },
+  {
+   "item": 9,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k2:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.0570922234084157
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.04984074279847434
+    }
+   ]
+  },
+  {
+   "item": 9,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k2:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 3,
+     "rf": -0.016033722908172152
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.0032067688044105265
+    }
+   ]
+  },
+  {
+   "item": 9,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k2:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 17,
+     "rf": -0.014347617168079625
+    },
+    {
+     "converged": true,
+     "steps": 4,
+     "rf": -0.015966207215848165
+    }
+   ]
+  },
+  {
+   "item": 10,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k2:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.014641227693595634
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.03009573840619052
+    }
+   ]
+  },
+  {
+   "item": 10,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k2:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.06155649208469367
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.04262461220694148
+    }
+   ]
+  },
+  {
+   "item": 10,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k2:distance:2-4",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 63,
+     "rf": -0.020021801563567677
+    },
+    {
+     "converged": true,
+     "steps": 92,
+     "rf": -0.019585462635480454
+    }
+   ]
+  },
+  {
+   "item": 11,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k2:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.01985500698069671
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.09228185593923952
+    }
+   ]
+  },
+  {
+   "item": 11,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k2:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.011389001919304522
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.027706593400412288
+    }
+   ]
+  },
+  {
+   "item": 11,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k2:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.018094166685998975
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.017333045772616906
+    }
+   ]
+  },
+  {
+   "item": 12,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k2:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.029579064849132537
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.005768296226796139
+    }
+   ]
+  },
+  {
+   "item": 12,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k2:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.023563501294636306
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0038565559719889514
+    }
+   ]
+  },
+  {
+   "item": 12,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k2:distance:8-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 44,
+     "rf": -0.0053972030504059985
+    },
+    {
+     "converged": true,
+     "steps": 47,
+     "rf": -0.005223673608817964
+    }
+   ]
+  },
+  {
+   "item": 13,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k3:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0018195206413838413
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.05196286893364864
+    }
+   ]
+  },
+  {
+   "item": 13,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k3:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.030403392839961806
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.008195421912509297
+    }
+   ]
+  },
+  {
+   "item": 13,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k3:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 19,
+     "rf": -0.001976952906739539
+    },
+    {
+     "converged": true,
+     "steps": 26,
+     "rf": -0.0008487607352501309
+    }
+   ]
+  },
+  {
+   "item": 14,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k3:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0036635514837405356
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.05541619787933838
+    }
+   ]
+  },
+  {
+   "item": 14,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k3:distance:2-4",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.052878696836760594
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.05723514781106215
+    }
+   ]
+  },
+  {
+   "item": 14,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k3:distance:2-4",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 13,
+     "rf": -0.016038462434613578
+    },
+    {
+     "converged": true,
+     "steps": 19,
+     "rf": -0.01707013440941015
+    }
+   ]
+  },
+  {
+   "item": 15,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k3:distance:4-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.020364922653110133
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.003156268595403106
+    }
+   ]
+  },
+  {
+   "item": 15,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k3:distance:4-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 79,
+     "rf": -0.010952359299915714
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.008492764523113996
+    }
+   ]
+  },
+  {
+   "item": 15,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k3:distance:4-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 24,
+     "rf": -0.008187983633504753
+    },
+    {
+     "converged": true,
+     "steps": 27,
+     "rf": -0.007940263727895478
+    }
+   ]
+  },
+  {
+   "item": 16,
+   "midpoint": 3,
+   "arm": "A0",
+   "intent": "k3:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.09974789406951565
+    },
+    {
+     "converged": true,
+     "steps": 8,
+     "rf": 0.000456982136267674
+    }
+   ]
+  },
+  {
+   "item": 16,
+   "midpoint": 3,
+   "arm": "A1",
+   "intent": "k3:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.0081672135827699
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.007962437518747239
+    }
+   ]
+  },
+  {
+   "item": 16,
+   "midpoint": 3,
+   "arm": "A2",
+   "intent": "k3:distance:6-8",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 23,
+     "rf": 0.003804827337704972
+    },
+    {
+     "converged": true,
+     "steps": 18,
+     "rf": 0.0008537042320638351
+    }
+   ]
+  },
+  {
+   "item": 17,
+   "midpoint": 1,
+   "arm": "A0",
+   "intent": "k3:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0008155628501954081
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.001142150377157067
+    }
+   ]
+  },
+  {
+   "item": 17,
+   "midpoint": 1,
+   "arm": "A1",
+   "intent": "k3:distance:8-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.013855725204997947
+    },
+    {
+     "converged": true,
+     "steps": 34,
+     "rf": -0.01237863444501626
+    }
+   ]
+  },
+  {
+   "item": 17,
+   "midpoint": 1,
+   "arm": "A2",
+   "intent": "k3:distance:8-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 17,
+     "rf": -0.011225470181990783
+    },
+    {
+     "converged": true,
+     "steps": 18,
+     "rf": -0.012415655485208375
+    }
+   ]
+  },
+  {
+   "item": 19,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k5:distance:11-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.01866771721046382
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.014391546251164884
+    }
+   ]
+  },
+  {
+   "item": 19,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k5:distance:11-14",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.01833979534752363
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.012135752510344766
+    }
+   ]
+  },
+  {
+   "item": 19,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k5:distance:11-14",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 61,
+     "rf": 0.01692195728350207
+    },
+    {
+     "converged": true,
+     "steps": 18,
+     "rf": 0.017685688090678452
+    }
+   ]
+  },
+  {
+   "item": 20,
+   "midpoint": 0,
+   "arm": "A0",
+   "intent": "k7:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.024034033360137267
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.0033324815191114873
+    }
+   ]
+  },
+  {
+   "item": 20,
+   "midpoint": 0,
+   "arm": "A1",
+   "intent": "k7:distance:10-12",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0034341198247856168
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.02411964829474348
+    }
+   ]
+  },
+  {
+   "item": 20,
+   "midpoint": 0,
+   "arm": "A2",
+   "intent": "k7:distance:10-12",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 18,
+     "rf": -8.702859429254612e-05
+    },
+    {
+     "converged": true,
+     "steps": 34,
+     "rf": -0.000968457600695879
+    }
+   ]
+  },
+  {
+   "item": 21,
+   "midpoint": 1,
+   "arm": "A0",
+   "intent": "k7:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.0164463095123634
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.04937150029662246
+    }
+   ]
+  },
+  {
+   "item": 21,
+   "midpoint": 1,
+   "arm": "A1",
+   "intent": "k7:distance:6-8",
+   "outcomes": [
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": -0.020171608336448654
+    },
+    {
+     "converged": false,
+     "steps": 200,
+     "rf": 0.006950691451447946
+    }
+   ]
+  },
+  {
+   "item": 21,
+   "midpoint": 1,
+   "arm": "A2",
+   "intent": "k7:distance:6-8",
+   "outcomes": [
+    {
+     "converged": true,
+     "steps": 29,
+     "rf": 0.011807702638193012
+    },
+    {
+     "converged": true,
+     "steps": 17,
+     "rf": 0.012538620839593574
+    }
+   ]
+  }
+ ]
+}

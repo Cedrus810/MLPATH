@@ -1,0 +1,176 @@
+== benchmarks/explore_d2/results/2026-10-26/b05_hf_sA failed 56
+   converged midpoint (<= 0.001): 28 / 38, steps {'p50': 23.0, 'p90': 32.0, 'p99': 90.45000000000003, 'max': 108.0}, >=150: 0
+   converged refine_end (<= 0.003): 40 / 40, steps {'p50': 0.0, 'p90': 1.0, 'p99': 1.6099999999999994, 'max': 2.0}, >=150: 0
+   converged branch (<= 0.003): 9234 / 9280, steps {'p50': 4.0, 'p90': 91.0, 'p99': 161.0, 'max': 200.0}, >=150: 180
+   failed midpoint: n=10, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.001 p50 0.00114 max 0.00162
+      fproj_last: min 0.00229 p50 0.0181 max 0.0475
+      tail_fproj_p50: min 0.0069 p50 0.0178 max 0.0288
+      tail_within_2x: min 0 p50 0 max 1
+      tail_step_p50_A: min 0.00364 p50 0.0192 max 0.0361
+      dE_eV: min -0.00781 p50 -0.00488 max -0.00195
+      rmsd_first_last_A: min 0.00659 p50 0.0334 max 0.0811
+   failed branch: n=46, endpoint (walked 0): 2
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.003 p50 0.00345 max 0.013
+      fproj_last: min 0.00324 p50 0.0177 max 0.956
+      tail_fproj_p50: min 0.0047 p50 0.0387 max 0.996
+      tail_within_2x: min 0 p50 1 max 50
+      tail_step_p50_A: min 0.000212 p50 0.019 max 0.05
+      dE_eV: min -2.44 p50 -0.265 max 0
+      rmsd_first_last_A: min 0.21 p50 1.14 max 1.91
+== benchmarks/explore_d2/results/2026-10-26/b05_hf_sB failed 55
+   converged midpoint (<= 0.001): 23 / 34, steps {'p50': 18.0, 'p90': 34.2, 'p99': 152.04000000000002, 'max': 156.0}, >=150: 1
+   converged refine_end (<= 0.003): 44 / 44, steps {'p50': 0.0, 'p90': 1.0, 'p99': 3.5700000000000003, 'max': 4.0}, >=150: 0
+   converged branch (<= 0.003): 9197 / 9241, steps {'p50': 5.0, 'p90': 88.0, 'p99': 169.03999999999905, 'max': 199.0}, >=150: 185
+   failed midpoint: n=11, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00111 p50 0.00141 max 0.00167
+      fproj_last: min 0.00289 p50 0.00599 max 0.0238
+      tail_fproj_p50: min 0.004 p50 0.00752 max 0.026
+      tail_within_2x: min 0 p50 0 max 4
+      tail_step_p50_A: min 0.00214 p50 0.0128 max 0.0256
+      dE_eV: min -0.00977 p50 -0.00586 max 0
+      rmsd_first_last_A: min 0.00351 p50 0.011 max 0.0259
+   failed branch: n=44, endpoint (walked 0): 4
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.003 p50 0.00374 max 0.01
+      fproj_last: min 0.00376 p50 0.0163 max 0.459
+      tail_fproj_p50: min 0.00747 p50 0.0362 max 0.473
+      tail_within_2x: min 0 p50 0 max 24
+      tail_step_p50_A: min 0.000663 p50 0.0128 max 0.05
+      dE_eV: min -2.29 p50 -0.276 max -0.00195
+      rmsd_first_last_A: min 0.16 p50 0.621 max 1.78
+== benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sA failed 55
+   converged midpoint (<= 0.001): 44 / 55, steps {'p50': 26.0, 'p90': 138.60000000000002, 'p99': 190.11, 'max': 200.0}, >=150: 4
+   converged refine_end (<= 0.003): 46 / 46, steps {'p50': 0.0, 'p90': 1.5, 'p99': 10.399999999999977, 'max': 14.0}, >=150: 0
+   converged branch (<= 0.003): 9710 / 9774, steps {'p50': 4.0, 'p90': 85.0, 'p99': 163.90999999999985, 'max': 200.0}, >=150: 183
+   failed midpoint: n=11, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.001 p50 0.00111 max 0.00154
+      fproj_last: min 0.00247 p50 0.00914 max 0.0351
+      tail_fproj_p50: min 0.00332 p50 0.0119 max 0.032
+      tail_within_2x: min 0 p50 0 max 12
+      tail_step_p50_A: min 0.00123 p50 0.0111 max 0.0297
+      dE_eV: min -0.00977 p50 -0.00391 max 0
+      rmsd_first_last_A: min 0.00804 p50 0.0241 max 0.085
+   failed branch: n=44, endpoint (walked 0): 3
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00301 p50 0.00343 max 0.0201
+      fproj_last: min 0.00308 p50 0.0251 max 0.0983
+      tail_fproj_p50: min 0.0067 p50 0.0368 max 0.483
+      tail_within_2x: min 0 p50 0 max 22
+      tail_step_p50_A: min 0.00215 p50 0.0153 max 0.05
+      dE_eV: min -2.38 p50 -0.32 max -0.00195
+      rmsd_first_last_A: min 0.178 p50 0.927 max 1.96
+== benchmarks/explore_d2/results/2026-10-28/b05_hf_v11_sB failed 55
+   converged midpoint (<= 0.001): 37 / 48, steps {'p50': 12.0, 'p90': 33.19999999999999, 'p99': 88.96000000000001, 'max': 94.0}, >=150: 0
+   converged refine_end (<= 0.003): 38 / 38, steps {'p50': 0.0, 'p90': 1.0, 'p99': 1.0, 'max': 1.0}, >=150: 0
+   converged branch (<= 0.003): 9186 / 9251, steps {'p50': 5.0, 'p90': 89.0, 'p99': 168.0, 'max': 199.0}, >=150: 180
+   failed midpoint: n=11, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00105 p50 0.00117 max 0.00161
+      fproj_last: min 0.00195 p50 0.00512 max 0.0456
+      tail_fproj_p50: min 0.00357 p50 0.00626 max 0.0224
+      tail_within_2x: min 0 p50 0 max 11
+      tail_step_p50_A: min 0.00151 p50 0.0098 max 0.0298
+      dE_eV: min -0.00977 p50 -0.00391 max 0.00195
+      rmsd_first_last_A: min 0.00757 p50 0.0207 max 0.0832
+   failed branch: n=44, endpoint (walked 0): 3
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00301 p50 0.00357 max 0.0304
+      fproj_last: min 0.0032 p50 0.0436 max 0.549
+      tail_fproj_p50: min 0.0093 p50 0.0393 max 0.645
+      tail_within_2x: min 0 p50 0 max 15
+      tail_step_p50_A: min 0.00437 p50 0.0148 max 0.05
+      dE_eV: min -2.39 p50 -0.29 max -0.00195
+      rmsd_first_last_A: min 0.177 p50 0.694 max 2.09
+== benchmarks/explore_d2/results/2026-10-28/b05_hf_v11r_sA failed 10
+   converged midpoint (<= 0.001): 15 / 21, steps {'p50': 22.0, 'p90': 36.4, 'p99': 40.86, 'max': 41.0}, >=150: 0
+   converged refine_end (<= 0.003): 24 / 24, steps {'p50': 0.0, 'p90': 0.6999999999999993, 'p99': 3.3099999999999987, 'max': 4.0}, >=150: 0
+   converged branch (<= 0.003): 8420 / 8607, steps {'p50': 4.0, 'p90': 91.0, 'p99': 169.0, 'max': 199.0}, >=150: 221
+   failed midpoint: n=6, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00103 p50 0.00128 max 0.00149
+      fproj_last: min 0.00377 p50 0.00924 max 0.0261
+      tail_fproj_p50: min 0.00388 p50 0.0125 max 0.028
+      tail_within_2x: min 0 p50 0 max 4
+      tail_step_p50_A: min 0.00369 p50 0.0122 max 0.0229
+      dE_eV: min -0.00977 p50 -0.00391 max -0.00195
+      rmsd_first_last_A: min 0.00884 p50 0.0123 max 0.0396
+   failed branch: n=4, endpoint (walked 0): 3
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00325 p50 0.00417 max 0.0055
+      fproj_last: min 0.00501 p50 0.0146 max 0.0813
+      tail_fproj_p50: min 0.0105 p50 0.0348 max 0.0624
+      tail_within_2x: min 0 p50 3.5 max 17
+      tail_step_p50_A: min 0.00743 p50 0.0118 max 0.0413
+      dE_eV: min -2.24 p50 -0.0234 max -0.0215
+      rmsd_first_last_A: min 0.381 p50 0.436 max 1.37
+== benchmarks/explore_d2/results/2026-10-28/b05_hf_v11r_sB failed 18
+   converged midpoint (<= 0.001): 10 / 15, steps {'p50': 23.5, 'p90': 24.2, 'p99': 25.82, 'max': 26.0}, >=150: 0
+   converged refine_end (<= 0.003): 18 / 18, steps {'p50': 0.0, 'p90': 0.3000000000000007, 'p99': 1.0, 'max': 1.0}, >=150: 0
+   converged branch (<= 0.003): 8183 / 8381, steps {'p50': 4.0, 'p90': 94.0, 'p99': 176.0, 'max': 200.0}, >=150: 239
+   failed midpoint: n=5, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.0011 p50 0.0013 max 0.00161
+      fproj_last: min 0.00289 p50 0.00408 max 0.00749
+      tail_fproj_p50: min 0.00427 p50 0.0106 max 0.0226
+      tail_within_2x: min 0 p50 0 max 5
+      tail_step_p50_A: min 0.00244 p50 0.0127 max 0.0134
+      dE_eV: min -0.00781 p50 -0.00391 max -0.00195
+      rmsd_first_last_A: min 0.0014 p50 0.0319 max 0.0489
+   failed branch: n=13, endpoint (walked 0): 5
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00314 p50 0.00358 max 0.00487
+      fproj_last: min 0.00521 p50 0.0359 max 0.101
+      tail_fproj_p50: min 0.0111 p50 0.017 max 0.0657
+      tail_within_2x: min 0 p50 1 max 11
+      tail_step_p50_A: min 0.0049 p50 0.0082 max 0.0222
+      dE_eV: min -2.25 p50 -0.00977 max -0.00195
+      rmsd_first_last_A: min 0.243 p50 0.43 max 1.22
+== benchmarks/explore_d2/results/2026-10-29/b05_hf_v4_sA failed 13
+   converged midpoint (<= 0.001): 22 / 31, steps {'p50': 17.5, 'p90': 31.700000000000006, 'p99': 38.529999999999994, 'max': 40.0}, >=150: 0
+   converged refine_end (<= 0.003): 34 / 34, steps {'p50': 0.0, 'p90': 0.6999999999999993, 'p99': 8.370000000000019, 'max': 12.0}, >=150: 0
+   converged branch (<= 0.003): 9605 / 9683, steps {'p50': 4.0, 'p90': 86.0, 'p99': 169.0, 'max': 200.0}, >=150: 220
+   failed midpoint: n=9, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00106 p50 0.00133 max 0.00147
+      fproj_last: min 0.00302 p50 0.0104 max 0.024
+      tail_fproj_p50: min 0.00375 p50 0.0153 max 0.026
+      tail_within_2x: min 0 p50 0 max 6
+      tail_step_p50_A: min 0.00183 p50 0.0168 max 0.024
+      dE_eV: min -0.00977 p50 -0.00586 max -0.00195
+      rmsd_first_last_A: min 0.0143 p50 0.0228 max 0.0716
+   failed branch: n=4, endpoint (walked 0): 4
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00315 p50 0.00382 max 0.00831
+      fproj_last: min 0.0146 p50 0.106 max 0.201
+      tail_fproj_p50: min 0.0159 p50 0.0367 max 0.0774
+      tail_within_2x: min 0 p50 0.5 max 3
+      tail_step_p50_A: min 0.0117 p50 0.0175 max 0.021
+      dE_eV: min -1.79 p50 -0.0293 max -0.00586
+      rmsd_first_last_A: min 0.224 p50 0.472 max 0.982
+== benchmarks/explore_d2/results/2026-10-29/b05_hf_v4_sB failed 17
+   converged midpoint (<= 0.001): 18 / 26, steps {'p50': 18.5, 'p90': 24.900000000000002, 'p99': 33.639999999999986, 'max': 35.0}, >=150: 0
+   converged refine_end (<= 0.003): 34 / 34, steps {'p50': 0.0, 'p90': 1.0, 'p99': 6.670000000000002, 'max': 7.0}, >=150: 0
+   converged branch (<= 0.003): 9564 / 9640, steps {'p50': 4.0, 'p90': 88.0, 'p99': 163.0, 'max': 200.0}, >=150: 171
+   failed midpoint: n=8, endpoint (walked 0): 0
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00112 p50 0.00127 max 0.00175
+      fproj_last: min 0.00189 p50 0.00583 max 0.0301
+      tail_fproj_p50: min 0.0042 p50 0.00665 max 0.0284
+      tail_within_2x: min 0 p50 1 max 7
+      tail_step_p50_A: min 0.00185 p50 0.0093 max 0.0221
+      dE_eV: min -0.00781 p50 -0.00586 max 0
+      rmsd_first_last_A: min 0.00961 p50 0.0142 max 0.0467
+   failed branch: n=9, endpoint (walked 0): 6
+      steps: min 200 p50 200 max 200
+      fproj_min: min 0.00309 p50 0.00339 max 0.00431
+      fproj_last: min 0.0046 p50 0.0132 max 0.417
+      tail_fproj_p50: min 0.00953 p50 0.0143 max 0.349
+      tail_within_2x: min 0 p50 4 max 13
+      tail_step_p50_A: min 0.00348 p50 0.00625 max 0.05
+      dE_eV: min -2.26 p50 -0.00586 max -0.00195
+      rmsd_first_last_A: min 0.21 p50 0.28 max 1.34

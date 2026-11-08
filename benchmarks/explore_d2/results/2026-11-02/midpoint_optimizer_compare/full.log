@@ -1,0 +1,439 @@
+{"group": "N_hs", "spent": 476, "wall_s": 52.99971479806118, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.348801671992987, "item": 0, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.411485574091785, "item": 0, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 20.927943453891203, "item": 0, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.26677498500794, "item": 0, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 2.167165506980382, "item": 0, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.9173574979649857, "item": 0, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 457, "wall_s": 47.84107202501036, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.23940290103201, "item": 1, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 21.022157342988066, "item": 1, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 20.98822991293855, "item": 1, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 20.749635879998095, "item": 1, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 89, "spent": 90, "wall_s": 8.972761101089418, "item": 1, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 99, "spent": 100, "wall_s": 9.97268655395601, "item": 1, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 494, "wall_s": 47.96257620805409, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 19.577449321979657, "item": 2, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 19.568150816950947, "item": 2, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 19.533282952033915, "item": 2, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 19.63637361198198, "item": 2, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 75, "spent": 76, "wall_s": 7.45428029994946, "item": 2, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 26, "spent": 27, "wall_s": 2.6773051710333675, "item": 2, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 881, "wall_s": 78.45413910399657, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.819142666994594, "item": 3, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.783789925975725, "item": 3, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.937252023024485, "item": 3, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.808169536991045, "item": 3, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.18228905205615, "item": 3, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.647136843996122, "item": 3, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 666, "wall_s": 58.82418368407525, "mids": [true, true, true, false]}
+{"group": "N", "arm": "A0", "converged": true, "stop": null, "steps": 12, "spent": 13, "wall_s": 1.3869725069962442, "item": 4, "mid": 3, "rep": 0}
+{"group": "N", "arm": "A0", "converged": true, "stop": null, "steps": 13, "spent": 14, "wall_s": 1.4383551789214835, "item": 4, "mid": 3, "rep": 1}
+{"group": "N", "arm": "A1", "converged": true, "stop": null, "steps": 4, "spent": 5, "wall_s": 0.5728953159414232, "item": 4, "mid": 3, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.627560602966696, "item": 4, "mid": 3, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 5, "spent": 6, "wall_s": 0.6284648780710995, "item": 4, "mid": 3, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 14, "spent": 15, "wall_s": 1.5986325819976628, "item": 4, "mid": 3, "rep": 1}
+{"group": "N_hs", "spent": 1205, "wall_s": 105.32351613801438, "mids": []}
+{"group": "N_hs", "spent": 838, "wall_s": 73.62830641306937, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.617386537021957, "item": 6, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.802450373070315, "item": 6, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.822531732963398, "item": 6, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.760995764983818, "item": 6, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.885450907982886, "item": 6, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 188, "spent": 189, "wall_s": 17.005897485069, "item": 6, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 437, "wall_s": 39.02769510401413, "mids": [true, true]}
+{"group": "N_hs", "spent": 1505, "wall_s": 131.96253540099133, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.632039300049655, "item": 8, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.225570646929555, "item": 8, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 2.982929882942699, "item": 8, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.787414571037516, "item": 8, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 13, "spent": 14, "wall_s": 1.2838414530269802, "item": 8, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 15, "spent": 16, "wall_s": 1.4728476570453495, "item": 8, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 541, "wall_s": 47.80898752203211, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.92371554998681, "item": 9, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.48073137702886, "item": 9, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": true, "stop": null, "steps": 3, "spent": 4, "wall_s": 0.44060794496908784, "item": 9, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.82316317304503, "item": 9, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.6774453899124637, "item": 9, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 4, "spent": 5, "wall_s": 0.5221276900265366, "item": 9, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 562, "wall_s": 49.4839797540335, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.869417577050626, "item": 10, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.870791816036217, "item": 10, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.76326575106941, "item": 10, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.827648842940107, "item": 10, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 63, "spent": 64, "wall_s": 5.883331392076798, "item": 10, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 92, "spent": 93, "wall_s": 8.264242902980186, "item": 10, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 440, "wall_s": 38.884697078960016, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.793322673998773, "item": 11, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.852222087909468, "item": 11, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.19217643106822, "item": 11, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.96068688808009, "item": 11, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.775558374938555, "item": 11, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.461156996083446, "item": 11, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 571, "wall_s": 50.324054561089724, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.751279997988604, "item": 12, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.710021935985424, "item": 12, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.740982396993786, "item": 12, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.733055282966234, "item": 12, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 44, "spent": 45, "wall_s": 4.113989467034116, "item": 12, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 47, "spent": 48, "wall_s": 4.267960055964068, "item": 12, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 588, "wall_s": 51.68695773091167, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.823563727084547, "item": 13, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.797929496970028, "item": 13, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.75776501209475, "item": 13, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.667059496976435, "item": 13, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 19, "spent": 20, "wall_s": 1.9222631530137733, "item": 13, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 26, "spent": 27, "wall_s": 2.4321697630221024, "item": 13, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 501, "wall_s": 43.9256179810036, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.65263191901613, "item": 14, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.906518079922535, "item": 14, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.492893202928826, "item": 14, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.53830186801497, "item": 14, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 13, "spent": 14, "wall_s": 1.260329666081816, "item": 14, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 19, "spent": 20, "wall_s": 2.048607593984343, "item": 14, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 588, "wall_s": 51.56602950103115, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.675156583078206, "item": 15, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.86494151095394, "item": 15, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": true, "stop": null, "steps": 79, "spent": 80, "wall_s": 7.371741403010674, "item": 15, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.59174837800674, "item": 15, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 24, "spent": 25, "wall_s": 2.31580679200124, "item": 15, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 27, "spent": 28, "wall_s": 2.4989639640552923, "item": 15, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 512, "wall_s": 44.774901192984544, "mids": [true, true, true, false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.599578797002323, "item": 16, "mid": 3, "rep": 0}
+{"group": "N", "arm": "A0", "converged": true, "stop": null, "steps": 8, "spent": 9, "wall_s": 0.8496221100213006, "item": 16, "mid": 3, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.67200130794663, "item": 16, "mid": 3, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.799422766896896, "item": 16, "mid": 3, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 23, "spent": 24, "wall_s": 2.2310130930272862, "item": 16, "mid": 3, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.819150623981841, "item": 16, "mid": 3, "rep": 1}
+{"group": "N_hs", "spent": 1166, "wall_s": 102.27309563802555, "mids": [true, false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.6283088310156, "item": 17, "mid": 1, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.603662307956256, "item": 17, "mid": 1, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.588806312996894, "item": 17, "mid": 1, "rep": 0}
+{"group": "N", "arm": "A1", "converged": true, "stop": null, "steps": 34, "spent": 35, "wall_s": 3.1768234650371596, "item": 17, "mid": 1, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.7083497870480642, "item": 17, "mid": 1, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.753026568912901, "item": 17, "mid": 1, "rep": 1}
+{"group": "N_hs", "spent": 1157, "wall_s": 101.78968211007304, "mids": [true, true, true, true]}
+{"group": "N_hs", "spent": 714, "wall_s": 62.72790654806886, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.830865439027548, "item": 19, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.95662194804754, "item": 19, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.2220893149497, "item": 19, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.72281025897246, "item": 19, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 61, "spent": 62, "wall_s": 5.566851367009804, "item": 19, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.7137071029283106, "item": 19, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 431, "wall_s": 37.62811667297501, "mids": [false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.6961916340515, "item": 20, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.731165632023476, "item": 20, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.504745848011225, "item": 20, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.712303624022752, "item": 20, "mid": 0, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.8813821740914136, "item": 20, "mid": 0, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 34, "spent": 35, "wall_s": 3.375493261963129, "item": 20, "mid": 0, "rep": 1}
+{"group": "N_hs", "spent": 487, "wall_s": 43.023472634959035, "mids": [true, false]}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.843573807971552, "item": 21, "mid": 1, "rep": 0}
+{"group": "N", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.7477730269311, "item": 21, "mid": 1, "rep": 1}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.559302593930624, "item": 21, "mid": 1, "rep": 0}
+{"group": "N", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.539983544964343, "item": 21, "mid": 1, "rep": 1}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 29, "spent": 30, "wall_s": 2.591975294984877, "item": 21, "mid": 1, "rep": 0}
+{"group": "N", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.5854134369874373, "item": 21, "mid": 1, "rep": 1}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.6343611079501, "item": 0}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.89557766006328, "item": 0}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 142, "spent": 143, "wall_s": 12.384018625947647, "item": 0}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.422972996952012, "item": 1}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.573926507029682, "item": 1}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 35, "spent": 36, "wall_s": 3.1738004359649494, "item": 1}
+{"group": "F", "arm": "A0", "converged": true, "stop": null, "steps": 41, "spent": 42, "wall_s": 4.093874203041196, "item": 2}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.21117676096037, "item": 2}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.6866554279113188, "item": 2}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.823166841058992, "item": 3}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.816504024900496, "item": 3}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.63991304906085, "item": 3}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.690833837958053, "item": 4}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.071324018994346, "item": 4}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 145, "spent": 146, "wall_s": 12.801049725036137, "item": 4}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.881422734935768, "item": 5}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.976923188078217, "item": 5}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 40, "spent": 41, "wall_s": 3.749982014996931, "item": 5}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.815206706058234, "item": 6}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.885034817038104, "item": 6}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 152, "spent": 153, "wall_s": 13.511655088048428, "item": 6}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.668761061970145, "item": 7}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.062827409012243, "item": 7}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 20, "spent": 21, "wall_s": 2.0789576639654115, "item": 7}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.716996471979655, "item": 8}
+{"group": "F", "arm": "A1", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 2.8837499079527333, "item": 8}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 38, "spent": 39, "wall_s": 3.5736177819781005, "item": 8}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.753971835947596, "item": 9}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.80349014501553, "item": 9}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 61, "spent": 62, "wall_s": 5.590144972898997, "item": 9}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.90226502995938, "item": 10}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.896477370057255, "item": 10}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 111, "spent": 112, "wall_s": 9.695234628976323, "item": 10}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.692881574039347, "item": 11}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.72766961704474, "item": 11}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 47, "spent": 48, "wall_s": 4.229769380996004, "item": 11}
+{"group": "F", "arm": "A0", "converged": true, "stop": null, "steps": 32, "spent": 33, "wall_s": 2.8837384110083804, "item": 12}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.561177070019767, "item": 12}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 45, "spent": 46, "wall_s": 4.080432718037628, "item": 12}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.787418431020342, "item": 13}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.71916258195415, "item": 13}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.47024787205737, "item": 13}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.91808631992899, "item": 14}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.21563760889694, "item": 14}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 192, "spent": 193, "wall_s": 16.948636043001898, "item": 14}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.7368994000135, "item": 15}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.08775860397145, "item": 15}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 140, "spent": 141, "wall_s": 12.244348051026464, "item": 15}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.00360566494055, "item": 16}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.069938433007337, "item": 16}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.602870899019763, "item": 16}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.992811014060862, "item": 17}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.83590298704803, "item": 17}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 64, "spent": 65, "wall_s": 5.711253545014188, "item": 17}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.89814300299622, "item": 18}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.993393352022395, "item": 18}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 30, "spent": 31, "wall_s": 2.91667160007637, "item": 18}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.837980094947852, "item": 19}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.885368466028012, "item": 19}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.233536035986617, "item": 19}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.22750551602803, "item": 20}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.06469115393702, "item": 20}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 150, "spent": 151, "wall_s": 13.422994669992477, "item": 20}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.87822045001667, "item": 21}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.83830536401365, "item": 21}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 144, "spent": 145, "wall_s": 12.763191765057854, "item": 21}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.890702305012383, "item": 22}
+{"group": "F", "arm": "A1", "converged": true, "stop": null, "steps": 41, "spent": 42, "wall_s": 3.8792697929311544, "item": 22}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 166, "spent": 167, "wall_s": 14.589724870980717, "item": 22}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.732551953056827, "item": 23}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.86756525898818, "item": 23}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.577582461060956, "item": 23}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.971881131990813, "item": 24}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.139943714952096, "item": 24}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.407030323985964, "item": 24}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.830433972994797, "item": 25}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.90670551895164, "item": 25}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.57484146801289, "item": 25}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.31767805700656, "item": 26}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.86760482401587, "item": 26}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 26, "spent": 27, "wall_s": 2.4950138309504837, "item": 26}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.616780597018078, "item": 27}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.979611204005778, "item": 27}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 79, "spent": 80, "wall_s": 7.107407925999723, "item": 27}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.467085526906885, "item": 28}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.828398154932074, "item": 28}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 187, "spent": 188, "wall_s": 16.508763964055106, "item": 28}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.928758422029205, "item": 29}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.86020139500033, "item": 29}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 37, "spent": 38, "wall_s": 3.4431696030078456, "item": 29}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.933229266898707, "item": 30}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.906082001980394, "item": 30}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 45, "spent": 46, "wall_s": 4.0254972310503945, "item": 30}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.895973398000933, "item": 31}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.953919281018898, "item": 31}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 22, "spent": 23, "wall_s": 2.15490853600204, "item": 31}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.98100295092445, "item": 32}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.86637964390684, "item": 32}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 48, "spent": 49, "wall_s": 4.3780707970727235, "item": 32}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.065182787016965, "item": 33}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.906816535047255, "item": 33}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 50, "spent": 51, "wall_s": 4.471514200093225, "item": 33}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.79028175107669, "item": 34}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.930054421070963, "item": 34}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.6671995589276776, "item": 34}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.905619432101957, "item": 35}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.988132779020816, "item": 35}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 92, "spent": 93, "wall_s": 8.317150976043195, "item": 35}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.848827918060124, "item": 36}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.906947812996805, "item": 36}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 85, "spent": 86, "wall_s": 7.556246474967338, "item": 36}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.70048699597828, "item": 37}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.101534020039253, "item": 37}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.669826573925093, "item": 37}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.867443953058682, "item": 38}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.998339468962513, "item": 38}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.673598523950204, "item": 38}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.89047102292534, "item": 39}
+{"group": "F", "arm": "A1", "converged": true, "stop": null, "steps": 159, "spent": 160, "wall_s": 14.293498630984686, "item": 39}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 62, "spent": 63, "wall_s": 5.654188615037128, "item": 39}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.947808647993952, "item": 40}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.771749584004283, "item": 40}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.91557309695054, "item": 40}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.965685836039484, "item": 41}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.95429956400767, "item": 41}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 67, "spent": 68, "wall_s": 6.104220521054231, "item": 41}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.942712785094045, "item": 42}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.306875427020714, "item": 42}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 195, "spent": 196, "wall_s": 17.463867733022198, "item": 42}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.787944508017972, "item": 43}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.774744061054662, "item": 43}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 127, "spent": 128, "wall_s": 11.389905364019796, "item": 43}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.927750383038074, "item": 44}
+{"group": "F", "arm": "A1", "converged": true, "stop": null, "steps": 49, "spent": 50, "wall_s": 4.512391479103826, "item": 44}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 148, "spent": 149, "wall_s": 13.18995479401201, "item": 44}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.8646001489833, "item": 45}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.906395183992572, "item": 45}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 192, "spent": 193, "wall_s": 17.015661946032196, "item": 45}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.800842450000346, "item": 46}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.634243251988664, "item": 46}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 24, "spent": 25, "wall_s": 2.257725470000878, "item": 46}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.786407132982276, "item": 47}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.73546775698196, "item": 47}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 102, "spent": 103, "wall_s": 9.166523826890625, "item": 47}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.852139229071327, "item": 48}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.900043530971743, "item": 48}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.7066056819167, "item": 48}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.12253802397754, "item": 49}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.034069982008077, "item": 49}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 39, "spent": 40, "wall_s": 3.656338616972789, "item": 49}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.994435117929243, "item": 50}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.923822114011273, "item": 50}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.56203678995371, "item": 50}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.63586345501244, "item": 51}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.57177238794975, "item": 51}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 14, "spent": 15, "wall_s": 1.418093029060401, "item": 51}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.641680344939232, "item": 52}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.874469405971467, "item": 52}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 86, "spent": 87, "wall_s": 7.740546584012918, "item": 52}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.144327985006385, "item": 53}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.106966028921306, "item": 53}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.650383459986188, "item": 53}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.03069385897834, "item": 54}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.81327899196185, "item": 54}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 179, "spent": 180, "wall_s": 15.692730768932961, "item": 54}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.845329076051712, "item": 55}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.98718702304177, "item": 55}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 116, "spent": 117, "wall_s": 10.489396692952141, "item": 55}
+{"group": "F", "arm": "A0", "converged": true, "stop": null, "steps": 55, "spent": 56, "wall_s": 5.118695780984126, "item": 56}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.907517394050956, "item": 56}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 16, "spent": 17, "wall_s": 1.6075761689571664, "item": 56}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.74223419907503, "item": 57}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.932452243985608, "item": 57}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 177, "spent": 178, "wall_s": 15.666713263024576, "item": 57}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.97525019897148, "item": 58}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.89023444999475, "item": 58}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 101, "spent": 102, "wall_s": 9.090547187021002, "item": 58}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.82796295103617, "item": 59}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.84466836997308, "item": 59}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.7264831609791145, "item": 59}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.04868040198926, "item": 60}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.863974874955602, "item": 60}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.66506535501685, "item": 60}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.753788572968915, "item": 61}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.95610528893303, "item": 61}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 98, "spent": 99, "wall_s": 8.867958093993366, "item": 61}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.80643001489807, "item": 62}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.87401328305714, "item": 62}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.646752467029728, "item": 62}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.97704442194663, "item": 63}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.894273295998573, "item": 63}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 12, "spent": 13, "wall_s": 1.19483074801974, "item": 63}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.83646330796182, "item": 64}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.831458637025207, "item": 64}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 27, "spent": 28, "wall_s": 2.54442376003135, "item": 64}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.87815409398172, "item": 65}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.844698163913563, "item": 65}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.737820553942584, "item": 65}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.0284428820014, "item": 66}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.902661281987093, "item": 66}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 39, "spent": 40, "wall_s": 3.6200714660808444, "item": 66}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.955104971071705, "item": 67}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.944476393051445, "item": 67}
+{"group": "F", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.59060741600115, "item": 67}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.867005998035893, "item": 68}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.867974056047387, "item": 68}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 101, "spent": 102, "wall_s": 9.018795080017298, "item": 68}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.115032571018673, "item": 69}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.950673363986425, "item": 69}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 198, "spent": 199, "wall_s": 17.514014275977388, "item": 69}
+{"group": "F", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.710519916028716, "item": 70}
+{"group": "F", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.80828969797585, "item": 70}
+{"group": "F", "arm": "A2", "converged": true, "stop": null, "steps": 92, "spent": 93, "wall_s": 8.253153471974656, "item": 70}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 8, "spent": 9, "wall_s": 0.8881921609863639, "item": 0}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 16, "spent": 17, "wall_s": 1.545274969888851, "item": 0}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 12, "spent": 13, "wall_s": 1.2947551039978862, "item": 0}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.87413722195197, "item": 1}
+{"group": "S", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.724487301078625, "item": 1}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 75, "spent": 76, "wall_s": 6.768594184075482, "item": 1}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 33, "spent": 34, "wall_s": 3.1551853329874575, "item": 2}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 25, "spent": 26, "wall_s": 2.4438240259187296, "item": 2}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 34, "spent": 35, "wall_s": 3.142946421983652, "item": 2}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 33, "spent": 34, "wall_s": 3.132666694931686, "item": 3}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 2.973439131048508, "item": 3}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 72, "spent": 73, "wall_s": 6.494053947972134, "item": 3}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 2.8847724059596658, "item": 4}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 20, "spent": 21, "wall_s": 1.9811357579892501, "item": 4}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 36, "spent": 37, "wall_s": 3.346302581951022, "item": 4}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 12, "spent": 13, "wall_s": 1.1994981619063765, "item": 5}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 32, "spent": 33, "wall_s": 3.503809990012087, "item": 5}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 24, "spent": 25, "wall_s": 2.331904263002798, "item": 5}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 37, "spent": 38, "wall_s": 3.4967899380717427, "item": 6}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 28, "spent": 29, "wall_s": 2.674269084003754, "item": 6}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 41, "spent": 42, "wall_s": 3.9161216960055754, "item": 6}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 54, "spent": 55, "wall_s": 5.894738562987186, "item": 7}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 7.0074186800047755, "item": 7}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 33, "spent": 34, "wall_s": 3.243174263043329, "item": 7}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 13, "spent": 14, "wall_s": 1.3485806829994544, "item": 8}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 23, "spent": 24, "wall_s": 2.189186242991127, "item": 8}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 23, "spent": 24, "wall_s": 2.2371915369294584, "item": 8}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.848516974016093, "item": 9}
+{"group": "S", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.063154228031635, "item": 9}
+{"group": "S", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.892881067935377, "item": 9}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.866763197002, "item": 10}
+{"group": "S", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.820600178092718, "item": 10}
+{"group": "S", "arm": "A2", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 18.011850079987198, "item": 10}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 7, "spent": 8, "wall_s": 0.7910393280908465, "item": 11}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 2.887489911983721, "item": 11}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.7367901830002666, "item": 11}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 37, "spent": 38, "wall_s": 3.4332220460055396, "item": 12}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 33, "spent": 34, "wall_s": 3.068021200946532, "item": 12}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 62, "spent": 63, "wall_s": 5.738099145004526, "item": 12}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.8888910829555243, "item": 13}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 29, "spent": 30, "wall_s": 2.699646648950875, "item": 13}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 20, "spent": 21, "wall_s": 1.8904065460665151, "item": 13}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 46, "spent": 47, "wall_s": 4.35430056694895, "item": 14}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 29, "spent": 30, "wall_s": 2.717525796033442, "item": 14}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 59, "spent": 60, "wall_s": 5.353106796042994, "item": 14}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 25, "spent": 26, "wall_s": 2.359629741986282, "item": 15}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 26, "spent": 27, "wall_s": 2.5251691499724984, "item": 15}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 25, "spent": 26, "wall_s": 2.399054112029262, "item": 15}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 2, "spent": 3, "wall_s": 0.3478149870643392, "item": 16}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 47, "spent": 48, "wall_s": 4.312290012952872, "item": 16}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 12, "spent": 13, "wall_s": 1.2720073550008237, "item": 16}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 29, "spent": 30, "wall_s": 2.7479744600132108, "item": 17}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 42, "spent": 43, "wall_s": 3.907148244092241, "item": 17}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 44, "spent": 45, "wall_s": 4.0530016189441085, "item": 17}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.905095860012807, "item": 18}
+{"group": "S", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.897343838005327, "item": 18}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 171, "spent": 172, "wall_s": 15.126277940929867, "item": 18}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.663191299070604, "item": 19}
+{"group": "S", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.86518631898798, "item": 19}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 93, "spent": 94, "wall_s": 8.336980883963406, "item": 19}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 32, "spent": 33, "wall_s": 2.978469242108986, "item": 20}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 23, "spent": 24, "wall_s": 2.3247199590550736, "item": 20}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 44, "spent": 45, "wall_s": 4.16430061403662, "item": 20}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.936573703074828, "item": 21}
+{"group": "S", "arm": "A1", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.724372521042824, "item": 21}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 91, "spent": 92, "wall_s": 8.259570939000696, "item": 21}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 67, "spent": 68, "wall_s": 6.607318096095696, "item": 22}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 70, "spent": 71, "wall_s": 6.507932300097309, "item": 22}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 171, "spent": 172, "wall_s": 14.982887412887067, "item": 22}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 31, "spent": 32, "wall_s": 2.9779460850404575, "item": 23}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 24, "spent": 25, "wall_s": 2.272022088058293, "item": 23}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 39, "spent": 40, "wall_s": 3.548522257944569, "item": 23}
+{"group": "S", "arm": "A0", "converged": false, "stop": "transverse_not_converged", "steps": 200, "spent": 201, "wall_s": 17.59166235406883, "item": 24}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 6, "spent": 7, "wall_s": 0.8117368599632755, "item": 24}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 7, "spent": 8, "wall_s": 0.8152722630184144, "item": 24}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 13, "spent": 14, "wall_s": 1.3244578879093751, "item": 25}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 6, "spent": 7, "wall_s": 0.6565056189429015, "item": 25}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 2.198910320061259, "item": 25}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 17, "spent": 18, "wall_s": 1.6868102899752557, "item": 26}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 10, "spent": 11, "wall_s": 1.0074355349643156, "item": 26}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 19, "spent": 20, "wall_s": 1.8135993510950357, "item": 26}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 20, "spent": 21, "wall_s": 1.9829536060569808, "item": 27}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 21, "spent": 22, "wall_s": 2.0282405499601737, "item": 27}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 18, "spent": 19, "wall_s": 1.7543408090714365, "item": 27}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 28, "spent": 29, "wall_s": 2.6036108889384195, "item": 28}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 27, "spent": 28, "wall_s": 2.5374208049615845, "item": 28}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 45, "spent": 46, "wall_s": 4.08315917593427, "item": 28}
+{"group": "S", "arm": "A0", "converged": true, "stop": null, "steps": 27, "spent": 28, "wall_s": 2.5002172340173274, "item": 29}
+{"group": "S", "arm": "A1", "converged": true, "stop": null, "steps": 29, "spent": 30, "wall_s": 2.7039061340037733, "item": 29}
+{"group": "S", "arm": "A2", "converged": true, "stop": null, "steps": 19, "spent": 20, "wall_s": 1.8233250920893624, "item": 29}
