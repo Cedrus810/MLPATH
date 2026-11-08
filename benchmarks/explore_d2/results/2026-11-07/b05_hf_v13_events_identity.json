@@ -1,0 +1,56 @@
+[
+ {
+  "source": "2026-11-07/b05_hf_v13_sA",
+  "intent": "k6:distance:6-9",
+  "energy_eV": -18880.01953125,
+  "nearest_class": 0,
+  "srmsd_A": 0.0004329072655795572,
+  "dE_eV": 0.0,
+  "matches": true
+ },
+ {
+  "source": "2026-11-07/b05_hf_v13_sA",
+  "intent": "k0:distance:10-12",
+  "energy_eV": -18880.41015625,
+  "nearest_class": 2,
+  "srmsd_A": 0.017040624679336713,
+  "dE_eV": 0.0,
+  "matches": true
+ },
+ {
+  "source": "2026-11-07/b05_hf_v13_sA",
+  "intent": "k2:distance:2-3",
+  "energy_eV": -18880.01953125,
+  "nearest_class": 1,
+  "srmsd_A": 0.001257750507108041,
+  "dE_eV": 0.0,
+  "matches": true
+ },
+ {
+  "source": "2026-11-07/b05_hf_v13_sB",
+  "intent": "k5:distance:10-11",
+  "energy_eV": -18880.017578125,
+  "nearest_class": 1,
+  "srmsd_A": 0.005588178254465052,
+  "dE_eV": 0.001953125,
+  "matches": true
+ },
+ {
+  "source": "2026-11-07/b05_hf_v13_sB",
+  "intent": "k3:distance:10-13",
+  "energy_eV": -18880.01953125,
+  "nearest_class": 0,
+  "srmsd_A": 0.0017146767733497072,
+  "dE_eV": 0.0,
+  "matches": true
+ },
+ {
+  "source": "2026-11-07/b05_hf_v13_sB",
+  "intent": "k2:distance:8-14",
+  "energy_eV": -18880.412109375,
+  "nearest_class": 2,
+  "srmsd_A": 0.01768629312510288,
+  "dE_eV": -0.001953125,
+  "matches": true
+ }
+]

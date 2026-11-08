@@ -1,0 +1,73 @@
+{
+  "rule_version": "D2-HF-v1.3",
+  "population": {
+    "ready": 12,
+    "not_sampled": 102,
+    "domain_truncated": 0
+  },
+  "l1_status": {
+    "censored_energy": 5,
+    "completed": 7
+  },
+  "l2_status": {},
+  "promotion": {
+    "ridge_suspected": 1
+  },
+  "deferred": {
+    "no_trigger": 11
+  },
+  "release_status": {
+    "c1_candidate": 1
+  },
+  "certify_status": {},
+  "c1": [
+    {
+      "task": "L3|f0|C4H9Cl|69bec734e5749d86,7b6fcaad228d7a4c,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,86d490de8c338b11,fec7f36755270831,fec7f36755270831,fec7f36755270831:t:L0-v1+f1|HO|20e0501a2ce64366,e7ef864bc9081975:t:L0-v1:k0:f2.4:L0-v1|distance:4-9:+1:+:L0-v1",
+      "label": "rearrangement",
+      "class": "ridge_suspected",
+      "audit_release": false
+    }
+  ],
+  "c1_by_label": {
+    "rearrangement": 1
+  },
+  "c2": [],
+  "attempts": {},
+  "hosts": [
+    "kasuga02"
+  ],
+  "skips": {},
+  "accounts": {
+    "search": {
+      "budget": 6000,
+      "spent": 3354,
+      "held": 0
+    },
+    "refine": {
+      "budget": 12000,
+      "spent": 977,
+      "held": 0
+    }
+  },
+  "ledger_total": 4331,
+  "unreconciled": [],
+  "same_graph_ridge": {
+    "settled": 1,
+    "deferred": 0
+  },
+  "start_clusters": {
+    "clusters": 1,
+    "first_round": 1,
+    "second_round": 0,
+    "radius_A": 0.014
+  },
+  "hs_status": {
+    "unresolved:hysteresis": 1
+  },
+  "hc_status": {},
+  "property_status": "not_run",
+  "hf_forwards": {
+    "HS": 977
+  },
+  "hf_events": []
+}
