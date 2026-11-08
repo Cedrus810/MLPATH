@@ -1,0 +1,698 @@
+{
+ "summary": {
+  "failed": {
+   "items": 30,
+   "v3_met_failed_trial_here": 20,
+   "v3_spent": 52628,
+   "v4_spent": 26772,
+   "saved_total": 25856,
+   "saved_on_items_v3_hit": 19408,
+   "saved_on_items_v3_did_not_hit": 6448,
+   "items_identical_spent": 0,
+   "status_pairs": {
+    "unresolved:hysteresis -> unresolved:walk_relax_unconverged": 4,
+    "budget_exhausted -> unresolved:walk_relax_unconverged": 4,
+    "unresolved:hysteresis -> unresolved:hysteresis": 7,
+    "unresolved:walk_relax_unconverged -> unresolved:walk_relax_unconverged": 12,
+    "unresolved:hysteresis -> unresolved:transverse_not_converged": 2,
+    "unresolved:transverse_not_converged -> unresolved:transverse_not_converged": 1
+   },
+   "v3_candidates": 0,
+   "v4_candidates": 0,
+   "v3_continuous_maximum": 1,
+   "v4_continuous_maximum": 2,
+   "v3_candidate_lost_by_v4": [],
+   "v4_candidate_not_in_v3": []
+  },
+  "control": {
+   "items": 6,
+   "v3_met_failed_trial_here": 0,
+   "v3_spent": 3968,
+   "v4_spent": 3740,
+   "saved_total": 228,
+   "saved_on_items_v3_hit": 0,
+   "saved_on_items_v3_did_not_hit": 228,
+   "items_identical_spent": 0,
+   "status_pairs": {
+    "converged_candidate -> converged_candidate": 1,
+    "unresolved:hysteresis -> unresolved:hysteresis": 5
+   },
+   "v3_candidates": 1,
+   "v4_candidates": 1,
+   "v3_continuous_maximum": 1,
+   "v4_continuous_maximum": 1,
+   "v3_candidate_lost_by_v4": [],
+   "v4_candidate_not_in_v3": []
+  }
+ },
+ "items": [
+  {
+   "item": "b05_hf_v11r_sA_00_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1432,
+   "v4_spent": 412,
+   "saved": 1020,
+   "v3_failed_trials": 5,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 2064
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_01_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "budget_exhausted",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 3000,
+   "v4_spent": 835,
+   "saved": 2165,
+   "v3_failed_trials": 1,
+   "v4_failed_trials": 2,
+   "v3_branch": "budget_exhausted",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 2519
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_02_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1492,
+   "v4_spent": 1812,
+   "saved": -320,
+   "v3_failed_trials": 2,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1356
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_03_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1774,
+   "v4_spent": 358,
+   "saved": 1416,
+   "v3_failed_trials": 6,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 2397
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_04_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "budget_exhausted",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 3000,
+   "v4_spent": 1512,
+   "saved": 1488,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 1,
+   "v3_branch": "budget_exhausted",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 2239
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_05_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:transverse_not_converged",
+   "v3_spent": 985,
+   "v4_spent": 201,
+   "saved": 784,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:transverse_not_converged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1155
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_06_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1490,
+   "v4_spent": 1585,
+   "saved": -95,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1212
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_07_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1313,
+   "v4_spent": 531,
+   "saved": 782,
+   "v3_failed_trials": 5,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1925
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_08_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1327,
+   "v4_spent": 290,
+   "saved": 1037,
+   "v3_failed_trials": 6,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1914
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_09_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1571,
+   "v4_spent": 804,
+   "saved": 767,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1540
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_10_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1346,
+   "v4_spent": 1233,
+   "saved": 113,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1451
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_11_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1556,
+   "v4_spent": 1161,
+   "saved": 395,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1510
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_12_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1823,
+   "v4_spent": 406,
+   "saved": 1417,
+   "v3_failed_trials": 8,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 2022
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_13_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 2551,
+   "v4_spent": 2487,
+   "saved": 64,
+   "v3_failed_trials": 8,
+   "v4_failed_trials": 2,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "budget_exhausted",
+    "spent": 3000
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_14_failed",
+   "block": "sA",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1602,
+   "v4_spent": 574,
+   "saved": 1028,
+   "v3_failed_trials": 6,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1574
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_15_control",
+   "block": "sA",
+   "group": "control",
+   "v3_status": "converged_candidate",
+   "v4_status": "converged_candidate",
+   "v3_spent": 229,
+   "v4_spent": 220,
+   "saved": 9,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "continuous_maximum",
+   "v4_branch": "continuous_maximum",
+   "recorded": {
+    "status": "converged_candidate",
+    "spent": 201
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_16_control",
+   "block": "sA",
+   "group": "control",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 845,
+   "v4_spent": 917,
+   "saved": -72,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 858
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sA_17_control",
+   "block": "sA",
+   "group": "control",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 521,
+   "v4_spent": 472,
+   "saved": 49,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1632
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_00_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1342,
+   "v4_spent": 408,
+   "saved": 934,
+   "v3_failed_trials": 4,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1411
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_01_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "budget_exhausted",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 3000,
+   "v4_spent": 498,
+   "saved": 2502,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 1,
+   "v3_branch": "budget_exhausted",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1965
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_02_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 2632,
+   "v4_spent": 1358,
+   "saved": 1274,
+   "v3_failed_trials": 3,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "budget_exhausted",
+    "spent": 3000
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_03_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 762,
+   "v4_spent": 634,
+   "saved": 128,
+   "v3_failed_trials": 1,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 906
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_04_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1587,
+   "v4_spent": 577,
+   "saved": 1010,
+   "v3_failed_trials": 1,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1460
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_05_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1904,
+   "v4_spent": 473,
+   "saved": 1431,
+   "v3_failed_trials": 6,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1700
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_06_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1630,
+   "v4_spent": 410,
+   "saved": 1220,
+   "v3_failed_trials": 7,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1432
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_07_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1838,
+   "v4_spent": 1819,
+   "saved": 19,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1722
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_08_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1395,
+   "v4_spent": 373,
+   "saved": 1022,
+   "v3_failed_trials": 6,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1385
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_09_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1480,
+   "v4_spent": 1359,
+   "saved": 121,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1115
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_10_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1966,
+   "v4_spent": 1775,
+   "saved": 191,
+   "v3_failed_trials": 1,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1271
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_11_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "budget_exhausted",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 3000,
+   "v4_spent": 1629,
+   "saved": 1371,
+   "v3_failed_trials": 7,
+   "v4_failed_trials": 1,
+   "v3_branch": "budget_exhausted",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "budget_exhausted",
+    "spent": 3000
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_12_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:transverse_not_converged",
+   "v3_spent": 1485,
+   "v4_spent": 417,
+   "saved": 1068,
+   "v3_failed_trials": 1,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "continuous_maximum",
+   "recorded": {
+    "status": "unresolved:walk_relax_unconverged",
+    "spent": 1360
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_13_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:walk_relax_unconverged",
+   "v4_status": "unresolved:walk_relax_unconverged",
+   "v3_spent": 1595,
+   "v4_spent": 445,
+   "saved": 1150,
+   "v3_failed_trials": 2,
+   "v4_failed_trials": 1,
+   "v3_branch": "unresolved:walk_relax_unconverged",
+   "v4_branch": "unresolved:walk_relax_unconverged",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1851
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_14_failed",
+   "block": "sB",
+   "group": "failed",
+   "v3_status": "unresolved:transverse_not_converged",
+   "v4_status": "unresolved:transverse_not_converged",
+   "v3_spent": 750,
+   "v4_spent": 396,
+   "saved": 354,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "continuous_maximum",
+   "v4_branch": "continuous_maximum",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1441
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_15_control",
+   "block": "sB",
+   "group": "control",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 1473,
+   "v4_spent": 1057,
+   "saved": 416,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 1177
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_16_control",
+   "block": "sB",
+   "group": "control",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 679,
+   "v4_spent": 850,
+   "saved": -171,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 686
+   }
+  },
+  {
+   "item": "b05_hf_v11r_sB_17_control",
+   "block": "sB",
+   "group": "control",
+   "v3_status": "unresolved:hysteresis",
+   "v4_status": "unresolved:hysteresis",
+   "v3_spent": 221,
+   "v4_spent": 224,
+   "saved": -3,
+   "v3_failed_trials": 0,
+   "v4_failed_trials": 0,
+   "v3_branch": "unresolved:hysteresis",
+   "v4_branch": "unresolved:hysteresis",
+   "recorded": {
+    "status": "unresolved:hysteresis",
+    "spent": 227
+   }
+  }
+ ]
+}
