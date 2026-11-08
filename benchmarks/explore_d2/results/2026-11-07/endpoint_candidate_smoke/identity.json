@@ -1,0 +1,173 @@
+{
+ "automorphisms": 1296,
+ "basin_rmsd_A": 0.15,
+ "basin_energy_eV": 0.05,
+ "reference_events": 22,
+ "reference_classes": [
+  {
+   "source": "2026-10-26/b05_hf_sA",
+   "intent": "k6:distance:6-9",
+   "energy_eV": -18880.01953125,
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     6,
+     9
+    ]
+   ],
+   "formed": [
+    [
+     9,
+     14
+    ]
+   ],
+   "cluster": 0,
+   "members": 11,
+   "sources": [
+    "2026-10-26/b05_hf_sA",
+    "2026-10-26/b05_hf_sB",
+    "2026-10-28/b05_hf_v11_sA",
+    "2026-10-28/b05_hf_v11_sB",
+    "2026-10-28/b05_hf_v11r_sA",
+    "2026-10-28/b05_hf_v11r_sB",
+    "2026-10-29/b05_hf_v4_sA",
+    "2026-10-29/b05_hf_v4_sB"
+   ]
+  },
+  {
+   "source": "2026-10-26/b05_hf_sA",
+   "intent": "k2:distance:2-3",
+   "energy_eV": -18880.01953125,
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "formed": [
+    [
+     3,
+     14
+    ]
+   ],
+   "cluster": 1,
+   "members": 10,
+   "sources": [
+    "2026-10-26/b05_hf_sA",
+    "2026-10-26/b05_hf_sB",
+    "2026-10-28/b05_hf_v11_sA",
+    "2026-10-28/b05_hf_v11_sB",
+    "2026-10-28/b05_hf_v11r_sA",
+    "2026-10-29/b05_hf_v4_sA",
+    "2026-10-29/b05_hf_v4_sB"
+   ]
+  },
+  {
+   "source": "2026-10-29/b05_hf_v4_sA",
+   "intent": "k1:distance:10-12",
+   "energy_eV": -18880.41015625,
+   "broken": [
+    [
+     0,
+     1
+    ],
+    [
+     10,
+     12
+    ]
+   ],
+   "formed": [
+    [
+     12,
+     14
+    ]
+   ],
+   "cluster": 2,
+   "members": 1,
+   "sources": [
+    "2026-10-29/b05_hf_v4_sA"
+   ]
+  }
+ ],
+ "class_to_class_rmsd_A": [
+  [
+   0.0,
+   0.5741,
+   1.4058
+  ],
+  [
+   0.5741,
+   0.0,
+   1.4001
+  ],
+  [
+   1.4058,
+   1.4001,
+   0.0
+  ]
+ ],
+ "candidates": 4,
+ "candidates_by_class": {
+  "0": [],
+  "1": [],
+  "2": [
+   "k1:distance:6-8",
+   "k5:distance:11-14",
+   "k7:distance:6-8"
+  ]
+ },
+ "unmatched_groups": [],
+ "rows": [
+  {
+   "source": "endpoint_candidate_smoke/out/failed_00_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k7:distance:6-8",
+   "energy_eV": -18880.41015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.02353627787754508,
+   "nearest_dE_eV": 0.0,
+   "matches_class": true
+  },
+  {
+   "source": "endpoint_candidate_smoke/out/failed_01_v7.json",
+   "group": "failed",
+   "arm": "v7",
+   "intent": "k1:distance:6-8",
+   "energy_eV": -18880.4140625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.024340790580939544,
+   "nearest_dE_eV": -0.00390625,
+   "matches_class": true
+  },
+  {
+   "source": "endpoint_candidate_smoke/out/failed_02_v6.json",
+   "group": "failed",
+   "arm": "v6",
+   "intent": "k5:distance:11-14",
+   "energy_eV": -18880.419921875,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.013967543942319433,
+   "nearest_dE_eV": -0.009765625,
+   "matches_class": true
+  },
+  {
+   "source": "endpoint_candidate_smoke/out/failed_02_v7.json",
+   "group": "failed",
+   "arm": "v7",
+   "intent": "k5:distance:11-14",
+   "energy_eV": -18880.416015625,
+   "nearest_class": 2,
+   "nearest_rmsd_A": 0.013860351360596695,
+   "nearest_dE_eV": -0.005859375,
+   "matches_class": true
+  }
+ ]
+}

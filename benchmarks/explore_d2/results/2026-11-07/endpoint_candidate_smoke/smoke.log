@@ -1,0 +1,6 @@
+{"file": "failed_00_v6.json", "status": "converged_candidate", "spent": 197, "origin": "from_right_coarse", "ends_rf": [0.5288, -0.0046]}
+{"file": "failed_00_v7.json", "status": "unresolved:branch_force_disagreement", "spent": 309, "origin": null, "ends_rf": [0.5288, -0.0053]}
+{"file": "failed_01_v6.json", "status": "unresolved:no_resolved_maximum_bracket", "spent": 3, "origin": null, "ends_rf": [0.4994, -0.0017]}
+{"file": "failed_01_v7.json", "status": "converged_candidate", "spent": 3, "origin": "right", "ends_rf": [0.4996, -0.0001]}
+{"file": "failed_02_v6.json", "status": "converged_candidate", "spent": 243, "origin": "from_right_coarse", "ends_rf": [0.0785, -0.0088]}
+{"file": "failed_02_v7.json", "status": "converged_candidate", "spent": 237, "origin": "from_right_coarse", "ends_rf": [0.0773, -0.0036]}
