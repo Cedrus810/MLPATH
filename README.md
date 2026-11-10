@@ -114,9 +114,9 @@ result mechanically against those criteria.
 | P2 | 3-Oxobutanal enol | Reaction-network expansion A→B | Completed — 16/16 seeds |
 | P3 | Benzoylacetone | Aromaticity, chelation, competing isomers | Completed — criteria frozen and passed |
 | b04 | Cl⁻ + CH₃Cl | **Total charge**, 2 fragments, heavy-atom coordinate | Completed — criteria frozen 2026-09-13, TS QM-confirmed |
-| b05 | Tertiary halide + nucleophile | Substitution vs elimination competition | In progress |
+| b05 | Tertiary halide + nucleophile | Substitution vs elimination competition | In progress — D2-HF v1.4 two-seed full runs done (2026-11-08); HS bracket rule frozen at v7 |
 | b06 | Electrophilic addition substrate | Polar addition | Planned |
-| b07 | Cyclohexene (retro-DA) · butadiene + ethylene (DA) | **Fragment number 1↔2** | Planned (probe green) |
+| b07 | Cyclohexene (retro-DA) · butadiene + ethylene (DA) | **Fragment number 1↔2** | Planned — n1 Diels–Alder probe scripts landed |
 
 P0–P3 are now frozen regression fixtures: their results remain valid, and formal
 acceptance passes to the P4+ independent-QM protocol. The series deliberately
@@ -313,18 +313,19 @@ have been voided before.
 | [docs/onboarding/README.md](docs/onboarding/README.md) | newcomer guide |
 | [benchmarks/README.md](benchmarks/README.md) | benchmark suite rules and queue |
 | [env/BASELINE.md](env/BASELINE.md) | environment baseline and fingerprint history |
-| [docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md](docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md) | current plan — path maturation layer (M2+M3 next) |
+| [docs/HF5_SUMMARY_2026-11-10.md](docs/HF5_SUMMARY_2026-11-10.md) | current line — HF5/HF6 summary and plans |
 | [docs/PLAN_2026-09-28.md](docs/PLAN_2026-09-28.md) | connect-mode two-layer bridge — G1–G4 landed, stop-at-product termination pending |
 
-Active work as of 2026-10-05: connect mode is merged into `src/prrs`
-(G1–G4 landed; the stop-at-product termination condition is still pending);
-**PARS** selection/refinement landed as an independent module (MVP-1..5; the
-QM-feedback experiment MVP-6 awaits a decision); the **path maturation
-layer** `mature/` landed M0+M1, with M2+M3 as the next construction block;
-the 10-04/10-05 integrity and connectivity review rounds are closed in
-`docs/INTEGRITY_REVIEW_2026-10-05.md` and `docs/REREVIEW_2026-10-05.md`.
-The PERF batch (PERF-02/03a/22) landed; the rest of the 09-28 static review
-remains measurement-first triage.
+Active work as of 2026-11-11: connect mode, PARS (MVP-1..5) and the maturation
+layer M0+M1 stand as before. The **D2-HF line** has run v1.1 → v1.4: same-graph
+ridges sampled, HS / HC run in parallel waves, the HS bracket rule frozen at v7,
+and v1.4 executed as two-seed full runs with lost-mode diagnostics; the
+fp32-Hessian diagnosis and the F3 false-ridge audit are closed, and rescued
+midpoint candidates are the new E2 TS. Next construction blocks: HF5
+cross-system (`docs/PLAN_HF5_CROSS_SYSTEM_2026-11-08.md`, summary in
+`docs/HF5_SUMMARY_2026-11-10.md`) and the HF6 dimer
+(`docs/PLAN_HF6_DIMER_2026-11-10.md`); an n1 Diels–Alder probe has scripts in
+`benchmarks/n1_diels_alder/`.
 
 The original method note is
 [`mlp_native_perturbation_response_reaction_search.md`](mlp_native_perturbation_response_reaction_search.md).
