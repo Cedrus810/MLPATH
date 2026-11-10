@@ -32,3 +32,11 @@ ja5c13906_si_001 (1).pdf
 .commit_drafts/
 researchd.plan.toml
 /*.o[0-9]*
+
+# 2026-11-11: benchmark run outputs stay local (4+ GB journals/ledgers/poses; scripts stay)
+benchmarks/**/results/
+benchmarks/**/*.log
+benchmarks/**/*.o[0-9]*
+benchmarks/**/pids*.txt
+benchmarks/**/*.jsonl
+benchmarks/**/*.json
