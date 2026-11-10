@@ -2403,7 +2403,7 @@ PBS `b05_hf_v4.o20601`：18:26:51 → 23:52:55（5.4 h，单张 4080 SUPER 两�
 
 [施工计划](PLAN_HF_D2_V14_2026-11-07.md)（含用户原话）。只写了计划：S3 按种子、以 `audit_fraction` 抽同键图的脊，其余记 `HS_skipped:same_graph_ridge`；HS / HC 照 `_run_scans` 按组分波次、`run_many` 共用批量求值器并行，按输入顺序结算，HC 判重在结算时按顺序做；先同构（HS 波 → HC 波），测量后再定是否流水线（异构）。先量后建：基线 GPU 利用率与每 forward 墙钟未测。
 
-## 进行中：D2-HF-v1.4（S3 + HS / HC 并行）施工、测试与测量冒烟（2026-11-07；用户「可以」）
+## 已完成：D2-HF-v1.4（S3 + HS / HC 并行）施工、测试与测量（2026-11-07→08；用户「可以」；整跑结果见 11-08 末节）
 
 [施工计划](PLAN_HF_D2_V14_2026-11-07.md)。
 - 代码 `explore/src/explore/d2.py`：`init_run(..., same_graph_sample=True, hf_parallel=True)`（两者同给，需要 v1.3）冻结为 `D2-HF-v1.4`，manifest 加两个键（旧规则不写）。S3：同键图的脊按 `_key(seed, "same_graph_sample", intent_id) < audit_fraction` 抽样，抽中的仍在最后一组，其余记 `HS_skipped:same_graph_ridge`（HC 不跑），HS payload 加 `same_graph_sample`，报告 `same_graph_ridge` 加 `skipped`、`sample_candidates`。并行：HS / HC 拆成执行（`_hs_run`、`_hc_run`，接受任意计数工厂）与结算（HC 的化学对与判重在 `_hc_finish`，结算时按输入顺序做）；串行路径（v1.1–v1.3）改为调用同一组函数，逻辑不变；`_hf_parallel` 按组（第一轮 → 第二轮 → 同键图的脊样本）分波次，每波预留上限、`run_many` 共用 `search_batch` 批量求值器（`max_active` / `wave_size` 沿用冻结值）、按输入顺序结算，HS 波后接该组的 HC 波；一项都派不出去的波才按现行原因跳过。`tests/d2_bench.py`、`tests/d2_driver.py`（新 `v14` 模式）透传。
@@ -2418,3 +2418,181 @@ PBS `b05_hf_v4.o20601`：18:26:51 → 23:52:55（5.4 h，单张 4080 SUPER 两�
 - 整跑 PBS 脚本 `benchmarks/explore_d2/b05_hf_v14_pbs.zsh`（用户 11-08：并发「8」、yayoi05「装得下」；照 v1.3 脚本只改 ← 行：yayoi05 2×3090、ncpus 32 / ngpus 2 / 120 GB，两块各占一张卡、各 16 线程，`--sample-parallel --max-active 8`，种子与额度同 v1.3）。
 - 批量求值噪声（用户 11-08「A 跑」）：脚本 `benchmarks/explore_d2/batch_noise.py`。第一次在 183（08:13）因他人作业（PID 520460，`experiments/2026-11-08_ppi_r4/`，08:15 起占 8.3 GB 显存）CUDA OOM，未出结果；改在 181（08:20，GPU 空闲）跑完，结果 `results/2026-11-08/batch_noise/noise.json`。11-07 验收的 4 个对照候选结构，各单独算 8 次、作为批大小 1 / 8 / 16 的首个结构各算 8 次：力分量重复标准差最大值单独 0.0004–0.0011、批量 0.0004–0.0010，中位 6–8e-5 对 6.6–7.9e-5；批量与单独平均力之差逐原子最大 0.00014–0.0011 eV/Å（与 8 次重复平均值的统计误差同量级）；能量差 ≤ 0.0005 eV。未见批量求值噪声更大或有系统偏差；并发 16 的 10 项结局差异不能由此解释。限定：4 个结构，都是对照组候选，失败组卡住的帧没测。
 - B / C 的 PBS 脚本（用户 11-08「BC 我全给你3090 跑」，yayoi03 / yayoi08）：`benchmarks/explore_d2/hs_parallel_bench_rep_pbs.zsh`（并行测量重复两次，各占一张 3090，输出 `results/2026-11-08/hs_parallel_bench/full_r{1,2}/`）；`benchmarks/explore_d2/b05_hf_v13r_pbs.zsh`（v1.3 在 3090 上重跑，布局与参数照搬 yayoi05 v1.4：两块各占一张卡、16 线程、`--max-active 8`、同种子同额度；输出 `results/2026-11-08/b05_hf_v13r_s{A,B}/`）。与先前所说不同：C 原为 yayoi32 上的 v1.4，节点是 3090，改为 v1.3 同硬件重跑，使 v1.3 / v1.4 只差规则。是否已提交未核实。
+
+- 交接（11-08，用户「是的准备交接文档」）：[HANDOFF_HF_D2_2026-11-08.md](HANDOFF_HF_D2_2026-11-08.md)，接替 11-06 版（旧文件未改、未标作废）；README 加一行。提交草稿 `2026-11-08_0840_handoff`。
+
+## 已完成：b05 D2-HF-v1.4 整跑、v1.3 同硬件对照与并行测量重复（2026-11-08；用户「跑完了吧」「处理完 整理完 写handoff」）
+
+- 作业（都在 183 上读，日志均有 done 行、无 error / traceback，unreconciled 空）：
+  - v1.4：PBS 24986，yayoi05（2×3090，两块各占一张卡、16 线程、`--max-active 8`），08:01:00 → 11:34:39（3.6 h），`results/2026-11-08/b05_hf_v14_s{A,B}/`。
+  - v1.3r（v1.3 同硬件对照，布局与参数同 v1.4）：PBS 24989，yayoi08，08:14:57 → 17:12:50（9.0 h），`results/2026-11-08/b05_hf_v13r_s{A,B}/`。
+  - 测量重复：PBS 24988，yayoi03（两次重复各占一张 3090），08:14:57 → 09:01:38，`results/2026-11-08/hs_parallel_bench/full_r{1,2}/`。
+- v1.3r → v1.4（同硬件、同布局、同种子同额度，只差规则）：
+  - HS 候选 sA 21 → 21、sB 19 → 17；HC 连通的不重复事件两块都是 3 → 3。
+  - refine forward 237.9k → 69.2k（sA）、237.7k → 65.2k（sB）；ledger 577.5k → 408.9k、577.5k → 405.1k。
+  - 同键图的脊：v1.3r 跑 171 / 169 个、暂缓 40 / 41 → v1.4 抽查 16 / 16 个、跳过 189 / 196 个，样本中候选 0。
+  - 墙钟（两块同时）9.0 h → 3.6 h。少跑与并行各占多少，这次分不开。
+  - HC：v1.3r `endpoint_unstable` 1 / 1、`tangent_no_resolved_drop` 2 / 3；v1.4 3 / 0、2 / 1。
+- 事件身份（参照类改用剩下的 6 块：10-28 v1.1 / v1.1r 与 10-29 v4，三类都在其中；规则同前；结果 `results/2026-11-08/b05_hf_v14_events_identity.json`、`b05_hf_v13r_events_identity.json`，由屏幕输出转录）：v1.4 sA 类 0 / 2 / 1、sB 类 2 / 1 / 0；v1.3r sA 类 2 / 1 / 0、sB 类 1 / 2 / 0；对称 RMSD 0.0016–0.029 Å，ΔE ≤ 0.002 eV。两版两块都是已知三类，无新类、无丢失。
+- v1.4 对 11-07 v1.3（yayoi32，单 4080S 两块共用）：候选 21 / 18 → 21 / 17，事件 3 / 3 → 3 / 3。
+- 并行测量重复（三次：yayoi43 4080S 一次、yayoi03 3090 两次；汇总 `results/2026-11-08/hs_parallel_bench/repeats_summary.json`）：
+  - 候选数：串行 31 / 32 / 32，p4 32 / 31 / 31，p8 33 / 30 / 33，p16 28 / 32 / 30。
+  - 两次运行之间 HS 结局不同的项数：串行对串行 4–7；串行对 p4 4–8、p8 4–5、p16 5–10；同臂重复 p4 5–6、p8 2–4、p16 6–9。并行的差异与串行自身的 fp32 波动同量级，p16 略多；第一次的 p16 10 项属波动范围的上沿。
+  - 墙钟（3090）：串行 1 600 / 1 421 s，p8 328 / 313 s（4.5–4.9×），p16 285 / 291 s（4.9–5.6×）；4080S 上 p16 慢于 p8（337 对 310 s）。
+- **数据被删（不是本线所为，操作者未知；用户未回答"是你或别的窗口做的吗？"）**：11-08 12:02–12:04 之间，`benchmarks/explore_d2/results/2026-10-26/` 整个目录（10-26 的 b05 HF 两块整跑、冒烟、repeat_response_census 等）与 `results/2026-11-08/b05_hf_v14_smoke`（目录、日志、pid 文件；只剩 `_prepare.jsonl`）不见了；同一时间段 `benchmarks/explore_d2/` 下多个脚本与结果目录的修改时间被改，内容核对未变（本线的 `ts_ef.py`、`d2.py`、测试、计划、TODO 都是原内容）。没有做任何恢复。影响：八块参照集只剩六块；4 份旧提交草稿（`2026-10-26_1200`、`2026-10-26_1800`、`2026-10-28_0245`、`2026-10-28_1200`）的 `git add` 引用了已删路径，照原样执行会失败（未改这些旧草稿）；本次 `2026-11-08_0800` 草稿已去掉被删的冒烟路径。
+- 交接更新（11-08，用户「处理完 整理完 写handoff」）：[HANDOFF_HF_D2_2026-11-08.md](HANDOFF_HF_D2_2026-11-08.md) 改为整理后的版本（加入 v1.4 整跑、v1.3r 对照、测量重复、数据被删一节、接下来要定的事）。提交草稿 `2026-11-08_1800_v14-results-handoff`。
+- 更正（11-08）：上面"数据被删（不是本线所为，操作者未知）"一条。用户 11-08 原话："是这样 的影响1  和2 是因为块太大了  我git会爆炸 所以没动"——即 `results/2026-10-26/` 等的去向与 git 体积有关，用户知情，不是意外丢失（具体是移走还是删除未问）。另：本线两份草稿（`2026-11-07_1530_d2-hf-v13`、`2026-11-08_1800_v14-results-handoff`）的 `git add` 含整块运行目录，其中 `journal.jsonl` 每个 127–379 MB（合计约 1.8 GB），同样会撑大 git，待用户定改法。
+- 补充（11-08）：用户原话"我是因为推完了所以 才给她拆了好了"——`results/2026-10-26/` 等是推送之后才从工作区拿掉的，不是丢失。
+
+## 计划：HF-5 跨体系检验（b04 → N1，D2-HF-v1.4 不改；2026-11-08；用户「可以」；未施工）
+
+[施工计划](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md)。用户 11-08 对"要我写 HF-5（b04 → b09）的施工计划吗？"回答「可以」。计划里把 b09 换成 N1（环戊二烯 + 丙烯醛 DA），原因：评估协议 §3.1 与 b09 交接把 b09 定为最终验收 / 压力测试，HF-5 要在新体系上按实测定 σ、B，属于开发用途；N1 是协议里的协同双分子开发参照。内容：新 runner `run_d2.py --system`（不改 `run_b04_d2.py` / `run_b05_d2.py`、不改 `explore/src/`）；b04 v1.2 基线 → 测 B_b04 → v1.4 两种子 + 重复 / 旋转 / 步长敏感性；N1 先在 POLAR-1 上建 endo / exo 参照，再测噪声、σ、B，跑 v1.2 基线与 v1.4；搜索、性质、连接、参照召回分开报告。只写了计划，没有改代码、没有跑计算。核对：`openmm_dev` 里有 RDKit 2025.09.6 与 geomeTRIC（只读 import）。
+
+## 发现：`explore` 两个源码模块与两个测试文件不在工作区（2026-11-08 18:59 核对；只读；HF-5 施工因此停在 a0 之前）
+
+- 写 HF-5 的 `run_d2.py` 时，本机导入 `explore.d2` 报 `ModuleNotFoundError: No module named 'explore.ts_branch'`。核对（本机与 183 上 `ls` 结果相同，不是 NFS 缓存）：`explore/src/explore/ts_branch.py`、`ts_connect.py` 与 `explore/tests/test_ts_branch.py`、`test_ts_connect.py` 不在。`explore/src/explore/` 目录修改时间 11-08 12:02:xx、`explore/tests/` 12:04:23，落在交接 §5 记的结果目录被拿掉的同一时段。
+- `__pycache__` 还留着两份 .pyc，头部记录的源文件：`ts_branch.py` 12 536 字节、mtime 2026-10-29 02:13:12；`ts_connect.py` 14 128 字节、mtime 2026-10-26 06:15:27。可用来核对恢复的版本是否就是 v1.4 整跑用的那份。
+- 其余 explore 模块单独导入都正常（只有 `d2` 失败，`certify` 不在导入时引用这两个模块）。11-08 17:12 结束的 v1.3r 整跑是在拿掉之前启动的。
+- 更正：交接 `HANDOFF_HF_D2_2026-11-08.md` §5 说"核对过本线的代码、测试……内容未变"，这次发现不对——那次核对漏掉了被拿掉的文件。
+- 没有做任何恢复（git 由用户执行）。
+
+## 已完成：HF-5 a0（新 runner `run_d2.py` 的 b04 一致性冒烟）与 a1 PBS 脚本（2026-11-08；用户「可以」「180」「yayoi42 … 冒烟完了就是这个跑」）
+
+[施工计划](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) §3–4。
+- 恢复核对（用户 21:3x 从 git 恢复 4 个文件；在 183 上读，181 因 NFS 目录缓存当时还看不到）：`ts_branch.py` 12 536、`ts_connect.py` 14 128 字节；用原路径重新编译后与 `__pycache__` 里的 .pyc 字节码逐字节相同，即 v1.4 整跑用的版本；`test_ts_branch.py` + `test_ts_connect.py` 23 passed；`import explore.d2` 正常。
+- 代码：`benchmarks/explore_d2/systems.py`（b04 / b05 / n1 体系表，b04 / b05 的实测值从各自 runner 导入；未测的值为 None，runner 拒绝需要它的开关）、`run_d2.py`（`run_b05_d2.py` 的 CLI 加 `--system`、`--rotate`（旋转矩阵写进 manifest identity，不另写文件）、`--magnitude-step`、`--certify-max-rise-eV`（默认 3.0，M5-R10））、`hf5_smoke_compare.py`（只读对照）。ruff 通过。CPU 检查（183）：幅度网格 0.1 时与原 `MAGNITUDES_A` 相同；旋转矩阵正交、det 1、不改原子间距；b04 / b05 片段式子与体系表一致；b04 加 `--hs-bracket`、n1 加 `--hf`、步长 0.07 均被拒。
+- 冒烟：先在 183 启动（PID 743387），用户说 183 在跑别的，27 s 时按 PID 停掉（那个未完成的目录 `results/2026-11-08/b04_hf5_smoke/` 留着、不续跑）；改在 180（PID 79655，21:39 → 21:45，负载 0.00；`nvidia-smi` 报驱动 / 库版本不匹配，torch 能用 CUDA，GPU 占用无法确认）。参数同 10-28 `b04_hf_v11_smoke`（`--certify-max-rise-eV 1.0`）。结果 `results/2026-11-08/b04_hf5_smoke_180/`，日志无 traceback，在 180 上读。
+  - 与 10-28 对照（`hf5_smoke_compare.py`）：冻结设置、HF、起点分簇、config 相同；6 个姿态 ID 相同、坐标最大差 1.7e-6 Å；扫描结局 ready 34 / truncated 8、升级 脊 3 / 抽查 3、HS 候选 2 / hysteresis 2 / above_ceiling 2、HC 连通 1 / 判重 1、SN2 鞍点 −26132.2012 eV 与化学对全部相同；forward HS 627 对 552、HC 193 对 188、search 5 319 对 5 286（fp32 波动量级，10-26 与 10-28 两次冒烟之间也差 HS 610 / 599）；unreconciled 空。
+  - 实测：每意图 127 forward（5 319 / 42）；ledger 6 139 forward 约 290 s（扣除 76 s 加载），约 0.047 s / forward（2080 Ti，含开销）。
+- a1 PBS 脚本 `benchmarks/explore_d2/b04_hf5_v12_pbs.zsh`（照 v1.4 脚本只改 ← 行：yayoi42，ncpus 20 / ngpus 1 / 64 GB，12 线程 = 物理核数，walltime 6 h）：b04 D2-HF-v1.2 sA，L0 与 cap 同 b05 v1.4 整跑，壳层 2.0，search 47 000（184 意图上限 × 127 × 2）、refine 200 000。预计约 27k forward、20–30 min（按冒烟单步外推）。冒烟走的是 v1.1；v1.2 只多传 `same_graph_ridge_last=True` 给 `init_run`，这条 d2 路径 11-07 起在 b05 冒烟与整跑里跑过。`qsub` 由用户执行。
+
+## 已完成：HF-5 a1 b04 D2-HF-v1.2 基线整跑 sA（PBS yayoi42 作业 25188，2026-11-08 21:47:39 → 21:57:30；用户「跑完了」后在 183 上读）
+
+[计划](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) §4 a1。日志 `b04_hf5_v12.o25188`（项目根目录）有 done 行；`results/2026-11-08/b04_hf5_v12_sA.log` 无 traceback；unreconciled 空。4080 SUPER；模型加载 78 s。
+- 规模：意图 176（ready 144、domain_truncated 32）；L1 completed 84 / censored_energy 60；升级 23（脊 13、抽查 10），无触发 121；起点簇 18（第二轮 5）。
+- 账目：search 22 760 / 47 000，refine 4 939 / 200 000（HS 3 876、HC 1 063），ledger 27 699。约 0.0185 s / forward（扣除加载）。
+- HS：候选 11（全部来自脊）、`hysteresis` 7、`above_ceiling` 5；HC 连通 1、判重 10——**11 个候选全部是同一个 SN2 事件**（鞍点 −26132.2012 eV，断 0–1、成 0–5，与 b04 参照及 10-26 / 10-28 冒烟相同）。首次连通时累计 20 825 forward。不在参照里的事件 0。
+- **同键图的脊出候选**：6 个同键图的脊（全部是 `distance:0-5` 压缩方向，即 Cl⁻ 推 C）中 4 个出候选，HC 都是 SN2 事件的 `hf_duplicate`；另 2 个 `hysteresis`。原因（核对 L1 扫描点自带的 `edges`）：峰点 k 与 k+1 的键图都是 {0–2, 0–3, 0–4}，两根 C–Cl 都长于成键判据，即 SN2 的断键与成键分散在峰前后多步，不发生在峰这一步上，所以被 `_same_graph_ridge` 判为同键图。这正是 R3 选项文档 §3 R3a 写的误判情形。b05 上"同键图的脊 0 候选"（八块 0 / 1 663、整跑 0 / 363 + 0 / 32 样本）在 b04 上不成立。本次规则 v1.2 不跳过任何脊，事件没有丢；在 v1.4（S3 只抽 10%）下，这一事件仍可由 7 个成键改变的脊找到，但若某体系的反应全部是这种情形，S3 会跳过其中约 90%。没有改任何规则。
+- a2 的输入：62 个收敛中点（|RF| < 0.01 / 0.01–0.05 / > 0.05 分别为 20 / 21 / 21，来自 11 个 HS），失败中点 0。
+- a2 冒烟（180，PID 79964，22:06 → 22:07；`results/2026-11-08/b04_sign_resolution/smoke/`，日志无 traceback，在 180 上读；pid 文件在 180 上写，本机因 NFS 目录缓存一时看不到新目录）：S 组 1 点（a1 `k3·distance:0-1`，q 2.2801，记录 RF +0.0084）× 2 次：两次精阶段都收敛，19–23 forward、1.4–3.3 s；粗阶段 RF +0.0040 / −0.0020、精阶段 +0.0040 / −0.0018。全量（24 点 × 8 次）待用户「跑」。另：等待冒烟结束的后台任务第一次写错了 PID（81093），立即失败，按正确 PID 重开，不影响冒烟。
+- a2 全量改交 PBS（用户 11-09：yayoi31 空）：脚本 `benchmarks/explore_d2/b04_sign_resolution_pbs.zsh`（照 a1 脚本只改 ← 行：yayoi31 Ryzen 9950X / 4080 SUPER，ncpus 32 / ngpus 1 / 48 GB，16 线程，walltime 2 h），S 组 24 点 × 8 次，输出 `results/2026-11-08/b04_sign_resolution/full/`。`qsub` 由用户执行。
+
+## 已完成：HF-5 a2 b04 符号分辨界线测量（PBS yayoi31 作业 25291，2026-11-09 10:20:17 → 10:27:36；用户「跑完了」）
+
+[计划](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) §4 a2；定义同 [PLAN_HF_MIDPOINT_COARSE_2026-11-02.md](PLAN_HF_MIDPOINT_COARSE_2026-11-02.md) §2。日志 `b04_signres.o25291` 有 done 行，`full.log` 无 traceback，192 个结果齐全。汇总 `midpoint_sign_resolution_summary.py` 在 183 上写出 `results/2026-11-08/b04_sign_resolution/summary.json`（183 负载高，约 5 min）；数字按用户要求在 fulda 上读（文件数 192、summary 10:33 写入）。
+- 输入：a1（b04 v1.2 sA）的收敛中点，按记录 |RF| 三层各 8 点，每点 8 次（0.01 Å 扰动后冷启动松弛到 1e-3）。192 次全部有粗阶段帧、全部精阶段收敛；共 4 851 forward。
+- σ_c（同点粗阶段反力标准差）：全体中位 0.0034、p90 0.0069、最大 0.0087；分层中位 / p90：|RF| < 0.01 0.0044 / 0.0059，0.01–0.05 0.0031 / 0.0034，> 0.05 0.0036 / 0.0073。b05（11-02）为中位 0.0040、p90 0.0073。
+- 粗精偏差（粗 − 精，逐次）：均值 −0.00016、标准差 0.0033（b05 −0.0006 / 0.0047）；逐点均值 −0.0026 至 +0.0029，未见一致偏差。逐次极值 −0.021 / +0.012 是个别重复。
+- 公式 B = 0.003 + 3σ_c：中位 0.0131、pooled 0.0159、p90 0.0237。在任一界线之外的精阶段收敛重复中，粗精反力异号 0 次。按 b05 的取法（p90），B_b04 = 0.0237；待用户定。
+
+## 已完成：b04 HS 括区规则（B_b04 = 0.0237）与 v1.4 冒烟（2026-11-09；用户「可以」）
+
+- `benchmarks/explore_d2/systems.py`：b04 `hs_bracket = HSBracket(2e-3, 0.0237)`（用户 11-09 对"B_b04 取 0.0237，可以吗？"答「可以」）。
+- v1.4 冒烟（180，PID 82795，10:35 → 11:16；`results/2026-11-09/b04_hf5_v14_smoke/`，日志无 traceback，在 180 上读）：`--hf --start-cluster --same-graph-ridge --hs-bracket --sample-parallel --rotate 1 --magnitude-step 0.05`，L0 同 a0 冒烟，`--audit-fraction 1.0`（让同键图的脊全部进样本、走到并行路径）。manifest：D2-HF-v1.4、`hs_bracket` 0.002 / 0.0237、幅度网格 34 点、`input_rotation` 已写。升级 34（抽查 28、脊 6）；HS 候选 2、`hysteresis` 17、`above_ceiling` 15；HC 连通 1（SN2，−26132.2012 eV，断 0–1、成 0–5）+ 判重 1；search 9 399、refine 4 604（HS 4 422、HC 182），unreconciled 空。同键图的脊 6 个全部进样本，报告的 `sample_candidates` 非空（样本里出了候选，与 a1 的发现一致）。
+- 耗时：40 min 中模型加载占 1 480 s（a0 冒烟在同一台 180 上是 76 s，PBS 节点 78 s），原因未查；扣除加载约 0.064 s / forward。
+- a3 + a4 的 PBS 脚本 `benchmarks/explore_d2/b04_hf5_v14_pbs.zsh` 可交（host 暂填 yayoi31，等用户给节点）。
+
+## 已完成：HF-5 a3 + a4 b04 D2-HF-v1.4 五个运行（PBS yayoi31 作业 25361，2026-11-09 12:50:54 → 13:10:05；用户「跑完了」后在 fulda 上读）
+
+[计划](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) §4。日志 `b04_hf5_v14.o25361` 有 done 行，5 份运行日志无 traceback，unreconciled 全空。5 个进程共用一张 4080 SUPER、各 3 线程。汇总脚本 `benchmarks/explore_d2/hf5_b04_summary.py`（只读 manifest / report 与 journal 中的 HS / HC 结算），结果 `results/2026-11-09/b04_hf5_summary.json`（含 a1）。
+
+| 运行 | 升级（脊 / 抽查） | HS 候选 | 同键图的脊：跑 / 跳过 / 样本候选 | HC | 事件 | search / refine forward | 首次连通累计 forward |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| a1 v1.2 sA | 13 / 10 | 11 | 6 / — / 4（全跑） | 连通 1、判重 10 | SN2 | 22 760 / 4 939 | 20 825 |
+| v1.4 sA | 13 / 10 | 7 | 1 / 5 / 1 | 连通 1、判重 6 | SN2 | 22 877 / 3 252 | 24 800 |
+| v1.4 sB | 20 / 13 | 7 | 2 / 12 / 1 | 连通 1、判重 6 | SN2 | 24 263 / 3 808 | 26 506 |
+| v1.4 sA 重复 | 13 / 10 | 6 | 1 / 5 / 0 | 连通 1、判重 4、**`error:OutOfMemoryError` 1** | SN2 | 22 782 / 3 470 | 24 994 |
+| v1.4 sA 旋转 | 20 / 10 | 7 | 4 / 10 / 1 | 连通 1、判重 5、`endpoint_unstable` 1 | SN2 | 22 154 / 4 384 | 23 585 |
+| v1.4 sA 步长 0.05 | 13 / 10 | 1 | 1 / 12 / 1 | 连通 1 | SN2 | 26 014 / 474 | 26 488 |
+
+- **参照召回**：6 个运行都找到 b04 唯一的参照事件 SN2（鞍点 −26132.199 至 −26132.201 eV；步长 0.05 那次断 0–5、成 0–1，是同一 SN2 的镜像方向）；不在参照里的事件 0。性质检验（Hessian 阶数）与几何匹配未做（a5）。
+- **同键图的脊与步长**：步长 0.1 时 13 个脊里 6 个判为同键图；**步长 0.05 时 13 个里 12 个判为同键图**（12 个被 S3 跳过），唯一成键改变的脊没有出候选，事件是靠抽中的那 1 个同键图的脊找到的。读法：细步长下 SN2 的断键与成键分到更多扫描步里，峰前后一步内键图更不容易变，`_same_graph_ridge` 的判定强烈依赖扫描步长。b04 上 S3 的前提不成立，而且样本出候选在 4 / 5 个 v1.4 运行里出现。
+- **成本**：b04 上 search 占 ledger 的 82–98%；v1.4 相对 v1.2 refine 少 0.6–1.7k forward（−11% 至 −34%），步长 0.05 那次 refine 只有 474（大部分脊被跳过）。首次连通的累计 forward v1.4 反而晚 2.8–5.7k（同键图的脊被排到最后 / 跳过，而 a1 中最早连通的就是成键改变的脊——次序差异，未逐项核对）。
+- **重复（sA 对 sA 重复）**：升级相同；候选 7 / 6，`branch_force_disagreement` 1 / 2；fp32 波动量级（推断）。重复那次 1 个 HC 因 **GPU 显存不足**（5 个进程共用 16 GB）报 `error:OutOfMemoryError`，这是我打包 5 个进程的资源问题，不是算法结局；该项 HC 结果缺失。
+- **旋转**：输入转动后升级的脊 13 → 20（L0 姿态随朝向变化，原因未查），事件不变。
+
+## 已完成：HF-5 a5 b04 事件的参照匹配与性质检验（2026-11-09 13:13 → 13:15，180，PID 83642；在 180 上读）
+
+- 脚本 `benchmarks/explore_d2/hf_event_validate.py`（新，只在搜索之后做，不影响搜索）：每个 HC 连通事件的鞍点与参照鞍点比对称 RMSD（参照自身键图的自同构群，|Aut| 12）和 ΔE（参照在同一 fp32 模型上的单点），判据用运行自己的判重规则（≤ 0.15 Å、≤ 0.05 eV）；阶数用 `prrs.runner.confirm_minimum`（同 10-25 `hf_ef_bounded.py`）。结果 `results/2026-11-09/b04_event_validate.json`，日志无 traceback；共 256 forward（不入运行账本）。
+- 参照：`runs/b04_probe2_openceiling/ts_candidates/ts0000.extxyz`（PRRS 在 POLAR-1 面上的 SN2 鞍点，已由 QM 核验，`docs/experiments/b04_qm/README.md`）。本次复核：fp32 单点 −26132.2031 eV，解析 Hessian 一阶，虚频 −534.9 cm⁻¹。
+- 6 个事件（a1 v1.2 sA，v1.4 sA / sB / sA 重复 / sA 旋转 / sA 步长 0.05）：**全部匹配参照**，对称 RMSD 0.0003–0.0004 Å，ΔE +0.002 至 +0.004 eV。
+- 阶数：3 个通过（a1、旋转、步长 0.05：解析 Hessian，一阶，−535.7 至 −536.0 cm⁻¹，内部模复核一致）；**3 个未决**（v1.4 sA、sB、sA 重复：解析 Hessian 与有限差分交叉核验相差 1.6–2.1%，超过 1% 门限而改用 fd Hessian，随后 `trivial_mode_floor_above_tolerance`）。这 3 个的 fd 谱也只有一个负本征值（−534 至 −541 cm⁻¹），但按规则记未决，不计为通过。这是 TODO 第 12 条（交叉核验门限贴着 fp32 噪声）在 b04 上的又一例；门未改。
+
+## 已完成：HF-5 n0 N1 输入与 POLAR-1 参照鞍点（2026-11-09 13:18 → 13:27，180；在 180 上读）
+
+[计划](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) §5 n0。参照一侧，搜索看不到。结果 `benchmarks/n1_diels_alder/results/2026-11-09/`（`build.json`、`reference.json`、`ts_*/`），复合物输入复制到 `benchmarks/n1_diels_alder/input.extxyz`（`systems.py` 的 N1 路径；与结果目录中的相同）。
+- `build.py`：RDKit / MMFF 建环戊二烯与 s-trans 丙烯醛，fp32 POLAR-1 BFGS 到 0.01 eV/Å（10 / 17 步）；面对面摆放后松弛为反应前复合物（126 步，结合 −0.148 eV，接触比 2.09）。原子顺序：环戊二烯 C1–C5（C1、C4 为双烯端）及 6 H，丙烯醛 C6–C8、O9 及 4 H。TS 初猜：带原子编号的产物 SMILES 枚举立体异构体（8 个中 4 个可嵌入，即 endo / exo 各一对对映体，按 C8 到 C2=C3 与到 C5 的距离判 endo / exo），MMFF 约束形成中的 C1–C6、C4–C7 于 2.25 Å（实得 2.20 Å）、O9=C8–C7=C6 二面角 0° / 180°，得 4 个初猜。第一次运行因写文件时两个片段共用 calculator 报错，改为写副本后重跑通过。
+- `reference.py`：每个初猜 `prrs optimize --transition`（geomeTRIC，GAU，fp32 POLAR-1，132–141 次求值）→ `confirm_minimum` 阶数 → `descend_saddle` 两侧。第一次运行子进程缺 `PYTHONPATH`（`No module named prrs`），补上后重跑通过。
+  - 4 个都收敛为一阶鞍点（解析 Hessian），两侧都下降到反应物一侧（两根形成键 3.3–3.8 Å）与产物（1.56–1.58 Å），即 4 个都是协同、不对称的一步 DA：
+
+| 鞍点 | E − E(endo s-cis)，eV | C1–C6 / C4–C7（Å） | 虚频（cm⁻¹） | 末步 fmax（eV/Å） |
+| --- | --- | --- | --- | --- |
+| endo s-cis | 0（−10502.7236） | 2.06 / 2.44 | −542 | 0.006 |
+| exo s-cis | +0.008 | 2.10 / 2.41 | −503 | 0.023 |
+| endo s-trans | +0.068 | 2.09 / 2.32 | −582 | 0.021 |
+| exo s-trans | +0.076 | 2.10 / 2.34 | −550 | 0.017 |
+
+  - 两两对称 RMSD：同 endo / exo 之间 0.65 Å，endo 对 exo 1.93 Å，四者互不相同。相对复合物，最低鞍点高 0.80 eV。
+  - 限定：GAU 收敛下末步 fmax 最高 0.023 eV/Å，比搜索端候选判据 0.01 松；QM 一轴（评估协议 §3.2 第 6 步）未做；参照的 s-cis / s-trans 只覆盖丙烯醛两个平面构象。
+
+## 已完成（结果不可用于定参数）：σ / 几何噪声的通用测量脚本与 b04、N1 首测（2026-11-09；用户「可以 180 +181」）
+
+- 脚本 `benchmarks/explore_d2/rf_jitter_scan.py`（新）：量的定义同 `hf_ef_rf_jitter.py`（A 刚体变换；B 8 次 0.01 Å 扰动后在同 q 松弛到 τ 3e-3 / 1e-3，反力标准差 → σ，几何两两最大 RMSD → 几何噪声），取点改为：L0 第一个姿态的全部距离意图扫完整幅度，能量最高的收敛点在扫描内部的扫描按种子取 4 条，每条测峰点与峰前一点。
+- b04（181，PID 2368200，13:34 → 13:44，无 traceback；`results/2026-11-09/rf_jitter_b04.json`）：18 意图中 4 条有内部峰，正好全选。反应性的两条（C–Cl：`0-1`、`0-5`）上 σ（τ 3e-3）0.0012–0.0038、（τ 1e-3）0.0010–0.0029，几何噪声（τ 3e-3）0.0005–0.0022 Å，与 10-25 旧值（σ 0.0034 / 0.0037，τ 1e-3 0.0031 / 0.0042；几何 6.2e-4 Å）同量级。另两条是 Cl⁻ 在约 4 Å 外的松散距离（`1-5`、`2-5`），几何噪声 0.016–0.376 Å。
+- N1（180，PID 84297，13:34 → 14:20，无 traceback；`rf_jitter_n1.json`）：106 意图中 13 条有内部峰，按种子选的 4 条全是 H / O 之间的松散分子间距离（`10-11`、`14-15`、`10-14`、`9-14`），没有 DA 成键的 C1–C6（`0-11`）或 C4–C7（`3-12`）；几何噪声 0.009–1.02 Å、σ 0.0005–0.0124，同点重复落到不同构象。这与旧定义（HS 真正走到的反应性中点上的同支抖动）不是同一个量，**不用于定 N1 的 HFSettings**。
+- 读法：取点规则的缺陷，不是测量本身的问题。建议改为只取峰点与下一点扫描自带 `edges` 不同（成键改变的脊）的扫描——与 `jump`、`_same_graph_ridge` 同一定义，不看参照、不新增阈值；b04 上按此筛出的正是两条 C–Cl 扫描，与旧值相符。N1 需重跑（约 45 min，本次实测 46 min）。待用户定。
+
+## 已完成：σ 测量改为只取成键改变的脊（v2；用户 11-09「可以」）：b04 v2（181）与 N1（PBS yayoi38 作业 25432）
+
+- `rf_jitter_scan.py` 选扫描加条件：峰点与下一收敛点的扫描自带 `edges` 不同；结果里列出每条有内部峰的扫描是否成键改变。
+- b04 v2（181，PID 2390355，14:42 → 14:47，无 traceback；`rf_jitter_b04_v2.json`）：有内部峰 3 条（第一版 4 条，fp32 波动），成键改变只有 `0-1`；`0-5`（同为 SN2 扫描）被判同键图，与 a1 中同键图的脊的成因相同。`0-1` 上 σ（τ 3e-3）0.0029 / 0.0069、（τ 1e-3）0.0011 / 0.0010，几何噪声 0.0015–0.0029 Å，与 10-25 旧值同量级。
+- N1 先在 180 启动（PID 84841），用户给 yayoi38 后 5 min 时按 PID 停掉（半截文件 `rf_jitter_n1_v2.*` 留着）；改交 PBS（`benchmarks/explore_d2/n1_rf_jitter_pbs.zsh`，作业 25432，14:49:17 → 15:03:14，日志有 done 行、无 traceback；在 fulda 上读）。结果 `rf_jitter_n1_v2n.json`：第一个姿态 106 个距离意图中 16 条有内部峰，**成键改变 0 条**，没有测量点。16 条全是 H / O 参与的分子间距离（峰在 2.6–6.4 Å）。σ 与几何噪声仍未测出。
+- 读法（推断）：在这个姿态上，单根距离原语的扫描在峰这一步推不出 DA 的成键（DA 要两根 C–C 协同靠近）。只看了 1 / 8 个姿态。
+- 续（用户 11-09 给 yayoi41）：扩到 8 个姿态需要改脚本（未冒烟，按规矩不交 PBS），改为用已跑通的同一脚本换 7 个种子（20261024–20261030，各自 L0 第一个姿态朝向不同），PBS 脚本 `benchmarks/explore_d2/n1_rf_jitter_seeds_pbs.zsh`（yayoi41，两批 4 / 3 进程、各 4 线程），输出 `results/2026-11-09/rf_jitter_n1_s<种子>.json`。`qsub` 由用户执行。
+- 结果（PBS yayoi41 作业 25544，日志有 done 行；节点时钟记 02:16:33 → 03:11:18，约 55 min；7 份 json 齐全、无 traceback；在 fulda 上读）：8 个朝向（含 11-09 的 20261023）中 5 个有成键改变的脊，共 7 条：`9-11`（s25）、**`0-11` C1–C6（s26）**、**`3-12` C4–C7（s28）**、`3-17`（s28）、`12-17`、`0-14`（s29）、`2-11`（s30）；s24、s27 为 0 条。即单根距离扫描在部分朝向上能推出 DA 的成键。各点扫描反力 −5.5 至 +4.8（峰是离散扫描点，不在根附近）。
+  - σ（τ 3e-3 / 1e-3）：`0-11` 0.0011–0.0027 / 0.0007–0.0009；`3-12` 0.0009–0.0027 / 0.0005–0.0006；另 4 条 0.0013–0.0025 / 0.0003–0.0018；`9-11`（H 压到 C，q ≈ 1.1 Å）0.0022 / 0.0221（τ 3e-3）、0.0281 / 0.0058（τ 1e-3）。
+  - 几何噪声（τ 3e-3）：DA 两条 0.0033–0.0074 Å，另 4 条 0.0050–0.0093，`9-11` 0.0104 / 0.70。`9-11` 峰点（τ 3e-3）与两点（τ 1e-3）的 8 次重复两两相差 0.46–1.48 Å，不在同一支上。
+  - 提议（待用户定）：剔除重复间最大 RMSD 超过现有分支几何门 `branch_rmsd_A` 0.05 Å 的（点, τ），其余取最大：`reaction_force_sigma` 0.0027、`geometry_noise_A` 0.0104 Å（b04 0.0042 / 6.2e-4，b05 0.0025 / 7e-3）。
+- N1 noise_eV：180 上 `--measure-noise`（PID 85464，17:18 启动）卡在 NFS I/O（D 状态 10 min、日志 0 字节，用户「nfs 炸了」），按 PID 停掉，未出结果。改为一次交完的 PBS 脚本 `benchmarks/explore_d2/n1_hf5_chain_pbs.zsh`（用户 11-09「别给我一个冒烟」）：noise_eV → v1.2 基线 sA（noise_eV 取 noise_eV_rule，L0 / cap / 额度同 b05 v1.4）→ 中点符号分辨界线（S、F 组）。host 暂填 yayoi41，等节点；`--measure-noise` 与 N1 的 D2 路径都还没在真实模型上跑通过（b04 / b05 路径跑通过）。
+- N1 冒烟（180，用户「去180 冒烟」；`benchmarks/explore_d2/n1_smoke_180.sh`，17:31 启动，前 ~30 min 卡在 NFS I/O，18:04:35 结束；日志无 traceback；在 180 上读）：
+  - `--measure-noise`（`results/2026-11-09/n1_noise_180/noise.json`）：noise_eV_rule = **0.0527 eV**（fp32 量子 0.00098；b04 0.002、b05 0.0039）。4 个意图中 2 个的 5 次重复极差 0.001（1 个量子），另 2 个 0.046 / 0.053：5 次中有重复落到能量差约 0.04 eV 的另一个构象盆。即按现定义（最大极差）测到的是构象盆能量差，不是数值噪声。noise_eV 取法待用户定；`n1_hf5_chain_pbs.zsh` 第 2 步现在会自动取 0.0527，定之前不交。
+  - v1.2 小规模冒烟（`n1_hf5_v12_smoke/`，noise 0.0527，2 姿态、`n_far` 2、search / refine 各 20 000）：D2-HF-v1.2；意图 187（ready 150、truncated 37），L1 completed 19 / censored 46 / 额度用完 19（66 个 `L1_skipped:search_budget`）；升级 10（脊 2、抽查 8）；HS `transverse_not_converged` 8、`above_ceiling` 1、`hysteresis` 1，无候选、无 HC；search 19 844 + refine 2 661 = ledger 22 505，unreconciled 空；起点簇 10。每意图约 238 search forward（19 844 / 84 已扫）。HS 多停在 `transverse_not_converged` 只见于这 10 项，原因未查。
+- 用户 11-09 给 yayoi41（noise_eV 未定）：两种取法并跑 N1 v1.2 基线 sA（0.052734375 / 0.001953125），各自再测符号分辨界线；PBS 脚本 `benchmarks/explore_d2/n1_hf5_v12_pair_pbs.zsh`（两个运行共用一张 5080、各 8 线程，walltime 48 h）。由结果（哪个能找到参照 DA 鞍点、脊与 HS 的差别）再定 noise_eV。`n1_hf5_chain_pbs.zsh` 不再用。
+
+## 已完成：HF-5 n2 N1 v1.2 基线 sA，noise_eV 两种取法并跑（PBS yayoi41 作业 25575，2026-11-09 18:38 → 21:43；用户「是不是没跑呢」后在 fulda / 180 上读）
+
+日志 `n1_v12_pair.o25575` 有 done 行（节点时钟 04:35 → 07:43）；两份运行日志、两份 S 组日志无 traceback，F 组日志为空（无失败中点）；unreconciled 均空。结果 `results/2026-11-09/n1_hf5_v12_sA_{n0527,n0020}/`。
+
+| | noise 0.0527 | noise 0.00195 |
+| --- | --- | --- |
+| 意图 ready / truncated | 754 / 147 | 754 / 147 |
+| 升级 脊 / 抽查 / 跳支括区 | 32 / 70 / 10 | 71 / 67 / 8 |
+| HS 候选 / `transverse_not_converged` / `hysteresis` / `walk_relax_unconverged` / `above_ceiling` | 3 / 23 / 44 / 11 / 31 | 4 / 38 / 61 / 11 / 31 |
+| HC 连通事件 | 3 | 4 |
+| search / refine forward | 302 241 / 54 967 | 301 540 / 74 756 |
+
+- 事件比对（`hf_event_validate.py`，180，PID 89221，10:13 → 10:17，无 traceback；`results/2026-11-09/n1_event_validate.json`）：参照为 n0 的 4 个 DA 鞍点（本次复核均一阶）。7 个事件（两种取法合计，`2-11` 两边都有）**全部是一阶鞍点（虚频 −503 至 −846 cm⁻¹），但都只改变一根键**（C3–C6 `2-11`、C4–C6 `3-11`、C3–C7 `2-12`、C4–C7 `3-12`）；与最近参照 DA 鞍点的对称 RMSD 0.97–1.27 Å、能量高 0.59–1.52 eV，**无一匹配**（判据 0.15 Å / 0.05 eV）。即 v1.2 在 N1 上找到的是单键形成的分步鞍点，没有找到协同 DA 鞍点。
+- 核对（只读）：`explore/intents.py` 有 `pair_intents`（bonded 与 near 层两两组合），但 `run_b04_d2.py`、`run_b05_d2.py`、`run_d2.py` 都只用 `distance_intents(...)[0]`（单根距离），二元意图从未进入 D2。DA 两根键是否在 near 层未查。
+- 符号分辨界线：两边各 144 个结果（18 点 × 8 次，分层不满 8 点），未汇总。
+- 读法（推断）：单根距离原语推出的是一根键先成的分步路径；协同 DA 需要两根键一起推（设计 §8.2"多起点与协同意图"）。noise_eV 取小值多升级 39 个脊、多 1 个事件，但不改变这一点。
+
+## 已完成：二元意图能否覆盖 N1 的 DA 键对（只读；2026-11-10；用户「1 接二元意图 先查范围」）
+
+- 规则（`explore/intents.py`）：`pair_intents` 只从 bonded 与 near 层（距离 ≤ `pair_cutoff_A` 4.0 Å）的单根距离两两配对；locality `adjacent` 要求共用原子或两对之间有键。DA 键对（C1–C6 + C4–C7，或对称的 C1–C7 + C4–C6）经丙烯醛 C6=C7 键算 adjacent。
+- N1 v1.2 运行（`n1_hf5_v12_sA_n0020`）的 8 个 L0 姿态：**没有一个姿态的 DA 两根距离同时 ≤ 4.0 Å**，每个姿态至多一根在 near 层（3.19–3.97 Å），另一根 4.12–6.75 Å；最接近的是 k7（C1–C6 4.12、C4–C7 3.28）。即现有 `pair_intents` 在这些姿态上一个 DA 键对都不生成。
+- 数量：8 个姿态单根意图 754 个；`adjacent` 二元意图 13 796 个（`all` 26 220），为单根的 18 倍；按冒烟实测约 238 search forward / 意图，约 3.3M forward，现 search 额度 340k。
+- 读法：接入二元意图需要先定取法（纳入 far 层 / 放宽 cutoff / 子集规则）与额度，属发现层设计 §3.1 v1 范围以外的新规则，待用户定。没有改代码。
+
+## 已完成：HF-5 小结（2026-11-10；用户「对的  写」）
+
+用户 11-10："但是 是 我们为啥变成了 一个反应 优化一次参数 没意义了 啊""我们在干什么 / 你是不是完全搞糊涂了 方向"。小结 [HF5_SUMMARY_2026-11-10.md](HF5_SUMMARY_2026-11-10.md)：b04 参照召回成立、性质检验 3 通过 3 未决（TODO 12）；S3 前提在 b04 不成立且依赖步长；N1 单原语 D2 只找到单键分步鞍点、4 个参照 DA 鞍点都没找到；各体系数值参数取法不统一。列出需一次性通用重定的规则（S3、测量程序、noise_eV 定义、Hessian 交叉核验门限），不为 N1 补意图规则。施工计划状态行已改；README 加一行。二元意图选项页不写。
+
+## 计划：HF-6 与 Dimer 比较（2026-11-10；用户「可以  继续做」；未施工）
+
+[施工计划](PLAN_HF6_DIMER_2026-11-10.md)。核对：仓库里没有 Dimer 基线实现；`openmm_dev` 的 ASE 3.29 有 `ase.mep.dimer`（只读 import）。第一阶段局部定位：b04 / b05 / N1 三个现有运行的全部 HS 冻结括区（23 / 140 / 146 项），HF 臂按各自冻结规则重跑 HS，Dimer 臂取峰点几何 + 意图梯度方向；同一 fp32 模型、fmax 0.01、单项 3 000 forward、同一检验后端；ASE 默认 Dimer 参数一次写定、不按体系调。端到端另立计划。
+
+## HF-6 第一阶段：脚本与冒烟（2026-11-10；用户「开工」）
+
+- `benchmarks/explore_d2/hf6_local.py`（新）：每个 HS 冻结括区两臂——hf（运行自己冻结的 HS）、dimer（ASE `ase.mep.dimer` 默认 `DimerControl`、种子 20261110，从括区内能量最高的扫描点出发，初始模式为意图坐标梯度，`MinModeTranslate` 到完整 fmax ≤ 0.01），各自 hs_cap 账本；每项每臂一个 JSON，可续跑。
+- 冒烟（180，PID 89890，13:09 启动；`results/2026-11-10/hf6_local_smoke_b04/`）：b04 第 1 项两臂跑通。hf：`converged_candidate`，242 forward，−26132.2012 eV（SN2）。dimer：收敛，完整 fmax 0.0075、曲率 −0.757，1 353 forward、356 步，但终点离起点最远原子 12.3 Å、能量 −26132.371（比 SN2 鞍点低 0.17 eV），不是 SN2 鞍点。ASE 默认参数（`dimer_separation` 1e-4 Å）在 fp32 下能收敛。0.065 s / forward（2080 Ti）。
+- 整跑 PBS 脚本 `benchmarks/explore_d2/hf6_local_pbs.zsh`（yayoi31，三个体系三个进程共用一张卡、各 5 线程，walltime 48 h）。`qsub` 由用户执行。

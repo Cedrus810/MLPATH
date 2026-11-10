@@ -24,6 +24,10 @@
 | 算力节约待办（重复响应、构象入口、暂缓状态） | [TODO.md](TODO.md)（2026-10-26 起）；[同一起点降优先级计划](PLAN_START_CLUSTER_2026-10-28.md)（已施工为 D2-HF-v1.1）；[延续试步失败处理计划](PLAN_HF_WALK_RETRY_2026-10-28.md)（现行为 v4：首次失败即终止该侧）；[结果记录](HF_WALK_POLICY_RESULTS_2026-10-29.md) |
 | 二分中点卡住（TODO 第 9 条，11-01 至 11-02）：诊断、冷启动对照、横向曲率、阈值选项、分级终止（v4）与验收 | [冷启动对照计划](PLAN_HF_MIDPOINT_COLD_2026-11-01.md)；[横向曲率计划](PLAN_HF_MIDPOINT_TRANSVERSE_2026-11-02.md)；[改法选项](HF_MIDPOINT_THRESHOLD_OPTIONS_2026-11-02.md)；[分级终止施工计划（含用户决定与验收结果）](PLAN_HF_MIDPOINT_COARSE_2026-11-02.md)；[O5 优化器对照](PLAN_HF_MIDPOINT_O5_2026-11-02.md)；[精阶段 FIRE（v5）施工与验收](PLAN_HF_MIDPOINT_FINE_FIRE_2026-11-04.md)；[剩余精阶段卡点的改法选项（11-06）](HF_MIDPOINT_FINE_STAGE_OPTIONS_2026-11-06.md)；[粗阶段出候选（v6）施工计划](PLAN_HF_MIDPOINT_COARSE_CANDIDATE_2026-11-06.md)；[refine 端点出候选（v7）施工计划](PLAN_HF_ENDPOINT_CANDIDATE_2026-11-07.md)；[HS 两侧无最大值（R3）的改法选项（11-07）](HF_HS_NO_MAXIMUM_OPTIONS_2026-11-07.md)；[同键图的脊最后派发（D2-HF-v1.2）施工计划](PLAN_HF_SAME_GRAPH_RIDGE_2026-11-07.md)；[v7 接入 D2（D2-HF-v1.3）与 b05 整跑](PLAN_HF_D2_V13_2026-11-07.md)；[同键图的脊剩余花费的改法选项（11-07）](HF_SAME_GRAPH_RIDGE_SPEND_OPTIONS_2026-11-07.md)；[S3 + HS / HC 并行（D2-HF-v1.4）施工计划](PLAN_HF_D2_V14_2026-11-07.md) |
 | 二分中点工作线交接（11-01 至 11-06：诊断、v4 分级终止、O5、v5 精阶段 FIRE、候选身份与 HC、待办） | [HANDOFF_HF_MIDPOINT_2026-11-06.md](HANDOFF_HF_MIDPOINT_2026-11-06.md)（接替 [11-04 版](HANDOFF_HF_MIDPOINT_2026-11-04.md)） |
+| HF-6 与 Dimer 比较（11-10 计划：局部定位先行，端到端另立） | [PLAN_HF6_DIMER_2026-11-10.md](PLAN_HF6_DIMER_2026-11-10.md) |
+| HF-5 小结（11-10：b04 召回成立、S3 前提不成立；N1 单原语 D2 漏掉协同 DA；需统一重定的规则） | [HF5_SUMMARY_2026-11-10.md](HF5_SUMMARY_2026-11-10.md) |
+| HF-5 跨体系检验（11-08 计划：b04 有界端到端 → N1 协同体系，D2-HF-v1.4 不改；b09 留作最终验收） | [PLAN_HF5_CROSS_SYSTEM_2026-11-08.md](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) |
+| HS 精修与 D2 工作线交接（11-06 至 11-08：9c 诊断、v6 / v7、R3 普查、D2-HF-v1.2–v1.4、并行测量、v1.4 整跑与同硬件对照、数据被删、待办；接替 11-06 版） | [HANDOFF_HF_D2_2026-11-08.md](HANDOFF_HF_D2_2026-11-08.md) |
 | b05 HF D2 工作线交接（10-26 至 11-01：去重、两轮派发、跳支括区、延续策略 v4、新 E2 鞍点与 QM 核验） | [HANDOFF_HF_D2_2026-11-01.md](HANDOFF_HF_D2_2026-11-01.md) |
 | 如何复跑与验证改动 | 两套 Makefile；[env/BASELINE.md](../env/BASELINE.md) 是环境与历史验证记录 |
 
