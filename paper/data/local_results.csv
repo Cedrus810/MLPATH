@@ -1,0 +1,7 @@
+system,arm,items,candidates,order1,geometry_matches,strict_reference_hits,distinct_strict_references,forwards,source
+b04,hf,23,11,11,11,11,1,4360,benchmarks/explore_d2/results/2026-11-10/hf6_local_summary_v3.json
+b04,dimer,23,10,3,3,3,1,42048,benchmarks/explore_d2/results/2026-11-10/hf6_local_summary_v3.json
+b05,hf,140,19,16,19,16,3,63659,benchmarks/explore_d2/results/2026-11-10/hf6_local_summary_v3.json
+b05,dimer,140,27,15,0,0,0,371593,benchmarks/explore_d2/results/2026-11-10/hf6_local_summary_v3.json
+n1,hf,146,4,4,0,0,0,66071,benchmarks/explore_d2/results/2026-11-10/hf6_local_summary_v3.json
+n1,dimer,146,70,28,3,3,2,319582,benchmarks/explore_d2/results/2026-11-10/hf6_local_summary_v3.json

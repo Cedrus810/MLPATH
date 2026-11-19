@@ -1,0 +1,13 @@
+seed,system,arm,budget,reference_count,strict_references_found,first_strict_hit,first_hit_budget_fraction,order1,source
+sA,b04,d2,26129,1,1,24800,0.9491369742431781,1,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sA_v3.json
+sA,b04,db,26129,1,0,,,0,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sA_v3.json
+sA,b05,d2,408888,3,3,348119,0.8513798399561738,3,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sA_v3.json
+sA,b05,db,408888,3,0,,,10,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sA_v3.json
+sA,n1,d2,376296,4,0,,,4,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sA_v3.json
+sA,n1,db,376296,4,0,,,4,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sA_v3.json
+sB,b04,d2,28071,1,1,26506,0.9442485126999395,1,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sB_v2.json
+sB,b04,db,28071,1,0,,,1,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sB_v2.json
+sB,b05,d2,405075,3,2,348388,0.8600580139480343,2,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sB_v2.json
+sB,b05,db,405075,3,0,,,17,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sB_v2.json
+sB,n1,d2,377745,4,0,,,3,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sB_v2.json
+sB,n1,db,377745,4,0,,,7,benchmarks/explore_d2/results/2026-11-11/hf6_e2e_summary_sB_v2.json
