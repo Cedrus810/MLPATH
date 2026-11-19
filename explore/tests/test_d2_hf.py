@@ -18,7 +18,7 @@ from explore.d2 import HF_RULE_VERSION, HFSettings, run
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def drive(run_dir, counter, crash_after, mode="hf"):
+def drive(run_dir, counter, crash_after, mode="hf", env=None):
     path = os.pathsep.join(str(ROOT / p) for p in ("src", "../src", "tests"))
     return subprocess.run(
         [
@@ -29,7 +29,7 @@ def drive(run_dir, counter, crash_after, mode="hf"):
             str(crash_after),
             mode,
         ],
-        env={**os.environ, "PYTHONPATH": path},
+        env={**os.environ, "PYTHONPATH": path, **(env or {})},
         capture_output=True,
         text=True,
         timeout=900,
@@ -101,6 +101,9 @@ def test_resume_after_completion_dispatches_nothing(reference, tmp_path):
 
 def crash_point(ref_dir, where):
     log = events(ref_dir)
+    if where == "GN":
+        gn = next(e for e in log if e["event"] == "settle" and e["task"].startswith("GN|"))
+        return gn["cumulative_spent"] - gn["spent"] // 2
     hs = next(e for e in log if e["event"] == "settle" and e["task"].startswith("HS|"))
     hc = next(e for e in log if e["event"] == "settle" and e["task"].startswith("HC|"))
     if where == "HS":
@@ -118,10 +121,10 @@ def test_kill_and_resume_pays_once_and_keeps_the_search_geometry(reference, tmp_
     _kill_and_resume(reference, tmp_path, where, "hf")
 
 
-def _kill_and_resume(reference, tmp_path, where, mode):
+def _kill_and_resume(reference, tmp_path, where, mode, env=None):
     ref_dir, ref_external = reference
     run_dir, counter = tmp_path / "run", tmp_path / "count"
-    first = drive(run_dir, counter, crash_point(ref_dir, where), mode)
+    first = drive(run_dir, counter, crash_point(ref_dir, where), mode, env)
     assert first.returncode == 137, first.stderr
     cut = events(run_dir)
     hs_before = {
@@ -132,7 +135,7 @@ def _kill_and_resume(reference, tmp_path, where, mode):
         and e["status"] == "converged_candidate"
     }
 
-    second = drive(run_dir, counter, -1, mode)
+    second = drive(run_dir, counter, -1, mode, env)
     assert second.returncode == 0, second.stderr
     log, rep, ref = events(run_dir), report(run_dir), report(ref_dir)
 
@@ -652,3 +655,199 @@ def reference_v14(tmp_path_factory):
 def test_v14_kill_inside_a_wave_and_resume_pays_once(reference_v14, tmp_path, where):
     assert report(reference_v14[0])["rule_version"] == "D2-HF-v1.4"
     _kill_and_resume(reference_v14, tmp_path, where, "v14")
+
+
+# Three general rules (D2-HF-v1.5; docs/PLAN_HF_D2_V15_2026-11-13.md).
+def test_same_graph_basin_compares_the_basins_around_the_ridge():
+    """SN2-like: the bond change is spread over steps, peak and next point share a graph
+    (old test: same-graph), but the descent ends in another graph (basin test: changed)."""
+    from explore.d2 import _points, _same_graph_ridge
+
+    a, mid, b = [[0, 1]], [[0, 2]], [[1, 2]]
+
+    def pts(graphs, energies):
+        return _points(
+            {
+                "points": [
+                    _scan_record(1.5 + 0.1 * i, e, 1.0 - i, g)
+                    for i, (g, e) in enumerate(zip(graphs, energies))
+                ]
+            }
+        )
+
+    ridge = {"class": "ridge_suspected", "info": {"peak": 2}}
+    spread = pts([a, a, mid, mid, b], [0.0, 0.2, 0.4, 0.3, -0.5])
+    assert _same_graph_ridge(ridge, spread)
+    assert not _same_graph_ridge(ridge, spread, basin=True)
+    conformational = pts([a, a, a, mid, a], [0.0, 0.2, 0.4, 0.3, -0.5])
+    assert not _same_graph_ridge(ridge, conformational)  # neighbours differ
+    assert _same_graph_ridge(ridge, conformational, basin=True)  # both basins in graph a
+    # the lowest point of the converged run after the peak decides, not the last point
+    dip = pts([a, a, a, b, a], [0.0, 0.2, 0.4, -0.6, -0.1])
+    assert not _same_graph_ridge(ridge, dip, basin=True)
+
+
+def test_geometry_noise_measure_validation():
+    from d2_bench import gn_measure
+
+    assert gn_measure().cap() == 2 * 2 * 3 * 60
+    for bad in (
+        dict(ridges=0),
+        dict(repeats=1),
+        dict(max_steps=1.5),
+        dict(sigma_A=0.0),
+        dict(fallback_A=float("nan")),
+        dict(taus=()),
+        dict(taus=(1e-3, -1e-3)),
+    ):
+        with pytest.raises(ValueError):
+            gn_measure(**bad)
+
+
+def test_v15_settings_and_freeze(tmp_path):
+    from d2_bench import gn_measure
+
+    with pytest.raises(ValueError):  # needs v1.4
+        _v13(tmp_path / "a", geometry_noise_measure=gn_measure())
+    with pytest.raises(ValueError):
+        _v13(
+            tmp_path / "b",
+            same_graph_sample=True,
+            hf_parallel=True,
+            geometry_noise_measure={"ridges": 2},
+        )
+    _v13(tmp_path / "v14", same_graph_sample=True, hf_parallel=True)
+    old = json.loads((tmp_path / "v14" / "manifest.json").read_text())
+    assert old["rule_version"] == "D2-HF-v1.4" and "same_graph_basin" not in old
+    _v13(
+        tmp_path / "v15",
+        same_graph_sample=True,
+        hf_parallel=True,
+        geometry_noise_measure=gn_measure(),
+    )
+    m = json.loads((tmp_path / "v15" / "manifest.json").read_text())
+    assert m["rule_version"] == "D2-HF-v1.5"
+    assert m["same_graph_basin"] is True and m["same_graph_fallback"] is True
+    assert m["geometry_noise_measure"]["taus"] == [3e-3, 1e-3]
+
+
+def _v15(run_dir, **over):
+    from d2_bench import gn_measure
+
+    _v13(
+        run_dir,
+        same_graph_sample=True,
+        hf_parallel=True,
+        geometry_noise_measure=gn_measure(),
+        **over,
+    )
+
+
+def test_v15_measures_geometry_noise_on_bond_changing_ridges(tmp_path, monkeypatch):
+    import explore.d2 as d2
+
+    monkeypatch.setattr(d2, "_same_graph_ridge", lambda c, p, basin=False: False)
+    run_dir = tmp_path / "run"
+    _v15(run_dir)
+    tick = Tick()
+    rep = run(run_dir, backends(tick))
+    gn = _settles(run_dir, "GN|")
+    assert len(gn) == 2  # both bench ridges, at most ``ridges`` = 2
+    assert all(e["account"] == "refine" and e["status"] == "completed" for e in gn)
+    for e in gn:
+        assert [(r["where"], r["tau"]) for r in e["payload"]["points"]] == [
+            ("before_peak", 3e-3),
+            ("before_peak", 1e-3),
+            ("peak", 3e-3),
+            ("peak", 1e-3),
+        ]
+    g = rep["geometry_noise"]
+    values = [
+        r["max_pair_rmsd_A"]
+        for e in gn
+        for r in e["payload"]["points"]
+        if r["max_pair_rmsd_A"] is not None and r["max_pair_rmsd_A"] <= 0.05
+    ]
+    assert g["source"] == "measured" and g["geometry_noise_A"] == max(values)
+    assert rep["start_clusters"]["radius_A"] == pytest.approx(1e4 * max(values))
+    # GN tasks come before every HS, HS after all of them
+    order = [e["task"][:2] for e in events(run_dir) if e["event"] == "settle"]
+    assert order.index("HS") > max(i for i, t in enumerate(order) if t == "GN")
+    assert tick.count == rep["ledger_total"] == paid(rep)
+    # resume: nothing new, same value from the journal
+    before = len(events(run_dir))
+    again = run(run_dir, backends(Tick()))
+    assert len(events(run_dir)) == before
+    assert again["geometry_noise"] == rep["geometry_noise"]
+
+
+def test_v15_geometry_noise_falls_back_without_budget(tmp_path, monkeypatch):
+    import explore.d2 as d2
+    from d2_bench import gn_measure
+
+    monkeypatch.setattr(d2, "_same_graph_ridge", lambda c, p, basin=False: False)
+    run_dir = tmp_path / "run"
+    _v15(run_dir, certify_budget=gn_measure().cap() - 1)
+    rep = run(run_dir, backends(Tick()))
+    assert rep["skips"]["GN_skipped:refine_budget"] == 2
+    assert rep["geometry_noise"]["source"] == "fallback"
+    assert rep["geometry_noise"]["geometry_noise_A"] == 0.0104
+
+
+def test_same_graph_fallback_reads_the_sampled_hc():
+    from types import SimpleNamespace
+
+    from explore.d2 import _same_graph_fallback
+
+    rows = [({"intent_id": "a"},), ({"intent_id": "b"},)]
+    for status, expect in (
+        ("connected", True),
+        ("hf_duplicate", True),
+        ("same_basin", False),
+        ("failed:tangent_no_resolved_drop", False),
+    ):
+        run_ = SimpleNamespace(settled={"HC|b": {"status": status}})
+        assert _same_graph_fallback(run_, rows) is expect
+    assert _same_graph_fallback(SimpleNamespace(settled={}), rows) is False
+
+
+@pytest.mark.parametrize("triggered", [True, False])
+def test_v15_unsampled_same_graph_ridges_wait_for_the_sample(tmp_path, monkeypatch, triggered):
+    """Both bench ridges are same-graph; none sampled (fraction 0). Fallback on: they run
+    last, tagged; off: skipped as in v1.4, and no HC for them."""
+    import explore.d2 as d2
+
+    monkeypatch.setattr(d2, "_same_graph_fallback", lambda run, sampled: triggered)
+    run_dir = tmp_path / "run"
+    _v15(run_dir, audit_fraction=0.0)
+    tick = Tick()
+    rep = run(run_dir, backends(tick))
+    hs = _settles(run_dir, "HS|")
+    sg = rep["same_graph_ridge"]
+    if triggered:
+        assert len(hs) == 2 and all(e["payload"]["same_graph_fallback"] for e in hs)
+        assert all(e["payload"]["same_graph_sample"] is False for e in hs)
+        assert sg["fallback"] == 2 and sg["skipped"] == 0
+    else:
+        assert not hs and sg["skipped"] == 2 and sg["fallback"] == 0
+    assert tick.count == rep["ledger_total"] == paid(rep)
+
+
+BOND_CHANGING = {"D2_BENCH_BOND_CHANGING": "1"}
+
+
+@pytest.fixture(scope="module")
+def reference_v15(tmp_path_factory):
+    base = tmp_path_factory.mktemp("v15ref")
+    done = drive(base / "run", base / "count", -1, "v15", BOND_CHANGING)
+    assert done.returncode == 0, done.stderr
+    return base / "run", (base / "count").stat().st_size
+
+
+@pytest.mark.parametrize("where", ["GN", "HS"])
+def test_v15_kill_and_resume_pays_once(reference_v15, tmp_path, where):
+    rep = report(reference_v15[0])
+    assert rep["rule_version"] == "D2-HF-v1.5"
+    assert rep["geometry_noise"]["source"] == "measured"
+    _kill_and_resume(reference_v15, tmp_path, where, "v15", BOND_CHANGING)
+    assert report(tmp_path / "run")["geometry_noise"] == rep["geometry_noise"]

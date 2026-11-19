@@ -78,6 +78,7 @@ def init(
     hs_bracket=None,
     same_graph_sample=False,
     hf_parallel=False,
+    geometry_noise_measure=None,
     **over,
 ):
     init_run(
@@ -93,7 +94,19 @@ def init(
         hs_bracket=hs_bracket,
         same_graph_sample=same_graph_sample,
         hf_parallel=hf_parallel,
+        geometry_noise_measure=geometry_noise_measure,
     )
+
+
+# D2-HF-v1.5 bench measurement: small enough for the test budget (cap 2 x 2 x 3 x 60)
+def gn_measure(**over):
+    from explore.d2 import GeometryNoiseMeasure
+
+    base = dict(
+        ridges=2, repeats=3, sigma_A=0.01, taus=(3e-3, 1e-3), max_steps=60, fallback_A=0.0104
+    )
+    base.update(over)
+    return GeometryNoiseMeasure(**base)
 
 
 class Tick:

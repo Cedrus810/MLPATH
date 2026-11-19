@@ -12,9 +12,32 @@ from run_b04_d2 import HF_B04
 from run_b05_d2 import FRAGMENT_STATES as FRAGMENT_STATES_B05
 from run_b05_d2 import HF_B05, HS_BRACKET_B05
 
-from explore.d2 import HFSettings, HSBracket
+from explore.d2 import GeometryNoiseMeasure, HFSettings, HSBracket
 
 ROOT = Path(__file__).resolve().parents[2]
+
+# D2-HF-v1.5 (docs/PLAN_HF_D2_V15_2026-11-13.md; user 2026-11-13 chose M2 and N1 of
+# docs/HF_GENERAL_RULES_OPTIONS_2026-11-12.md): one set for every system on fp32 POLAR-1.
+# sigma and the sign bound B are the largest measured on b04 / b05 / N1 (0.0042 b04;
+# 0.025 b05, 0.0237 b04); thresholds and caps as before. geometry_noise_A is measured in
+# the run (GN_V15); the HFSettings value is only its fallback (0.0104 A, N1, the largest
+# measured) and is replaced once the run has measured it. Re-derive all of it for another
+# model or precision.
+HF_V15 = HFSettings(
+    reaction_force_sigma=0.0042,
+    geometry_noise_A=0.0104,
+    midpoint_transverse_fmax_eV_A=1e-3,
+    hs_cap=3000,
+    hc_cap=3000,
+)
+HS_BRACKET_V15 = HSBracket(
+    midpoint_coarse_transverse_fmax_eV_A=2e-3, midpoint_sign_bound_eV_A=0.025
+)
+GN_V15 = GeometryNoiseMeasure(
+    ridges=4, repeats=8, sigma_A=0.01, taus=(3e-3, 1e-3), max_steps=400, fallback_A=0.0104
+)
+# noise_eV = NOISE_QUANTA_V15 x the float32 spacing at the first pose's energy (N1, c = 2)
+NOISE_QUANTA_V15 = 2
 
 
 @dataclass(frozen=True)

@@ -8,6 +8,12 @@
       --audit-fraction F --max-active M --wave-size W \\
       [--hf [--start-cluster [--same-graph-ridge [--hs-bracket [--sample-parallel]]]]] \\
       [--rotate SEED] [--magnitude-step A] [--certify-max-rise-eV E]
+  python run_d2.py --system NAME --run DIR --v15 ... (no --noise-eV)
+
+--v15 freezes D2-HF-v1.5 (docs/PLAN_HF_D2_V15_2026-11-13.md): the v1.4 switches with the
+model-level constants of systems.py (HF_V15, HS_BRACKET_V15) instead of the system's own
+measured ones, geometry_noise_A measured in the run (GN_V15), and noise_eV =
+NOISE_QUANTA_V15 x float32 spacing at the first L0 pose's energy (written to the identity).
 
 Same modes, rule switches and resume behaviour as run_b05_d2.py, generalised over the
 system table (input, charge, fragment states, measured HFSettings / HSBracket). Added for
@@ -37,7 +43,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from ase.io import read  # noqa: E402
 from l0 import build_l0  # noqa: E402
-from systems import SYSTEMS  # noqa: E402
+from systems import GN_V15, HF_V15, HS_BRACKET_V15, NOISE_QUANTA_V15, SYSTEMS  # noqa: E402
 
 from benchmarks.b04_sn2_chloride.calculator import MODELS, polar1  # noqa: E402
 from explore.d2 import Backends, D2Settings, StartCluster, init_run, run  # noqa: E402
@@ -124,15 +130,25 @@ def parse_args(argv=None):
     ap.add_argument(
         "--sample-parallel", action="store_true", help="with --hs-bracket: D2-HF-v1.4"
     )
+    ap.add_argument("--v15", action="store_true", help="D2-HF-v1.5 (implies the v1.4 switches)")
     args = ap.parse_args(argv)
+    if args.v15:
+        if args.measure_noise:
+            ap.error("--v15 sets noise_eV itself; --measure-noise is not used")
+        if args.noise_eV is not None:
+            ap.error("--v15 sets noise_eV from the float32 spacing; drop --noise-eV")
+        args.hf = args.start_cluster = args.same_graph_ridge = True
+        args.hs_bracket = args.sample_parallel = True
     needed = L0_ARGS + (RUN_ARGS if args.run else ())
+    if args.v15:
+        needed = tuple(n for n in needed if n != "noise_eV")
     missing = [f"--{n.replace('_', '-')}" for n in needed if getattr(args, n) is None]
     if missing:
         ap.error("required: " + " ".join(missing))
     system = SYSTEMS[args.system]
-    if args.hf and system.hf is None:
+    if args.hf and system.hf is None and not args.v15:
         ap.error(f"--hf: HFSettings for {args.system} not measured yet (systems.py)")
-    if args.hs_bracket and system.hs_bracket is None:
+    if args.hs_bracket and system.hs_bracket is None and not args.v15:
         ap.error(f"--hs-bracket: HSBracket for {args.system} not measured yet (systems.py)")
     try:
         magnitudes(args.magnitude_step)
@@ -317,7 +333,7 @@ def run_mode(args, system):
     manifest = run_dir / "manifest.json"
     if manifest.exists():
         frozen = json.loads(manifest.read_text(encoding="utf-8"))["settings"]["noise_eV"]
-        if frozen != args.noise_eV:
+        if args.noise_eV is not None and frozen != args.noise_eV:
             print(
                 f"noise_eV: using the frozen {frozen} from manifest.json, not {args.noise_eV}"
             )
@@ -332,6 +348,21 @@ def run_mode(args, system):
         specs = {
             pid: distance_intents(a, pid, config, args.n_far, args.seed)[0] for pid, a in poses
         }
+        noise_rule = None
+        if args.v15:
+            first = poses[0][1].copy()
+            first.calc = calc32
+            energy = float(first.get_potential_energy())
+            spacing = float(np.spacing(np.float32(abs(energy))))
+            args.noise_eV = NOISE_QUANTA_V15 * spacing
+            noise_rule = {
+                "rule": "quanta x float32 spacing at the first pose energy (N1, c = 2)",
+                "quanta": NOISE_QUANTA_V15,
+                "pose_energy_eV": energy,
+                "float32_spacing_eV": spacing,
+                "noise_eV": args.noise_eV,
+                "forwards_outside_ledger": 1,
+            }
         path, model_type = MODELS["polar1"]
         identity = {
             "system": system.name,
@@ -343,6 +374,7 @@ def run_mode(args, system):
             "args": {k: v for k, v in vars(args).items() if k not in ("run", "measure_noise")},
             "input_rotation": None if matrix is None else matrix.tolist(),
             "l0": l0_info,
+            "noise_eV_rule": noise_rule,
         }
         init_run(
             run_dir,
@@ -351,12 +383,15 @@ def run_mode(args, system):
             d2_settings(args),
             config,
             identity,
-            hf=system.hf if args.hf else None,
+            hf=HF_V15 if args.v15 else (system.hf if args.hf else None),
             start_cluster=START_CLUSTER if args.start_cluster else None,
             same_graph_ridge_last=args.same_graph_ridge,
-            hs_bracket=system.hs_bracket if args.hs_bracket else None,
+            hs_bracket=HS_BRACKET_V15
+            if args.v15
+            else (system.hs_bracket if args.hs_bracket else None),
             same_graph_sample=args.sample_parallel,
             hf_parallel=args.sample_parallel,
+            geometry_noise_measure=GN_V15 if args.v15 else None,
         )
     report = run(run_dir, Backends(MACEBatchEvaluator(calc32), calc32))
     info = {"host": socket.gethostname(), "pid": os.getpid(), "load_s": load_s}

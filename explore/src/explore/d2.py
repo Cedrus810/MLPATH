@@ -27,10 +27,11 @@ from pathlib import Path
 import numpy as np
 from ase import Atoms
 from ase.calculators.singlepoint import SinglePointCalculator
+from ase.optimize import BFGS
 
 from .certify import Certification, certify, pair_symmetries
 from .journal import Account, Journal, repair_tail
-from .ledger import Ledger, tally, view_factory
+from .ledger import BudgetExhausted, Ledger, tally, view_factory
 from .parallel import ScanJob, TaskJob, run_many, scan_many
 from .poses import _jsonable
 from .probe import (
@@ -46,7 +47,7 @@ from .probe import (
 from .streams import stream
 from .ts_branch import BranchSettings, continue_branches_ef
 from .ts_connect import ConnectSettings, branch_starts, trace_sides_ef
-from .ts_ef import EFSettings
+from .ts_ef import EFSettings, _Constraint, _rmsd
 
 ARM = "D2"
 RULE_VERSION = "D2-v1.1"  # v1.1: F3 read_scan fix + F6 scan tangent to the refiner (2026-10-24)
@@ -76,6 +77,13 @@ HF_BR_RULE_VERSION = "D2-HF-v1.3"
 # and settle in input order; HC duplicate checks happen at settlement, in order.
 # Chosen at freeze by passing ``same_graph_sample`` and ``hf_parallel`` on top of v1.3.
 HF_V14_RULE_VERSION = "D2-HF-v1.4"
+# D2-HF-v1.4 + three general rules (docs/HF_GENERAL_RULES_OPTIONS_2026-11-12.md, user
+# 2026-11-13; plan docs/PLAN_HF_D2_V15_2026-11-13.md): the same-graph test compares the
+# basins on both sides of a ridge (scan start vs lowest point after the peak) instead of
+# two neighbouring scan steps; unsampled same-graph ridges run as a fourth group when a
+# sampled one connects (G3); geometry_noise_A is measured inside the run on bond-changing
+# ridges (M2). Chosen at freeze by passing ``geometry_noise_measure`` on top of v1.4.
+HF_V15_RULE_VERSION = "D2-HF-v1.5"
 
 
 @dataclass(frozen=True)
@@ -178,6 +186,41 @@ class HSBracket:
                 raise ValueError(f"{name} must be finite and positive")
 
 
+@dataclass(frozen=True)
+class GeometryNoiseMeasure:
+    """In-run measurement of HFSettings.geometry_noise_A (D2-HF-v1.5, plan §1 item 4).
+    ``ridges`` bond-changing ridges in a seeded order; at the peak and the point before
+    it, ``repeats`` N(0, ``sigma_A``) perturbations are relaxed at the same q to each tau
+    (ASE BFGS, maxstep 0.05, ``max_steps``); per (point, tau) the largest pairwise RMSD of
+    the converged repeats. (point, tau) above EFSettings.branch_rmsd_A are dropped (repeats
+    left the branch); the largest of the rest is the run's value, else ``fallback_A``."""
+
+    ridges: int
+    repeats: int
+    sigma_A: float
+    taus: tuple[float, ...]
+    max_steps: int
+    fallback_A: float
+
+    def __post_init__(self):
+        for name in ("ridges", "repeats", "max_steps"):
+            v = getattr(self, name)
+            if isinstance(v, bool) or not isinstance(v, (int, np.integer)) or v < 1:
+                raise ValueError(f"{name} must be a positive integer")
+        if self.repeats < 2:
+            raise ValueError("repeats must be at least 2 (pairwise RMSD)")
+        for name in ("sigma_A", "fallback_A"):
+            v = getattr(self, name)
+            if isinstance(v, bool) or not np.isfinite(v) or v <= 0:
+                raise ValueError(f"{name} must be finite and positive")
+        taus = tuple(self.taus)
+        if not taus or any(isinstance(t, bool) or not np.isfinite(t) or t <= 0 for t in taus):
+            raise ValueError("taus must be finite and positive")
+
+    def cap(self):
+        return 2 * len(self.taus) * self.repeats * self.max_steps
+
+
 @dataclass
 class Backends:
     """``search_batch``: ``evaluate_batch`` for ``scan_many`` (resident float32 model in
@@ -205,13 +248,15 @@ def init_run(
     hs_bracket=None,
     same_graph_sample=False,
     hf_parallel=False,
+    geometry_noise_measure=None,
 ):
     """Freeze a D2 run: write poses, the intent table and the manifest (last, so its
     presence marks a complete freeze). Refuses before any evaluation when a pose lacks
     its electronic state. ``hf`` (HFSettings) freezes rule D2-HF-v1; ``hf`` together with
     ``start_cluster`` (StartCluster) freezes D2-HF-v1.1; adding ``same_graph_ridge_last``
     freezes D2-HF-v1.2; adding ``hs_bracket`` (HSBracket) freezes D2-HF-v1.3; adding both
-    ``same_graph_sample`` and ``hf_parallel`` freezes D2-HF-v1.4."""
+    ``same_graph_sample`` and ``hf_parallel`` freezes D2-HF-v1.4; adding
+    ``geometry_noise_measure`` (GeometryNoiseMeasure) freezes D2-HF-v1.5."""
     run_dir = Path(run_dir)
     if start_cluster is not None and hf is None:
         raise ValueError("start_cluster orders HS dispatch and needs hf")
@@ -230,6 +275,11 @@ def init_run(
         raise ValueError("same_graph_sample and hf_parallel freeze D2-HF-v1.4 together")
     if same_graph_sample and hs_bracket is None:
         raise ValueError("D2-HF-v1.4 extends D2-HF-v1.3 and needs hs_bracket")
+    if geometry_noise_measure is not None:
+        if not isinstance(geometry_noise_measure, GeometryNoiseMeasure):
+            raise ValueError("geometry_noise_measure must be a GeometryNoiseMeasure")
+        if not same_graph_sample:
+            raise ValueError("D2-HF-v1.5 extends D2-HF-v1.4 and needs same_graph_sample")
     if (run_dir / "manifest.json").exists():
         raise FileExistsError(f"{run_dir} already holds a D2 run; resume it with run()")
     for pose_id, atoms in poses:
@@ -296,6 +346,8 @@ def init_run(
             rule = HF_SG_RULE_VERSION if hs_bracket is None else HF_BR_RULE_VERSION
             if same_graph_sample:
                 rule = HF_V14_RULE_VERSION
+                if geometry_noise_measure is not None:
+                    rule = HF_V15_RULE_VERSION
     manifest = {
         "rule_version": rule,
         "arm": ARM,
@@ -312,6 +364,11 @@ def init_run(
         manifest["hs_bracket"] = asdict(hs_bracket)
     if same_graph_sample:
         manifest["same_graph_sample"] = manifest["hf_parallel"] = True
+    if geometry_noise_measure is not None:
+        gn = asdict(geometry_noise_measure)
+        gn["taus"] = list(gn["taus"])
+        manifest["geometry_noise_measure"] = gn
+        manifest["same_graph_basin"] = manifest["same_graph_fallback"] = True
     (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
 
@@ -388,6 +445,13 @@ class _Run:
         self.hs_bracket = HSBracket(**hb) if hb else None
         self.same_graph_sample = bool(manifest.get("same_graph_sample", False))
         self.hf_parallel = bool(manifest.get("hf_parallel", False))
+        gn = manifest.get("geometry_noise_measure")
+        self.geometry_noise_measure = (
+            GeometryNoiseMeasure(**{**gn, "taus": tuple(gn["taus"])}) if gn else None
+        )
+        self.same_graph_basin = bool(manifest.get("same_graph_basin", False))
+        self.same_graph_fallback = bool(manifest.get("same_graph_fallback", False))
+        self.geometry_noise = None  # filled by _promote under D2-HF-v1.5
         # In HF mode the second account pays E/F search + connection ("refine"); its
         # budget is the frozen certify_budget. Stages are told apart in the ledger.
         self.l4_account = "certify" if self.hf is None else "refine"
@@ -1045,14 +1109,143 @@ def _hf_parallel(run, backends, items, skip_reason):
             return
 
 
-def _same_graph_ridge(classified, points):
+def _same_graph_ridge(classified, points, basin=False):
     """A ridge whose scan peak and the next point share their bond graph (D2-HF-v1.2):
     the rise-fall-flip of ``read_scan`` met on a conformational jump (F4 of
-    TS_HESSIAN_FREE_DESIGN_RECORD_2026-10-24). Same ``edges`` as the jump trigger."""
+    TS_HESSIAN_FREE_DESIGN_RECORD_2026-10-24). Same ``edges`` as the jump trigger.
+
+    ``basin`` (D2-HF-v1.5): compare the basins on both sides of the ridge instead -- the
+    scan start and the lowest point of the converged run right after the peak (the point
+    that gives ``read_scan`` its descent). A bond change spread over several scan steps
+    (SN2, N1 C-C formation) is invisible between two neighbouring steps, and more so the
+    finer the step (docs/HF_GENERAL_RULES_OPTIONS_2026-11-12.md §1)."""
     if classified["class"] != "ridge_suspected":
         return False
     k = classified["info"]["peak"]
-    return points[k].edges == points[k + 1].edges
+    if not basin:
+        return points[k].edges == points[k + 1].edges
+    end = k + 1
+    while end + 1 < len(points) and points[end + 1].converged:
+        end += 1
+    low = min(range(k + 1, end + 1), key=lambda i: points[i].energy_eV)
+    return points[0].edges == points[low].edges
+
+
+_GN_TASK = "GN"
+
+
+def _gn_run(run, row, points, peak, factory, ledger, task, attempt):
+    """Geometry-noise repeats of one ridge (D2-HF-v1.5); (status, payload)."""
+    gm = run.geometry_noise_measure
+    rng = np.random.default_rng(_seed(run.settings, task))
+    intent = _intent(row)
+    template = run.poses[row["pose_id"]]
+    out = []
+    status = "completed"
+    try:
+        with ledger.segment(task=task, stage="geometry_noise", attempt=attempt) as seg:
+            _gn_points(gm, template, intent, points, peak, factory, rng, out)
+            seg.outcome = "completed"
+    except BudgetExhausted:
+        status = "budget_exhausted"
+    return status, {"peak": peak, "points": out}
+
+
+def _gn_points(gm, template, intent, points, peak, factory, rng, out):
+    """Repeats at the peak and the point before it, each tau; appends to ``out``."""
+    for label, j in (("before_peak", peak - 1), ("peak", peak)):
+        x0, q = np.asarray(points[j].positions, float), float(points[j].q_target)
+        for tau in gm.taus:
+            runs = []
+            for _ in range(gm.repeats):
+                start = x0 + rng.normal(0.0, gm.sigma_A, x0.shape)
+                try:
+                    work = template.copy()
+                    work.set_constraint()
+                    work.positions = start
+                    work.set_constraint(_Constraint(intent, q, tol=1e-8))
+                    work.set_positions(work.positions)
+                    work.calc = factory()
+                    opt = BFGS(work, logfile=None, maxstep=0.05)
+                    ok = bool(opt.run(fmax=tau, steps=gm.max_steps))
+                except BudgetExhausted:
+                    raise
+                except Exception as exc:  # degenerate coordinate, model domain
+                    ok = False
+                    runs.append({"converged": False, "error": type(exc).__name__})
+                    continue
+                runs.append({"converged": ok, "positions": work.positions.copy()})
+            good = [r["positions"] for r in runs if r["converged"]]
+            pair = max(
+                (_rmsd(a, b) for i, a in enumerate(good) for b in good[i + 1 :]),
+                default=None,
+            )
+            out.append(
+                {
+                    "where": label,
+                    "q": q,
+                    "tau": tau,
+                    "converged": len(good),
+                    "max_pair_rmsd_A": pair,
+                }
+            )
+
+
+def _geometry_noise(run):
+    """Run value of geometry_noise_A from the settled GN tasks (pure, from the journal)."""
+    gm = run.geometry_noise_measure
+    limit = _ef_settings(run.hf, run.hs_bracket).branch_rmsd_A
+    kept, dropped = [], 0
+    for task, ev in run.settled.items():
+        if not task.startswith(_GN_TASK + "|"):
+            continue
+        for rec in ev["payload"]["points"]:
+            v = rec["max_pair_rmsd_A"]
+            if v is None:
+                continue
+            if v > limit:
+                dropped += 1
+            else:
+                kept.append(v)
+    value = max(kept) if kept else gm.fallback_A
+    return {
+        "geometry_noise_A": float(value),
+        "source": "measured" if kept else "fallback",
+        "kept": len(kept),
+        "dropped_above_branch_rmsd": dropped,
+        "branch_rmsd_A": limit,
+    }
+
+
+def _measure_geometry_noise(run, backends, ridges):
+    """GN tasks on up to ``ridges`` bond-changing ridges (seeded order), in one parallel
+    wave on the refine account; then set run.hf.geometry_noise_A (D2-HF-v1.5)."""
+    s, gm = run.settings, run.geometry_noise_measure
+    ridges = sorted(ridges, key=lambda rc: _key(s.seed, "geometry_noise", rc[0]["intent_id"]))
+    cap = gm.cap()
+    wave = []
+    for row, classified in ridges[: gm.ridges]:
+        task = _task(_GN_TASK, row)
+        if not run.pending(task):
+            continue
+        attempt = run.dispatch(task, "refine", cap, _GN_TASK)
+        if attempt is None:
+            run.skip(task, "GN_skipped:refine_budget")
+            continue
+        points = _points(run.settled[_task("L1", row)]["payload"])
+        ledger = run.task_ledger(cap)
+        wave.append((task, attempt, ledger, row, points, classified["info"]["peak"]))
+    if wave:
+        jobs = [
+            _job(_gn_run, run, row, points, peak, ledger, task, attempt)
+            for task, attempt, ledger, row, points, peak in wave
+        ]
+        outcomes, _ = run_many(jobs, backends.search_batch, s.max_active)
+        for (task, attempt, ledger, *_), out in zip(wave, outcomes):
+            status, payload = _outcome(out)
+            run.settle(task, attempt, "refine", cap, ledger, status, payload)
+    run.geometry_noise = _geometry_noise(run)
+    run.hf = replace(run.hf, geometry_noise_A=run.geometry_noise["geometry_noise_A"])
 
 
 def _promote(run, backends):
@@ -1074,8 +1267,23 @@ def _promote(run, backends):
         late = {
             row["intent_id"]
             for row, classified in chosen
-            if _same_graph_ridge(classified, _points(run.settled[_task("L1", row)]["payload"]))
+            if _same_graph_ridge(
+                classified,
+                _points(run.settled[_task("L1", row)]["payload"]),
+                **({"basin": True} if run.same_graph_basin else {}),
+            )
         }
+    if run.geometry_noise_measure is not None:
+        # D2-HF-v1.5: measured before the start clusters, which use it as their radius
+        _measure_geometry_noise(
+            run,
+            backends,
+            [
+                rc
+                for rc in chosen
+                if rc[1]["class"] == "ridge_suspected" and rc[0]["intent_id"] not in late
+            ],
+        )
     clusters = first_round = None
     if run.start_cluster is not None:
         # Same-graph ridges join clusters last, so none of them leads one and pushes a
@@ -1084,7 +1292,7 @@ def _promote(run, backends):
         ordered += [rc for rc in chosen if rc[0]["intent_id"] in late]
         clusters = run.start_clusters = _start_clusters(run, ordered)
         first_round = run.start_cluster.first_round
-    second, last, first = [], [], []
+    second, last, first, unsampled = [], [], [], []
     for row, classified in chosen:
         points = _points(run.settled[_task("L1", row)]["payload"])
         release_at, guess_at, tangent = _promotion_points(classified, points)
@@ -1100,7 +1308,9 @@ def _promote(run, backends):
                     drawn = _key(s.seed, "same_graph_sample", row["intent_id"])
                     tags["same_graph_sample"] = drawn < s.audit_fraction
                     if not tags["same_graph_sample"]:
-                        if run.pending(_task("HS", row)):
+                        if run.same_graph_fallback:  # D2-HF-v1.5: decided after the sample
+                            unsampled.append((row, classified, points, tags))
+                        elif run.pending(_task("HS", row)):
                             run.skip(_task("HS", row), "HS_skipped:same_graph_ridge")
                         continue
                 last.append((row, classified, points, tags))
@@ -1113,19 +1323,34 @@ def _promote(run, backends):
             continue
         _hf_tasks(run, backends, row, classified, points, tags, clusters)
     if run.hf is not None and run.hf_parallel:
-        # D2-HF-v1.4: the same three groups, each in parallel waves
-        for group, reason in (
-            (first, "HS_skipped:refine_budget"),
-            (second, "HS_deferred:same_start"),
-            (last, "HS_deferred:same_graph_ridge"),
-        ):
+
+        def items_of(group):
             items = []
             for row, classified, points, tags in group:
                 hf_tags = {k: v for k, v in tags.items() if k != "direction"}
                 if clusters is not None:
                     hf_tags["start_cluster"] = clusters[row["intent_id"]]
                 items.append((row, points, _hf_bracket(classified, points), hf_tags))
-            _hf_parallel(run, backends, items, reason)
+            return items
+
+        # D2-HF-v1.4: the same three groups, each in parallel waves
+        for group, reason in (
+            (first, "HS_skipped:refine_budget"),
+            (second, "HS_deferred:same_start"),
+            (last, "HS_deferred:same_graph_ridge"),
+        ):
+            _hf_parallel(run, backends, items_of(group), reason)
+        if unsampled:
+            # D2-HF-v1.5 (G3): a sampled same-graph ridge that connects shows the sample
+            # rule is unsafe here; the rest then run, on what is left, never dropped.
+            if _same_graph_fallback(run, last):
+                for _, _, _, tags in unsampled:
+                    tags["same_graph_fallback"] = True
+                _hf_parallel(run, backends, items_of(unsampled), "HS_deferred:same_graph_ridge")
+            else:
+                for row, *_ in unsampled:
+                    if run.pending(_task("HS", row)):
+                        run.skip(_task("HS", row), "HS_skipped:same_graph_ridge")
         return
     # round two (D2-HF-v1.1): the rest of every start cluster, on what round one left
     for row, classified, points in second:
@@ -1151,6 +1376,17 @@ def _promote(run, backends):
             clusters,
             skip_reason="HS_deferred:same_graph_ridge",
         )
+
+
+_FALLBACK_HC = ("connected", "hf_duplicate")
+
+
+def _same_graph_fallback(run, sampled):
+    """Whether any sampled same-graph ridge reached a connected HF event (pure)."""
+    return any(
+        run.settled.get(_task("HC", row), {}).get("status") in _FALLBACK_HC
+        for row, *_ in sampled
+    )
 
 
 def _tags(classified):
@@ -1332,6 +1568,15 @@ def _hf_report(run):
                     and ev["status"] == "converged_candidate"
                 ),
             }
+        if run.same_graph_fallback:
+            out["same_graph_ridge"]["fallback"] = sum(
+                1
+                for t, ev in run.settled.items()
+                if t.startswith("HS|") and ev["payload"].get("same_graph_fallback")
+            )
+    if run.geometry_noise_measure is not None:
+        out["geometry_noise"] = run.geometry_noise or _geometry_noise(run)
+        out["geometry_noise"]["tasks"] = _counts(run, _GN_TASK + "|")
     clusters = run.start_clusters
     if clusters is not None:
         first = run.start_cluster.first_round
