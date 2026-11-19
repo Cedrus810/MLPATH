@@ -2596,3 +2596,454 @@ PBS `b05_hf_v4.o20601`：18:26:51 → 23:52:55（5.4 h，单张 4080 SUPER 两�
 - `benchmarks/explore_d2/hf6_local.py`（新）：每个 HS 冻结括区两臂——hf（运行自己冻结的 HS）、dimer（ASE `ase.mep.dimer` 默认 `DimerControl`、种子 20261110，从括区内能量最高的扫描点出发，初始模式为意图坐标梯度，`MinModeTranslate` 到完整 fmax ≤ 0.01），各自 hs_cap 账本；每项每臂一个 JSON，可续跑。
 - 冒烟（180，PID 89890，13:09 启动；`results/2026-11-10/hf6_local_smoke_b04/`）：b04 第 1 项两臂跑通。hf：`converged_candidate`，242 forward，−26132.2012 eV（SN2）。dimer：收敛，完整 fmax 0.0075、曲率 −0.757，1 353 forward、356 步，但终点离起点最远原子 12.3 Å、能量 −26132.371（比 SN2 鞍点低 0.17 eV），不是 SN2 鞍点。ASE 默认参数（`dimer_separation` 1e-4 Å）在 fp32 下能收敛。0.065 s / forward（2080 Ti）。
 - 整跑 PBS 脚本 `benchmarks/explore_d2/hf6_local_pbs.zsh`（yayoi31，三个体系三个进程共用一张卡、各 5 线程，walltime 48 h）。`qsub` 由用户执行。
+
+## 已完成：HF-6 第一阶段 局部定位 HF vs Dimer（PBS yayoi31 作业 26355，2026-11-10 13:14:14 → 18:31:57；汇总 180 PID 92707，11-11 02:49 → 03:08）
+
+[计划](PLAN_HF6_DIMER_2026-11-10.md) §3。日志 `hf6_local.o26355` 有 done 行，三份运行日志与汇总日志无 traceback；23 / 140 / 146 项两臂齐全（在 fulda / 180 上读）。汇总 `benchmarks/explore_d2/hf6_local_summary.py` → `results/2026-11-10/hf6_local_summary.json`：两臂候选同一检验（`confirm_minimum` 阶数 + 参照对称 RMSD ≤ 0.15 Å 且 |ΔE| ≤ 0.05 eV）；b05 参照为 v1.4 sA 的 3 个 HC 连通事件（已知三类）。
+
+| 体系 | 臂 | 出候选 | 其中一阶 | 命中参照（项 / 不同参照） | 不同一阶鞍点 | forward 合计 | 一阶候选 forward 中位 | 其余结局 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| b04 | HF | 11 / 23 | 5（另 6 未决：刚体模门） | 11 / SN2 | 1 | 4 360 | 232 | hysteresis 6、above_ceiling 5、反力差门 1 |
+| b04 | Dimer | 10 / 23 | 3（阶 0 五个、阶 2 一个、未决 1） | 3 / SN2 | 1 | 42 048 | 12 | 额度用完 11、线搜索数值失败 2 |
+| b05 | HF | 19 / 140 | 14（未决 5） | 10 / 三类全有 | 7 | 63 659 | 262 | hysteresis 45、walk 36、above_ceiling 32、transverse 8 |
+| b05 | Dimer | 27 / 140 | 15（阶 0 七个、阶 2 一个、未决 4） | 0 | 8 | 371 593 | 986 | 额度用完 105、数值失败 8 |
+| N1 | HF | 4 / 146 | 4 | 0 | 4 | 66 071 | 233 | hysteresis 51、transverse 41、above_ceiling 32、walk 18 |
+| N1 | Dimer | 70 / 146 | 24（内部模复核不一致 38、阶 0 六个、阶 2 / 3 各一） | 2 / DA endo s-cis | 23 | 319 582 | 418 | 额度用完 74、数值失败 2 |
+
+- 同项交叉（参照 / 一阶非参照 / 无）：b04 HF 参照而 Dimer 无 8、两者都命中参照 3、都无 12；b05 HF 参照而 Dimer 无 9、HF 参照且 Dimer 一阶非参照 1、HF 一阶非参照而 Dimer 无 6、HF 无而 Dimer 一阶非参照 14、都无 110；N1 HF 无而 Dimer 命中 DA 2、HF 无而 Dimer 一阶非参照 18、两者都一阶非参照 4、都无 122。
+- 读法：给同样的冻结括区、同样的可见方向，HF 在 b04 / b05 上命中参照的项数多于 Dimer（11 对 3、10 对 0），总 forward 少约 6–10 倍；在 N1 上 HF 找到的 4 个都是单键分步鞍点，Dimer 在 2 项上找到了参照 DA 鞍点（endo s-cis），并找到 23 个不同的一阶鞍点（身份未查，未做连接）。Dimer 的一阶候选之外有不少落到极小（阶 0）或高阶点，额度用完占 48–75%。
+- 数值失败：12 项 Dimer 报 `RuntimeError: upper bound and lower bound inconsistent with step sign`（`MinModeTranslate` 线搜索），按数值失败计。
+- 限定：Dimer 用 ASE 默认参数（`dimer_separation` 1e-4 Å）、fp32、单项 3 000 forward、从扫描峰点与意图梯度出发；未调参。HF 臂是重跑，结局与原运行有 fp32 波动（如 b04 原 11 候选、本次 11；b05 原 21、本次 19）。Dimer 找到的非参照一阶鞍点未做连接与身份核查。
+
+## 计划：HF-6 第二阶段 端到端（2026-11-11；用户「可以」；未施工）
+
+[施工计划](PLAN_HF6_DIMER_E2E_2026-11-11.md)。D2 臂用已有运行（b04 v1.4 sA、b05 v1.4 sA、N1 v1.2 n0020，B* = 各自 ledger 26 129 / 408 888 / 376 296），事件 `cumulative_spent` 即命中成本；DB 臂从同一 L0 姿态原样出发，ASE Dimer 默认设定（gauss 0.1 Å 随机位移与随机初始模式），姿态轮转、单次 3 000 forward，累计到 B* 停；两臂只把"一阶 + 匹配参照"计入 R(b)，B* 网格 0–1。预计 DB 合计约 0.81M forward、三体系并行约 8 h（按第一阶段实测）。
+
+## HF-6 第二阶段 DB 臂：脚本与冒烟（2026-11-11；用户「可以」）
+
+- `benchmarks/explore_d2/hf6_e2e_db.py`（新）：见计划 §2.2；每次尝试一个 JSON，可续跑，累计到 B* 停，最后一次的上限截到剩余额度。
+- 冒烟（180，PID 93501，04:19 → 04:27；`results/2026-11-11/hf6_e2e_smoke_b04/`，在 180 上读）：b04 2 次尝试（姿态 0、7，轮次 0），都 `budget_exhausted`（3 000 forward，约 180 s，0.06 s / forward），末次曲率估计 −3.03 / −1.88，离起点最远原子 3.0 / 2.8 Å。ASE 提示"无法判断位移哪些原子，改为位移全部原子"（默认 gauss 位移、未给 mask 时的行为），照默认保留。等待脚本又写错一次 PID（93105，应为 93501），重开等待，不影响冒烟。
+- 冒烟后改一行：额度用完时 `steps` 记成 0（异常抛出前未读 `opt.nsteps`），改为总是读取；只影响记录。
+- 整跑 PBS 脚本 `benchmarks/explore_d2/hf6_e2e_db_pbs.zsh`（host 暂填 yayoi31，三个体系三个进程共用一张卡、各 5 线程，walltime 48 h）。`qsub` 由用户执行。
+- 第二个种子（用户 11-11「要不先把第二份 DB D2 做了」，给 yayoi35）：PBS 脚本 `benchmarks/explore_d2/hf6_e2e_sB_pbs.zsh`。D2：b04 / b05 用已有 v1.4 sB（ledger 28 071 / 405 075）；N1 新跑 v1.2 sB（种子 20261024、noise 0.00195，其余同 sA）→ `results/2026-11-11/n1_hf5_v12_sB_n0020/`，跑完读 ledger 作 N1 的 B*。DB：三个体系种子 20261024，输出 `results/2026-11-11/hf6_e2e_db_sB/`。三个进程并行、各 10 线程，N1 的 DB 接在 N1 D2 之后。`qsub` 由用户执行。
+
+## 已完成：HF-6 第二阶段 种子 sA：DB 整跑（PBS yayoi39 作业 26584，2026-11-11 08:51:22 → 16:10:00）与汇总（181，PID 3440441，16:22 → 16:38）
+
+日志 `hf6_e2e_db.o26584` 有 done 行，三份 DB 日志无 traceback；三个体系都用满 B*（尝试 11 / 156 / 154 次，在 fulda 上读；181 上文件数核对一致后汇总）。180 在 16:00 前后重启后 NFS 未挂上，汇总改在 181。汇总脚本 `benchmarks/explore_d2/hf6_e2e_summary.py` → `results/2026-11-11/hf6_e2e_summary_sA.json`。
+
+| 体系 | B* | D2 命中参照（首次命中累计 forward） | DB 尝试：收敛 / 额度用完 / 数值失败 | DB 收敛候选：一阶 / 阶 0 / 未决 / 高阶 | DB 命中参照 |
+| --- | --- | --- | --- | --- | --- |
+| b04 | 26 129 | SN2（24 800） | 3 / 8 / 0 | 0 / 1 / 2 / 0 | 0 |
+| b05 | 408 888 | 三类全有（348 119、348 335、348 906） | 43 / 105 / 8 | 13 / 18 / 10 / 2 | 0（最近 0.41 Å、−0.33 eV） |
+| N1 | 376 296 | 0（3 个一阶都是单键分步鞍点） | 57 / 90 / 7 | 7 / 11 / 37 / 2 | 0 |
+
+- 计分口径：计划写的"一阶且匹配参照"下，D2 的 b04 SN2 与 b05 两类因 Hessian 刚体模门（TODO 12）阶数未决而不计，R(B*) 为 0 / 1/3——量的是检验门而不是搜索。另算"匹配参照且阶数不是明确的 0 或 ≥ 2"：D2 R(B*) = 1（b04）、1（b05）、0（N1）；DB 全为 0。两种口径都报。
+- R(b) 网格：D2 的命中都在 B* 的最后约 5–15%（b04 24 800 / 26 129，b05 约 348k / 409k）：D2 先做完全部 L1 扫描再精修，b ≤ 3/4 B* 时 R = 0。DB 在三个体系上 R(b) 全为 0。
+- 循环：b05 参照取自 D2 sA 本运行的 3 个事件，D2 sA 的 b05 命中因此是自洽的；11-08 已用独立的六块参照集核对过这 3 个事件正是已知三类（`results/2026-11-08/b05_hf_v14_events_identity.json`），结论不变；DB 与任何一类最近 0.41 Å。sB 用 sA 事件作参照，无此循环。
+- 读法：从原样 L0 姿态出发、同一总预算下，DB（ASE Dimer 默认设定）在三个体系上都没有找到参照鞍点；D2 在 b04 / b05 找全参照，在 N1 上两臂都没找到 DA。DB 收敛的一阶鞍点（b05 11 个不同、N1 7 个）身份未查。第一阶段 Dimer 从扫描峰点出发在 N1 找到过 DA（2 / 146），端到端从 L0 出发没有找到。
+
+## 已完成：检验脚本的解析 Hessian 交叉核验门限 0.01 → 0.1（TODO 第 12 条；2026-11-11；用户「3 做了」）并重算 HF-6 两份汇总
+
+- 改动：`benchmarks/explore_d2/hf_event_validate.py` 加 `VALIDATION_HESSIAN_CHECK = 0.1` 与 `validation_config()`（`dataclasses.replace` 只改 `analytic_hessian_check`），`hf6_local_summary.py`、`hf6_e2e_summary.py` 调用它。只用于搜索之后的检验；`src/prrs` 默认值、搜索、`minimum_check_step_A` 0.01 不变。依据与误拦代价见 TODO 第 12 条。
+- 重算（181，PID 3486324 / 3486326，17:07 → 17:28，日志无 traceback；旧结果保留）：`results/2026-11-10/hf6_local_summary_v2.json`、`results/2026-11-11/hf6_e2e_summary_sA_v2.json`。
+  - 局部定位：一阶候选 HF / Dimer：b04 11 / 3（原 5 / 3），b05 17 / 15（原 14 / 15），N1 4 / 20（原 4 / 24）；命中参照不变（b04 11 / 3，b05 10 / 0，N1 0 / 2）。
+  - 端到端 sA：D2 的 b04 SN2、b05 三类全部判一阶，严格口径 R(B*) = 1 / 1（原 0 / 1/3），首次命中成本不变；N1 两臂 0；DB 三个体系命中参照 0。DB 收敛候选的阶数分布有变化（b05 一阶 13 → 8，内部模复核不一致 10 → 13）：这些候选改走解析 Hessian 后，由另一道门（内部模复核）判定，那道门未动。
+- 等待脚本末尾 `echo =====` 在 zsh 下报错，等待任务显示失败，两份汇总本身正常结束。
+
+## 更正与完成：HF-6 匹配用的对称群改为"鞍点群 ∪ 姿态图群"，第一阶段与第二阶段两个种子重算（2026-11-12）
+
+- 错误（我的）：`hf_event_validate.py` 与两个 HF-6 汇总脚本的参照匹配，对称 RMSD 只用参照鞍点自身键图的自同构群。b05 中转移不同编号甲基 H 的同类 E2 鞍点因此匹配不上（鞍点图里转移中的 H 与 O 相连，交换 H 的置换不在该群内）。由 sB 汇总发现：D2 sB 的 3 个 b05 事件对 sA 参照全部未匹配，而 11-08 用六块参照集（姿态图群）核对时它们正是已知三类。
+- 修正：新函数 `match_group`（`hf_event_validate.py`）= 结构自身图群 ∪ 该运行第一个姿态（反应物）图群（b05 |Aut| 1 296）；参照匹配与"不同鞍点"分组都用它。核对：sB 三个事件对 sA 参照 0.006 / 0.002 / 0.002 Å。
+- 重算（181，PID 3642764–6，12:57 → 13:20，日志无 traceback；181 GPU 上另有他人作业约 56%）：`results/2026-11-10/hf6_local_summary_v3.json`、`results/2026-11-11/hf6_e2e_summary_sA_v3.json`、`hf6_e2e_summary_sB_v2.json`（之前的 v1 / v2 保留，b05 匹配不可信）。
+
+第一阶段（局部定位，同一冻结括区）：
+
+| 体系 | HF：一阶 / 命中参照 / 不同一阶鞍点 | Dimer：一阶 / 命中参照 / 不同一阶鞍点 | HF / Dimer forward |
+| --- | --- | --- | --- |
+| b04 | 11 / 11 / 1 | 3 / 3 / 1 | 4 360 / 42 048 |
+| b05 | 16 / 19（三类全有）/ 3 | 15 / 0 / 8 | 63 659 / 371 593 |
+| N1 | 4 / 0 / 4 | 28 / 2（endo s-cis）/ 27 | 66 071 / 319 582 |
+
+第二阶段（端到端，同一 L0、同一 B*；严格口径：一阶且匹配参照；括号内为首次命中累计 forward / B*）：
+
+| 体系 | D2 sA | D2 sB | DB sA | DB sB |
+| --- | --- | --- | --- | --- |
+| b04 | 1/1（24 800 / 26 129） | 1/1（26 506 / 28 071） | 0 | 0 |
+| b05 | 3/3（约 348k / 409k） | 2/3（约 348k / 405k；第三类几何匹配 0.006 Å，但内部模复核未决） | 0 | 0 |
+| N1 | 0/4 | 0/4 | 0/4 | 0/4 |
+
+- 两个种子结论一致：同一 L0、同一预算下，D2 在 b04 / b05 找到参照（命中都在 B* 的最后约 5–15%，3/4 B* 时 R = 0），DB 在三个体系上都没有找到参照；N1 两臂都没有找到协同 DA。DB 的一阶非参照鞍点：b05 9 / 12 个不同、N1 4 / 7 个（身份未查）。
+- 阶数判定在重算之间会变（如第一阶段 N1 Dimer 一阶 20 → 28、"内部模复核不一致"40 → 若干）：fp32 GPU 求值不逐位重复，Hessian 内部模复核贴边的候选判法随之摆动。"命中参照"一项在三次重算中不变。
+
+## 已完成：HF-6 小结与交接（2026-11-12；用户「写 然后写 handoff」）
+
+- 小结 [HF6_SUMMARY_2026-11-12.md](HF6_SUMMARY_2026-11-12.md)：局部定位与端到端两层结果（数字取自本日"更正与完成"一节）、检验脚本的两处修改、限定。
+- 交接 [HANDOFF_HF5_HF6_2026-11-12.md](HANDOFF_HF5_HF6_2026-11-12.md)，接替 11-08 版（旧文件未改、未标作废）；README 加两行；两份 HF-6 计划的状态行已更新。本轮没有写提交草稿。13:30 核对：181 上本线进程都已退出，PBS 作业都有 done 行。
+
+## 已完成：三条通用规则的选项文档与同键图判定的离线重放（2026-11-12；用户「可以  继续往下推的时候小计算顺手算了」）
+
+- 选项文档 [HF_GENERAL_RULES_OPTIONS_2026-11-12.md](HF_GENERAL_RULES_OPTIONS_2026-11-12.md)（HF-5 小结 §4 第 1–3 条）：同键图脊判定 G0–G3（建议 G3）、σ / 几何噪声 / B 的测量程序 M1–M3（建议 M2）、noise_eV 定义 N1–N3（建议 N1，c = 2）。待用户定；未改 `explore/src/`。
+- N1 上同键图的脊出候选（从 journal 的 HS settle 统计）：sA n0020 61 / 3、sA n0527 25 / 3、sB n0020 57 / 3；成键改变的脊 10 / 1、7 / 0、18 / 1。即 S3 的前提在 N1 上也不成立（b04 已见 11-08）。
+- 离线重放 `benchmarks/explore_d2/same_graph_rule_replay.py`（只读 journal，181，几分钟）→ `results/2026-11-12/same_graph_rule_replay.json`：5 个运行（b04 v1.2 sA、b04 v1.4 步长 0.05、N1 sA / sB n0020、b05 v1.3 sA）上比较"相邻"（现行）/"盆"（扫描起点 vs 峰后最低点）/"窗口"三种判定；按"相邻"重建与 journal 标记不一致 0。"盆"：b04 两种步长都是同键图 1 / 成键改变 12；N1 sA 候选 4 个全在成键改变一侧；b05 同键图 212 → 211；例外 1 个（N1 sB `k3 / distance:1-16`，HC `failed:tangent_no_resolved_drop`，无事件）。样本内重放，不是独立检验。
+- 更正：11-09 a3 + a4 一节"步长 0.05 时 13 个里 12 个判为同键图"按 journal 重建为 13 / 13（12 个 skip + 抽中的 1 个）。
+
+## 已完成：HF-6 Dimer 参照外一阶鞍点的身份与两侧下降，及含镜像的参照重匹配（2026-11-12；用户「小计算顺手算了」；181，PID 3663385，约 14:09 → 14:34）
+
+- 脚本 `benchmarks/explore_d2/hf6_dimer_saddle_identity.py`（检验端，独立账本）：取 HF-6 三份汇总（局部 v3、端到端 sA v3 / sB v2）中判为一阶且不匹配参照的 Dimer 候选，按汇总自己的规则（`match_group` 对称 RMSD ≤ 0.15 Å 且 |ΔE| ≤ 0.05 eV）合并成组，每组一个代表：`confirm_minimum` 重判阶数 → 一阶则沿负模两侧各走 `irc_step_A`（最大原子位移 0.15 Å）后 ASE BFGS 到 fmax 0.01（≤ 1000 步），端点只按键图标记（不做 Hessian 极小确认、不接力）→ 两端 `prrs.state.classify`、各端与反应物姿态键图比较、与 D2 HC 连通事件比较。汇总 `hf6_dimer_saddle_identity_summary.py`。结果 `results/2026-11-12/dimer_identity/`（`summary.json`），11 352 forward、1 488 s，日志无 traceback。
+  - 冒烟（同日，PID 3659845）先用 `descend_saddle`：N1 第 0 组两侧分别停在 `internal_mode_recheck_disagrees`、`fmax_not_reached_after_polish`，没有端点（983 forward）；改为上面的 E/F 下降后直接整跑，旧冒烟按 PID 停掉，输出 `results/2026-11-12/dimer_identity_smoke/` 留着不用。
+- 分类（组数；"连回反应物"= 一端键图与姿态相同、两端键图不同）：
+
+| 体系 | 候选 → 组 | 不改键 | 连回反应物 | 两端都不是反应物 | 重判非一阶（内部模复核不一致） | 下降未完成 | 与 D2 事件同一鞍点 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| b04 | 1 → 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+| b05 | 42 → 24 | 9 | 1 | 11 | 3 | 0 | 0 |
+| N1 | 37 → 37 | 8 | 10 | 5 | 13 | 1 | 4 |
+
+  - **b05 第 0 组：取代通道**（C0–Cl1 断、C0–O14 成，叔碳上 OH⁻ 取代 Cl），6 个候选（局部 4、端到端 sB 2），能量比最低参照（E2 event1）高 0.45 eV，比 event0 / event2 高 0.06 eV；一侧下降 −0.79 eV 回到反应物键图，另一侧 −2.68 eV 到 tBuOH + Cl⁻。参照集（D2 v1.4 sA 的 3 个事件）全是 E2；D2 的 6 个事件里没有它（最近 0.45 Å）。即 Dimer 在 b05 上找到了一个 D2 没找到的通道。端点未做 Hessian 极小确认，无 QM。
+  - b05 "两端都不是反应物"的 11 组：两端都已断 C–Cl（Cl⁻ 已离去后的 O / H 迁移、C–O 插入等），能量比最低参照高 0.54–3.8 eV。
+  - **N1 连回反应物的 10 组**（相对 endo s-cis 参照的能量）：协同 DA 1 组（+0.01 eV，见下"镜像"）；杂 DA（C1–C8 + C4–O9）1 组（+0.36）；[2+2] 2 组（C1–O9 + C2–C8 +1.71；C3–C6 + C4–C7 +1.05，后者与 D2 某事件同一鞍点）；单根 C–C 2 组（C4–C7 +1.01、C3–C7 +1.52，都与 D2 事件同一鞍点）；H 迁移 3 组（含环戊二烯 C5→C1 的 1,5-H 迁移 +0.35）；环内 C1–C4 成键 1 组（+2.44）。
+  - 第 18 组（[2+2]）与 D2 事件几何相同，但 HF-5 记 D2 的 7 个事件都只改变一根键（HC 端点比较）；本次下降的产物端相对姿态成了两根键。两种端点判法不同，未进一步区分。
+- **镜像（我的匹配规则遗漏）**：N1 第 5 组（局部第 8 项）对 4 个参照的对称 RMSD ≥ 1.21 Å，z 取反后对 exo s-cis 0.012 Å、ΔE 0.002 eV，即参照 exo s-cis 鞍点的对映体。HF-6 的匹配只允许置换 + 真转动；从无手性反应物出发，对映鞍点能量相同，应算同一参照。只读核对 `benchmarks/explore_d2/hf6_mirror_match_check.py`（不调用模型；用汇总记录的能量）→ `results/2026-11-12/hf6_mirror_match_check.json`：三份汇总所有一阶候选的原有匹配全部复现；加入镜像后只变 1 项——局部 N1 Dimer 命中参照 2 → 3 项、不同参照 1 → 2（endo s-cis、exo s-cis）；端到端两个种子不变。汇总脚本与 v3 / v2 结果未改。
+
+
+## 已完成：HF TS 论文初稿 v0.1、SI 与证据图表（2026-11-13；用户「准备 开始打初稿」）
+
+- 新增 `paper/MLPATH_MainText.md`（约 3,500 英文词）：摘要、引言、E/F 分支定位方法、局部与端到端比较、N1 覆盖负结果、参照外 Dimer 通道、讨论与结论。`paper/MLPATH_SI.md`（约 2,600 英文词）记录设置、来源、评分、成本边界、QM 与未决项；`paper/README.md` 为中文写作入口。
+- 两张主表采用严格口径（一阶且匹配参照）：b05 局部 HF 为 16（19 次几何匹配中 3 次阶数未决）；N1 局部 Dimer 使用既有镜像审计修正为 3 次、覆盖 2 类 DA；b05 端到端 sB 保留 2/3，第三项阶数未决。正文保留 Dimer 找到额外取代鞍点，以及 N1 一项原 HC 与后续下降端点判法不同的证据。
+- `paper/tools/build_draft_evidence.py` 仅读五份既有汇总，生成 `paper/data/` 的四份 CSV 与 `draft_evidence.json`，以及两张图的 PNG/PDF。镜像修正作为显式叠加，旧汇总与搜索结果未改；无模型求值，无新分子/QM 计算。
+- 新增 `paper/references.bib` 五条基础文献；Dimer/CI-NEB 用作者机构记录、FIRE 用 APS、ASE 用作者仓储及官方文档、MACE-POLAR-1 用 arXiv v1 核对。尚未完成全面相关工作调查或本地 checkpoint 公开版本对应核验。
+- 验证：证据提取脚本执行通过；6 个局部汇总、618 个 item/arm、12 个端到端汇总、32 个参照观察计数核对；每项 forward 求和与源汇总相符；主表严格命中数/费用与源 JSON 一致；五条引文编号、Python AST 和 paper Markdown 本地链接检查通过；两张图已目视检查。
+- 范围：开发批次工作稿；不同体系仍沿用各自历史版本/参数。未采纳 11-12 通用规则选项，未启动正式冻结验证。Word/LaTeX/PDF 正文、作者/期刊、完整环境与公开归档未制作。`docs/README.md` 增加论文入口，保留此前各工作线记录。
+
+
+## 已完成：首篇横向验证设计 v0.1（2026-11-13；用户「横向设计吧」）
+
+- 新增 `paper/HORIZONTAL_VALIDATION_DESIGN_2026-11-13.md`：三个开发体系 b04/b05/N1，加三个公开数据留出槽位 H1（内部 H 转移）/H2（单分子重原子反应）/H3（同反应物多事件，承接旧 N3）。真实源记录 ID 尚未选定；按预登记排序及最多三候选/槽的参照资格程序选取，不按搜索表现选体系。
+- 设计六体系局部比较（最多 144 个括区，两臂）；四体系 b05/N1/H2/H3 端到端（四个配对块、D2 与数值校准后的 Dimer）。HP-1 通用规则与 V1 fp64 数值认证均为施工提案，未改源码；未把此前待定选项追认为已采纳。
+- 端到端改用预算内完整 C2 闭合计分，共同准备、搜索、失败、性质及双侧端点认证付费；原 HF-6 参照匹配/一阶曲线保留开发语义。参照外新通道另报，不改本轮参照分母。保留 N1 全零和所有未决/无括区/资格失败格。
+- 一期资源硬上界提议：开发/参照/输入/局部/A1 合计 2.656M forward；含端到端首波合计 6.656M；全四块合计 18.656M。这是封顶提案，不是运行授权或耗时预测。无新 QM、A2 整跑或第二模型计算。
+- 外部源核对：RGD1 Zenodo 7860446 更新记录（2023-04-24，修正早期正反势垒颠倒）、作者仓库与原数据论文入口；Transition1x 原论文作为备选来源。未下载数据集，未声称留出与模型训练集无重叠。
+- `paper/README.md` 和 `docs/README.md` 增加入口；旧稿/结果不改。验证：本地引用可达，规模与所有阶段上界算术核对通过，未就绪科学输入明确标记。本轮只有设计文档工作，无模型/分子/QM 求值。
+
+## 施工：D2-HF-v1.5（三条通用规则 G3 / M2 / N1；2026-11-13；用户「可以  然后我们继续吧」）
+
+[施工计划](PLAN_HF_D2_V15_2026-11-13.md)；选项与依据见 [HF_GENERAL_RULES_OPTIONS_2026-11-12.md](HF_GENERAL_RULES_OPTIONS_2026-11-12.md)（已记用户决定）。
+- `explore/src/explore/d2.py`：`HF_V15_RULE_VERSION = "D2-HF-v1.5"`；`GeometryNoiseMeasure`；`init_run(..., geometry_noise_measure=)`（需要 v1.4，manifest 加 `geometry_noise_measure`、`same_graph_basin`、`same_graph_fallback`）；`_same_graph_ridge(..., basin=True)`（扫描起点 vs 峰后连续收敛段最低点）；`GN|` 任务（`_gn_run`，refine 账户，ledger segment `geometry_noise`，上限 2 × len(taus) × repeats × max_steps）与 `_geometry_noise`（由 journal 重建，续跑一致）；`_promote` 中几何噪声在起点分簇之前测，未抽中的同键图脊在三组之后按 `_same_graph_fallback`（抽中的同键图脊有 HC `connected` / `hf_duplicate`）作为第四组派发或记 `HS_skipped:same_graph_ridge`；报告加 `geometry_noise`、`same_graph_ridge.fallback`。v1.4 及更早运行的行为不变。
+- 测试（`explore/tests/test_d2_hf.py` 新增 9 个，`d2_bench.py` 加 `gn_measure`，`d2_driver.py` 加 `v15` 模式与测试钩子 `D2_BENCH_BOND_CHANGING`）：basin 判定（分步成键 / 构象跳变 / 最低点而非末点）、`GeometryNoiseMeasure` 校验、冻结与版本、GN 测量与计费（外部计数 = 账本）、额度不够时后备、补跑判定的 HC 结局、补跑开 / 关两种派发、GN 中途与 HS 中途 kill → resume。第一次跑 GN 中途 kill 的测试失败（外部 1 054 > 记账 987：`_gn_run` 没开 ledger segment，被打断的 forward 没进账本），加 segment 后通过。`test_d2_hf.py` + `test_d2.py` + `test_d2_resume.py` 62 passed（181，`-n 8`，53 s）；ruff check / format 通过。
+- `benchmarks/explore_d2/systems.py`：`HF_V15`（σ 0.0042，几何噪声后备 0.0104，中点 1e-3，cap 3000）、`HS_BRACKET_V15`（2e-3 / 0.025）、`GN_V15`（4 个脊、8 次、0.01 Å、τ 3e-3 / 1e-3、400 步、后备 0.0104）、`NOISE_QUANTA_V15 = 2`。`run_d2.py --v15`：等于 v1.4 全部开关 + 上述常数；不接受 `--noise-eV`，在 L0 之后对第一个姿态求一次 fp32 能量，noise_eV = 2 × `np.spacing(float32(|E|))`，写进 identity `noise_eV_rule`（这 1 次 forward 不在运行账本里，已注明）。
+- 统一重跑的 PBS 脚本 `benchmarks/explore_d2/v15_three_systems_pbs.zsh`：b04 / b05 / N1 × sA / sB 共 6 个运行，两张卡各 3 个、各 5 线程；L0 与额度同上一轮各体系运行。host 暂填 yayoi05，`qsub` 由用户执行。
+- 冒烟（181，PID 3724389，模型加载后 12:51:06 冻结 → 12:57:01 报告；`results/2026-11-13/b04_v15_smoke/`，日志无 traceback，在 181 上读）：b04 `--v15`，2 个姿态、`--audit-fraction 0.1`、search 16 000 / refine 80 000，其余同 11-09 v1.4 冒烟（不旋转、步长 0.1）。manifest D2-HF-v1.5，noise_eV 0.00390625（第一个姿态 −26132.7285 eV，fp32 间距 0.00195 × 2）。升级 脊 3 / 抽查 3；同键图的脊（basin 判定）1 个，未抽中，因样本里没有事件记 `HS_skipped:same_graph_ridge`（补跑"不触发"分支走通）。GN 2 个任务 completed（2 个成键改变的脊），8 个（点, τ）全部保留，几何噪声 0.00298 Å（11-09 b04 v2 测得 0.0015–0.0029，旧值 6.2e-4），起点分簇半径 0.0060 Å。HS 候选 2，HC 连通 1（SN2，−26132.2012 eV，断 0–5、成 0–1）、`failed:tangent_no_resolved_drop` 1。forward：search 5 446 + refine 2 210（GN 约 1 650、HS 415、HC 145）= ledger 7 656，unreconciled 空。补跑"触发"分支只在单元测试里走过。
+- 统一重跑交 PBS（用户 11-13 给 yayoi29：Ryzen 5950X 16 物理核、1×RTX 3090 24 GB、64 GB）：`v15_three_systems_pbs.zsh` 改为单卡布局——b05 sA / sB 与 N1 sA / sB 同时 4 个进程、各 4 线程（合计 16 = 物理核），b04 sA / sB 分别排在同种子 b05 之后；mem 60 GB，walltime 48 h。同卡 4 个进程（约 6 GB / 进程）没有实测过，若 OOM 会以 `error:OutOfMemoryError` 记在单项上（11-09 有过一次）。b05 经 `run_d2.py --system b05` 在真实模型上是第一次跑（之前 b05 都用 `run_b05_d2.py`；输入文件、片段电子态与 `run_b05_d2.py` 相同，11-08 CPU 核对过）。`qsub` 由用户执行。
+
+## 已完成：D2-HF-v1.5 三个体系统一重跑（PBS yayoi29 作业 27682，2026-11-13 13:04:37 → 20:35:02；用户「跑完了」）与检验（181，PID 4109676）
+
+- 读取：作业日志有 done 行，6 份运行日志无 traceback，unreconciled 全空（在 fulda 上读，`v15_report_brief.py`）；181 上 6 个 journal / report 大小与 fulda 一致后在 181 上做检验。
+- 检验 `benchmarks/explore_d2/v15_validate.py` → `results/2026-11-13/v15_validate.json`：口径同 HF-6 端到端（`confirm_minimum` 阶数，交叉核验门 0.1；参照匹配 `match_group` 对称 RMSD ≤ 0.15 Å 且 |ΔE| ≤ 0.05 eV；R 只计一阶且匹配），另列允许镜像的匹配。470 forward，141 s，无 traceback。
+
+| 运行 | B*（上一轮 → v1.5） | R(B*) 上一轮 → v1.5 | 首次命中累计 forward（上一轮 → v1.5） | refine（其中 GN） | 测得几何噪声（Å） |
+| --- | --- | --- | --- | --- | --- |
+| b04 sA | 26 129 → 32 255 | 1 → 1 | 24 800 → 29 597 | 3 252 → 9 612（5 361） | 0.0027 |
+| b04 sB | 28 071 → 33 186 | 1 → 1 | 26 506 → 31 269 | 3 808 → 8 381（3 786） | 0.0053 |
+| b05 sA | 408 888 → 416 903 | 1 → 1 | 约 348k → 约 362k | 69 245 → 76 962（13 602） | 0.0130 |
+| b05 sB | 405 075 → 415 169 | 2/3 → 2/3 | 约 348k → 362k / 384k | 65 166 → 75 371（12 334） | 0.0166 |
+| N1 sA | 376 296 → 335 298 | 0 → 0 | — | 74 756 → 37 731（8 645） | 0.0377 |
+| N1 sB | 377 745 → 352 268 | 0 → 0 | — | 76 479 → 47 818（9 463） | 0.0327 |
+
+- 参照覆盖与上一轮完全相同：b04 两个种子都找到 SN2；b05 sA 三类全有，sB 仍是 event1 几何匹配（0.003 Å）但阶数 `internal_mode_recheck_disagrees` 未决（与上一轮 sB 同一处）；N1 两臂 0 / 4，镜像匹配也不改变任何一项。N1 的 7 个事件全部一阶，与最近参照 0.94–1.34 Å、高 0.62–1.49 eV（单键分步鞍点，sA 有 1 个两根键的 C3–C7 + C4–C6 [2+2] 类）。
+- 首次命中推迟的量与几何噪声测量（GN）的费用相当：b04 +4.8k（GN 5.4k）、b05 sA +13.6k（GN 13.6k）；GN 在起点分簇之前、HS 之前付费。GN 占 ledger：b04 12–17%，b05 3%，N1 3%。
+- N1 refine 减少 50% / 37%：按 basin 判定同键图的脊 42 / 60 个，抽中 4 / 9 个，其余跳过（v1.2 全跑）；补跑在 6 个运行里都没触发（N1 sB 样本出过 1 个候选，HC `failed:tangent_no_resolved_drop`）。
+- noise_eV：b04 0.00195 → 0.0039（升级数不变，23 / 33），b05、N1 与上一轮相同。
+- 几何噪声测得值都大于旧值（b04 6.2e-4、b05 7e-3、N1 0.0104），同体系两个种子相差最多约 2 倍；N1 接近剔除界线 0.05 Å。"取最大值"随取到的点变化大；它对起点分簇与分支跳变的具体影响没有单独分析。
+
+## 计划：F8 探索 / 精修分波次交替（D2-HF-v1.6；2026-11-14；用户「继续」；未施工）
+
+[施工计划](PLAN_HF_D2_F8_WAVES_2026-11-14.md)。离线估算 `benchmarks/explore_d2/f8_wave_replay.py`（只读 journal，不调模型，181）→ `results/2026-11-14/f8_wave_replay.json`：v1.5 六个运行的任务保持实付 forward、只改付费顺序。现行顺序的重排比实际首次命中早 2–8%（串行记账 vs 并行波次）。W = 8 时首次命中 / B*：b04 0.92 → 0.27、0.94 → 0.20；b05 前两类 0.87 → 0.34（sA）、sB 第一类 0.87 → 0.63；b05 第三类不提前（sA 出在晚波次，sB 只来自起点分簇第二轮）；W 8 → 16 收益小。计划与发现层设计 §4.2"L1 基础覆盖完成后才开放 L2"冲突，交用户定。只写了计划与估算脚本，没有改 `explore/src/`。
+- 更正：11-13 我回复里说 v1.5 命中"在预算最后约 8–13%"，按数字是最后 6–13%（b04 sB 0.94）。
+
+## 进行中：算法结构缺陷挖掘（2026-11-14；用户"通用性"纠正方向、"算法 缺陷 开始挖"）
+
+- 方向更正（用户 11-13 / 11-14 原话见 [ALGORITHM_DEFECTS_2026-11-14.md](ALGORITHM_DEFECTS_2026-11-14.md)）：S3 判定、几何噪声、noise_eV、F8 都是看着 b04 / b05 / N1 修 D2 的调度与记账，没有提高算法能找到什么；F8 计划搁置。以后 b04 / b05 / N1 只作证据，不作调参对象。
+- 缺陷 A 的数据：`benchmarks/explore_d2/launch_census.py`（只读 v1.5 sA 三个 journal，181，几十秒）→ `results/2026-11-14/launch_census.json`。没有升级的发射 b04 121 / 144（占搜索 forward 75%）、b05 604 / 932（58%）、N1 664 / 792（76%）；产出候选或事件的发射只占搜索 forward 9.7% / 4.0% / 0.8%；far 层 380 次发射约 146k forward、0 候选 0 事件；没升级的发射平均仍花 140 / 325 / 342 forward（扫描不早停）。
+
+## 设计初稿：Non-Hessian AFIR 式反应路径与 TS 搜索（2026-11-14；用户"所以我们要从头重新设计一套类似的。。。"、"对对对对"）
+
+[设计稿](NONHESSIAN_AFIR_DESIGN_2026-11-14.md)（初稿，待用户审）：AFIR 加权距离 ρ 作为发射与路径坐标；F = E + αρ 的驻点即固定 ρ 的约束极小、反力 = −α（推导，待数值验证），因此 TS 定位复用 HF 反力零点内核（坐标从 Σc r 推广到 ρ；`ts_ef._Constraint` 只用 value / gradient）；E/F 连接；一套通用参数（γ、p、步长判据、fp32 容差规则）。待用户定：P1 α 扫描 / P2 ρ 延拓、γ、单分子分组规则、openGRRM 是否有可借鉴实现。没有改代码、没有跑计算。
+
+## 设计稿第 2、3 版：Non-Hessian AFIR（2026-11-14；用户"你写的太粗了"、"GRRM 是 基于hessian 的"、"我们IRC 有自己一套  TS 也有自己一套……但是其他 能 吸收的  对于反应 逻辑  都是 一样的"）
+
+- 文献：子 agent 读 GRRM17 论文全文（PMC5765425）；Chem. Rec. 2016 的北大机构库 PDF 用 pdftotext 在 scratchpad 提取后读 §2.1–2.4。式 (3)（α 由 γ 换算）两份来源的文字提取都是乱码：按原文文字定义推出 α = γ / {[2^(−1/6) − (1 + √(1 + γ/ε))^(−1/6)] R0}，与提取片段一致，γ = 100 kJ/mol 时 α ≈ 119 kJ/mol/Å ≈ 1.23 eV/Å，待原文 PDF 核对；式 (5) 复算 298.15 K 的 93.3 / 101.2 / 106.9 kJ/mol 与原文一致，403.15 K、10 天复算 145.6，原文写 153.0，未查原因。GRRM17 默认每 50 / 5 / 10 步（极小化 / TS 优化 / IRC）算一次精确 Hessian。
+- 第 2 版（路径也改成位移控制）违背用户"其他能吸收的都一样"，改为第 3 版 [NONHESSIAN_AFIR_DESIGN_2026-11-14.md](NONHESSIAN_AFIR_DESIGN_2026-11-14.md)：AFIR 函数、γ、AFIR 路径（极小化 F 的轨迹，优化器换成 E/F 的 BFGS / FIRE）、路径终止 / 早弃 / 身份、MC-AFIR、SC-AFIR 分组、导航 μ_i（原文不算 Hessian 时用 ΔE）、停止判据全部照搬；MIN 确认、TS（在路径最高点前后按 ρ_AB 做位移控制的横向松弛，找反力变号括区，再用 HF 反力零点内核）、IRC（E/F 下降 + 端点稳定性）用本项目的方法。待用户定：γ（或 T、t）、远距原子对上限 5.0 / 8.0、停止判据两种版本、MC-AFIR 的 n、首版范围、镜像判重、式 (3) 原文核对。没有改代码、没有跑计算。
+- 补（同日，用户"我们的逻辑是 因为 mlp 给的F 和E 靠谱但是  hessian 不靠谱  所以只能绕开  就是mlp 特化的"）：设计稿加 §0"为什么绕开 Hessian：MLP 特化"——项目内证据（TODO 12 交叉核验、HF-6 阶数摆动、11-12 descend_saddle 失败、F1）与五条约束（搜索决定不依赖任何曲率包括力差分曲率；极小 / TS 只用 E/F 确认；事后 Hessian 检验只作参考；适用域守卫 domain_exit；并行批量求值）；§4.4 相应改写。
+- 再补（同日，用户"你这叫防守 写法……你的怀疑是把整个学术界当傻逼看"）：删去设计稿 §0 中"MLP 曲率与 QM 曲率差多少本项目没有测过"一句；"MLP 的 Hessian 不可靠"作为方法前提写定，不在本项目另作论证；项目内的数字改称"已经遇到的表现"。
+- 参数（同日，用户"直接用原文参数  （这俩  可以以后调"）：γ = 106.9 kJ/mol（298.15 K、10 天），MC-AFIR n = 100（Chem. Rec. 醛醇例子），两份原文不一致处取 GRRM17（远距对上限 8.0、停止 10N_T / 3N_T）；我定：首版只做 MC-AFIR + 本项目 MIN / TS / IRC，SC-AFIR 与网络扩展第二阶段；判重计入镜像。设计稿 §7、§12 已改。参考：原文醛醇例子不算 Hessian 时首次找到产物前平均 602 次梯度、整个搜索 6 898 次。
+- 远距原子对上限（同日，用户"8.0 这个我们mlp 看不到8  就改成5"）：设计稿 §5.2、§7、§12 改为 r_kl/(R_k+R_l) ≤ 5.0。该量是相对共价半径和的比值：5.0 对应 C–C 7.6 Å、C–H 5.35 Å、H–H 3.1 Å、C–Cl 8.9 Å、C–O 7.1 Å（ASE 共价半径）。
+- 远距原子对上限再改（同日，用户"问题mlp 自己带一个 截断啊。。。   往下压一压  至少压倒3倍？"）：r_kl/(R_k+R_l) ≤ 3.0，即 C–C 4.56 Å、C–H 3.21 Å、H–H 1.86 Å、C–O 4.26 Å、C–Cl 5.34 Å。设计稿 §5.2、§7、§12 已改。
+
+## 施工：Non-Hessian AFIR 第一阶段（MC-AFIR）代码、解析台测试与 fulda 冒烟（2026-11-14；用户「可以 就这么施工」「然后 去 fulda 发烟试验」）
+
+[施工计划](PLAN_AFIR_MC_2026-11-14.md)；设计稿已登记进项目 `CLAUDE.md`。
+- 代码（新模块，旧 D2 未改）：`explore/src/explore/afir.py`（`WeightedDistance` ρ_AB 及解析梯度，接口同 `Intent`；`alpha_from_gamma`、`gamma_from_T_t`；`AFIRCalculator`）、`afir_path.py`（`run_afir_path`：偏置能面上 ASE BFGS，逐步记录无偏 E、ρ、键图；终止 biased_minimum / two_maxima / dissociated / not_reactive（10 步早弃）/ domain_exit / max_steps / budget）、`afir_local.py`（`relax_min` E/F 极小 + 3 次扰动确认；`ts_from_path` 固定 ρ 的横向松弛找反力 + → − 括区，再交 `continue_branches_ef`；`link` = `branch_starts` + `trace_sides_ef`）；运行器 `benchmarks/afir_mc/run_mc_afir.py`（片段 E/F 准备、`sample_poses` 随机朝向、每条路径一个 JSON + 账本、`run_many` 并行、最近 100 条无新产物 / 预算停止）。
+- TS 括区的取帧改了两次（解析台发现）：固定窗口"最高点前后各 4 帧"在 TwoSaddle 上取不到 TS（路径最高点在 ρ 上比鞍点越过 0.66 Å）；改为从最高点按其反力方向走，又因最高点落在产物压缩壁上、反力方向指向错误而失败；最终为"从最高点沿路径往回走，直到相邻两帧在 ρ 升序下反力由 + 变 −；不行再往前走"。
+- 测试 `explore/tests/test_afir.py` 9 个：ρ 梯度对有限差分、平移转动不变、远处原子对权重衰减；α(100 kJ/mol) = 118.8 kJ/mol/Å、γ(298.15 K; 1 h / 1 天 / 10 天) = 93.3 / 101.2 / 106.9（原文值）；偏置计算器的力对有限差分；TwoSaddle 上 AFIR 路径越过势垒、每步一次 forward；守卫（定义域、预算、步数）；路径顶部 → 括区 → HF 内核得到解析台鞍点（x、y 误差 < 1e-2，完整力 ≤ 0.01）；连接到两侧极小；路径末端 MIN 确认。连同 `test_ts_ef / test_ts_branch / test_ts_connect` 共 81 passed；ruff 通过。
+- fulda 冒烟（RTX 5090，空闲；进程 PID 906362，16:09 → 16:11，128 s 含模型加载；`benchmarks/afir_mc/results/2026-11-14/b04_smoke/`，在 fulda 上读）：b04，4 条路径一波，ledger 4 468 forward（每条 757–1 462）。4 条都在 `two_maxima` 停，键图全程不变，两端 MIN 是同一复合物（3 条两端确认、2 处 `unstable`）；8 次 TS 括区都是 `no_bracket`——按 ρ 升序反力为 − → +，即复合物的极小、不是极大，判断正确。无产物。推断：片段间 ρ 由最近的 Cl–H 接触主导，随机朝向下 Cl⁻ 被压向甲基 H 而非 C 背面；4 条太少。冒烟时 PID 文件因 ssh 命令里 `D=` 在后台子 shell 中赋值而没写成，事后在 fulda 上补记。
+- 冒烟后改一处（通用规则）：路径全程键图不变即不做 TS 搜索，记 `bond_change: false`（冒烟中这类搜索每条花了数百 forward、全部无括区）。
+
+## 施工：批量 AFIR（MLP 特化：大量并发；2026-11-14；用户"mlp 探索的时候 是不同于 afir 我们可以大量并发 因为 分子量太小了"、"可以  搞起来"）
+
+- 代码：`explore/src/explore/afir_batch.py`——`run_paths`（一波所有 AFIR 路径叠成一个坐标数组，每步一次批量模型调用 + 向量化 FIRE，记录与停止同 `run_afir_path`）、`minimize`（批量 FIRE，可带固定坐标约束：力投影 + 牛顿恢复）、`confirm_minima`、`bracket_frames` / `scan_points` / `pick_bracket`（括区的帧一次批量做固定 ρ 松弛，再按"从顶往回找 + → −"选对）、`edges_of`；每个结构记一次 forward，每行的 forward 返回，账本 = 各行之和。`MAX_ATOMS_PER_CALL = 1024`（按原子数分块）。运行器 `benchmarks/afir_mc/run_mc_afir_batch.py`（每波 W 条：批量路径 → 批量两端 MIN → 批量括区 → HF 内核 + 连接用 `run_many`；`wave_*.json` 可续跑；"最近 n 波无新产物"停止）。测试 `explore/tests/test_afir_batch.py` 6 个；`test_afir.py` + `test_afir_batch.py` 15 passed；ruff 通过。
+- 吞吐测量（fulda RTX 5090，`benchmarks/afir_mc/throughput.py`，只测路径阶段、每条 ≤ 20 步，`results/2026-11-14/throughput_*.json` 与 `.log`，在 fulda 上读）：b05（16 原子）W = 8 / 32 / 128：177 / 211 / 217 forward/s，模型调用占墙钟 89–92%，每结构 5.0 / 4.3 / 4.2 ms；W = 256 CUDA OOM。N1（19 原子）W = 8 / 32：136 / 132 forward/s（7 ms / 结构）；W = 128 OOM（2 432 原子）。即 POLAR-1 每结构 4–7 ms、GPU 在 8–32 条时已饱和，Python 开销 2–5%；单调用约 2 000 原子以上 OOM。据此分块 1 024 原子、默认一波 32 条。对照：逐条线程版冒烟约 75 forward/s。
+- 批量版冒烟（fulda，PID 909110，`results/2026-11-14/b04_batch_smoke/`，87 s 含加载，在 fulda 上读）：b04 一波 32 条，ledger 16 411；路径阶段 3.6 s，两端 MIN 确认 46 s（forward 的大头）；29 条 `two_maxima`、3 条 `biased_minimum`，**0 条键图改变**，无括区、无产物。沿轨迹 F = E + αρ 单调下降（6 条中 2 条各一处小幅回升），两个能量极大是真实的：先撞上（ρ 约 2.1 Å、E 升 0.4–0.75 eV）、转动滑开、再撞，而不是优化器振荡。连同逐条版冒烟，b04 共 36 条路径 0 次 SN2；推断（未验证）：α = 1.30 eV/Å 按权重分摊，落在 Cl–C 上的份额不足以越过约 0.64 eV 的 SN2 势垒。
+
+## 施工：SC-AFIR 分组（用户 11-14 选 b：不升 γ，力集中到原子对；「b   走起来」）与 fulda 冒烟
+
+- 代码：`explore/src/explore/afir_fragments.py`——`perturbed_structure`（k–l 缩短 / 拉长 20%，其余原子最小二乘拟合距离矩阵，1e-3 Å 种子扰动破对称）、`sc_fragments`（k∈A、l∈B；r/(R_i+R_j) < 1.5 相连、两层；r_ij/(R_i+R_j) < r_kl/(R_k+R_l) 的 i、j 去掉）、`candidate_pairs`（r/(R_i+R_j) ≤ 3.0，按键图自同构每个轨道取一对）；测试 `explore/tests/test_afir_fragments.py` 4 passed（含原文的线性三原子在推近下变弯）。运行器 `run_mc_afir_batch.py` 加 `--mode sc`：反应物复合物 MIN = 输入结构 + 前 `--sc-poses` 个随机朝向，各自 E/F 极小化后按键图 + 对称 RMSD + 能量判重；每个 MIN 上每个候选原子对一条路径（只推近）。同时：两端只做极小化，只有键图与起点 MIN 不同的末端才做扰动确认。
+- 冒烟（fulda，PID 911449，`results/2026-11-14/b04_sc_smoke/`，92 s 含加载，ledger 10 365，在 fulda 上读）：6 个不同的复合物 MIN、38 条路径（2 波），4 条键图改变。**节点 0 上推 C 与进攻 Cl⁻（A = CH₃Cl，B = Cl⁻）的路径推出了 SN2**：括区交 HF 内核收敛到 −26132.2012 eV（与 b04 参照 SN2 鞍点同能量），连接 `connected`，断 C–Cl⁻、成 C–Cl。另 3 条"键图改变"是扰动结构把 C–Cl 拉过成键判据的假象，第二个极大落到同一括区导致重复调用内核（`branch_force_disagreement`）。
+- 冒烟后改三处（通用规则）：新事件按 `prrs.chemistry.reaction_event_key`（断 / 成键、两端对称归并、不分方向）计，而不按产物化学身份——b04 氯交换的产物与反应物化学身份相同，原口径把它记成 0 个新产物；"键图改变"改为路径终点对起点 MIN（SC 用节点键图）；同一路径相同括区只交内核一次。在 fulda 上对冒烟结果离线复算：1 个独立事件（SN2）。没有重跑冒烟。
+
+## 已完成：b04 SC-AFIR sA 试跑（fulda，PID 913464，2026-11-14 17:36 → 17:37；用户"跑起来试试  先跑一个 b04  看看能不能works"）
+
+`benchmarks/afir_mc/fulda_b04_sc_sA.sh` → `results/2026-11-14/b04_sc_sA/`（在 fulda 上读）：预算 32 255（= D2 v1.5 b04 sA ledger），实花 **4 745 forward**、72 s 含加载；6 个复合物 MIN、38 条路径、1 条键图改变（节点 0 的 C···Cl⁻ 推力路径）；**1 个独立事件（SN2，事件键与冒烟相同）**，由确认过的路径末端计入。对照：D2 v1.5 b04 sA 首次命中在 29 597 forward。
+- TS 这次未定位：同一括区（ρ 2.344 → 2.443 Å，反力 +1.175 → −0.959）交 HF 内核得 `unresolved:branch_force_disagreement`。与冒烟对照：冒烟中同一路径的两次尝试括区相同（数值差在 fp32 抖动内），一次 `converged_candidate`（−26132.2012 eV）、一次 `branch_force_disagreement`；即三次同括区尝试成功 1 次。读法：0.1 Å 内反力变化约 2.1 eV/Å 的陡括区，中点两侧横向松弛的反力差贴着门限 3√2σ（σ = 0.0042）≈ 0.018 eV/Å，fp32 抖动决定成败。
+
+## 施工：批量收窄括区 + 内核重试；b04 SC sA 重跑（fulda，PID 913916；用户「可以」）
+
+- `explore/src/explore/afir_batch.py` `narrow_brackets`：每轮在每个括区内取 8 个等距 q，从两端各做一次固定 q 的横向松弛（所有括区一次批量调用）；只采用两侧都收敛、反力同号、对齐 RMSD ≤ 0.05 Å 的点；取 + → − 的相邻对为新括区，变号落在不一致点之间时停在上一轮宽度；默认 3 轮。测试（TwoSaddle）：2 轮后宽度 < 原来 1/20，内核仍找到解析台鞍点；`test_afir*.py` 20 passed。运行器：选出括区后先批量收窄（记在本波账本），再交内核；内核报 `branch_force_disagreement` 时重试，最多 3 次（`TS_CAP` 12 000）。
+- 重跑 `results/2026-11-14/b04_sc_sA_narrow/`（85 s 含加载，在 fulda 上读）：38 条路径、1 条键图改变；括区 0.0991 Å → 0.0014 Å（第 2 轮最接近 TS 的 4 个 q 两侧反力异号、不一致，停在一致段）；**内核第一次即 `converged_candidate`，−26132.2012 eV（b04 参照 SN2 鞍点同能量），内核 127 forward，连接 `connected`**；总 7 931 forward（收窄约 3 000）。对照：D2 v1.5 b04 sA 首次命中 29 597；DB 同预算 0。
+- 日志"new 2"是同一记录内同一事件键数了两次（路径末端确认 + 连接两端），事件集合为 1；已改为记录内去重。
+
+## 进行中：fulda 过夜队列（2026-11-14 19:57 启动；用户"fulda 现在准备启动"）
+
+- 脚本 `benchmarks/afir_mc/fulda_overnight_2026-11-14.sh`（启动 shell PID 988705，记在 `results/2026-11-14/pids_181_side.txt`），队列日志 `results/2026-11-14/overnight_queue.log`，输出 `results/2026-11-14/overnight/`（在 fulda 上读）。顺序：SC-AFIR b04 sA / sB、b05 sA / sB、N1 sA / sB（输入 + 32 个随机朝向，预算 5×B*）→ MC-AFIR 对照 b05 sA、N1 sA（预算 B*）→ `afir_validate.py`（阶数 + 参照匹配含镜像、不同 TS / 事件、与 D2 v1.5 的 R(b)）。预计 5–7 h（依据：实测批量吞吐与 b04 每条路径约 200 forward，b05 / N1 每路径花费未测）。各项可续跑，失败不停队列。
+- 启动核对（20:00）：b04_sc_sA 19:57:04 → 19:58:45 已结束；b04_sc_sB 已开始（PID 989048 运行中）。
+- 检验脚本 `afir_validate.py` 已在 b04_sc_sA_narrow 上试跑（fulda）：1 个 TS，一阶，匹配参照，首次命中 7 265（波末累计，上界），R(1/4 B*) = 1；D2 v1.5 在 B* 处才为 1。
+
+## 已完成（部分失败）：fulda 过夜队列（2026-11-14 19:57:04 → 20:37:09；用户「跑完了」，在 fulda 上读）
+
+队列日志 `results/2026-11-14/overnight_queue.log`，检验 `overnight/validate.json`。
+- **b04 SC sA / sB**：两个种子都找到参照 SN2 鞍点（−26132.2012 eV，一阶，连接 `connected`）；首次命中（波末累计，上界）9 661 / 9 833，D2 v1.5 为 29 597 / 31 269；R(½B*) = 1 / 1（D2 v1.5 为 0 / 0）；总花费 12 728 / 17 984。
+- **b05 SC sA、SC sB、MC sA 三项 FAILED（我的 bug）**：`account` → `event_key` → `reaction_event_key` 抛 `IdentityUnavailable`（两端自同构生成的群超过 automorphism_limit 20 000；b05 单结构 |Aut| 1 296），未捕获；且统计在写波次文件之前，第 0 波结果未落盘（forward 已记入账本）。
+- **N1 SC sA / sB**：各 44 波 1 376 条路径，只花 25.3k / 25.2k forward（每条约 18）；每波 32 条中约 30 条在第 10 步被早弃（`not_reactive`），0 个事件、0 个 TS。推断：GRRM 的"10 步后力项仍大于扰动结构时的值则弃"按 RFO 步长设计；本实现的 FIRE 从静止起步（dt 0.1），10 步几乎没移动，而 SC 扰动结构先回弹使 ρ 增大，于是几乎全被误弃（b04 每波也有 21–23 条如此，SN2 那条未被弃）。N1 MC sA：2 波 64 条，全部键图不变，按"2 波无新事件"停止（15 018 forward）。
+- 修复（2026-11-15）：`event_key` 遇 `IdentityUnavailable` 时退回"两端化学身份（无序）+ 断 / 成键元素对"的摘要键（只会合并通道、不会拆分），本地用 b04 结构核对：常规键与 SN2 事件键一致，fallback 正反方向相同；波次文件改为先写、后统计，统计异常记入 `accounting_error`，不再中断运行。早弃规则未改（待用户定）。
+
+## 2026-11-15：早弃改为可选（默认关）、每次调用原子数可设；PBS 脚本；fulda 冒烟（用户「可以」、给 yayoi42）
+
+- `run_mc_afir_batch.py --early-discard-steps`（默认 0 = 关）；`afir_batch.MAX_ATOMS_PER_CALL` 可由环境变量 `AFIR_MAX_ATOMS_PER_CALL` 设（默认 1024）。`test_afir*.py` 20 passed，ruff 通过。
+- PBS 脚本 `benchmarks/afir_mc/afir_sc_b05_n1_pbs.zsh`（模板只改 ← 行；yayoi42：ncpus 20 / ngpus 1 / 100 GB，12 线程，`AFIR_MAX_ATOMS_PER_CALL=512`，walltime 24 h）：SC b05 sA / sB、N1 sA / sB（早弃关、输入 + 32 个随机朝向、预算 5×B*）+ `afir_validate.py`，输出 `results/2026-11-15/pbs/`。`qsub` 由用户执行。
+- fulda 冒烟（PID 1041867，`results/2026-11-15/b05_smoke_fix/`，357 s，在 fulda 上读）：b05 SC、2 个随机朝向、预算 40 000：27 条路径（13 `biased_minimum`、14 `two_maxima`，无早弃），6 条键图改变，1 个事件经 fallback 键计入（无崩溃）；括区阶段 136 s、约 3 万 forward，预算在括区用完（`budget_exhausted:bracket`），未进入 HF 内核。读法：括区扫描对整条路径（相邻 ≥ 0.05 Å）逐帧做固定 ρ 松弛，长路径代价高；正式运行预算 5×B* 不受截断，效率待改。
+- 更正（11-15）：缺陷清单、设计稿、交接里通用性几句原话的日期由 11-13 改为 11-14（说这几句时日期已是 11-14）。
+
+## 进行中：PBS 作业 28756（yayoi42，2026-11-15 09:35:56 起）中间结果；b05 括区扫描收敛测量（fulda，PID 1049106；用户「跑」）
+
+PBS 输出 `benchmarks/afir_mc/results/2026-11-15/pbs/`，作业日志 `afir_sc.o28756`（项目根目录），均在 fulda 上读。
+- **b05 SC sA / sB**（09:35 → 09:56 / 09:56 → 10:25）：跑完全部计划路径（104 / 132 条，SC 模式无"无新产物"停止），花 111 523 / 188 811 forward（预算 5×B* 约 2.08M）。两个种子都推出同样两个 fallback 事件：E2（断 C–Cl 与一根 β C–H、OH⁻ 得 H，ΔE −1.3 至 −2.0 eV）与甲基 C–H 去质子（ΔE 约 +0.4 eV）。**TS 0 个**：66 次括区尝试全部 `no_bracket`。原因（代码 + 数据）：`pick_bracket` 要求相邻两点的固定 ρ 横向松弛都收敛，而扫描点在 `ef.max_relax_steps` = 200 步内达到 transverse fmax ≤ 0.003 eV/Å 的只有 24/388、39/724；58/66 次尝试中存在反力 + → − 的相邻对，但没有一对两点都收敛。E2 两条路径 ΔE 差 0.65 eV 而落在同一 fallback 键下，是否同一通道未核实。
+- **N1 SC sA**（10:25 → 11:13）：44 波 1 379 条路径，248 890 forward，**0 个事件**；成键变化只有 6 次 `domain_exit`（同一组原子 A = [11, 15, 16, 17]、B = [14]）。路径中位 53 步，多数 `two_maxima`，两极大间落差中位 0.05 eV、p10 0.008 eV；看过的例子中路径已停在偏置能面极小（ρ 不变、E 只有 meV 抖动），不是被截断。N1 sB 11:13 起在跑。
+- **括区扫描收敛测量**：`benchmarks/afir_mc/bracket_convergence.py`（启动脚本 `fulda_bracket_convergence.sh`），fulda PID 1049106，363 s，61 112 forward，输出 `results/2026-11-15/bracket_convergence/`（`summary.json`、`points.json`）。重放 b05 sA 的 k 9、39、93 三条路径（k 9、39 与 PBS 记录逐步一致；k 93 因 fp32 批次组成不同而分岔，未成键，只作对照），95 个扫描点按原设置（FIRE、maxstep 0.05、Newton 恢复、0.003 eV/Å）松弛，步数上限放宽到 2000：
+  - 200 步内收敛 9/95，2000 步内 93/95；收敛步数 p10 / 中位 / p90 = 201 / 539 / 954；未收敛的 2 点最终 fmax 0.0032、0.0042 eV/Å。即**卡在步数上限，不是卡在地板**（fmax 一直在降）。
+  - 第 200 步与最终的反力符号不同的点 16/95，其中 k 39 括区的 + 端（q 1.336）在第 200 步为 −0.013、最终 +0.224；未收敛点的符号不能用。
+  - 全部收敛后，两条 E2 路径都得到括区：k 9 q 1.651 → 1.834 Å（反力 +1.95 → −0.14），k 39 q 1.336 → 1.453 Å（+0.22 → −0.17）；括区 + 端分别要 1 285、686 步。k 93（未成键）反力 − → +，无括区，判断正确。
+  - 只测了 b05 一个种子的两条成键路径；N1 等其他体系的收敛步数未测。没有改 `explore/src`。
+
+## 施工：括区扫描 / 收窄的横向松弛步数上限 200 → 2000 与 b05 冒烟（2026-11-15；用户「可以」）
+
+- `benchmarks/afir_mc/run_mc_afir_batch.py`：新增 `SCAN_MAX_STEPS = 2000`，只用于 `scan_points` 与 `narrow_brackets`；HF 内核仍用 `ef.max_relax_steps` = 200；manifest 记 `scan_max_steps`。依据见上节测量。PBS 28756 的 N1 sB 进程在改动前已加载旧代码，不受影响。ruff 通过；没有跑 pytest（改动只在运行器常数）。
+- fulda 冒烟（PID 1050893，`benchmarks/afir_mc/fulda_smoke_scan2000.sh` → `results/2026-11-15/b05_smoke_scan2000/`，725 s，140 106 forward，在 fulda 上读）：条件同 `b05_smoke_fix`（b05 SC、2 个随机朝向），预算 300 000。1 波 27 条路径，6 条键图改变；12 次括区尝试中 5 次得到括区（改前同条件 0 次）、4 次 `no_bracket`、3 次 `same_bracket`。内核：2 次 `converged_candidate`（都在 −18880.0195 eV），2 次 `unresolved:transverse_not_converged`（内核自己的 200 步上限），1 次 `unresolved:hysteresis`。k 25（E2 路径）的 TS 连接 `connected`（两端 −18882.406 / −18880.400 eV）；k 16（路径末端未成键）的 TS 连接 `failed:tangent_no_resolved_drop`。事件 1 个（E2 的 fallback 键）。
+- 代价：括区阶段 579 s、本波账本 137 528 forward，约每次括区尝试 11k（改前冒烟括区约 3 万 forward 且全部失败）。按 PBS b05 的括区尝试数（sA 24、sB 42）外推，括区阶段约 26 万 / 46 万 forward，在 5×B* 内，但与 D2 v1.5 b05 的 B*（约 41.6 万，整个运行）同量级。
+- 冒烟没有做参照匹配与阶数检验；这个 TS 是否 b05 参照中的 E2 鞍点未核实。
+
+## 只读分析：N1 SC sA 中推 DA 成键位置的路径（2026-11-15；用户「可以」）
+
+`benchmarks/afir_mc/n1_da_pairs.py`（不调用模型；在 fulda 上读 `results/2026-11-15/pbs/n1_sc_sA/`）→ `results/2026-11-15/n1_da_pairs_sA.txt`；另在 181 上用 `WeightedDistance` 算参照鞍点的 ρ（只做几何计算）。
+- 1 379 条路径中 257 条是片段间原子对；33 个反应物复合物 MIN 中多数有 C1/C4 × C6/C7 在 3.3–4.3 Å 内（起点并不缺 DA 朝向）。
+- 推 DA 成键位置（{C1 0, C4 3} × {C6 11, C7 12}）的路径 38 条：35 条 `two_maxima`、3 条 `biased_minimum`，0 条成键。路径末端相对起点 MIN 的能量中位 +0.49 eV，其中 11 条在 +1.0 至 +1.6 eV，**高于参照 DA 鞍点相对反应物侧 0.72–0.88 eV 的势垒**（`benchmarks/n1_diels_alder/results/2026-11-09/reference.json`）；末端无偏极小化后都落回复合物（C–C 3.2–4.3 Å）。
+- 同一 A / B 分组下，四个参照 DA 鞍点的 ρ_AB = 2.56–2.86 Å；能量最高的几条路径末端 ρ = 1.94–2.18 Å，比鞍点处更小。即这些路径把 ρ 压到比 DA 鞍点还小、能量比鞍点还高，但几何不在 DA 通道上：**不是力不够推不过势垒，而是 ρ 被别的方式压小了**。具体是哪些原子对被压近，路径帧坐标没有存，未查。
+- 另有一部分路径（例如 n0|0-11）停在 ρ 约 3.1 Å、只比起点高约 0.2 eV，它们为何停止未单独分析。
+
+## 已完成：PBS 作业 28756（yayoi42，2026-11-15 09:35:56 → 12:05:11；用户「对面跑完了」，在 fulda 上读）
+
+- 5 份日志无 traceback。N1 SC sB：44 波，272 180 forward，0 个事件（sA 见上）。
+- `afir_validate.py` → `results/2026-11-15/pbs/validate.json`（跑的是改步数上限之前的代码）：b05 sA / sB 各 2 个事件、0 个 TS 候选，R = 0；N1 两个种子 0 个事件、0 个 TS 候选，R = 0；对照 D2 v1.5：b05 sA 在 B* 时 R = 1、sB 2/3，N1 两个种子 R = 0。
+
+## 已完成：N1 DA 位置路径的逐帧重放（fulda，PID 1054491，72 s，161 forward；用户「一起重放」）
+
+`benchmarks/afir_mc/n1_da_replay.py`（启动脚本 `fulda_n1_da_replay.sh`）→ `results/2026-11-15/n1_da_replay/`（`replay.json`、每条路径的逐帧 `.extxyz`，在 fulda 上读）。重放 N1 SC sA 的 n28|0-12、n24|0-11、n6|0-12：前两条与 PBS 记录逐步一致（步数、终止、ρ_end 差 ≤ 0.01 Å）；n6 步数与终止一致，ρ_end 2.04 对 2.18（fp32 批次组成差异）。
+- 三条路径都是**一对片段间 H···H 被压到 0.93–0.99 Å**（H9–H17、H6–H16、H10–H16；起点低能帧约 2.0 Å），该对的权重份额从 2–4% 升到 42–46%；其次是与这对 H 相邻的 H···C、C···H（约 1.9–2.1 Å）。
+- 成键位置的 C–C 几乎没动：n28 C1–C6 3.35 → 3.19 Å、C4–C7 4.41 → 3.86 Å；n24 C1–C6 4.17 → 3.91 Å（C4–C7 6.5 Å）；n6 C1–C6 3.77 → 3.52 Å。参照 endo s-cis 鞍点处 C1–C6 / C4–C7 = 2.06 / 2.44 Å。
+- 从低能帧到末端的能量升高 1.02–1.34 eV。即 FIRE 在偏置能面上靠把一对 H···H 压到约 0.95 Å 来缩小 ρ，而不是去靠近 DA 通道。
+- 未确认（Claude 推断）：分子间 H···H 在 0.95 Å 只多 1–1.3 eV，可能是 MLP 在这种近距离（训练域外）的排斥偏软；若用 QM，这个方向的代价应该高得多，AFIR 极小化就不会走这里。没有做 QM 核对。现有定义域守卫 r/(R_i+R_j) < 0.5 对 H–H 是 0.31 Å，拦不住 0.95 Å（比值 1.53）。
+
+## 已完成：N1 H···H 压近帧的 QM 单点（183，PID 4091624，2026-11-15 12:11:05 → 12:21:46；用户「做」「跑完了吧」，在 183 上读）
+
+脚本与输入在 183 上写入：`benchmarks/afir_mc/results/2026-11-15/n1_hh_qm/`（`n1_hh_qm.sh`、6 个 `.xyz`、`mlp_energies.txt`；**在 183 上读**）。ωB97M-V/def2-TZVPD DEFGRID2 TightSCF，中性单重态，ORCA 6.1.1；n28|0-12、n24|0-11、n6|0-12 各取起点低能帧与末端帧（H···H 约 0.95 Å），6 个单点并行各 6 核。要比的量：同一条路径末端减低能帧的能量差，QM 对 MLP（MLP：+1.315 / +1.017 / +1.335 eV）。可续跑（正常结束的单点跳过）。
+- 结果（6 个单点均 ORCA TERMINATED NORMALLY，各约 10 min / 6 核）：末端帧减低能帧的能量差 QM / MLP = n28 1.289 / 1.315、n24 1.014 / 1.017、n6 1.349 / 1.335 eV，MLP − QM = +0.027 / +0.003 / −0.014 eV。
+- 结论：**MLP 在这种 H···H 约 0.95 Å 的压近构型上与 QM 一致，不是排斥偏软**；上节"MLP 训练域外排斥偏软"的推断被否定。N1 推不出 DA 的原因在 AFIR 的推法本身（ρ 被一对 H···H 压近而缩小，力没有落到 DA 通道上），不在模型。
+
+## 选项文档：AFIR 推力怎么分摊（2026-11-15；用户"是的  我们要改一改 afir 同意吧"；待用户定，未改代码）
+
+[AFIR_PUSH_OPTIONS_2026-11-15.md](AFIR_PUSH_OPTIONS_2026-11-15.md)。机制核对（重放 `replay.json` 的成对距离与权重份额，fulda 上读）：∂ρ/∂r_ij ∝ ω_ij(6ρ/r_ij − 5)，r_ij > 1.2ρ 的对被 AFIR 力拉开；三条重放末端帧四个 DA 成键 C–C 对的系数全部为负（−0.003 至 −0.119），H···H 对 +3.2 至 +3.4。选项：1 SC 只推单对（括区坐标同时要改，否则回到缺陷 C）；2 ρ 中不计 H（k / l 为 H 时除外）；3 双分子先按原版 MC-AFIR、停止按 100 条计。建议 2 + 3 的停止判据。
+
+## 施工：SC 偏置坐标改为冻结权重 q（设计稿 §2.1，用户 2026-11-15「这样」）与 N1 冒烟
+
+- 设计稿 `NONHESSIAN_AFIR_DESIGN_2026-11-14.md` 新增 §2.1（用户原话逐字）。代码：`explore/src/explore/afir.py` `FrozenWeightedDistance`（q = Σ c_ij r_ij，c 取路径扰动起点的 AFIR 权重并归一，路径中不更新；接口同 `WeightedDistance`）；`run_mc_afir_batch.py --sc-coord frozen|rho`（默认 frozen；SC 每条路径用自己的扰动起点建 q；括区与内核用同一坐标；rho 用于复现 11-15 前的运行）；`bracket_convergence.py`、`n1_da_replay.py` 改传 `sc_coord="rho"`（它们重放旧运行）。测试 `test_frozen_weights_coordinate`（梯度对有限差分、刚体不变、x0 处等于 ρ、c > 0 而 ρ 在远对上系数为负）；`test_afir*.py` 21 passed；ruff 通过。
+- fulda 冒烟（PID 1086504，`fulda_smoke_frozen_n1.sh` → `results/2026-11-15/n1_smoke_frozen/`，302 s，21 158 forward，在 fulda 上读）：N1 SC、2 个随机朝向（3 个节点）、126 条路径、0 个事件；新代码路径无报错。推 DA 位置的 4 条路径 q 只降 0.08–0.23 Å、能量只升 0.10–0.19 eV，都在约 50 步以 `two_maxima` 停。
+- 停止原因（看轨迹）：前约 45 步是扰动起点回弹（q 先增大），之后才开始推；q 正在加速下降时（n0|0-11：3.54 → 3.26 Å），第一个"极大"是 q 突然停住、E 回落 0.013 eV（像 FIRE 速度清零的过冲），两步后一个 0.0029 eV 的起伏凑成第二个极大（判据：两侧下降都超过 noise_eV ≈ 0.002 eV，是我在施工计划 §3 定的）。n1|0-12 同样（右侧回落 0.017 / 0.0029 eV）。即**路径在爬坡途中被"两个极大"截断**，这次冒烟不能说明冻结权重有没有用。
+- 未确认（Claude 推断）：11-15 之前 ρ 版的 N1 路径也多以 `two_maxima` 停（落差中位 0.05 eV），其中多少是同样被截断，未查。
+
+## 已完成：冻结权重 q 对 ρ_AB，三条已知失败路径对照（fulda，PID 1089578，81 s，2 219 forward；用户"先做冻结权重的推力坐标，保留现有 γ 和 SC 分组。用三条已知失败路径对照……"）
+
+`benchmarks/afir_mc/n1_frozen_compare.py`（启动 `fulda_n1_frozen_compare.sh`）→ `results/2026-11-15/n1_frozen_compare/`（`compare.json` 含每 5 帧的轨迹；每个变体的逐帧 `.extxyz`；在 fulda 上读）。N1 SC sA 的 n28|0-12、n24|0-11、n6|0-12，同一扰动起点、同一 A / B 分组、同一 γ；每条 {ρ_AB, 冻结 q} × {现行停止, 不计极大（诊断用：noise_eV 设为 1e6，运行器未改）}。
+
+| 路径 | 变体 | 结局 / 步数 | H···H 最短（Å） | 含 H 原子对的力份额（末端） | 成键位置的 C–C（末端，Å；加粗为被推的那对及同侧另一根） | 末端 E − 低能帧（eV） |
+| --- | --- | --- | --- | --- | --- | --- |
+| n28 | ρ，现行停止 | two_maxima / 53 | 0.95 | 0.91 | C1–C6 3.19 | +1.32 |
+| n28 | q，现行停止 | two_maxima / 61 | 1.69 | 0.29 | C1–C6 3.16 | −0.02 |
+| n28 | ρ，不计极大 | biased_minimum / 325 | 0.94 | 0.92 | C1–C7 3.75 | +1.21 |
+| n28 | q，不计极大 | biased_minimum / 624 | 2.29（全程最短 1.62） | 0.29 | **C1–C7 2.85、C4–C7 3.21** | +0.12 |
+| n24 | ρ，不计极大 | biased_minimum / 151 | 0.99 | 0.92 | C1–C6 4.09 | +1.02 |
+| n24 | q，不计极大 | biased_minimum / 211 | 1.84 | 0.37 | **C1–C6 3.07** | +0.21 |
+| n6 | ρ，不计极大 | biased_minimum / 356 | 0.94 | 0.92 | C1–C6 3.83 | +1.23 |
+| n6 | q，不计极大 | biased_minimum / 233 | 1.89 | 0.33 | **C1–C6 2.88、C1–C7 2.98** | +0.15 |
+
+（n24、n6 的"现行停止"两行与 n28 同型：q 版 48–49 步被截断，C–C 3.5–3.8 Å。起点低能帧的成键 C–C 为 3.4–4.2 Å。）
+
+- **H 接触不再垄断**：q 版 H···H 不低于 1.6 Å，含 H 原子对的力份额固定在 0.29–0.37；ρ 版塌到 0.93–0.99 Å、份额 0.91–0.92。
+- **碳骨架向反应区推进，但只在不被"两个极大"截断时**：q 版不计极大时，被推的 C–C 从 3.4–4.1 Å 推到 2.85–3.07 Å，最近的重原子对由 C–C 占据；ρ 版同条件下 C–C 停在 3.75–4.09 Å。现行停止下 q 版 48–61 步即停，几乎没推。
+- **仍没有成键**：q 版停在偏置能面极小，末端只比低能帧高 0.12–0.21 eV（全程最高 0.17–0.21 eV），远低于参照 DA 势垒 0.72–0.88 eV；参照鞍点处成键 C–C 为 2.06 / 2.44 Å。
+- 未确认（Claude 推断）：q 版停在 C–C 约 2.9–3.1 Å，可能是常数权重把 α 分摊到全部 A × B 对上，落到被推那一对的只有 α·c_ij（已知 n28 被推对 c = 0.29，约 0.37 eV/Å），其余对在接触处撑住；没有逐对力的分解。
+
+## 施工：跳支后用路径位移坐标 q_d 重新括区（设计稿 §4.2；用户 2026-11-15「补上设计里已有的路径位移坐标 q_d……遇到跳支，就用两侧对齐结构的位移方向重新括区」）——解析台发现定义本身的缺陷，**未接入运行器**
+
+- 代码：`explore/src/explore/afir.py` `DisplacementCoordinate`（q_d = Σ(x − x_ref)·d̂，d = 两侧对齐后的位移，去掉 x_ref 处的平移与转动分量后归一；常梯度 d̂）；`afir_local.py` `rebracket_jump`（内核在推力坐标上报 `unresolved:hysteresis` 时，对每个跳支侧：本侧跳支前最后一点 → 另一侧已走过的点中 q 最接近者，即另一条分支上同一 q 的结构；在 [0, |d|] 取 5 个 q_d 做固定 q_d 的 E/F 松弛，取 + → − 相邻对交 `continue_branches_ef`；单点的 `_Stop` / `GateRejected` 只记该点）。运行器 `bracket_task` 没有改。
+- 施工中改过两处：变号判据写错（`a > tol > −b` 实为 b > −tol），已改为 a > tol 且 b < −tol；"跳支后结构"起初用内核的 `positions_after`，在 fold 台上它仍在同一分支上（折叠点附近分支变陡被判为跳支，d 只有 0.004 Å），改为取另一条分支上同一 q 的点。
+- 解析台结果（fold 台，鞍点 (0, 0) 不在任何固定 x 分支上）：
+  - 共线 C₃（test_ts_branch 原台）：笛卡尔位移 d ∝ (−1, −1, 2) 与 x 的伸缩重叠，q_d ≈ 0.6x + 0.8y（台面单位），鞍点处 g·H⁻¹·g = 0.85 > 0，q_d 分支同样不经过鞍点 → `branch_unresolved`，不给假 TS（测试通过）。
+  - 可分离台（两个分开的双原子，x、y 分属两根键）：**失败**。固定 q_d 的松弛把两个双原子转了 10–82°，滑到全局极小 (x, y) = (2.83, −1.41)（E = −1.2，反力 0），不成括区。原因：笛卡尔线性坐标只在一阶上转动不变，有限转动即可满足约束而不改变内部结构；对片段可相对转动的复合物（AFIR 的典型情形）不可靠。测试记为 strict xfail。
+- `test_afir / test_afir_batch / test_afir_fragments / test_ts_branch / test_ts_ef / test_ts_connect`：95 passed、1 xfailed；ruff 通过。
+- 改为距离空间版（用户 11-15「可以」）：`DisplacementCoordinate` 现为 q_d = Σ_{i<j} u_ij [r_ij(x) − r_ij(x_before)]，u ∝ 两侧结构在全部原子对上的距离差（严格平移、转动不变，无需对齐）；`rebracket_jump` 的扫描起点改为跳支前结构与对齐后另一侧结构之间的直线插值，q_d 由约束校正。单元测试（q_d(before) = 0、q_d(after) = |Δr|、刚体不变、梯度对有限差分）通过。
+- 解析台：共线 C₃ 仍为 `branch_unresolved`、无假 TS（通过）；**可分离台仍失败**：u 中除 2–3 键（−0.885）外还有两个双原子之间的交叉距离（0–3 −0.36、1–2 +0.29）——两侧结构是各自独立走出来的，相对位置不同；交叉距离在该台上不花能量，固定 q_d 的松弛挪动它们满足约束，s 照样滑到全局极小（E = −1.2、反力 0）。即逃逸通道从"转动"换成"软的分子间距离"。测试仍记为 strict xfail（原因已更新）。95 passed、1 xfailed；ruff 通过。**仍未接入运行器。**
+- 用户 11-15："暂停 q_d，不加“近邻 ≤ 3.0”的裁剪；先去掉“两个极大”停止，再做括区逐步展开。主线随后集中解决冻结推力停在反应区外的问题"。设计稿 §4.2 末已注明 q_d 暂停。
+
+## 施工：去掉"两个极大"停止、括区从峰向两侧逐轮展开（用户 2026-11-15，同上）与 fulda 冒烟
+
+- 代码：`PathSettings.stop_after_maxima`（默认 0 = 关；2 = 11-15 之前），`afir_path.run_afir_path` 与 `afir_batch.run_paths` 都按它；运行器 `--stop-after-maxima`（默认 0）。`afir_batch.expand_brackets`：每个括区搜索从峰出发，第 k 轮松弛两侧各第 k 帧（所有搜索的同一轮一次批量调用），每轮后用 `pick_bracket` 检查，找到即停、两侧用尽即停。运行器括区阶段改用它；峰改为取**能量最高的两个**极大（不再取最先两个：不停在两个极大后路径上会有小的过冲极大）。三个重放旧运行的脚本（`bracket_convergence.py`、`n1_da_replay.py`、`n1_frozen_compare.py` 的 stop 变体）显式设 `stop_after_maxima=2`。测试：`expand_brackets` 与整段扫描在 TwoSaddle 上给出同一括区、松弛点更少、内核仍定位鞍点；两侧用尽无括区。相关 6 个测试文件 97 passed、1 xfailed；ruff 通过。
+- 冒烟 1（fulda，PID 1122866，`fulda_smoke_expand.sh`，默认 frozen q、不停极大）：**b05**（2 个朝向，`results/2026-11-15/b05_smoke_expand/`）27 条路径全部 `biased_minimum`，**0 条键图改变**（ρ 版同条件 6 条，含 E2）；**N1**（`n1_smoke_expand/`）126 条路径、`biased_minimum` 125 + `domain_exit` 1，0 个事件。括区代码未被走到。
+- 冒烟 2（fulda，PID 1124452，`fulda_smoke_expand_rho.sh`，b05 `--sc-coord rho`，其余同 `b05_smoke_scan2000`；`results/2026-11-15/b05_smoke_expand_rho/`，1 135 s，173 214 forward）：6 条键图改变、12 次括区尝试，**8 次成括区**（全段扫描版 5 次）；内核 3 次 `converged_candidate`（均 −18880.0195 eV，其中 n1|2-14 连接 `connected`，两端 −18882.408 / −18880.400 eV；另两次连接 `failed:tangent_no_resolved_drop`），2 次 `walk_relax_unconverged`，2 次 `hysteresis`；事件 1 个（E2 fallback 键）。
+- **代价反而升高**：括区阶段 951 s、本波括区 109 153 + 收窄 52 188 forward；全段扫描版（`b05_smoke_scan2000`）为 579 s、括区 83 163 + 收窄 48 564。每次尝试松弛点数：找到括区的 3–9 点（全段版 12–17），但两次无括区的尝试把整条路径用尽，19–20 点。原因：不停在两个极大后路径变长（步数中位 44 → 64、最长 132 → 518），无括区的尝试要扫的帧更多；逐轮展开也把墙钟串成多轮。
+
+## 已完成：推力分解——ρ 对冻结 q，在偏置极小处每对拿到多少推力（fulda，PID 1134946，约 3 min；用户「做」）
+
+`benchmarks/afir_mc/push_force_breakdown.py`（启动 `fulda_push_force_breakdown.sh`）→ `results/2026-11-15/push_breakdown/{b05,n1}/breakdown.json` 与逐帧 `.extxyz`（在 fulda 上读）。b05 冒烟只存了能量和坐标值、没存帧，所以两个体系都重放路径（只跑路径阶段，b05 / N1 各约 1 900 forward）；同一扰动起点、A / B、γ（α = 1.297 eV/Å），不停在两个极大。每对的推力 = α·∂coord/∂r_ij（> 0 为推近；冻结 q 为 α·c_ij，ρ 为 α·ω_ij(6ρ/r_ij − 5)/Σω）；偏置极小处 ∇E = −α∇coord，即无偏力所平衡的就是它。
+
+| 体系 / 路径（被推对） | 变体 | 成键 | 末端 E − 低能帧（eV） | 被推对：r（Å）/ 推力（eV/Å）/ 份额 | 推力最大的一对：r / 推力 / 份额 | 被拉开的对数 |
+| --- | --- | --- | --- | --- | --- | --- |
+| b05 n1\|2-14（C2–O14） | ρ | 是 | −0.51 | 3.67 / −0.011 / 0.005 | H5–O14 0.93 / +1.96 / 0.92 | 15 |
+| | 冻结 q | 否 | +0.03 | 2.61 / +0.54 / 0.42 | 同左（H5–O14 1.57 / +0.43 / 0.33 次之） | 0 |
+| b05 n0\|2-14（C2–O14） | ρ | 是 | −0.17 | 3.34 / −0.020 / 0.012 | H4–O14 0.94 / +1.62 / 0.96 | 15 |
+| | 冻结 q | 否 | +0.06 | 2.65 / +0.51 / 0.40 | 同左（H4–O14 1.67 / +0.30 / 0.24 次之） | 0 |
+| b05 n1\|5-14（H5–O14） | ρ | 是 | −0.61 | 0.94 / +1.45 / 0.98 | 即被推对 | 9 |
+| | 冻结 q | 否 | +0.13 | 1.45 / +0.89 / 0.68 | 即被推对 | 0 |
+| N1 n28\|0-12（C1–C7） | ρ | 否 | +1.21 | 3.75 / −0.073 / 0.014 | H9–H17 0.94 / +4.67 / 0.87 | 51 |
+| | 冻结 q | 否 | +0.12 | 2.85 / +0.37 / 0.29 | 即被推对（C4–C7 2.85 / +0.24 / 0.18 次之） | 0 |
+| N1 n24\|0-11（C1–C6） | ρ | 否 | +1.02 | 4.09 / −0.056 / 0.011 | H6–H16 0.99 / +4.32 / 0.85 | 51 |
+| | 冻结 q | 否 | +0.21 | 3.07 / +0.32 / 0.24 | 即被推对（C2–C6 2.86 / +0.28 / 0.21 次之） | 0 |
+| N1 n6\|0-12（C1–C7） | ρ | 否 | +1.23 | 4.56 / −0.028 / 0.005 | H10–H16 0.93 / +4.83 / 0.87 | 69 |
+| | 冻结 q | 否 | +0.14 | 2.98 / +0.20 / 0.16 | 即被推对（C1–C6、C4–C6、C4–C7 各约 0.13–0.14 / 0.10） | 0 |
+
+- **"推力被摊薄"由推断变为数字**：冻结 q 下被推对只拿到 0.20–0.54 eV/Å（份额 0.16–0.42），H–O 质子转移对 0.30–0.89 eV/Å；ρ 下推力集中到一对上，份额 0.83–0.98、推力 1.45–4.83 eV/Å（可超过 α，因为 6ρ/r − 5 在 r ≪ ρ 时放大，同时 9–69 对被拉开）。
+- **ρ 的集中在 b05 上恰好是"有用"的**：三条路径的集中对都是 H···O（0.93–0.94 Å，即成 O–H 键，质子转移），路径成键、末端能量降 0.17–0.61 eV；冻结 q 下 H···O 停在 1.45–1.67 Å，不成键。在 N1 上同样的集中落到 H···H（0.93–0.99 Å），不成键。
+- 读法（Claude 推断，未确认）：ρ 的自我强化是 AFIR "自己找到"反应对的机制，好坏取决于最先被压近的是哪一对；冻结 q 去掉了错误的集中，也去掉了有用的集中，推力按起点距离摊开后不足以越过势垒（N1 DA 势垒 0.72–0.88 eV、成键 C–C 需从约 3 Å 推到约 2.1–2.4 Å）。
+
+## 施工：SC 只推被选中的原子对（V_bias = α r_kl）、TS 定位坐标与推力解耦（设计稿 §2.2；用户 2026-11-15「SC 每条路径只推被选中的原子对。推力坐标和 TS 定位坐标同时解耦。冻结权重退回对照方案」、"单对推法直接定义为 V_bias = α r_kl……α(γ) 的换算可以原样保留"）与 fulda 冒烟
+
+- 代码：运行器 `--sc-coord pair|frozen|rho`（默认 pair：`WeightedDistance` 取 A = {k}、B = {l}，恰为 r_kl）、`--ts-coord frozen-peak|rho|push`（默认 frozen-peak：同一 SC 分组 A × B 上的冻结权重 q，权重冻结在该括区的峰帧；这一取法是 Claude 定的）；SC 条目与路径记录带 `groups`；括区帧用 `afir_batch.with_coordinate` 换成 TS 坐标的值后再 `bracket_frames` / `expand_brackets`，收窄与内核用同一 TS 坐标。MC 模式不变。测试 `test_decoupled_ts_coordinate`（TwoSaddle，推 H–O1）：B = {O0, O2} 时解耦坐标找到台面鞍点；B = {O0, O1, O2} 时 H 从 O0 迁到 O1、q 在峰处取极小、无括区（坐标的已知局限，不给假 TS）。相关 6 个测试文件 99 passed、1 xfailed；ruff 通过。
+- 冒烟（fulda，PID 1136789，`fulda_smoke_pair.sh`，2 个朝向；在 fulda 上读）：
+  - **b05**（`results/2026-11-15/b05_smoke_pair/`，911 s，64 166 forward）：27 条路径中 2 条成键，都是推 H–O14 的路径（n0|4-14、n1|5-14），r_kl 1.6–1.7 → 0.93–0.94 Å，产物为 E2（断 C–Cl 与 C–H、成 O–H）。4 次括区尝试 3 次 `converged_candidate`：两次 −18880.0195 / −18880.0215 eV 且连接 `connected`（两端 −18882.40 / −18880.40 eV，与此前 E2 鞍点同能量），一次 −18880.412 eV 连接 `failed:tangent_no_resolved_drop`；1 次 `no_bracket`。括区阶段墙钟 747 s，但整波 61 022 forward（ρ 版同条件 169 105）。
+  - **N1**（`n1_smoke_pair/`，227 s，28 730 forward）：126 条路径、0 个事件（1 次 `domain_exit`）。推 DA 位置的 4 条路径 r_kl 从 2.85–3.48 Å 推到 **2.41–2.53 Å**（冻结 q 版 2.85–3.07、ρ 版 3.75–4.09），停在偏置能面极小（末端比起点 MIN 高 0.36–0.48 eV）。偏置极小处沿被推的 C–C、其余坐标松弛时 ∂E/∂r_kl = α = 1.30 eV/Å：即单对推到约 2.4–2.5 Å 后，该距离上的回复力已等于 α。参照 endo s-cis 鞍点 C1–C6 / C4–C7 = 2.06 / 2.44 Å。
+- 未确认（Claude 推断）：N1 只推一根 C–C 时走的是接近分步（双自由基）的方向，其势垒比协同 DA 的 0.72–0.88 eV 高，γ = 106.9 kJ/mol 对应的 α 推不过；没有算这条分步路径的能量。
+
+## 施工：双对协同探索层（设计稿 §2.3；用户 2026-11-15，原话见设计稿）与 N1 冒烟
+
+- 代码：`afir_fragments.perturbed_structure_pairs`（多对在同一次最小二乘拟合中同时缩短；单对与原 `perturbed_structure` 逐位相同）、`two_contact_combos`（两个非成键接触、比值 ≤ 3.0、四原子互异、键图自同构下按"对的对"去重，不筛环大小）；`afir.PairSumDistance`（双对推力 α(r_kl + r_mn)/√2）、`afir.FrozenPairSet`（TS 坐标：原子对集合 P 上峰帧冻结权重；单对 P = canon(A×B)，与 `FrozenWeightedDistance` 同值）；运行器 `--sc-double 1`（默认）：单对层后跑双对层，文件 `dwave_*` / `dts_*`，事件集合与 forward 分开记（summary：`events` / `double_events` / `double_new_events`、`forwards_single_layer` / `forwards_double_layer`），共用 `--budget`；单对的 TS 坐标也改用 `FrozenPairSet`（同值）；`--ts-coord rho` 只用于单对。测试：多对扰动一次拟合、与顺序无关、单对退化；双对枚举（两个 H₂：平行与交叉在键图自同构下为同一轨道）；`PairSumDistance` / `FrozenPairSet` 梯度对有限差分、与 `FrozenWeightedDistance` 同值。相关 6 个测试文件 102 passed、1 xfailed；ruff 通过。
+- 计数（输入结构，每个复合物 MIN）：双对组合 b04 6、b05 61、N1 525；冒烟中 N1 三个复合物实际 1 255 条（部分组合 `sc_fragments` 失败被跳过）。
+- 冒烟（fulda，PID 1144463，`fulda_smoke_double.sh` → `results/2026-11-15/n1_smoke_double/`，470 s，在 fulda 上读）：N1 SC、2 个朝向、预算 60 000：单对层 126 条、28 629 forward、0 事件；双对层 3 个完整波次 + 1 波被预算截断（`budget_exhausted:bracket`），31 139 forward、0 事件；双对层的 4 条键图改变都是分子内 1,3 / 1,4 原子对（如丙烯醛 C6–O9）在两对同时缩短后 2 步内 `domain_exit`。按种子打乱后 DA 组合（C1–C6 + C4–C7）不在前约 100 条内，本次没跑到。
+- `afir_validate.py` 改为同时读 `wave_*`（单对层）与 `dwave_*`（双对层），TS 行带 `layer`，报告加 `events_single_layer` / `events_double_layer` / `events_only_double_layer`；在 `n1_smoke_double` 上试跑（fulda，几十秒）读到两层合计 60 000 forward。
+
+## PBS 脚本：正式运行（2026-11-15；用户"正式运行 给pbs……保留现有 5×B 上限，撤回第一轮全组合覆盖的要求。N1 按固定预算做部分覆盖，不扩到 440 万 forward"）
+
+- `benchmarks/afir_mc/afir_pair_double_pbs.zsh`（模板只改 ← 行；原写 yayoi42，用户告知 42 宕机后改 yayoi08：ncpus 32 / ngpus 2 / 120 GB / walltime 48 h，两路各占一张 RTX 3090、各 16 线程、`AFIR_MAX_ATOMS_PER_CALL=768`；A 路 N1 sA → b05 sA → b04 sA，B 路 N1 sB → b05 sB → b04 sB）：11-15 定稿默认（单对 + 双对层、TS 坐标解耦、不停两个极大、括区逐轮展开、γ 106.9），反应物 MIN = 输入 + 32 个随机朝向，预算 5×B*；两路并行共用 GPU（各 6 线程、`AFIR_MAX_ATOMS_PER_CALL=256`）：A 路 N1 sA → sB，B 路 b04 sA → sB → b05 sA → sB；最后 `afir_validate.py`。输出 `results/2026-11-15/pbs_pair_double/`。`qsub` 由用户执行；未提交时不跑。
+- 预计（依据）：N1 每种子单对层约 50 min（PBS 28756 实测），双对层到预算约 143 波 × 60–78 s（fulda 冒烟实测）≈ 2.8 h（5090），4080 上按单对层实测速度比约 ×1.5 → 约 4 h；b05 括区花费只有冒烟一波的数据，粗估每种子 ≤ 4–6 h；两路并行共用 GPU 会互相拖慢，总计约 10–14 h，无更精确依据。两进程共用 16 GB 卡未实测，OOM 时该项记 FAILED，同节点重提可续跑。
+
+## 进行中：PBS 作业 29729（yayoi08，2026-11-15 22:21:07 起；作业日志 `afir_pair2.o29729`，结果在 fulda 上读）——中间读数（2026-11-16 14:41）
+
+- 已完成：N1 sA（22:21 → 08:23）、N1 sB（22:21 → 08:20）、b05 sA（08:23 → 14:19）。在跑：b05 sB（08:20 起，双对层第 6 波）、b04 sA（14:19 起）；之后 b04 sB 与检验。
+- **N1 双对层推出了 DA 环加成**（两个种子各一次，同一事件键 `b8f41330f4f4067f`；单对层两个种子 0 事件）：sA 第 24 个双对波次 `n6|0-12+3-11` 形成 C1–C7 + C4–C6，ΔE −1.162 eV；sB 第 54 波 `n25|0-11+3-12` 形成 C1–C6 + C4–C7，ΔE −1.064 eV。两条路径都停在偏置极小（546 / 297 步）。**TS 未定位**：两条路径各两次括区都是 `unresolved:hysteresis`（q_d 已暂停，跳支照记）。
+- N1 各层花费：sA 单对 350 127、双对 1 324 829（102 波，到预算）；sB 单对 360 551、双对 1 397 905（418 波，到预算）。b05 sA：单对 183 343、双对 513 179，事件 1 个（E2，fallback 键，双对层无新事件），共 706 090、5.9 h。
+
+## 已完成：PBS 作业 29729（yayoi08，2026-11-15 22:21:07 → 2026-11-16 23:26:36；检验 `pbs_pair_double/validate.json`，410 s；2026-11-18 在 fulda 上读）
+
+各项结束：N1 sA 08:23、N1 sB 08:20、b05 sA 14:19、b04 sA 15:36、b05 sB 21:24、b04 sB 23:19（11-16）；日志无 FAILED。R 只计一阶且匹配参照的 TS；首次命中为波末累计 forward（上界），含双对层（双对层在单对层之后付费）。
+
+| 运行 | 花费 / B* | 事件（单对 / 双对 / 仅双对） | 首次命中（forward） | R(B*) | R(5B*) | D2 v1.5：首次命中 / R(B*) |
+| --- | --- | --- | --- | --- | --- | --- |
+| b04 sA | 159 985 / 32 255 | 1 / 1 / 0 | SN2 23 518 | 1 | 1 | 29 597 / 1 |
+| b04 sB | 165 919 / 33 186 | 1 / 0 / 0 | SN2 76 424 | 0 | 1 | 31 269 / 1 |
+| b05 sA | 706 090 / 416 903 | 1 / 1 / 0 | event0 73 263、event2 163 069、event1 429 297 | 0.67 | 1（2B* 起） | 约 362k（三类）/ 1 |
+| b05 sB | 1 641 536 / 415 169 | 1 / 2 / 1 | event2 107 055、event0 268 377、event1 943 174 | 0.67 | 1 | event0 362 123、event2 383 535、event1 未命中 / 0.67 |
+| N1 sA | 1 677 450 / 335 298 | 0 / 1 / 1 | ts_endo_s-trans 894 511（另 ts_exo_s-trans 仅镜像匹配，1 677 450） | 0 | 0.25（含镜像 0.5） | 未命中 / 0 |
+| N1 sB | 1 761 329 / 352 268 | 0 / 1 / 1 | 不计镜像无；ts_exo_s-trans 镜像匹配 1 232 197 | 0 | 0（含镜像 0.25） | 未命中 / 0 |
+
+- **N1：本项目第一次由搜索找到参照协同 DA 鞍点**，全部来自双对层：sA `n25|0-11+3-12` 收敛到 ts_endo_s-trans（一阶，RMSD 0.011 Å，连接 `failed:tangent_no_resolved_drop`），sA `n4|0-11+3-12` 与 sB `n6|0-11+3-12` 收敛到 ts_exo_s-trans 的镜像（一阶，连接 `connected`）。两个 s-cis 参照（势垒最低的两个）未找到。D2 v1.5 与 HF-6 端到端均为 0。
+- **b05**：两个种子三类参照全部找到（一阶、匹配）；单对层找到 event0 / event2，event1（−18880.41 eV）只由双对层找到。sB 的 27 个 TS 候选中 12 个连接 `failed:tangent_no_resolved_drop`。
+- **b04**：两个种子都找到 SN2；sA 首次命中早于 D2 v1.5，sB 晚（76 424 对 31 269）。
+- 找到 DA 鞍点的路径与 11-16 中间读数里计入事件的成键路径不是同一条（两个种子的节点编号各自独立）：sA 计入事件的是 `n6|0-12+3-11`、鞍点来自 `n25|0-11+3-12` 与 `n4|0-11+3-12`；sB 计入事件的是 `n25|0-11+3-12`、鞍点来自 `n6|0-11+3-12`。括区只对路径末端键图改变的路径做，所以给出鞍点的路径末端键图也改变了，但其末端极小未计为新事件（原因未逐条查）。
+
+## 已完成（只读）：N1 两个 s-cis DA 参照为什么没找到（2026-11-18；用户「可以」）
+
+`benchmarks/afir_mc/n1_scis_check.py`（不调用模型；在 fulda 上读 `pbs_pair_double/n1_s{A,B}`；参照二面角在 181 上由 `benchmarks/n1_diels_alder/results/2026-11-09/ts_*/geometry.extxyz` 算）。
+- **根因：反应物里没有 s-cis 丙烯醛。** 丙烯醛 O9=C8–C7=C6 二面角：s-cis 参照 7°、s-trans 参照 −169 / −170°、输入结构 −178°；两个种子共 66 个反应物复合物 MIN 全部 |二面角| 172–180°（s-trans），一个 |二面角| < 90° 的都没有；推 DA 的路径末端仍为 s-trans（156–179°）。片段由输入结构 E/F 松弛得到、随机朝向不改构象，所以 s-cis 鞍点在现行起点集合下按构造不可达，与覆盖率无关。这是可区分的检查：若起点里有 s-cis，至少会有复合物的二面角接近 0°。
+- 覆盖率：双对层实际跑了 sA 3 264 / 13 370、sB 3 424 / 13 358（约 25%）。DA 位置组合：sA 跑到 4 个；sB 计划 8 个、跑到 2 个（其余 6 个因预算未跑）。跑到的 6 个里 5 个两根 C–C 都形成，其中 3 次括区收敛到 s-trans 参照（endo s-trans 1 次、exo s-trans 镜像 2 次），其余 `hysteresis` / `branch_unresolved`；1 个（sA `n16|0-12+3-11`）`max_steps`、未成键。
+- 读法：s-cis 构象要由构象变化（C7–C8 单键旋转）得到，按设计稿 §6 应来自第二阶段的网络扩展（从新 MIN 继续 SC-AFIR），第一阶段只从输入构象出发。这一条是 Claude 的推断，未验证。
+
+## 计划：Non-Hessian AFIR 第二阶段网络扩展（2026-11-18；用户「可以试试」；未施工）
+
+[施工计划](PLAN_AFIR_NETWORK_2026-11-18.md)。动笔前只读核实（fulda 上读 PBS 29729，`o9c6` 检查，不调用模型）：单对层推丙烯醛分子内 O9···C6（比值 2.49，在候选对中）的路径，末端极小 sA 23 个中 11 个、sB 24 个中 10 个为 s-cis（二面角 −12°…8°，比起点高 0.04–0.09 eV）；它们键图不变，现行运行器不计事件、不再展开。计划：末端极小不论键图都经扰动确认入 MIN 表（判重按设计稿 §4.1，同键图不同构象算不同 MIN），按 μ_i（T_R 2981.5 K，ΔE）导航展开，GRRM17 停止，单对 + 双对规则不变；待用户定：展开的 MIN 是否都跑双对层（每个 MIN 约 18 万 forward，N1 预算内约 10 个 MIN；只跑单对约 150 个）。
+
+## 中止：CI-NEB 作 TS 定位的对照（2026-11-19；用户"我们是不是可以从 别的算法绕开得到突破呢"、「可以试试」）
+
+- 脚本 `benchmarks/afir_mc/n1_cineb_check.py`（重放 PBS 29729 的 N1 DA 双对路径；两端 E/F 极小、中间 12 个像取 AFIR 轨迹按弧长重采样；ASE NEB 改进切线 + 爬坡像、k 0.1 eV/Å²、FIRE、0.01 eV/Å；收敛的爬坡像写成波次格式交 `afir_validate.py`）与启动脚本 `fulda_n1_cineb.sh`，输出 `results/2026-11-19/n1_cineb/`。
+- 00:36 在 fulda 启动（PID 1464888 → 1464889 → 1464891），没有先给计划表。用户在 fulda 上调试模型（"因为我那面在调试模型。。。"），00:45 按 PID 核对后停掉三个进程；停时仍在准备阶段（启动到建 `sA/` 约 6 min，GPU 0%），没有任何 NEB 结果。脚本只做了 lint，**未跑通过**。
+
+## 已完成（失败）：CI-NEB 对照在 180 上的冒烟（2026-11-19 01:00:37 → 02:57:29；用户"你实在不行 180"、"你直接disown明早看"；09:35 在 180 上读）
+
+- `benchmarks/afir_mc/k180_n1_cineb_smoke.sh`：只跑 1 条路径（PBS 29729 N1 sA `n6|0-12+3-11`，我们的内核两次括区都是 `hysteresis`），之后 `afir_validate.py`。进程 41502（PPID 1，`setsid nohup`）→ 41503 → 41505（Python），PID 记在 `results/2026-11-19/n1_cineb_smoke180/pids_180.txt`。**结果在 180 上读**（`ssh canna@192.168.0.180`；NFS 属性缓存）。
+- 为此给 `run_mc_afir_batch.sc_items` 加了可选参数 `double_filter(label)`（只生成指定标签的双对条目；不传时行为不变；双对起点只依赖节点与原子对，过滤不改变起点）。
+- 01:41 读数：Python 启动约 3 min、33 个复合物极小化约 9 min、路径重放 01:13:47 完成；之后两端极小化 + CI-NEB 运行中（CPU 82%、GPU 39%、显存 10.5 GB）。NEB 没有写进度日志，看不出步数；最坏跑满 2 000 步上限。慢的原因：ASE NEB 每步对 12 个像逐个调用模型（未批量），2080 Ti。正式对照前须改为批量求值。
+- 明早要看：`n1_cineb_smoke180/run.log`（末行 `all done`）、`sA/neb.json`（是否收敛、步数、forward、爬坡像能量与成键 C–C 距离）、`validate.json`（阶数、是否匹配 DA 参照或其镜像）。
+- 结果：重放成功（543 步，`biased_minimum`，成键）；**CI-NEB 未收敛**：2 000 步用满，84 197 forward，墙钟 6 773 s（其中重放前准备 591 s）。最终链能量（相对反应物端，eV）：0, −0.02, 0.00, 0.01, −0.02, −0.04, −0.04, −0.05, −0.04, 0.08, 4.87, 4.88, **24.05**（爬坡像）, −1.10（产物端）。即第 1–9 个像都滑回反应物盆，最后三个像跨越到产物，爬坡像升到 +24 eV、两个分子间的成键 C–C 拉开到 32–39 Å（几何已散），残余力 0.35 eV/Å。`afir_validate.py`：0 个候选。
+- 读法：这次冒烟不能说明"CI-NEB 不适合"，只说明这一版设置不行；可能的原因（未核实）：初始链取自偏置路径帧、反应物一侧帧过密而成键段只有末尾几帧；12 个像太少；k = 0.1；爬坡在链未收敛时就开启。另外单条 1.9 h（2080 Ti、ASE NEB 逐个像调用模型、未批量）。
+
+## 已完成（冒烟通过）：简化 String + 爬坡像作 TS 定位（2026-11-19；用户"简化 String 方法交替做力驱动更新和路径重新分布，避免节点全挤到反应物盆；之后可以用爬坡像定位鞍点。这样试试？"）
+
+- 代码：`explore/src/explore/afir_string.py`（`reparametrize` 等弧长重分布、节点先对齐前一个；`string_climb`：内部节点沿完整力走一步、每节点最大原子位移封顶 0.05 Å，再重分布，所有节点一次批量求值；收敛 = 刚体对齐后最大原子位移 ≤ 2e-3 Å；之后最高内部节点爬坡，F − 2(F·τ)τ，τ 取固定的两个相邻节点，FIRE，完整力 ≤ 0.01 eV/Å 收敛；超过起点极小 + 3 eV 记 `above_ceiling`，沿用运行器 TS 上限）。未接入运行器。测试 `explore/tests/test_afir_string.py`（TwoSaddle：节点初始全挤在反应物旁，重分布后铺开，爬坡像收敛到台面鞍点）2 passed。施工中改过一处：收敛判据起初把端点每步的刚体转动算成变化（停在 0.00216 Å 不降），改为逐节点刚体对齐后再量。
+- 分子对照脚本 `benchmarks/afir_mc/n1_string_check.py`（重放同 `n1_cineb_check.py`，只建所需标签的双对条目；重放帧存 `frames_<label>.npz` 供重跑跳过准备；20 个节点；结果写波次格式交 `afir_validate.py`）。
+- 冒烟：180，PID 43006（09:43 启动，`k180_n1_string_smoke.sh`），同一条路径 sA `n6|0-12+3-11`；输出 `results/2026-11-19/n1_string_smoke180/`，**在 180 上读**。
+- 冒烟结果（180，PID 43006，09:43:20 → 09:56:05，在 180 上读）：重放 545 步、成键；两端极小都收敛。String 1 000 次迭代未达 2e-3 Å 的收敛判据（`max_steps`），节点能量（相对反应物端，eV）0, 0.14, 0.03, 0.09, 0.11, 0.05, 0.06, 0.10, 0.10, 0.05, 0.06, 0.02, 0.01, 0.08, 0.16, 0.33, **0.65**, 0.61, −0.74, −1.10。**爬坡像 93 步收敛**（完整力 0.0093 eV/Å），比反应物端高 0.820 eV，C1–C7 2.307 Å、C4–C6 2.098 Å（不对称的协同 DA）。`afir_validate.py`：一阶，**匹配 ts_endo_s-trans**（不计镜像），本对照内首次命中 19 340 forward。
+- 花费：String + 爬坡 + 两端 19 340 forward、433 s（2080 Ti）；重放与准备 294 s。对照：同一条路径上 HF 内核两次括区都是 `hysteresis`；CI-NEB（未批量）84 197 forward 未收敛、爬坡像散架。
+- 只有一条路径；String 本身没有达到收敛判据，爬坡像从未收敛的弦出发仍收敛到参照鞍点，这一点在别的路径上是否成立未知。
+
+## 已完成：简化 String + 爬坡像，其余 4 条 N1 DA 路径（181，PID 1049675，2026-11-19 11:24 → 12:02:32；用户"181 直接跑吧 然后disown"）
+
+`benchmarks/afir_mc/k181_n1_string_rest.sh`：sA `n25|0-11+3-12`、`n4|0-11+3-12`，sB `n25|0-11+3-12`、`n6|0-11+3-12`（PBS 29729；这 4 条在 HF 内核里：sA n25 一次 `hysteresis` + 一次收敛 endo s-trans，sA n4 一次收敛 + 一次 `branch_unresolved`，sB n25 两次 `hysteresis`，sB n6 两次收敛），之后 `afir_validate.py`。输出 `results/2026-11-19/n1_string_rest181/`（`run.log` 末行 `all done`；`sA/string.json`、`sB/string.json`、`validate.json`），在 181 上读。预计约 40 min（依据：180 冒烟每种子准备约 5 min、每条约 7 min，181 同为 2080 Ti）。
+- 结果（16:04 在 181 上读）：4 条爬坡像全部收敛（41–69 步，完整力 0.0078–0.0096 eV/Å），String 本身仍都是 1 000 次 `max_steps`。`afir_validate.py`：4 个都是一阶，全部匹配 s-trans 参照：sA n25 → ts_endo_s-trans（RMSD 0.009 Å）、sA n4 → ts_exo_s-trans 的镜像、sB n25 → ts_exo_s-trans（0.011 Å）、sB n6 → ts_exo_s-trans 的镜像。相对反应物端 0.807–0.851 eV；成键 C–C 2.10 / 2.31–2.34 Å。每条 18 676–19 656 forward、393–519 s（2080 Ti），准备 142–295 s / 种子。
+- 连同 180 冒烟：**5 条 DA 路径 5 条都定位到参照 s-trans DA 鞍点**；其中 2 条（sA n6、sB n25）HF 内核两次括区都是 `hysteresis`，CI-NEB（sA n6）失败。
+
+## 已完成（文献与设计）：粗路径到 TS 的新颖性研究（2026-11-19；用户“那么挖掘新颖性吧。。。”）
+
+- 新增 [方向充分性与 E/F 定位研究](TS_DIRECTION_NOVELTY_2026-11-19.md)：核对简化 String、Freezing String、Climbing String、SPM、BITSS、OCI-NEB 等原始资料；少节点、局部爬坡、自适应切换均已有近邻。
+- 建议主线：不用模态，以多尺度几何切向的爬坡动作分歧与实际 E/F 定位反馈控制方向优化精度；给出动作扰动界及其局限。指标、控制器与性能均属候选研究，没有完成实现或验证。
+- 最小辨别实验：同一批缓存 AFIR 路径的 String 0/20/100/1000 步档位，并分离起点和方向的影响；统一规则、两侧连接、完整成本及 SPM/OCI-NEB 近邻对照。此次没有启动分子计算或改动定位器。
+
+## 准备：方向何时够用——String 迭代数对爬坡定位的影响（2026-11-19；用户贴入的研究路线："让 AFIR 路径提供方向，用很少的局部优化直接定位鞍点，按需要修正方向……最该研究的问题是：方向究竟在第几步就已经够用了，能否提前交给爬坡？"；未跑，等用户说"跑"）
+
+- 核实贴入的两点（只读）：`afir_string.string_climb` 的爬坡切线在 String 结束时由最高节点的两个邻居取一次、之后固定；5 条路径的花费 18 676–19 656 中 String 占 18 000（18 节点 × 1 000 次），92–96%。两点都对。
+- 代码：`afir_string` 抽出 `climb`（沿固定方向的爬坡，记每 10 步的 E、fmax）与 `tangent`（两个邻居之差；施工中试过先对齐邻居，在 TwoSaddle 上把转动混进切线、爬坡停滞，已改回）；`test_afir_string.py` 2 passed。测量脚本 `benchmarks/afir_mc/n1_direction_study.py` 与启动脚本 `k181_n1_direction_study.sh`：5 条已缓存的 DA 路径（不重放），String 跑一次、在 k = 0 / 10 / 25 / 50 / 100 / 200 / 400 次迭代处存弦（k = 0 即 AFIR 路径按弧长重采样、不迭代），从每份弦各自爬坡；收敛者沿 ±0.05 Å τ 下降、按键图与能量标两侧是否回到反应物 / 产物端（为本测量定的粗检查，不是 HC 规则）；每个 k 单独交 `afir_validate.py`。
+- 启动（用户「跑」）：181。第一次（PID 1208920，16:15）30 s 内退出：`n1_direction_study.py` 先导入 `run_d2` 而 `sys.path` 尚未由 `run_mc_afir` 设置（我的导入顺序错误），已改并用 `--help` 在本机核过导入。重新启动 PID 1209519（→ Python 1209524），输出 `results/2026-11-19/n1_direction_study/`，在 181 上读。

@@ -13,6 +13,7 @@
 | 路径成熟层 `mature/` | `docs/PLAN_GEN_COMPAS_MATURATION_2026-10-03.md`（施工计划） | 用户 2026-10-11 指示施工 M2–M4（探索批序贯停止）；全文仍待确认 |
 | connect | `docs/PLAN_2026-09-28.md` | 待用户确认 |
 | 评估协议（量尺，先冻结） | `docs/EVALUATION_PROTOCOL_DESIGN_2026-10-13.md`（按其 v1 范围） | 用户审定（2026-10-13）；执行参数待零号批后冻结 |
+| Non-Hessian AFIR（反应逻辑照搬 AFIR；TS / IRC / 极小用本项目 E/F 方法；MLP 特化） | `docs/NONHESSIAN_AFIR_DESIGN_2026-11-14.md`；施工计划 `docs/PLAN_AFIR_MC_2026-11-14.md` | 用户审定（2026-11-14「可以 就这么施工」）；第一阶段 MC-AFIR 施工中；取代 D2 的发射层（L1–L3、单距离意图），HF 内核与连接沿用 |
 | 发现层重设计（方案 A 约束松弛） | `docs/DISCOVERY_LAYER_DESIGN_2026-10-13.md`（按其 §1.1 v1 范围）；施工计划 `docs/PLAN_EXPLORE_V1_2026-10-13.md`，代码在独立包 `explore/` | 用户审定（2026-10-13）；M1–M5 已施工；当前局部精修仍依赖完整 Hessian，下一步优先级见 10-24 HF TS 设计记录 |
 
 ## 环境

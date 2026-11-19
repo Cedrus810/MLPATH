@@ -8,6 +8,9 @@
 
 | 你要了解什么 | 入口 |
 | --- | --- |
+| 粗路径到 TS 的新颖性研究（2026-11-19） | [方向充分性与 E/F 定位](TS_DIRECTION_NOVELTY_2026-11-19.md)：String / SPM / BITSS / OCI-NEB 近邻、动作分歧指标、理论边界及最小消融；研究建议，未施工 |
+| HF TS 论文初稿（2026-11-13，开发批次 v0.1） | [写作入口](../paper/README.md)、[英文正文](../paper/MLPATH_MainText.md)、[SI](../paper/MLPATH_SI.md)；含从现有汇总生成的两张图与证据表，采用一阶且匹配参照口径并记录镜像修正 |
+| 首篇横向验证设计（2026-11-13） | [HORIZONTAL_VALIDATION_DESIGN](../paper/HORIZONTAL_VALIDATION_DESIGN_2026-11-13.md)：三个开发体系＋三个公开数据留出槽位，六体系局部、四体系端到端；共同 C2 与预算内完成计分，未实施 |
 | 整个项目怎样连接 | [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) |
 | 核心问题、当前缺陷、怎么修与未来方向 | [HF TS 设计记录](TS_HESSIAN_FREE_DESIGN_RECORD_2026-10-24.md)：八项缺口与 HF-1…HF-6；[HF-2/3 实现记录](HF_EF_LOCATOR_2026-10-25.md)：独立 E/F 原语、b05 丢模审计、解析测试及下一关；[跳支定位施工计划](PLAN_HF_JUMP_2026-10-25.md)：b05 E2 的 §5.2 双侧延续（J0/J1 已施工）；[E/F 连接追踪施工计划](PLAN_HF_CONNECT_2026-10-26.md)：F7 `trace_sides_ef`（K1–K3 已施工）；[HF-4 施工计划](PLAN_HF4_D2_2026-10-26.md)：E/F 链接入 D2 调度、账本与续跑（H1–H4 已施工，H5 待节点） |
 | 10-13 评估协议与发现层重设计 | [评估协议设计](EVALUATION_PROTOCOL_DESIGN_2026-10-13.md)、[发现层设计](DISCOVERY_LAYER_DESIGN_2026-10-13.md)；用户 10-13 审定（按各自 v1 范围）。[施工计划](PLAN_EXPLORE_V1_2026-10-13.md)：M1–M4 已完成（账本、约束松弛探针、姿态与意图、C2 认证；b04 冒烟跑通、未验收）；[M5 D2 编排](PLAN_EXPLORE_M5_2026-10-23.md)已完成（两账户、分级、抽查、kill→resume；b04 冒烟得 c2，未验收） |
@@ -24,6 +27,15 @@
 | 算力节约待办（重复响应、构象入口、暂缓状态） | [TODO.md](TODO.md)（2026-10-26 起）；[同一起点降优先级计划](PLAN_START_CLUSTER_2026-10-28.md)（已施工为 D2-HF-v1.1）；[延续试步失败处理计划](PLAN_HF_WALK_RETRY_2026-10-28.md)（现行为 v4：首次失败即终止该侧）；[结果记录](HF_WALK_POLICY_RESULTS_2026-10-29.md) |
 | 二分中点卡住（TODO 第 9 条，11-01 至 11-02）：诊断、冷启动对照、横向曲率、阈值选项、分级终止（v4）与验收 | [冷启动对照计划](PLAN_HF_MIDPOINT_COLD_2026-11-01.md)；[横向曲率计划](PLAN_HF_MIDPOINT_TRANSVERSE_2026-11-02.md)；[改法选项](HF_MIDPOINT_THRESHOLD_OPTIONS_2026-11-02.md)；[分级终止施工计划（含用户决定与验收结果）](PLAN_HF_MIDPOINT_COARSE_2026-11-02.md)；[O5 优化器对照](PLAN_HF_MIDPOINT_O5_2026-11-02.md)；[精阶段 FIRE（v5）施工与验收](PLAN_HF_MIDPOINT_FINE_FIRE_2026-11-04.md)；[剩余精阶段卡点的改法选项（11-06）](HF_MIDPOINT_FINE_STAGE_OPTIONS_2026-11-06.md)；[粗阶段出候选（v6）施工计划](PLAN_HF_MIDPOINT_COARSE_CANDIDATE_2026-11-06.md)；[refine 端点出候选（v7）施工计划](PLAN_HF_ENDPOINT_CANDIDATE_2026-11-07.md)；[HS 两侧无最大值（R3）的改法选项（11-07）](HF_HS_NO_MAXIMUM_OPTIONS_2026-11-07.md)；[同键图的脊最后派发（D2-HF-v1.2）施工计划](PLAN_HF_SAME_GRAPH_RIDGE_2026-11-07.md)；[v7 接入 D2（D2-HF-v1.3）与 b05 整跑](PLAN_HF_D2_V13_2026-11-07.md)；[同键图的脊剩余花费的改法选项（11-07）](HF_SAME_GRAPH_RIDGE_SPEND_OPTIONS_2026-11-07.md)；[S3 + HS / HC 并行（D2-HF-v1.4）施工计划](PLAN_HF_D2_V14_2026-11-07.md) |
 | 二分中点工作线交接（11-01 至 11-06：诊断、v4 分级终止、O5、v5 精阶段 FIRE、候选身份与 HC、待办） | [HANDOFF_HF_MIDPOINT_2026-11-06.md](HANDOFF_HF_MIDPOINT_2026-11-06.md)（接替 [11-04 版](HANDOFF_HF_MIDPOINT_2026-11-04.md)） |
+| HF-5 / HF-6 工作线交接（11-08 至 11-12：b04 / N1 跨体系检验、HF-6 局部与端到端、检验脚本修正、待定事项；接替 11-08 版） | [HANDOFF_HF5_HF6_2026-11-12.md](HANDOFF_HF5_HF6_2026-11-12.md) |
+| HF-6 小结（11-12：局部 HF 命中多、成本低约一个数量级；端到端 DB 0 命中；N1 两臂都漏协同 DA） | [HF6_SUMMARY_2026-11-12.md](HF6_SUMMARY_2026-11-12.md) |
+| 三条通用规则的选项（11-12：同键图脊判定 G0–G3、σ / 几何噪声 / B 的测量程序 M1–M3、noise_eV 定义 N1–N3；待用户定） | [HF_GENERAL_RULES_OPTIONS_2026-11-12.md](HF_GENERAL_RULES_OPTIONS_2026-11-12.md) |
+| D2-HF-v1.5 施工计划（11-13：G3 / M2 / N1 施工、冒烟、三体系 × 两种子整跑，参照覆盖与上一轮相同） | [PLAN_HF_D2_V15_2026-11-13.md](PLAN_HF_D2_V15_2026-11-13.md) |
+| F8 探索 / 精修分波次交替施工计划（11-14：离线重排估算 W = 8 时 b04 / b05 前两类首次命中由约 0.9 B* 提前到 0.2–0.35 B*；搁置，未施工） | [PLAN_HF_D2_F8_WAVES_2026-11-14.md](PLAN_HF_D2_F8_WAVES_2026-11-14.md) |
+| 算法结构缺陷清单（11-14 起，挖掘中：A 发射点按几何枚举、不看反应附近——三体系 84% / 65% / 84% 的发射无升级，far 层 380 次发射 0 事件） | [ALGORITHM_DEFECTS_2026-11-14.md](ALGORITHM_DEFECTS_2026-11-14.md) |
+| Non-Hessian AFIR 设计稿（11-14 第 3 版，待用户审：反应逻辑照搬 AFIR——函数、γ、MC / SC-AFIR、导航与停止；TS 用 HF 反力零点内核在路径上重建括区，IRC 用 E/F 下降；不用 Hessian） | [NONHESSIAN_AFIR_DESIGN_2026-11-14.md](NONHESSIAN_AFIR_DESIGN_2026-11-14.md) |
+| Non-Hessian AFIR 线交接（11-15：设计、代码、b04 结果、b05 / N1 PBS 运行与待办；接替 HF5 / HF6 交接） | [HANDOFF_AFIR_2026-11-15.md](HANDOFF_AFIR_2026-11-15.md) |
+| HF-6 第二阶段：端到端 D2 对 DB（11-11 计划：同一 L0、同一总预算，R(b) 与首次命中成本） | [PLAN_HF6_DIMER_E2E_2026-11-11.md](PLAN_HF6_DIMER_E2E_2026-11-11.md) |
 | HF-6 与 Dimer 比较（11-10 计划：局部定位先行，端到端另立） | [PLAN_HF6_DIMER_2026-11-10.md](PLAN_HF6_DIMER_2026-11-10.md) |
 | HF-5 小结（11-10：b04 召回成立、S3 前提不成立；N1 单原语 D2 漏掉协同 DA；需统一重定的规则） | [HF5_SUMMARY_2026-11-10.md](HF5_SUMMARY_2026-11-10.md) |
 | HF-5 跨体系检验（11-08 计划：b04 有界端到端 → N1 协同体系，D2-HF-v1.4 不改；b09 留作最终验收） | [PLAN_HF5_CROSS_SYSTEM_2026-11-08.md](PLAN_HF5_CROSS_SYSTEM_2026-11-08.md) |
