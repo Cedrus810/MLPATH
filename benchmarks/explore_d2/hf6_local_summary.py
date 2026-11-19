@@ -19,14 +19,14 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from hf_event_validate import _jsonable, events  # noqa: E402  (sets sys.path)
+from hf_event_validate import _jsonable, match_group, validation_config, events  # noqa: E402  (sets sys.path)
 
 from ase import Atoms  # noqa: E402
 from ase.io import read  # noqa: E402
 
 from benchmarks.b04_sn2_chloride.calculator import polar1  # noqa: E402
 from explore.ledger import Ledger, view_factory  # noqa: E402
-from prrs.chemistry import automorphisms, symmetric_rmsd  # noqa: E402
+from prrs.chemistry import symmetric_rmsd  # noqa: E402
 from prrs.config import SearchConfig  # noqa: E402
 from prrs.runner import confirm_minimum  # noqa: E402
 from prrs.search import _stamped_with_charge  # noqa: E402
@@ -66,7 +66,7 @@ def main():
     report = {}
     for name, spec in SYSTEMS.items():
         manifest = json.loads((spec["run"] / "manifest.json").read_text())
-        config = SearchConfig.from_dict(manifest["config"])
+        config = validation_config(SearchConfig.from_dict(manifest["config"]))
         numbers = json.loads((spec["run"] / "poses.jsonl").read_text().splitlines()[0])[
             "numbers"
         ]
@@ -96,9 +96,7 @@ def main():
                 )
         for r in refs:
             r["energy"] = float(r["atoms"].get_potential_energy())
-            r["group"], _ = automorphisms(
-                r["atoms"], config.bond_scale, config.active_atoms, config.automorphism_limit
-            )
+            r["group"] = match_group(r["atoms"], spec["run"], config)
 
         def rmsd(a, b, group):
             return float(symmetric_rmsd(a, b, group, config.active_atoms))
@@ -149,9 +147,7 @@ def main():
             for i, a, e, cell in cands:
                 if cell["order"] != 1:
                     continue
-                g, _ = automorphisms(
-                    a, config.bond_scale, config.active_atoms, config.automorphism_limit
-                )
+                g = match_group(a, spec["run"], config)
                 for grp in groups:
                     b, eb = grp[0]
                     if (

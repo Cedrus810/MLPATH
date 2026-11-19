@@ -12,6 +12,7 @@ search and never feeds back into it; an undecided Hessian is recorded as such.
     python hf_event_validate.py OUT_JSON --refs REF.extxyz [...] --runs RUN_DIR [...]
 """
 
+import dataclasses
 import json
 import sys
 import time
@@ -33,6 +34,42 @@ from prrs.runner import confirm_minimum  # noqa: E402
 from prrs.search import _stamped_with_charge  # noqa: E402
 
 SEED = 20261109
+
+# TODO item 12 (user 2026-11-11「3 做了」): the analytic-Hessian cross-check exists to catch
+# unit / layout errors, which give O(1) relative deviations (a factor-2 error gives 0.5).
+# fp32 POLAR-1 measured deviations at the default 0.01 A probe step: b04 events 0.004-0.021
+# (the rejected ones 0.016-0.021, 2026-11-09), b05 median 0.0065-0.012 (2026-10-30). The
+# default gate 1e-2 sits inside that noise and turned true saddles into "undecided". 0.1 is
+# ~5x the largest measured fp32 deviation and ~5x below a factor-2 unit error. Used only for
+# post-search validation here; search and PRRS defaults are unchanged.
+VALIDATION_HESSIAN_CHECK = 0.1
+
+
+def validation_config(config):
+    return dataclasses.replace(config, analytic_hessian_check=VALIDATION_HESSIAN_CHECK)
+
+
+_POSE_GROUPS = {}
+
+
+def match_group(atoms, run_dir, config):
+    """Permutations for symmetric RMSD: the automorphisms of the structure's own graph united
+    with those of the run's pose (reactant) graph. The saddle graph alone misses symmetry-
+    equivalent saddles whose reacting atom carries another label (b05: which methyl H
+    moves; found 2026-11-12, sB events against sA events). D2's own HF duplicate rule also
+    unites saddle and endpoint groups (TODO item 6); the 11-06 identity used the pose group."""
+    key = str(run_dir)
+    if key not in _POSE_GROUPS:
+        r = json.loads((Path(run_dir) / "poses.jsonl").read_text().splitlines()[0])
+        pose = Atoms(numbers=r["numbers"], positions=r["positions"])
+        _POSE_GROUPS[key], _ = automorphisms(
+            pose, config.bond_scale, config.active_atoms, config.automorphism_limit
+        )
+    own, _ = automorphisms(
+        atoms, config.bond_scale, config.active_atoms, config.automorphism_limit
+    )
+    unique = {tuple(int(i) for i in g) for g in list(own) + list(_POSE_GROUPS[key])}
+    return [np.array(g) for g in sorted(unique)]
 
 
 def events(run_dir):
@@ -76,7 +113,7 @@ def main():
     refs = args[args.index("--refs") + 1 : args.index("--runs")]
     runs = [Path(p) for p in args[args.index("--runs") + 1 :]]
     manifest = json.loads((runs[0] / "manifest.json").read_text(encoding="utf-8"))
-    config = SearchConfig.from_dict(manifest["config"])
+    config = validation_config(SearchConfig.from_dict(manifest["config"]))
     numbers = json.loads((runs[0] / "poses.jsonl").read_text().splitlines()[0])["numbers"]
     calc = polar1("cuda", "float32")
     ledger = Ledger(out.with_suffix(".ledger.jsonl"), arm="V", replay=False)
@@ -102,9 +139,7 @@ def main():
         if list(r.numbers) != list(numbers):
             raise ValueError(f"{path}: atom order {list(r.numbers)} != run order {numbers}")
         a = atoms_at(r.positions)
-        group, _ = automorphisms(
-            a, config.bond_scale, config.active_atoms, config.automorphism_limit
-        )
+        group = match_group(a, runs[0], config)
         reference.append(
             {
                 "path": str(path),
