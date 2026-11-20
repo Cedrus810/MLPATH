@@ -103,4 +103,22 @@ SYSTEMS = {
         hs_bracket=None,
         note="cyclopentadiene + acrolein; input built by benchmarks/n1_diels_alder/build.py",
     ),
+    # b09 (docs/B09_DISTANCE_2026-11-20.md §5 A; user 2026-11-20 "180跑"): AFIR runner only.
+    # The AFIR runner uses the global HF_V15 / HS_BRACKET_V15, so no per-system HF values are
+    # measured here (None: run_d2.py refuses options that need them).
+    "b09": System(
+        name="b09",
+        input_path=ROOT
+        / "benchmarks/carbene_ambimodal/results/2026-11-20/b09_afir_input/input.extxyz",
+        charge=0,
+        multiplicity=1,
+        fragment_states={
+            "C3H6O2": {"charge": 0, "multiplicity": 1},
+            "C7H10O": {"charge": 0, "multiplicity": 1},
+        },
+        hf=None,
+        hs_bracket=None,
+        note="dimethoxycarbene + 1-cyclohexene-1-carboxaldehyde; unbiased input built by "
+        "benchmarks/carbene_ambimodal/build_b09_afir_input.py",
+    ),
 }
