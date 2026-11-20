@@ -8,6 +8,7 @@
 
 | 你要了解什么 | 入口 |
 | --- | --- |
+| **当前主线：TS 定位总体设计（2026-11-19，草稿，待用户审定）** | [TS_LOCATOR_DESIGN_2026-11-19.md](TS_LOCATOR_DESIGN_2026-11-19.md)：AFIR 路径给方向 → 短 String → 固定方向反射爬坡 → 两侧 E/F 下降；N1 方向研究结果、任意维度 45° 与"稳定 ⇒ 一阶"的理论、文献定位、外部 review 取舍、E1–E7 实验顺序与待定事项 |
 | 粗路径到 TS 的新颖性研究（2026-11-19） | [方向充分性与 E/F 定位](TS_DIRECTION_NOVELTY_2026-11-19.md)：String / SPM / BITSS / OCI-NEB 近邻、动作分歧指标、理论边界及最小消融；研究建议，未施工 |
 | HF TS 论文初稿（2026-11-13，开发批次 v0.1） | [写作入口](../paper/README.md)、[英文正文](../paper/MLPATH_MainText.md)、[SI](../paper/MLPATH_SI.md)；含从现有汇总生成的两张图与证据表，采用一阶且匹配参照口径并记录镜像修正 |
 | 首篇横向验证设计（2026-11-13） | [HORIZONTAL_VALIDATION_DESIGN](../paper/HORIZONTAL_VALIDATION_DESIGN_2026-11-13.md)：三个开发体系＋三个公开数据留出槽位，六体系局部、四体系端到端；共同 C2 与预算内完成计分，未实施 |
@@ -23,6 +24,8 @@
 | 10-09 b09 探针与搜索设计修复 | [搜索设计修复](SEARCH_DESIGN_REPAIR_2026-10-09.md)（谱排序按执行运动打分、受限软模、先粗扫后细化、环内保键交付）；b09 结果见 [probe_b09/README](../benchmarks/carbene_ambimodal/probe_b09/README.md) 与 [FOLLOWUP](../benchmarks/carbene_ambimodal/probe_b09/FOLLOWUP_2026-10-09.md) |
 | b09 差距测量现状（10-10 交接） | [HANDOFF_B09_GAP_2026-10-10.md](HANDOFF_B09_GAP_2026-10-10.md)：b09 定位为终极验收、当前只测差距；全部实验、已识别差距与待决定项 |
 | PRRS 离 b09 验收差多远 | [B09_GAP_ANALYSIS_2026-10-10.md](B09_GAP_ANALYSIS_2026-10-10.md)：按目标逐级对照、差距分参数级 / 设计稿预见未实现 / 超出发现层三类；用户 10-10：不着急做 |
+| SC 单对层片段内 / 片段间原子对拆分（2026-11-20，方案待定） | [PLAN_AFIR_PAIR_SPLIT_2026-11-20.md](PLAN_AFIR_PAIR_SPLIT_2026-11-20.md)：81–93% 的单对路径是每个朝向重推的片段内原子对；P0 不改 / P1 改顺序 / P2 片段内只推一次 + 可选构象回流 |
+| **现行 AFIR 流水线离 b09 多远（2026-11-20，待用户审）** | [B09_DISTANCE_2026-11-20.md](B09_DISTANCE_2026-11-20.md)：按级量距离、验收判据草稿、第一次测量计划；背景是撞车论文 Popcornn（`refs/popcornn_2611.22272/`） |
 | 哪些决策尚未收口 | 项目总览 §9 → [DECISIONS_PENDING.md](DECISIONS_PENDING.md) 及对应工作线计划 |
 | 算力节约待办（重复响应、构象入口、暂缓状态） | [TODO.md](TODO.md)（2026-10-26 起）；[同一起点降优先级计划](PLAN_START_CLUSTER_2026-10-28.md)（已施工为 D2-HF-v1.1）；[延续试步失败处理计划](PLAN_HF_WALK_RETRY_2026-10-28.md)（现行为 v4：首次失败即终止该侧）；[结果记录](HF_WALK_POLICY_RESULTS_2026-10-29.md) |
 | 二分中点卡住（TODO 第 9 条，11-01 至 11-02）：诊断、冷启动对照、横向曲率、阈值选项、分级终止（v4）与验收 | [冷启动对照计划](PLAN_HF_MIDPOINT_COLD_2026-11-01.md)；[横向曲率计划](PLAN_HF_MIDPOINT_TRANSVERSE_2026-11-02.md)；[改法选项](HF_MIDPOINT_THRESHOLD_OPTIONS_2026-11-02.md)；[分级终止施工计划（含用户决定与验收结果）](PLAN_HF_MIDPOINT_COARSE_2026-11-02.md)；[O5 优化器对照](PLAN_HF_MIDPOINT_O5_2026-11-02.md)；[精阶段 FIRE（v5）施工与验收](PLAN_HF_MIDPOINT_FINE_FIRE_2026-11-04.md)；[剩余精阶段卡点的改法选项（11-06）](HF_MIDPOINT_FINE_STAGE_OPTIONS_2026-11-06.md)；[粗阶段出候选（v6）施工计划](PLAN_HF_MIDPOINT_COARSE_CANDIDATE_2026-11-06.md)；[refine 端点出候选（v7）施工计划](PLAN_HF_ENDPOINT_CANDIDATE_2026-11-07.md)；[HS 两侧无最大值（R3）的改法选项（11-07）](HF_HS_NO_MAXIMUM_OPTIONS_2026-11-07.md)；[同键图的脊最后派发（D2-HF-v1.2）施工计划](PLAN_HF_SAME_GRAPH_RIDGE_2026-11-07.md)；[v7 接入 D2（D2-HF-v1.3）与 b05 整跑](PLAN_HF_D2_V13_2026-11-07.md)；[同键图的脊剩余花费的改法选项（11-07）](HF_SAME_GRAPH_RIDGE_SPEND_OPTIONS_2026-11-07.md)；[S3 + HS / HC 并行（D2-HF-v1.4）施工计划](PLAN_HF_D2_V14_2026-11-07.md) |
@@ -33,7 +36,7 @@
 | D2-HF-v1.5 施工计划（11-13：G3 / M2 / N1 施工、冒烟、三体系 × 两种子整跑，参照覆盖与上一轮相同） | [PLAN_HF_D2_V15_2026-11-13.md](PLAN_HF_D2_V15_2026-11-13.md) |
 | F8 探索 / 精修分波次交替施工计划（11-14：离线重排估算 W = 8 时 b04 / b05 前两类首次命中由约 0.9 B* 提前到 0.2–0.35 B*；搁置，未施工） | [PLAN_HF_D2_F8_WAVES_2026-11-14.md](PLAN_HF_D2_F8_WAVES_2026-11-14.md) |
 | 算法结构缺陷清单（11-14 起，挖掘中：A 发射点按几何枚举、不看反应附近——三体系 84% / 65% / 84% 的发射无升级，far 层 380 次发射 0 事件） | [ALGORITHM_DEFECTS_2026-11-14.md](ALGORITHM_DEFECTS_2026-11-14.md) |
-| Non-Hessian AFIR 设计稿（11-14 第 3 版，待用户审：反应逻辑照搬 AFIR——函数、γ、MC / SC-AFIR、导航与停止；TS 用 HF 反力零点内核在路径上重建括区，IRC 用 E/F 下降；不用 Hessian） | [NONHESSIAN_AFIR_DESIGN_2026-11-14.md](NONHESSIAN_AFIR_DESIGN_2026-11-14.md) |
+| Non-Hessian AFIR 设计稿（11-14 第 3 版，用户 11-14 审定「可以 就这么施工」：反应逻辑照搬 AFIR——函数、γ、MC / SC-AFIR、导航与停止；TS 用 HF 反力零点内核在路径上重建括区，IRC 用 E/F 下降；不用 Hessian） | [NONHESSIAN_AFIR_DESIGN_2026-11-14.md](NONHESSIAN_AFIR_DESIGN_2026-11-14.md) |
 | Non-Hessian AFIR 线交接（11-15：设计、代码、b04 结果、b05 / N1 PBS 运行与待办；接替 HF5 / HF6 交接） | [HANDOFF_AFIR_2026-11-15.md](HANDOFF_AFIR_2026-11-15.md) |
 | HF-6 第二阶段：端到端 D2 对 DB（11-11 计划：同一 L0、同一总预算，R(b) 与首次命中成本） | [PLAN_HF6_DIMER_E2E_2026-11-11.md](PLAN_HF6_DIMER_E2E_2026-11-11.md) |
 | HF-6 与 Dimer 比较（11-10 计划：局部定位先行，端到端另立） | [PLAN_HF6_DIMER_2026-11-10.md](PLAN_HF6_DIMER_2026-11-10.md) |

@@ -4,6 +4,8 @@
 
 状态：文献核对、数学分析与候选研究方案。本文没有采纳新的生产算法，没有启动分子计算，也没有改动定位器。既有 5/5 结果来自 `DONE_LOG.md` 当日记录；本次核对源码和记录，没有重新读取 180 的原始运行工件。
 
+**2026-11-19 晚补**：§6.1 的档位测量已做（k = 0 / 10 / 25 / 50 / 100 / 200 / 400）：k=0 4/5、k≥10 5/5，判读为"固定的短 String 已覆盖全部成功且更省"（[DONE_LOG](DONE_LOG.md) 同日）。固定方向反射的理论与补充文献见 [TS 定位总体设计草稿](TS_LOCATOR_DESIGN_2026-11-19.md) §3–§4；本文 §3 表末补了五行。
+
 ## 1. 建议押注的科学问题
 
 **在搜索决策不使用 Hessian、模态或力差分曲率的条件下，如何判断一条尚未收敛的反应路径已经提供了足够可靠的爬坡方向，并只为缺失的方向信息继续付费？**
@@ -39,6 +41,11 @@
 | Goswami, Gunde, Jónsson，OCI-NEB，2026，[正式论文](https://www.frontiersin.org/journals/chemistry/articles/10.3389/fchem.2026.1807063/full) | 路径与 Dimer 搜索自适应切换，检查模态对齐并处理失败 | 自适应切换本身已有；本项目需解决无模态条件下的方向判定 |
 | Maragakis et al.，Adaptive NEB，2002，[作者仓储](https://efthimioskaxiras.scholars.harvard.edu/sites/g/files/omnuum11321/files/efthimios_kaxiras/files/140.pdf) | 逐步聚焦鞍点附近区域 | 局部加密和缩小窗口本身已有 |
 | Reddy, Chiang，稳定边界方法，2006，[原始摘要](https://pubmed.ncbi.nlm.nih.gov/16706723/) | 利用稳定边界及轨迹调整找鞍点 | 通道/盆边界语言本身已有 |
+| （11-19 晚补）OCI-NEB 的 45° 细节，[arXiv v4](https://arxiv.org/html/2601.12630v4) | 阈值 $1/\sqrt2$；"错位超过 45° 反射推离鞍点"；正文无推导、无维度说明；实际容差 0.85 来自超参数搜索；PMC 版显示 "1/2"，疑为渲染丢根号 | 任意维度的证明可补，但 45° 本身不算新 |
+| （11-19 晚补）Levitt, Ortner，SIAM J. Numer. Anal. 2017，[arXiv](https://arxiv.org/abs/1607.08875) | Lemma 1：精确最低特征向量的 ISD 下一阶鞍点吸引、极小与高阶鞍点排斥；GAD 无法全局收敛、会循环 | "稳定 ⇒ 一阶"的精确方向版本已有；固定任意方向版本不在其中 |
+| （11-19 晚补）E, Zhou，GAD，2011，[arXiv](https://arxiv.org/abs/1011.0042) | 耦合 (x, v) 系统：线性稳定 ⇔ 一阶鞍点 | 方向随动力学收敛，非固定方向 |
+| （11-19 晚补）Yin, Zhang, Zhang，SCS-HiSD，2026，[arXiv](https://arxiv.org/html/2607.03030) | 精确特征向量下线性稳定 ⇔ k 阶鞍点；不精确方向只给范数界，容差随最小负曲率趋零 | 无角度阈值、无软模与约束极小对比 |
+| （11-19 晚补）Shi, Zhang, Du 2025 [arXiv 2510.14144](https://arxiv.org/html/2510.14144)；Du 等 2026 [arXiv 2601.02650](https://arxiv.org/html/2601.02650) | 方向有误差的反射迭代，余量 $(1-\sqrt\theta)\mu-c\theta-c'\sqrt\theta$；后者只用能量 | 无固定方向结果、无 1/2 阈值；部分正文只读到摘要 |
 
 直接近邻的交集已经覆盖：少节点、局部修正、不求完整路径、E/F 更新、提前精修、盆关联。研究重心应放到可计算的方向充分性指标及其控制效果。
 

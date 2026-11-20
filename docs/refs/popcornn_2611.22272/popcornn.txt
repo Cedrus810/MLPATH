@@ -1,0 +1,2238 @@
+                                                    Neural Network Path Optimization for Finding
+                                                   Transition States on a Machine Learned Potential
+
+                                                      Kareem Hegazy1,2*† , Eric C-Y Yuan3,6† , Anup Kumar7 ,
+
+
+
+
+arXiv:2611.22272v1 [physics.chem-ph] 17 Nov 2026
+                                                     Dmitriy Morozov8 , Daniel Barter7 , Michael W Mahoney1,2,8 ,
+                                                             Teresa Head-Gordon3,4,5,6*, Samuel M Blau7*
+                                                    1
+                                                       Department of Statistics, University of California, Berkeley, 94720,
+                                                                                   CA, USA.
+                                                   2
+                                                     International Computer Science Institute, Berkeley, 94704, CA, USA.
+                                                       3
+                                                         Kenneth S. Pitzer Theory Center and Department of Chemistry,
+                                                              University of California, Berkeley, 94720, CA, USA.
+                                                       4
+                                                         Department of Bioengineering, University of California, Berkeley,
+                                                                                94720, CA, USA.
+                                                   5
+                                                     Department of Chemical and Biomolecular Engineering, University of
+                                                                     California, Berkeley, 94720, CA, USA.
+                                                   6
+                                                     Chemical Sciences Division, Lawrence Berkeley National Laboratory,
+                                                                           Berkeley, 94720, CA, USA.
+                                                     7
+                                                       Energy Technologies Area, Lawrence Berkeley National Laboratory,
+                                                                           Berkeley, 94720, CA, USA.
+                                                       8
+                                                         Computer Science Area, Lawrence Berkeley National Laboratory,
+                                                                           Berkeley, 94720, CA, USA.
+
+
+                                                        *Corresponding author(s). E-mail(s): khegazy@berkeley.edu;
+                                                                    thg@berkeley.edu; smblau@lbl.gov;
+                                                             †
+                                                               These authors contributed equally to this work.
+
+
+                                                                                       Abstract
+                                                    Transition states govern chemical reaction rates and outcomes, yet locating them
+                                                    remains a central challenge in computational chemistry. Double-ended search
+                                                    methods find transition states given reactant and product structures, but gen-
+                                                    erally rely on discretized path representations developed for density functional
+                                                    theory, where potential energy surface evaluations are expensive. Machine learned
+
+
+
+
+                                                                                           1
+     interatomic potentials (MLIPs) dramatically reduce this cost and leverage auto-
+     matic differentiation to access higher-order derivatives efficiently. We introduce
+     Popcornn, a framework to find transition states by optimizing continuous neural
+     network paths atop an MLIP with a parallelized adaptive numerical integrator.
+     This combination eliminates path discretization artifacts, reduces hyperparam-
+     eter sensitivity, and enables non-local optimization to overcome local features
+     using second-order potential-energy-surface information. Popcornn consistently
+     recovers more correct transition states than standard methods such as nudged
+     elastic band and growing string, across MLIPs on thousands of organic reac-
+     tions, establishing it as a robust, automation-ready method for high-throughput
+     transition state search. Popcornn’s infrastructure is flexible in path objective,
+     integration strategy, and optimization algorithm, making it a practical tool and
+     platform for investigating open questions in MLIP-based path optimization.
+
+     Keywords: Transition states, path optimization, machine learning interatomic
+     potentials, reaction networks
+
+
+
+
+1 Introduction
+The quantum mechanical potential energy surface (PES) describes how an atomistic
+system’s energy changes during conformational rearrangement and chemical transfor-
+mations. The most chemically pertinent areas of the PES are stationary points: minima
+define stable molecules, and first-order saddle points define transition states (TSs) that
+describe transformations of reactant molecules into product species. Accurately and
+efficiently locating the TSs on the PES is critical for understanding complex reactive
+combustion [1, 2], electrolyte decomposition [3–7], heterogeneous [8] and homogeneous
+catalysis [9], polymer transformations [10], and more.
+     PES minima can be reliably found with a variety of different local optimiza-
+tion algorithms using only iterative energy and gradient (1st order and quasi-second
+order) methods, starting from nearly any reasonable initial guess structure [11, 12].
+In contrast, single-ended TS optimization depends heavily on the quality of the initial
+guess (i.e., how close the structure is to the desired TS), the optimization algorithm
+employed, and often the need to calculate Hessian (2nd order) information. TS opti-
+mization for chemical transformations is typically carried out with density functional
+theory (DFT). However, when Hessian (2nd order) information is used, DFT even-
+tually becomes intractable for large systems due to quartic scaling with the number
+of basis functions. As automatically-differentiable machine learned interatomic poten-
+tials (MLIPs) progress towards being reliable DFT surrogates, improved accessibility
+of second-order information has enabled more robust single-ended TS optimization
+[13–16].
+     Even with readily-available Hessians, single-ended TS optimization remains fun-
+damentally constrained by the need for a reasonably good initial guess TS structure
+[13, 16]. Experts can build such structures by hand, structural templates can be
+employed for specific reaction classes [17], and generative models can now propose
+
+
+
+                                             2
+TS structures from reactants and products [18–21] or from reactants alone [22]. How-
+ever, these generative models are limited in chemical scope by their TS training data;
+currently, standard datasets consist of main-group reactions [22, 23]. Therefore, auto-
+mated initial guess construction across the chemical diversity of complex reaction
+networks [24, 25] remains an open challenge.
+    An alternative and more automation-friendly approach is double-ended TS
+search [12], which locates the TS given reactant and product structures by reformu-
+lating the task as a path optimization. It is the natural tool for reaction networks
+built by enumerating candidate reactant–product pairs [5, 24, 26]. The path can be
+thought of as an optimizable function xθ (t) which maps a point on a reaction coor-
+dinate or “reaction time” t to a 3D structure. The path is constrained to return the
+reactant structure when t = 0 and the product structure when t = 1: xθ (0) = xR and
+xθ (1) = xP . Thus, the transformation of the reactant to the product must necessarily
+be accomplished along the path. The optimization objective for most double-ended
+path optimization schemes is derived from or can be interpreted as a path integral:
+                                        Z 1
+                                   L=         ℓ(x(t)) dt,                              (1)
+                                          0
+
+where ℓ(x(t)) quantifies the local “path quality” at reaction time t. In the simplest
+case, ℓ(x(t)) can be the potential energy E (x(t)), and the minimization objective LE
+is the total energy along the path. Decades of work, including the nudged elastic band
+(NEB) [27, 28] and growing string method (GSM) [29–32], have been dedicated to
+obtaining the minimum energy path (MEP) by minimizing LE . The highest energy
+point along the MEP is guaranteed to be a TS, and the MEP is the gradient descent
+path from the TS to the reactant and product minima.
+    Notably, NEB and GSM were developed under the constraints of performing path
+optimization atop a DFT PES. Despite avoiding prohibitively expensive Hessians, cal-
+                                                                                       3
+culating a structure’s total energy and atomic forces with DFT still scales as O(Ne−     ),
+becoming computationally challenging or intractable for larger systems. Traditionally,
+to make the path optimization computationally practical, the path (and its integral
+Eq. 1) is discretized to a set of discrete structures (images) such that only tens of DFT
+calculations are needed at each optimization iteration. However, path discretization
+has a variety of negative consequences: the potential to miss PES features between
+discrete images; complexities around how to place images along the path; maintaining
+path connectivity with fictitious spring forces; the need to treat a “climbing image”
+differently from the rest of the path; and the introduction of many hyperparameters
+(related to these details) that often need to be carefully selected by the user for each
+reaction. All of these consequences are anathema to automation. Perhaps most prob-
+lematic, path optimization proceeds locally such that each image’s position is updated
+pursuant only to the energy and forces at that image and its two neighboring images,
+preventing the path from cohesively mutating into an entirely different track along
+the PES.
+    Independent of the path representation, the MEP optimization objective is criti-
+cally hindered by the MEP’s sensitivity to local structures that do not affect the TS.
+Although LE only requires PES first derivatives at each optimization iteration and the
+
+
+                                              3
+MEP has attractive mathematical properties [33, 34], it is also sensitive to every part
+of the path. This sensitivity is a crucial drawback, making the optimization landscape
+substantially more complex and difficult to navigate. In practice, the primary goal
+of path optimization should be to locate the TS. With the TS in hand, we can then
+obtain the MEP and/or confirm the associated endpoints via intrinsic reaction coor-
+dinate (IRC) or quasi-IRC [33, 35] calculations. However, directly targeting the TS –
+rather than the MEP – requires a force-based path objective [36]; but a force-based
+path objective necessitates the calculation of second derivatives along the path at each
+iteration. While intractable with DFT, this presents an opportunity for improved path
+optimization methodology atop differentiable MLIPs.
+    In this work, we present a software platform for MLIP-based double-ended TS
+search that we call Popcornn : “Path Optimization with a Continuous Representation
+Neural Network.” Popcornn leverages a neural network to parameterize the continuous
+path from reactant to product, combined with a GPU-parallelized adaptive numerical
+path integrator to calculate the path objective – a critical combination we find neces-
+sary to ensure comprehensive PES sampling and to avoid many issues of traditional
+path discretization. This combination further facilitates global and cohesive path opti-
+mization by differentiating the path objective through the MLIP with respect to the
+path’s weights and biases. By default, Popcornn employs a force-based optimization
+objective that directly targets the TS rather than seeking the MEP. We demonstrate
+that, with fixed default settings, Popcornn consistently achieves improved robustness
+and recovery of intended TSs, when compared with NEB and GSM, across multiple
+MLIPs and thousands of in-distribution and out-of-distribution test reactions. Addi-
+tionally, Popcornn is engineered to be flexible with respect to path objective, numerical
+integration strategy, optimization algorithm, and path initialization strategy. Thus, it
+is both of immediate practical utility for double-ended TS search atop a pre-trained
+MLIP, and it is also envisioned as a powerful platform for subsequent investigation
+and further improvement of MLIP-based path optimization methodologies.
+
+2 Results
+2.1 Popcornn framework
+Popcornn uses a simple fully-connected neural network to parameterize the path,
+
+                       xθ (t) = (1 − t) xR + t xP + t (1 − t) fθ (t),                (2)
+                                |       {z      } |       {z       }
+                                    linear prior       perturbation
+
+
+where t ∈ [0, 1] is the reaction time, xR and xP are the reactant and product endpoints,
+and fθ (t) is a fully-connected neural network with adjustable parameters θ (Fig. 1a).
+The path (xθ (t) ∈ R3N ) and neural network (fθ (t) ∈ R3N ) model the positions of
+all N atoms. The path formulation in Eq. 2 employs a perturbation from a linear
+interpolation between xR and xP , while enforcing hard endpoint constraints: xθ (0) =
+xR and xθ (1) = xP . We observe that the perturbative correction to a linear prior
+is important for path quality and optimization speed; see Supplementary Note A
+for details. This path formulation was developed independently and concurrently in
+
+
+                                              4
+ (a) Continuous path               (b) Path optimization objective                  (c) Automatic differentiation
+
+                                         Σ
+                                                            VRE, pVRE, ...
+
+                            eval                                             grad               ∂/∂θ
+
+                                                                                            Σ
+
+
+
+                                                                  adaptive                   differentiate through potential
+
+                                             gradient descent update
+
+
+
+Fig. 1 Schematic illustration of Popcornn. (a) The continuous reaction path is parameterized by a
+simple neural network. (b) The path objective of choice is calculated via a GPU-parallelized adaptive
+numerical path integrator. (c) The gradient of the objective with respect to the path neural network
+parameters is obtained via backpropagation through the differentiable potential, enabling path opti-
+mization via gradient descent.
+
+
+references [37–39]; additionally, neural path models have also been trained across many
+reactions to predict paths directly, from the endpoints [39] or outward from a TS [22],
+whereas Popcornn optimizes each path on the target PES. The continuous path allows
+one to probe the molecular structure at any point, guaranteeing no discontinuities and
+allowing all relevant PES features along the path to be sampled during optimization.
+Critically, we note that changing any internal neuron parameter in xθ (t) modifies all
+atomic positions across the entire reaction path, enabling non-local path mutation
+rather than local bead perturbations.
+    To realize our continuous formulation’s (Eqs. 1 and 2) full capabilities, the loss
+must also be evaluated via adaptive numerical integration, rather than a coarse or
+other rigid summation scheme. Thus, unlike conventional methods that approximate
+the loss (Eq. 1) using discrete points, we evaluate the path integral with the GPU-
+parallelized adaptive numerical path integrator PadaQuad [40] (Fig. 1b). PadaQuad
+globally updates the entire path by integrating the gradient of the loss with respect to
+all network parameters along the entire path (Eq. 5), driving cohesive path optimiza-
+tion via gradient descent (Fig. 1c). The adaptivity of PadaQuad is central to avoiding
+fixed discretization, and it focuses PES evaluations in regions of high variation and
+large contributions to the integral while limiting evaluations in slowly varying regions
+(Supplementary Note E). The adaptive numerical integration of Eq. 1 precludes the
+need for fictitious spring force terms. Instead, PadaQuad does this by adaptively
+adding, removing, and adjusting evaluation points based on the integral error, indepen-
+dent of the PES value. This adaptivity places evaluations where needed, removing the
+need for spring forces to affix them and creating an efficient and error-bound evaluation
+of the path. We provide more details on PadaQuad in Supplementary Note E.
+    We explore two different path objectives: one which targets the minimum energy
+path, and the other which directly targets the TS via the path which goes least high
+on the PES. Crehuet and Bofill [41] introduced the variational reaction energy (VRE)
+
+
+
+
+                                                       5
+path objective                          Z 1
+                             LVRE =           |F(xθ (t))| |vθ (t)| dt,                  (3)
+                                         0
+where F(xθ (t)) ∈ R3N is the atomic forces at positions xθ (t), and vθ (t) = dxθ (t)/dt ∈
+R3N is the tangent to the path. Minimizing LVRE results in a minimum energy path,
+also known as a gradient descent path [42, 43]. This MEP is the goal of NEB and GSM.
+Birkholz and Schlegel [36] introduced the projected VRE (pVRE) loss as a variational
+bound of LVRE
+                      Z 1                               X
+            LpVRE =         |F(xθ (t)) · vθ (t)| dt =         2Ea,T S − Ea,R − Ea,P ,   (4)
+                       0                                  a
+
+
+which is sensitive to the angle between F(xθ (t)) and vθ (t), and which can be thought
+of as a sum over all activation barriers a. Minimizing LpVRE results in a path that
+has the lowest PES barrier, thereby directly targeting the TS while being insensitive
+to structures along the rest of the path. Later, we show LpVRE produces qualitatively
+simpler and more robust paths.
+    The path xθ (t) is updated by the gradient of the path integral loss given by
+                              Z 1                Z 1
+                     ∂L             ∂ℓ(t)              ∂ℓ(xθ (t)) ∂xθ (t)
+                        =                 dt =                            dt.           (5)
+                     ∂θ        0     ∂θ           0      ∂xθ       ∂θ
+
+Numerically, this gradient can be calculated in two ways: taking the gradient of the
+completed integral; or integrating the gradient of the integrand. In the former case,
+the evaluation points are determined by the loss integral since the gradient is taken
+after. In the latter case, the gradient is more accurate because the evaluation points
+are chosen to minimize the error of the gradient by placing them where the gradi-
+ent of the loss varies the most. We use the latter formulation, though Popcornn and
+PadaQuad support both options. The gradient is one order higher than the highest
+order derivative in the quantity ℓ. That is, if the integrand ℓ contains only the poten-
+tial energy (like in NEB), only the first derivative of the PES (atomic forces) would be
+needed. On the other hand, if ℓ involves the forces (VRE and pVRE), then the second
+derivative (the Hessian) is necessary for the path differentiation. The steep computa-
+tional cost of DFT-based second derivatives has prevented force-based path objectives
+from being realistically viable, until the recent advent of differentiable MLIPs that are
+sufficiently accurate to describe reactive PESs for chemical systems of interest [13].
+    The LpVRE loss admits a natural force-based convergence criterion based on the
+optimization gradient (Eq. 5). Established energy-minimization methods like NEB
+and GSM leverage modified forces (perpendicular gradients on the images and spring
+forces) to determine the convergence of the optimization [28]. The LpVRE loss iso-
+lates and targets the TS (Supplementary Note B.2), while removing intermediate
+extrema along xθ (t). Specifically, the gradient of LpVRE becomes proportional to the
+TS force as the path converges (Eq. B39). Therefore, the gradient of LpVRE is a
+physically consistent counterpart to convergence criteria used by the aforementioned
+
+
+
+                                                 6
+established methods. Given this correspondence, we set the same convergence criteria
+for Popcornn, NEB, and GSM for the following chemical reaction evaluations.
+
+
+         (a)                                          (b)
+
+
+
+
+         (c)
+
+
+
+
+Fig. 2 Different loss functions on the Muller-Brown potential. (a) The VRE loss tries to find the
+minimum energy path, which can hinder efficient TS finding. (b) The pVRE loss focuses on minimizing
+the barrier height, directly targeting the TS. (c) The pVRE loss fully converges within 150 steps,
+whereas the VRE loss takes 500 steps to converge.
+
+
+    To understand the differences between paths optimized with the LpVRE and LVRE
+losses, we demonstrate Popcornn with both loss functions on the model Müller-Brown
+potential, revealing the advantages of LpVRE . Figure 2 shows the Popcornn optimiza-
+tion of xθ (t) on the Müller-Brown potential for the LVRE and LpVRE losses. We observe
+xθ (t) optimized with LpVRE converges to the TS roughly three times faster than with
+LVRE . The LpVRE optimization quickly locates the TS and converges to a stable path,
+while the LVRE optimization struggles to navigate the PES within the first 200 steps
+due to LVRE ’s more complex locally-aware loss landscape. Given that our stated goal
+is to locate the TS as robustly as possible, the TS-focused LpVRE is the superior path
+objective. For the remainder of this work, we use LpVRE as our optimization objec-
+tive unless otherwise stated. We provide more detailed discussion and intuition of the
+LVRE and LpVRE losses in Supplementary Note B.
+    It is well established that the quality of the initial path provided for path opti-
+mization dramatically impacts the success rate of the path optimization task and the
+likelihood of recovering the intended TS [44]. In the molecular context, the geodesic
+method of Zhu et al. [45] and the IDPP method [46] are commonly used. Both leverage
+
+
+                                                7
+discretized path optimizations with custom objectives atop bespoke analytic pair-
+wise potentials to improve upon a naive linear path. This avoids steric clashes that
+could yield critically problematic DFT convergence or erroneous MLIP predictions.
+Popcornn extends its continuous path representation, adaptive numerical integration,
+and backpropagation-optimization machinery to initial path construction. Similar to
+MLIPs, one can add new path initializations to the Popcornn ecosystem [47]. We imple-
+mented a continuous path geodesic optimization atop the pairwise potential given by
+Zhu et al. [45], and we refer to this approach as Popcornn -geodesic. As we show below,
+this substantially improves path optimization outcomes.
+
+2.2 Chemical reaction evaluations
+To evaluate Popcornn ’s ability to robustly locate intended transition states in a
+systematic manner, we conduct large-scale experiments across different MLIPs on
+both in-distribution and out-of-distribution reactions. By leveraging reaction test sets
+containing thousands of examples, we seek to ensure that we are drawing reliable,
+statistically significant conclusions, while demonstrating Popcornn ’s robustness and
+high-throughput capabilities. We find the reaction path in three steps: we first opti-
+mize the endpoint structures on the MLIP (Fig. 3a); secondly, we construct an initial
+path (between the optimized endpoints) atop a pairwise potential using discretized
+geodesic or Popcornn -geodesic (Fig. 3b); finally, we optimize the path atop the MLIP
+(Fig. 3c). To find the TS, we apply a TS optimization method to the structure along
+the optimized path with maximal energy and minimal forces. To validate the pro-
+posed TSs, we apply (quasi)IRC calculations to recover endpoints (Fig. 3d) that are
+then compared with initial endpoints (Fig. 3e). Experimental success, as measured
+by graph matching between initial endpoints and IRC endpoints, is categorized by a
+quality hierarchy:
+• Intended: Both IRC endpoints match both initial endpoints.
+• Partially intended: One IRC endpoint matches one initial endpoint.
+• Unintended: Neither IRC endpoint matches either initial endpoint; however, the
+  IRC endpoints also do not match each other, i.e., a reaction has still occurred.
+• No reaction: IRC endpoints match, i.e., the transition state found corresponds only
+  to a conformational change, not a reaction.
+    We benchmark Popcornn against the two most common path optimzation meth-
+ods, NEB [27, 28] and GSM [29–32]. For NEB, we compare two different initial path
+construction strategies: discretized geodesic and Popcornn -geodesic. For GSM, initial
+path construction is not required; the path is built concurrently with optimization.
+For Popcornn, Popcornn -geodesic constructs the initial path prior to Popcornn opti-
+mization atop the MLIP with the pVRE optimization objective. We note that for
+each method we run all experiments with multiple different sets of hyperparameters
+and present results from only the single best-performing set. This procedure is most
+representative of performance in a simple high-throughput context, yielding a fair
+comparison between methods. Further discussion of NEB hyperparameters is provided
+in Section 4.4. Supplementary Note F presents ablation tests across bead density and
+path initialization methods for NEB.
+
+
+                                           8
+    We perform experiments on small organic reactions with MLIPs trained on
+Transition-1x [23] (T1x), and we test on out-of-distribution (OOD) reactions present
+in the Grambow-Green dataset (GG) [48] but absent in T1x. The reactions in T1x
+are derived from GG, but in some cases DFT NEB fails to find the path of the GG
+reaction, and that reaction is excluded from T1x. These challenging 1,342 reactions
+where DFT NEB fails make up our OOD test dataset. When comparing against NEB,
+we use standard settings of 10 and 20 beads, along with an exhaustive 100 bead
+optimization. The 100 bead optimization roughly matches the number of Popcornn
+evaluations, thus extending NEB towards the numerical integration regime for a more
+direct comparison with Popcornn . We additionally tested NEB with 1000 beads, but
+we found significantly worse behavior.
+
+
+ (a) Relax endpoints            (b) Construct initial path          (c) Optimize path             (d) Optimize TS
+                                                                                                            + Calculate IRC
+                                   Geodesic                                       NEB GSM
+                                   Popcornn-geodesic                              Popcornn
+
+
+
+
+                       (MLIP)            (Pairwise potential)                            (MLIP)                      (MLIP)
+
+
+                                                  (e) Compare bonding
+                                   Intended / Partially intended / Unintended / No reaction
+
+
+
+Fig. 3 Systematic evaluation of double-ended TS finding methods. (a) The endpoints are individ-
+ually optimized to PES minima. (b) An initial path connecting the initial optimized endpoints is
+constructed via optimization atop a pairwise potential to approximate the actual reaction path and
+resolve steric clashes (Geodesic, Popcornn-geodesic). (c) Path optimization is performed on the MLIP
+PES, starting from the initial path from (b) for NEB and Popcornn, or directly from the opti-
+mized endpoints for GSM. (d) The highest point on the optimized path undergoes a single-ended TS
+optimization and is connected to the reaction endpoints using an IRC. (e) The IRC endpoints are
+compared with the initial endpoints to check how well the optimized TS corresponds to the intended
+reaction TS.
+
+
+    Our first experiment compares Popcornn and NEB performance on small organic
+reactions using the NewtonNet MLIP [49] trained on T1x [23] from Ref. [13]. We
+validate each test reaction as having a true TS on the NewtonNet PES by running
+single-ended TS optimizations from the corresponding TS structure in the Grambow-
+Green dataset, followed by IRC calculations that must recover endpoints with the
+intended bonding. This ensures that any result less than “Intended” is solely due to a
+failure of the double-ended TS search procedure, and not incompleteness of the MLIP
+energy surface.
+    Popcornn -geodesic initial path construction followed by Popcornn -pVRE atop the
+MLIP yields superior TS recovery over NEB with either initial path construction pro-
+cedure. Popcornn achieves 81% “Intended” TSs (Fig. 4b, right bar) compared with
+
+
+                                                                9
+ (a)
+
+
+
+
+ (b)
+
+
+
+
+ (c)
+
+
+
+
+Fig. 4 Popcornn vs. NEB on small organic reactions using NewtonNet trained on Transition-1x.
+(a) An example of the out-of-distribution reactions, those in the Grambow-Green dataset, on which
+we are testing. (b) Popcornn finds more “Intended” TSs across various NEB setups with different
+initializations (Geodesic and Popcornn-Geodesic) and number of beads (10, 20, 100). The number
+at the bottom of each bar is the average time, in seconds, for the TS optimization to converge. (c)
+Popcornn’s convergence rate to correct TSs is competitive with low-bead NEB for short runtimes,
+and ultimately outperforms all NEB variants.
+
+
+44%, 65%, and 53% for discrete geodesic → NEB with 10, 20, and 100 beads, respec-
+tively (Fig. 4b, left bars). Interestingly, the Popcornn -geodesic initial path improves
+over the discrete geodesic by 15% for 100 NEB beads, and slightly worsens for 10 and
+20 beads. This indicates that a continuous or many-bead path benefits significantly
+from continuous optimization of the initial path. In contrast, starkly discretized path
+
+
+                                                10
+ (a)
+
+
+
+
+ (b)
+
+
+
+
+Fig. 5 Popcornn vs. GSM on organic reactions using LeftNet and MACE trained or fine-tuned on
+Transition-1x by Zhao et al [50]. (a) An example of the test reactions evaluated here that are in T1x
+but not used in training. (b) Popcornn improves recovery of “Intended” TSs for test reactions by 10%
+and 16% for LeftNet and MACE, respectively, and across varying numbers of beads (9 and 25). The
+number at the bottom of each bar is the average time, in seconds, for the TS optimization to converge.
+
+
+optimizations are not significantly impacted by a continuous initial path. In addition
+to being more robust at convergence, Popcornn is comparable in speed to both 10 and
+20 bead NEB optimizations within the same accuracy range: roughly aligning with
+the lighter dashed blue lines before 200 s (Fig. 4c). Popcornn is significantly faster
+than the 100 bead path optimization. Further comparison of alternative initial path
+construction strategies for NEB is provided in Supplementary Note F.
+    The second experiment compares Popcornn and GSM performance on organic
+reactions using two popular MLIPs: LeftNet [51] and MACE [52, 53]. Each MLIP was
+trained or fine-tuned on T1x by Zhao et al. [50], and we follow the training/validation
+split of T1x used by Zhao et al. for the set of test reactions. Rather than confirming
+the presence of a TS corresponding to each reaction on each separate MLIP PES,
+they confirmed the presence of the corresponding TS on the DFT PES used for MLIP
+training, yielding 960 DFT-validated test reactions. Therefore, it is possible that a
+failure to identify an “Intended” here may be due to a failure of the double-ended TS
+search procedure or because the TS does not exist on the MLIP PES. Zhao et al. [50]
+showed that energy and force mean absolute errors were best for LeftNet and slightly
+worse for MACE.
+    Popcornn yields superior TS recovery over GSM across both MLIPs (Fig. 5b).
+Popcornn achieves 84% and 85% “Intended” TSs compared with 74% and 69% for
+
+
+                                                 11
+GSM with LeftNet and MACE, respectively. While the absolute success of GSM falls
+from LeftNet to MACE, corresponding to decreasing accuracy of the MLIP, Pop-
+cornn ’s success rate remains essentially unchanged. This demonstrates how Popcornn ’s
+numerical integration increases the robustness of the optimized path and TS by dis-
+proportionately improving upon less accurate MLIPs. We further observe that the
+GSM “Intended” rate is weakly affected by the number of beads, although the con-
+vergence time increases faster with the number of beads for MACE than it does for
+LeftNet. Popcornn is faster than 25-bead GSM, but roughly 2 to 3 times slower than
+9-bead GSM.
+
+3 Discussion
+Popcornn is a robust double-ended TS search framework explicitly designed to lever-
+age the distinct advantages of MLIPs. MLIP efficiency and differentiability via simple
+backpropagation allow us to address fundamental weaknesses in previous approaches
+by employing a continuous path representation coupled with adaptive numerical inte-
+gration of a path objective that directly targets the TS rather than the entire MEP.
+Further, the batched parallelization of our adaptive integrator allows Popcornn to
+take full advantage of modern GPU hardware. In contrast to typical small-scale com-
+parisons of path optimization methods, we demonstrate Popcornn ’s advantages via
+high-throughput evaluations with thousands of reactions at various levels of difficulty.
+While we evaluate robustness and computational runtime, we consider robustness to
+be the dominant factor that should govern method selection in the MLIP context. This
+is because probing the PES will become extremely fast/cheap with future ML hard-
+ware and software advancements. Popcornn consistently outperforms NEB and GSM
+across multiple MLIPs and reaction sets while simultaneously reducing the number of
+hyperparameters that a user must choose, making it well-suited for high-throughput
+double-ended TS search.
+    We attribute much of Popcornn ’s success to the symbiotic combination of a contin-
+uous path representation xθ (t) and an adaptive numerical integrator. The importance
+of incorporating careful numerical considerations within scientific machine learning
+methods has been highlighted previously [54–59]. Although properly integrating Eq. 1
+requires a continuous path, the continuous path alone is not sufficient. Earlier work by
+Ramakrishnan et al. [38] employ neural network paths with fixed and discrete integral
+approximation schemes that are still vulnerable to missing essential PES structure
+along the path. Popcornn, instead, leverages the continuous nature of the path to
+enable adaptive numerical integration. We therefore stress the importance of simulta-
+neously having a continuous path xθ (t) and an accurate numerical integration scheme
+built into the path optimization.
+    Popcornn is a highly flexible framework built to adapt to and grow with advancing
+machine learning, chemistry, and optimization techniques. Specifically, by modular-
+izing the path representation, PES, path integrator, and path objective, a user can
+swap any functionality for their own method. Various MLIPs, including Newton-
+Net [13, 49], MACE [52, 53], ANI-1x [60, 61], LeftNet [51], Orb [62], and UMA [63], are
+already supported, and new models can be easily implemented. While we used vanilla
+
+
+
+                                          12
+neural networks for the path representation in this work, spline representations are
+also available, and more sophisticated architectures are possible. Similarly, the objec-
+tive integrator and the objective function can be replaced. The modular architecture
+empowers chemists to systematically investigate how path representation, objective,
+optimization, integration, and PES calculations interact; an open methodological ques-
+tion that has thus far been difficult to address with monolithic implementations. We
+envision the Popcornn framework as a powerful software framework for subsequent
+path optimization methodology development as well as for establishing additional
+diverse reaction evaluations.
+    While the Popcornn framework and the test systems used here are all molecular
+and non-periodic, we are currently generalizing Popcornn to periodic systems, allow-
+ing it to be employed for double-ended transition state optimization for catalysis and
+material systems. For such periodic non-molecular systems, future work will deter-
+mine if the geodesic loss and the pairwise potential from Zhu et al. [45] (designed for
+small molecules) will be sufficient, or if a new interpolation loss (e.g., a continuous
+implementation of IDPP) will be needed.
+    Reaction networks are broadly constructed in one of two ways [25]. Exploration-
+based construction grows the network outward from the reactants with a single-ended
+TS search, discovering rather than presupposing products [22, 64]. To avoid combina-
+torial blowup in the number of reactions, one must constrain which transformations are
+sampled and which species are expanded as the network deepens. Enumeration-based
+construction instead bounds the chemical space up front by enumerating candidate
+species and reactant–product pairs [5, 24, 26]. Each pair then requires a double-ended
+TS search, which imposes no restriction on the bond-change pattern connecting the
+endpoints. Popcornn is designed for this second setting. It is also complementary to
+generative TS models [18–22], which can rapidly propose accurate TSs within the
+chemistry represented in their training data but require curated sets of converged TSs
+to train. Since Popcornn is a tool that consumes MLIPs, its scope is only set by the
+underlying pre-trained MLIP, rather than any one particular dataset coverage. For
+example, Popcornn already works with foundation MLIPs trained on OMol25 [63, 65]
+already span transition metals and diverse charge and spin states, chemistry for which
+reactive TS data remain scarce.
+    Finally, as MLIPs continue to improve in speed, accuracy, and generality [66], we
+believe that robust transition state search via Popcornn and subsequent improvements
+atop our software framework will enable the construction of massive chemical reaction
+networks, allowing us to understand and eventually design complex reactive processes
+in electrolytes, catalysis, polymers, and beyond.
+
+4 Methods
+4.1 Interfacing with Popcornn
+Here, we describe Popcornn in greater detail, walk through important design choices,
+and outline key steps in applying Popcornn . This section generally follows the Pop-
+cornn workflow and highlights key components that a user may wish to adapt to
+
+
+
+                                          13
+their specific problem. Supplementary Note G gives pseudocode for each step, and
+Algorithm 1 summarizes a complete run.
+
+4.1.1 Input Endpoints into Popcornn
+The Popcornn package takes optimized endpoints as inputs. Popcornn itself does not
+optimize the endpoints and expects the user to have done so with their preferred
+method. In this work, the endpoints are first relaxed with BFGS on the MLIP PES.
+Popcornn fixes the input endpoints in Cartesian coordinates, thus requiring the end-
+points to be translationally and rotationally aligned. See Supplementary Note A for
+more discussion.
+
+4.1.2 The Path Model
+A single 2-layer perceptron is used for the path representation, following Eq. 2. Con-
+cretely, the neural network fθ is Linear(1, 128) → GELU () → Linear(128, 3N ). The
+GELU activation is chosen because of its smoothness [67]. Supplementary Note A
+provides more details on the path representation, and Algorithm 2 (Supplementary
+Note G.2) shows how positions, velocities, energies and forces are evaluated along the
+path.
+
+4.1.3 Path Initialization
+Popcornn implements a continuous path version of the geodesic approach for initial
+path construction [45]. The geodesic approach uses the pairwise repulsive potential
+
+                                                              (eq)             (eq)
+                                             "                       #
+                                    X              rij − rij                  rij
+                         Ugeo =           exp −α           (eq)
+                                                                         +β        ,                   (6)
+                                    i<j                rij                     rij
+
+               (eq)
+where rij and rij are the current and approximate equilibrium distances, respectively,
+between atoms i and j within a cutoff distance of 3 Å, while α = 1.7 and β = 0.01
+scale the contributions of each energy term, as originally proposed by Zhu et al. [45].
+In the original geodesic approach, discrete points were optimized. In Popcornn, we
+apply the same loss to a continuous path
+          Z 1s        X                                           Z 1
+                                                       2
+ Lgeo =                          |Fq (xθ (t)) · vθ (t)| dt =             F(pairs) (xθ (t)) · vθ (t) dt, (7)
+          0      q∈{(i,j)|i<j}                                       0
+
+
+where ∥ · ∥ is the norm of a (N (N − 1)/2)-dimensional vector across unique atomic
+                           N (N −1)
+pairs, and F(pairs) ∈ R3N × 2       is a matrix by stacking pairwise forces Fq ∈ R3N .
+See Supplementary Note B.4 for more detail. This initial path construction is the first
+optimization stage of Algorithm 1 (Supplementary Note G.1).
+
+
+
+
+                                                  14
+4.1.4 Interfacing with MLIPs
+We have interfaced Popcornn with various MLIPs, including NewtonNet [13, 49],
+MACE [52, 53], ANI-1x [60, 61], LeftNet [51], Orb [62], and UMA [63]. The model
+weights are acquired from Yuan et al. [13], Zhao et al. [50], and Wood et al. [63]. The
+Popcornn repository includes a template class and necessary functions to interface
+with future MLIPs. The Popcornn code repository [47] provides more details, and
+Supplementary Note G.6 lists where each step is implemented.
+
+4.1.5 TS Determination
+When searching for the TS along xθ (t), we found that both minimizing the PES gra-
+dient and maximizing energy led to the most robust method. The TS is the highest
+energy point along xθ (t), but simply selecting the highest energy point among the
+evaluated xθ (t) points may not be sufficiently precise if the adaptive integration eval-
+uations are too sparse. Instead, we find points between the evaluated path points at
+which dE/dt = 0 (calculated using Eq. B29) since this is more stable and has higher
+precision than a finite difference comparison between energy calculations. First, we
+determine where dE/dt changes sign within the cached values from the latest Pop-
+cornn optimization evaluation. This can result in multiple TS candidates. Second, we
+find the TS time of each pair by linearly interpolating between the cached time points
+and solve for t that satisfies dE (t)/dt = 0. Finally, we evaluate the PES energy of all
+the TS time candidates and determine t∗ as the highest energy point; this discards
+sign changes at energy minima. Algorithm 5 (Supplementary Note G.5) gives the full
+procedure.
+
+4.2 Popcornn Path Optimization
+4.2.1 Parallel Evaluations and Memory Management
+The loss integration is handled by PadaQuad [40]: a parallelized adaptive quadra-
+ture numerical integrator for path integrals with backpropagation capabilities. The
+adaptive numerical integration is necessary to properly evaluate Eq. 1. PadaQuad
+leverages the knowledge of the path to parallelize the integration, improving speed by
+orders of magnitude. PadaQuad also uses an adaptive memory management scheme
+to fully utilize GPU parallelism. We apply the absolute and relative tolerances of 0
+and 1, respectively, for the numerical integration. Hegazy et al. [40] and Supplemen-
+tary Note E provide more detailed discussions. Algorithms 3 and 4 (Supplementary
+Notes G.3 and G.4) give the gradient evaluation and the adaptive quadrature.
+
+4.2.2 Optimization Hyperparameters
+We use the Adam optimizer with a learning rate of 10−3 for both initial path construc-
+tion atop the initialization potential and final optimization atop the MLIP potential.
+Each of these optimizations used its own optimizer; that is, the optimizer was not
+shared between them. We run each optimization for up to 1000 steps, or stop as it
+reaches the gradient convergence of 10−2 for initial path construction and 10−1 for
+path optimization (corresponding to TS forces of 0.05 eV/Å). Supplementary Note C
+
+
+                                           15
+provides more detailed discussions, and Algorithm 1 shows where each of these settings
+enters.
+
+4.3 TS Optimization
+The TS acquired from Popcornn or other reference methods are optimized to a first-
+order saddle point on the MLIP using Sella [68] with the full Hessian at every step
+[13] with a convergence threshold of 0.01 eV/Å for up to 1000 steps. For retrieved
+TSs, forward and backwards IRC calculations are run using SellaIRC [68] with a
+convergence threshold of 0.01 eV/Å for up to another 1000 steps. For organic reactions,
+the endpoints are compared using connectivity graphs created by Open Babel [69].
+
+4.4 Reference Methods
+For a fair comparison, we provide the same inputs to each method and apply the same
+TS optimization to all outputs. Specifically, we give each method the same optimized
+endpoints. The output TSs of each method are processed in exactly the same way.
+    We use “improved tangent” NEB [27] with 10, 20, and 100 beads (k=5.0) and
+GSM [29] with 9 and 25 beads and a convergence threshold of 0.05 eV/Å. NEBs are
+optimized with the MDMin optimizer (dt=0.02, maxstep=0.1) in ASE for 2000 steps
+in total, where the first 1000 steps are without the climbing image and the last 1000
+steps are with the climbing image, with a convergence threshold of 0.05 eV/Å [28].
+All other hyperparameters are in ASE 3.28.0 and pyGSM defaults.
+
+Data availability
+All reaction data and model weights used in this study are publicly available.
+The reactions come from the Transition1x dataset [23, 70] and the Grambow–
+Green dataset [48, 71]; the two test sets are subsets of these datasets, selected as
+described in Results. The NewtonNet weights trained on Transition1x by Yuan et
+al. [13] are available at https://github.com/THGLab/NewtonNet/releases/download/
+pretrained/newtonnet t1x.zip. The LeftNet and MACE weights trained or fine-
+tuned on Transition1x by Zhao et al. [50] are available at https://huggingface.co/
+yhong55/ReactBench, with usage instructions at https://github.com/deepprinciple/
+ReactBench.
+
+Code availability
+Popcornn is available at https://github.com/khegazy/popcornn [47], and the GPU-
+parallelized adaptive numerical integrator PadaQuad is available at https://github.
+com/khegazy/padaquad [40]. Both are released under the Creative Commons Attri-
+bution 4.0 International licence. The MLIP implementations are available from their
+public repositories: NewtonNet [49] at https://github.com/THGLab/NewtonNet,
+LeftNet [51] at https://github.com/yuanqidu/LEFTNet, and MACE [52, 53] at https:
+//github.com/ACEsuit/mace.
+
+
+
+                                          16
+Acknowledgements. We thank Graeme Henkelman and Ilgar Baghishov for help-
+ful discussions about NEB hyperparameters. We thank Paul Zimmerman for helpful
+discussions about GSM hyperparameters. This work used computational resources
+provided by the National Energy Research Scientific Computing Center (NERSC), a
+U.S. Department of Energy Office of Science User Facility operated under Contract
+DE-AC02-05CH11231, and the Lawrencium computational cluster resource provided
+by the IT Division at the Lawrence Berkeley National Laboratory (Supported by the
+Director, Office of Science, Office of Basic Energy Sciences, of the U.S. Department
+of Energy under Contract No. DE-AC02-05CH11231). All authors acknowledge sup-
+port from the Laboratory Directed Research and Development program of Lawrence
+Berkeley National Laboratory (LBNL), supported by the Office of Science, Office
+of Basic Energy Sciences (BES), of the U.S. Department of Energy (DOE) under
+Contract No. DE-AC02-05CH11231. S.M.B. further acknowledges support from the
+Center for High Precision Patterning Science (CHiPPS), an Energy Frontier Research
+Center funded by the U.S. Department of Energy, Office of Science, Basic Energy
+Sciences at Lawrence Berkeley National Laboratory under Contract No. DE-AC02-
+34205CH11231. C.-Y.E.Y and T.H.G. further acknowledge support from the CPIMS
+program and funded by the U.S. Department of Energy, Office of Science, Basic
+Energy Sciences at Lawrence Berkeley National Laboratory under Contract No. DE-
+AC02-05CH11231. D.M. further acknowledges support from the Scientific Discovery
+through Advanced Computing (SciDAC) program funded by the U.S. Department
+of Energy, Office of Science, Office of Advanced Scientific Computing Research at
+Lawrence Berkeley National Laboratory under Contract No. DE-AC02-05CH11231.
+M.W.M. acknowledges DARPA, NSF, the DOE Competitive Portfolios grant, and the
+DOE SciGPT grant.
+Competing interests. The authors declare no competing interests.
+
+References
+ [1] Johansson, K.O., Head-Gordon, M.P., Schrader, P.E., Wilson, K.R., Michelsen,
+     H.A.: Resonance-stabilized hydrocarbon-radical chain reactions may explain soot
+     inception and growth. Science 361, 997–1000 (2018) https://doi.org/10.1126/
+     science.aat3417
+
+ [2] Martı́, C., Michelsen, H.A., Najm, H.N., Zádor, J.: Comprehensive kinetics on
+     the c7h7 potential energy surface under combustion conditions. The Journal
+     of Physical Chemistry A 127(8), 1941–1959 (2023) https://doi.org/10.1021/acs.
+     jpca.2c08035
+
+ [3] Xie, X., Spotte-Smith, E.W.C., Wen, M., Patel, H.D., Blau, S.M., Persson, K.A.:
+     Data-driven prediction of formation mechanisms of lithium ethylene monocar-
+     bonate with an automated reaction network. Journal of the American Chemical
+     Society 143, 13245–13258 (2021) https://doi.org/10.1021/jacs.1c05807
+
+ [4] Spotte-Smith, E.W.C., Kam, R.L., Barter, D., Xie, X., Hou, T., Dwaraknath,
+     S., Blau, S.M., Persson, K.A.: Toward a mechanistic model of solid-electrolyte
+
+
+                                        17
+    interphase formation and evolution in lithium-ion batteries. ACS Energy Letters
+    7, 1446–1453 (2022) https://doi.org/10.1021/acsenergylett.2c00517
+
+ [5] Barter, D., Spotte-Smith, E.W.C., Redkar, N.S., Khanwale, A., Dwaraknath, S.,
+     Persson, K.A., Blau, S.M.: Predictive stochastic analysis of massive filter-based
+     electrochemical reaction networks. Digital Discovery 2, 123–137 (2023) https:
+     //doi.org/10.1039/D2DD00117A
+
+ [6] Spotte-Smith, E.W.C., Blau, S.M., Barter, D., Leon, N.J., Hahn, N.T., Redkar,
+     N.S., Zavadil, K.R., Liao, C., Persson, K.A.: Chemical reaction networks explain
+     gas evolution mechanisms in mg-ion batteries. Journal of the American Chemical
+     Society 145, 12181–12192 (2023) https://doi.org/10.1021/jacs.3c02222
+
+ [7] Spotte-Smith, E.W.C., Petrocelli, T.B., Patel, H.D., Blau, S.M., Persson, K.A.:
+     Elementary decomposition mechanisms of lithium hexafluorophosphate in battery
+     electrolytes and interphases. ACS Energy Letters 8, 347–355 (2023) https://doi.
+     org/10.1021/acsenergylett.2c02351
+
+ [8] Garza, A.J., Bell, A.T., Head-Gordon, M.: Mechanism of co2 reduction at copper
+     surfaces: Pathways to c2 products. ACS Catalysis 8, 1490–1499 (2018) https:
+     //doi.org/10.1021/acscatal.7b03477
+
+ [9] Arnold, P.L., Ochiai, T., Lam, F.Y.T., Kelly, R.P., Seymour, M.L., Maron, L.:
+     Metallacyclic actinide catalysts for dinitrogen conversion to ammonia and sec-
+     ondary amines. Nature Chemistry 2020 12:7 12, 654–659 (2020) https://doi.org/
+     10.1038/s41557-020-0457-9
+
+[10] Demarteau, J., Epstein, A.R., Christensen, P.R., Abubekerov, M., Wang, H.,
+     Teat, S.J., Seguin, T.J., Chan, C.W., Scown, C.D., Russell, T.P., Keasling,
+     J.D., Persson, K.A., Helms, B.A.: Circularity in mixed-plastic chemical recycling
+     enabled by variable rates of polydiketoenamine hydrolysis. Science Advances 8,
+     8823 (2022) https://doi.org/10.1126/sciadv.abp8823
+
+[11] Schlegel, H.B.: Exploring potential energy surfaces for chemical reactions: An
+     overview of some practical methods. Journal of Computational Chemistry 24(12),
+     1514–1527 (2003) https://doi.org/10.1002/jcc.10231
+
+[12] Schlegel, H.B.: Geometry optimization. Wiley Interdisciplinary Reviews: Com-
+     putational Molecular Science 1, 790–809 (2011) https://doi.org/10.1002/wcms.
+     34
+
+[13] Yuan, E.C.Y., Kumar, A., Guan, X., Hermes, E.D., Rosen, A.S., Zádor, J.,
+     Head-Gordon, T., Blau, S.M.: Analytical ab initio hessian from a deep learning
+     potential for transition state optimization. Nature Communications 2024 15:1 15,
+     1–9 (2024) https://doi.org/10.1038/s41467-024-52481-5
+
+[14] Burger, A., Thiede, L., Rønne, N., Bernales, V., Vijaykumar, N., Vegge, T.,
+
+
+                                         18
+    Bhowmik, A., Aspuru-Guzik, A.: Shoot from the HIP: Hessian Interatomic
+    Potentials without derivatives (2025). https://arxiv.org/abs/2509.21624
+
+[15] Wander, B., Musielewicz, J., Cheula, R., Kitchin, J.R.: Accessing Numerical
+     Energy Hessians with Graph Neural Network Potentials and Their Application
+     in Heterogeneous Catalysis (2024). https://arxiv.org/abs/2410.01650
+
+[16] Wu, G., Yuan, E.C.Y., Hegazy, K., Blau, S.M., Head-Gordon, T.: Machine-learned
+     leftmost hessian eigenvectors for robust transition state finding. Journal of Chem-
+     ical Theory and Computation 22(13), 6670–6678 (2026) https://doi.org/10.1021/
+     acs.jctc.6c00554
+
+[17] Vijver, R.V., Zádor, J.: Kinbot: Automated stationary point search on potential
+     energy surfaces. Computer Physics Communications 248, 106947 (2020) https:
+     //doi.org/10.1016/j.cpc.2019.106947
+
+[18] Duan, C., Du, Y., Jia, H., Kulik, H.J.: Accurate transition state generation with
+     an object-aware equivariant elementary reaction diffusion model. Nature Comp.
+     Sci. 3(12), 1045–1055 (2023) https://doi.org/10.1038/s43588-023-00563-7
+
+[19] Kim, S., Woo, J., Kim, W.Y.: Diffusion-based generative AI for exploring transi-
+     tion states from 2D molecular graphs. Nature Communications 15(1), 341 (2024)
+     https://doi.org/10.1038/s41467-023-44629-6
+
+[20] Duan, C., Liu, G.-H., Du, Y., Chen, T., Zhao, Q., Jia, H., Gomes, C.P.,
+     Theodorou, E.A., Kulik, H.J.: Optimal transport for generating transition states
+     in chemical reactions. Nature Machine Intelligence 7(4), 615–626 (2025) https:
+     //doi.org/10.1038/s42256-025-01010-0
+
+[21] Galustian, L., Mark, K., Karwounopoulos, J., Kovar, M.P.-P., Heid, E.: GoFlow:
+     efficient transition state geometry prediction with flow matching and E(3)-
+     equivariant neural networks. Digital Discovery 4(12), 3492–3501 (2025) https:
+     //doi.org/10.1039/d5dd00283d
+
+[22] Han, Y., Ren, G., Liu, Y., Zhang, R., Huang, H., Zhang, R., Yu, Z., Liu, C., Li,
+     Z., Lin, X., Wang, J., Qin, Y., Wang, M., Mei, G., Wang, D., Cui, T., Jia, H.,
+     Duan, C., Zhao, Q.: Generative discovery of chemical reaction networks (2026).
+     https://arxiv.org/abs/2610.38236
+
+[23] Schreiner, M., Bhowmik, A., Vegge, T., Busk, J., Winther, O.: Transition1x - a
+     dataset for building generalizable reactive machine learning potentials. Scientific
+     Data 2022 9:1 9, 1–9 (2022) https://doi.org/10.1038/s41597-022-01870-w
+
+[24] Blau, S.M., Patel, H.D., Spotte-Smith, E.W.C., Xie, X., Dwaraknath, S., Persson,
+     K.A.: A chemically consistent graph architecture for massive reaction networks
+     applied to solid-electrolyte interphase formation. Chemical Science 12, 4931–4939
+     (2021) https://doi.org/10.1039/D0SC05647B
+
+
+                                          19
+[25] Wen, M., Spotte-Smith, E.W.C., Blau, S.M., McDermott, M.J., Krishnapriyan,
+     A.S., Persson, K.A.: Chemical reaction networks and opportunities for machine
+     learning. Nature Computational Science 2023 3:1 3, 12–24 (2023) https://doi.
+     org/10.1038/s43588-022-00369-z
+
+[26] Zhao, Q., Savoie, B.M.: Simultaneously improving reaction coverage and com-
+     putational cost in automated reaction prediction tasks. Nature Computational
+     Science 1(7), 479–490 (2021) https://doi.org/10.1038/s43588-021-00101-3
+
+[27] Jónsson, H., Mills, G., Jacobsen, K.W.: Nudged elastic band method for find-
+     ing minimum energy paths of transitions. In: Berne, B.J., Ciccotti, G., Coker,
+     D.F. (eds.) Classical and Quantum Dynamics in Condensed Phase Simula-
+     tions, pp. 385–404. World Scientific, Singapore (1998). https://doi.org/10.1142/
+     9789812839664 0016
+
+[28] Henkelman, G., Uberuaga, B.P., Jónsson, H.: A climbing image nudged elastic
+     band method for finding saddle points and minimum energy paths. The Journal
+     of Chemical Physics 113, 9901–9904 (2000) https://doi.org/10.1063/1.1329672
+
+[29] Zimmerman, P.M.: Growing string method with interpolation and optimization
+     in internal coordinates: Method and examples. Journal of Chemical Physics 138,
+     184102 (2013) https://doi.org/10.1063/1.4804162
+
+[30] Zimmerman, P.: Reliable transition state searches integrated with the growing
+     string method. Journal of Chemical Theory and Computation 9, 3043–3050 (2013)
+     https://doi.org/10.1021/ct400319w
+
+[31] Zimmerman, P.M.: Single-ended transition state finding with the growing string
+     method. Journal of Computational Chemistry 36, 601–611 (2015) https://doi.
+     org/10.1002/jcc.23833
+
+[32] Jafari, M., Zimmerman, P.M.: Reliable and efficient reaction path and transition
+     state finding for surface reactions with the growing string method. Journal of
+     Computational Chemistry 38, 645–658 (2017) https://doi.org/10.1002/jcc.24720
+
+[33] Fukui, K.: The path of chemical reactions - the irc approach. Accounts of Chemical
+     Research 14, 363–368 (1981) https://doi.org/10.1021/ar00072a001
+
+[34] Sheppard, D., Terrell, R., Henkelman, G.: Optimization methods for finding min-
+     imum energy paths. Journal of Chemical Physics 128 (2008) https://doi.org/10.
+     1063/1.2841941
+
+[35] Goodman, J.M., Silva, M.A.: Qrc: a rapid method for connecting transition struc-
+     tures to reactants in the computational analysis of organic reactivity. Tetrahedron
+     Letters 44, 8233–8236 (2003) https://doi.org/10.1016/j.tetlet.2003.09.074
+
+
+
+
+                                          20
+[36] Birkholz, A.B., Schlegel, H.B.: Path optimization by a variational reaction coordi-
+     nate method. i. development of formalism and algorithms. J Chem Phys 143(24),
+     244101 (2015)
+
+[37] Han, J., Wu, Z., Gu, S., Zhou, X.: Stringnet: Neural network based variational
+     method for transition pathways. Communications in Computational Physics
+     41(1), 116–152 (2027) https://doi.org/10.4208/cicp.OA-2025-0056
+
+[38] Ramakrishnan, K., Schaaf, L.L., Lin, C., Wang, G., Torr, P.: Implicit neural
+     representations for chemical reaction paths. Journal of Chemical Physics 163,
+     34109 (2025) https://doi.org/10.1063/5.0267023
+
+[39] Nam, J., Steiner, M., Misterka, M., Yang, S., Singhal, A., Gómez-Bombarelli, R.:
+     Transferable learning of reaction pathways from geometric priors. J. Phys. Chem.
+     Lett. 16, 11690–11699 (2025)
+
+[40] Hegazy, K., Morozov, D., Blau, S., Mahoney, M.W.: PadaQuad. GitHub (2025).
+     https://github.com/khegazy/padaquad
+
+[41] Crehuet, R., Bofill, J.M.: The reaction path intrinsic reaction coordinate method
+     and the hamilton-jacobi theory. Journal of Chemical Physics 122, 234105 (2005)
+     https://doi.org/10.1063/1.1927521
+
+[42] Aguilar-Mogas, A., Crehuet, R., Giménez, X., Bofill, J.M.: Applications of ana-
+     lytic and geometry concepts of the theory of calculus of variations to the
+     intrinsic reaction coordinate model. Molecular Physics 105, 2475–2492 (2007)
+     https://doi.org/10.1080/00268970701519762
+
+[43] Quapp, W.: Chemical reaction paths and calculus of variations. Theo-
+     retical Chemistry Accounts 121, 227–237 (2008) https://doi.org/10.1007/
+     s00214-008-0468-x
+
+[44] Rong, Z., Kitchaev, D., Canepa, P., Huang, W., Ceder, G.: An efficient algorithm
+     for finding the minimum energy path for cation migration in ionic materials.
+     Journal of Chemical Physics 145 (2016) https://doi.org/10.1063/1.4960790
+
+[45] Zhu, X., Thompson, K.C., Martı́nez, T.J.: Geodesic interpolation for reaction
+     pathways. Journal of Chemical Physics 150, 164103 (2019) https://doi.org/10.
+     1063/1.5090303
+
+[46] Smidstrup, S., Pedersen, A., Stokbro, K., Jónsson, H.: Improved initial guess
+     for minimum energy path calculations. Journal of Chemical Physics 140, 214106
+     (2014) https://doi.org/10.1063/1.4878664
+
+[47] Hegazy, K., Yuan, E.C.-Y., Kumar, A., Morozov, D., Mahoney, M., Head-Gordon,
+     T., Blau, S.M.: Popcornn: Path Optimization with a Continuous Representation
+     Neural Network. Version 0.2.1 (2026). https://github.com/khegazy/popcornn
+
+
+                                          21
+[48] Grambow, C.A., Pattanaik, L., Green, W.H.: Reactants, products, and transition
+     states of elementary chemical reactions based on quantum chemistry. Scientific
+     Data 2020 7:1 7, 1–8 (2020) https://doi.org/10.1038/s41597-020-0460-4
+
+[49] Haghighatlari, M., Li, J., Guan, X., Zhang, O., Das, A., Stein, C.J., Heidar-Zadeh,
+     F., Liu, M., Head-Gordon, M., Bertels, L., Hao, H., Leven, I., Gordon, T.H.:
+     Newtonnet: a newtonian message passing network for deep learning of interatomic
+     potentials and forces. Digital Discovery 1, 333–343 (2022) https://doi.org/10.
+     1039/D2DD00008C
+
+[50] Zhao, Q., Han, Y., Zhang, D., Wang, J., Zhong, P., Cui, T., Yin, B., Cao, Y., Jia,
+     H., Duan, C.: Harnessing machine learning to enhance transition state search with
+     interatomic potentials and generative models. Advanced Science, 06240 (2025)
+     https://doi.org/10.1002/advs.202506240
+
+[51] Du, W., Du, Y., Wang, L., Feng, D., Wang, G., Ji, S., Gomes, C.P., Ma, Z.M.: A
+     new perspective on building efficient and expressive 3d equivariant graph neural
+     networks. Advances in Neural Information Processing Systems 36 (2023)
+
+[52] Nigam, J., Pozdnyakov, S., Fraux, G., Ceriotti, M.: Mace: Higher order equivari-
+     ant message passing neural networks for fast and accurate force fields. Journal of
+     Chemical Physics 156 (2022) https://doi.org/10.1063/5.0087042
+
+[53] Kovács, D.P., Moore, J.H., Browning, N.J., Batatia, I., Horton, J.T., Pu, Y.,
+     Kapil, V., Witt, W.C., Magdău, I.-B., Cole, D.J., Csányi, G.: Mace-off: Trans-
+     ferable short range machine learning force fields for organic molecules. Chemical
+     Physics 1, 1–12 (2023)
+
+[54] Queiruga, A.F., Erichson, N.B., Taylor, D., Mahoney, M.W.: Continuous-in-
+     Depth Neural Networks (2020). https://arxiv.org/abs/2008.02389
+
+[55] Krishnapriyan, A.S., Gholami, A., Zhe, S., Kirby, R.M., Mahoney, M.W.: Char-
+     acterizing possible failure modes in physics-informed neural networks (2021).
+     https://arxiv.org/abs/2109.01050
+
+[56] Krishnapriyan, A.S., Queiruga, A.F., Erichson, N.B., Mahoney, M.W.: Learn-
+     ing continuous models for continuous physics (2023). https://arxiv.org/abs/2202.
+     08494
+
+[57] Sakarvadia, M., Hegazy, K., Totounferoush, A., Chard, K., Yang, Y., Foster, I.,
+     Mahoney, M.W.: The False Promise of Zero-Shot Super-Resolution in Machine-
+     Learned Operators (2026). https://arxiv.org/abs/2510.06646
+
+[58] Benitez, J.A.L., Hegazy, K., Guo, J., Dokmanić, I., Mahoney, M.W., Hoop, M.V.:
+     Neural equilibria for long-term prediction of nonlinear conservation laws (2026).
+     https://arxiv.org/abs/2501.06933
+
+
+
+                                          22
+[59] Hegazy, K., Mahoney, M.W., Erichson, N.B.: Recency Biased Causal Attention
+     for Time-series Forecasting (2026). https://arxiv.org/abs/2502.06151
+
+[60] Smith, J.S., Isayev, O., Roitberg, A.E.: Ani-1: an extensible neural network poten-
+     tial with dft accuracy at force field computational cost. Chemical Science 8,
+     3192–3203 (2017) https://doi.org/10.1039/C6SC05720A
+
+[61] Smith, J.S., Nebgen, B., Lubbers, N., Isayev, O., Roitberg, A.E.: Less is more:
+     Sampling chemical space with active learning. Journal of Chemical Physics 148,
+     241733 (2018) https://doi.org/10.1063/1.5023802
+
+[62] Neumann, M., Gin, J., Rhodes, B., Bennett, S., Li, Z., Choubisa, H., Hussey,
+     A., Godwin, J.: Orb: A Fast, Scalable Neural Network Potential (2024). https:
+     //arxiv.org/abs/2410.22570
+
+[63] Wood, B.M., Dzamba, M., Fu, X., Gao, M., Shuaibi, M., Barroso-Luque, L.,
+     Abdelmaqsoud, K., Gharakhanyan, V., Kitchin, J.R., Levine, D.S., Michel, K.,
+     Sriram, A., Cohen, T., Das, A., Rizvi, A., Sahoo, S.J., Ulissi, Z.W., Zitnick, C.L.:
+     UMA: A Family of Universal Models for Atoms (2026). https://arxiv.org/abs/
+     2506.23971
+
+[64] Unsleber, J.P., Grimmel, S.A., Reiher, M.: Chemoton 2.0: Autonomous explo-
+     ration of chemical reaction networks. Journal of Chemical Theory and Computa-
+     tion 18, 5393–5409 (2022) https://doi.org/10.1021/acs.jctc.2c00193
+
+[65] Levine, D.S., Shuaibi, M., Spotte-Smith, E.W.C., Taylor, M.G., Hasyim, M.R.,
+     Michel, K., Batatia, I., Csányi, G., Dzamba, M., Eastman, P., Frey, N.C., Fu,
+     X., Gharakhanyan, V., Krishnapriyan, A.S., Rackers, J.A., Raja, S., Rizvi, A.,
+     Rosen, A.S., Ulissi, Z., Vargas, S., Zitnick, C.L., Blau, S.M., Wood, B.M., Meta,
+     F.: The Open Molecules 2025 (OMol25) dataset, evaluations, and models. arXiv
+     preprint arXiv:2505.08762 (2025)
+
+[66] Yuan, E.C.-Y., Liu, Y., Chen, J., Zhong, P., Raja, S., Kreiman, T., Vargas, S.,
+     Xu, W., Head-Gordon, M., Yang, C., Blau, S.M., Cheng, B., Krishnapriyan, A.,
+     Head-Gordon, T.: Foundation Models for Atomistic Simulation of Chemistry and
+     Materials (2025)
+
+[67] Hendrycks, D., Gimpel, K.: Gaussian Error Linear Units (GELUs) (2023). https:
+     //arxiv.org/abs/1606.08415
+
+[68] Hermes, E.D., Sargsyan, K., Najm, H.N., Zádor, J.: Sella, an open-source
+     automation-friendly molecular saddle point optimizer. Journal of Chemical The-
+     ory and Computation 18, 6974–6988 (2022) https://doi.org/10.1021/acs.jctc.
+     2c00395
+
+[69] O’Boyle, N.M., Banck, M., James, C.A., Morley, C., Vandermeersch, T., Hutchi-
+     son, G.R.: Open babel: An open chemical toolbox. Journal of Cheminformatics
+
+
+                                           23
+    3, 1–14 (2011) https://doi.org/10.1186/1758-2946-3-33
+
+[70] Schreiner, M.: Transition1x. figshare (2022). https://doi.org/10.6084/m9.figshare.
+     19614657
+
+[71] Grambow, C.A., Pattanaik, L., Green, W.H.: Reactants, products, and transition
+     states of elementary chemical reactions based on quantum chemistry. Zenodo
+     (2020). https://doi.org/10.5281/zenodo.3581266
+
+[72] Simm, G.N., Reiher, M.: Context-driven exploration of complex chemical reaction
+     networks. Journal of Chemical Theory and Computation 13, 6108–6119 (2017)
+     https://doi.org/10.1021/acs.jctc.7b00945
+
+[73] Hait, D., Estrada Pabon, J.D., Stohr, M., Martinez, T.J.: Locating ab initio
+     transition states via geodesic construction on machine-learned potential energy
+     surfaces. Journal of Chemical Theory and Computation 21(22), 11632–11644
+     (2025) https://doi.org/10.1021/acs.jctc.5c01221
+
+[74] Bengio, Y., Louradour, J., Collobert, R., Weston, J.: Curriculum learning. In:
+     Proceedings of the 26th Annual International Conference on Machine Learning,
+     pp. 41–48 (2009)
+
+[75] Soviany, P., Ionescu, R.T., Rota, P., Sebe, N.: Curriculum Learning: A Survey
+     (2022). https://arxiv.org/abs/2101.10382
+
+[76] Chen, R.T.Q.: torchdiffeq (2018). https://github.com/rtqichen/torchdiffeq
+
+
+
+
+                                          24
+Supplementary Note A                          Neural Path Representation
+We parameterize our reaction path as a learned deviation from a linear interpolation
+between the endpoints. This parameterization was introduced in Eq. 2 and repeated
+here for clarity
+                    xθ (t) = (1 − t) xR + t xP + t (1 − t) fθ (t) .
+                             |       {z      } |       {z       }
+                                     linear prior       perturbation
+This parameterization anchors both the endpoints and the path. Our path model
+(fθ (t)) is a simple two-layer MLP with GELU activations. While optimizing the Pop-
+cornn path representation xθ (t), we observed that activation functions that are not
+smooth (e.g., ReLU and SELU) underperform smooth activations like GELU. We use
+the Cartesian coordinate system to represent both the input and output structures.
+
+A.1     Ablation Study of the Endpoint Enforcement
+A double-ended TS finding method must fix the two endpoints, as in Fig. 1a. This
+is trivially accomplished for discrete approaches like NEB, simply by not applying
+any updates to the endpoint beads. To impose the constraint in the continuous case,
+however, is not as straightforward. Our linear path formulation (Eq. 2) enforces the
+endpoint structures as hard constraints (xθ (0) = xR and xθ (1) = xP ) through a
+quadratic envelope. To demonstrate the flexibility and robustness of our methodology,
+we ablate this envelope by removing it and replacing it with other envelopes.
+    We remove the endpoint-enforcing envelope and enforce the endpoints by subtract-
+ing the neural network values. The resulting path formulation
+
+               xθ (t) = (1 − t) xR + t xP + fθ (t) − (1 − t) fθ (0) − t fθ (1),     (A1)
+                        |       {z      } |                {z                }
+                            linear prior                perturbation
+
+
+enforces xθ (0) = xR and xθ (1) = xP . This hard constraint enforcement leads to slight
+optimization instabilities compared to Eq. 2, shown in Fig. A1. We presume these
+instabilities are due to the interdependence between fθ (t), fθ (0), and fθ (1).
+    We ablate the envelope with functions of varying polynomial degrees and function
+types. Our ablation envelopes,
+
+                                                  t (1 − t)
+                                 Quadratic Envelope:                                (A2)
+                   Normalized Quadratic Envelope: 4 t (1 − t)                       (A3)
+                                                            2          2
+                                    Quartic Envelope:  t (1 − t)                    (A4)
+                                                       sin(πt)
+                                           Sine Envelope:                           (A5)
+                                      Cosine Envelope: 1 − cos(2πt),                (A6)
+
+illustrated in the top panel of Fig. A2, primarily differ at the endpoints. We ablate the
+quadratic term with the normalized quadratic because for the original quadratic enve-
+lope xθ (0.5) = 0.25 and for the normalized xθ (0.5) = 1, similar to the other envelopes.
+When testing the path optimization on the Muller-Brown potential, all the envelopes
+behave similarly (Fig. A2). When comparing the quadratic and sine envelopes with
+
+
+                                               25
+Fig. A1 Comparison between path constraint implementations. The path with a quadratic envelope
+t (1 − t) in Eq. 2 (top left) can be optimized more stably than the path with endpoint subtraction in
+Eq. A1 (top right). The bottom row compares the TS force during dynamics. The colored lines and
+circles are corresponding measurements at the same time.
+
+
+the quartic and cosine envelopes, the primary difference is at the endpoints. For the
+quartic and cosine envelopes, the path is artificially straightened. This may become a
+problem in some real-world optimizations where either the product or reactant state is
+fairly unstable. This is because the quadratic and sine envelopes have finite velocities
+at t = 0 and t = 1, whereas the quartic and cosine envelopes have zero velocity. There-
+fore, we would expect
+                    p some envelopes to produce a path that cannot be optimized,
+like a square root ( t (1 − t)), which has infinite velocities at the endpoints.
+
+A.2      Linear Prior Ablation Study
+The linear parameterization helps keep the path from deviating to something unphys-
+ical. We refer to this as our linear prior since the linear interpolation biases the initial
+path towards physicality. This linear prior offers a rough direction of the atom move-
+ments, and the neural network is trained to correct the 3N -dimensional movements
+as a function of the reaction coordinate t. This formalism is also adopted by other
+related work [37–39].
+    To illustrate the linear prior’s importance, we consider the bias-variance tradeoff
+by removing it. The randomized path,
+
+                xθ (t) = [1 − 4t (1 − t)][(1 − t) xR + t xP ] + 4t (1 − t) fθ (t),             (A7)
+
+
+
+                                                 26
+Fig. A2 Comparison between path envelope forms. We compare multiple path envelope ablations
+(top panel) and their optimization dynamics (middle and lower panels). For rigorous comparisons, we
+scale all envelope functions to have maxima of 1 at t = 0.5, roughly equivalent to scaling the learning
+rate. The colored lines and circles are corresponding measurements at the same time.
+
+
+
+                                                  27
+allows the middle point to be randomly initialized: (xθ (0.5) = fθ (0.5)). This random
+initialization removes the linear bias, or anchoring effect, of the linear prior. How-
+ever, this random initialization is likely to initialize xθ (0.5) = fθ (0.5) in a challenging
+region of the optimization landscape: e.g., at an unphysical structure, a very unlikely
+structure, or a structure that requires highly unlikely bond breaking and formation.
+To validate this intuition, we used the random initialization of Eq. A7 on the Muller-
+Brown potential, where we observe challenging and chaotic optimization (Fig. A3).
+Ultimately, the sporadic optimization of Eq. A7 results in a more convoluted path.
+Given these challenges with this simple model potential, we expect these issues to be
+exacerbated when using an MLIP.
+
+A.3     Hidden Units as a Time Basis
+Since the action of the xθ (t) neural network is a linear combination of the nonlinear
+hidden units (h(t)), xθ (t) can be interpreted as a weighted sum of learned reaction
+bases. Here we provide more detail on the path model with our two-layer neural
+network.
+   A two-layer neural network, with activations ϕ, has 4 learnable objects: a weight
+matrix W and a bias b for each layer. To improve stability for the path neural network,
+the scalar reaction coordinate t is first rescaled to
+
+                                          t̃ = 2t − 1.                                 (A8)
+
+Passing t̃ into the first layer of the path network gives us the first set of hidden units
+
+                                    (1)    (1)
+                       zj (t̃) = Wj t̃ + bj ,           hj (t̃) = ϕ(zj (t̃)),          (A9)
+
+where j = 1, . . . , w indexes the hidden units and ϕ is a smooth activation function.
+The output of the neural network is then
+                                                  w
+                                           (2)            (2)
+                                                  X
+                              fθ,i (t̃) = bi +          Wij hj (t̃),                  (A10)
+                                                  j=1
+
+
+for Cartesian coordinate i.
+     Thus, the hidden units from the first layer (h(t̃)) form a trainable basis set of
+the reaction coordinate. When using a non-smooth activation function (e.g., ReLU
+or SELU), the basis itself will not be smooth. This additionally makes the atomic
+velocities and the loss integrand discontinuous, ultimately making the integration,
+optimization, and convergence more challenging. In our setting with GELU activation,
+each hj (t̃) is a smooth feature over time, and the output layer constructs each Cartesian
+coordinate of the path as a linear combination of these features.
+     To enforce the xθ (t) endpoints as a hard constraint, we use the quadratic envelope
+q (t) (Eq. A2). Thus, the full xθ (t) is
+
+                 q (t) = t(1 − t)                                                     (A11)
+
+
+                                                 28
+Fig. A3 Comparison between path formalisms. We show the path optimization atop the model
+Muller-Brown potential using Popcornn with (top left) and without (top right) the linear prior in
+Eq. 2. The bottom panel shows the TS force during optimization. The colored lines and circles are
+corresponding measurements at the same time.
+
+                                                                                    
+                                                                    w
+                                                          (2)               (2)
+                                                                    X
+               xθ,i (t) = (1 − t)xR,i + txP,i + q (t) bi       +         Wij hj (t̃) .   (A12)
+                                                                    j=1
+
+
+This is analogous to representing the path with a set of smooth basis functions in t,
+except that the basis functions are learned jointly with the path. Increasing the hidden
+width increases the number of available time features, while the output layer selects
+their amplitudes independently for each Cartesian coordinate.
+
+A.4     Internal Versus Cartesian Coordinates
+Our path operates in Cartesian coordinates instead of the internal coordinates.
+Although empirical evidence has shown that internal coordinates are important for
+geometry optimization [68], transforming from internal coordinates to Cartesian is
+non-unique and generally difficult. This difficulty is in part because internal coordi-
+nates can have singularities, and optimal coordinates generally change throughout the
+reaction.
+   One of the primary benefits of internal coordinates is the grouped movement of
+atoms by one or a few coordinates. This feature can be captured by the neural network
+path, which can learn the optimal time-dependent internal representation. Thus, the
+
+
+
+                                               29
+neural network path effectively learns the time-dependent internal coordinates and
+their transformation.
+   The input molecules must be properly positioned before being passed to Popcornn.
+This includes handling the translational and rotational degrees of freedom. This is a
+non-trivial task that is best handled by specialty external packages [64, 72].
+
+A.5     Complexity of the Path Model
+The neural network fθ (t) is much smaller than the MLIP, serving only as a flexible
+representation of the path, not as a sophisticated regressor. Here, we use a simple fully-
+connected neural network instead of any invariant or equivariant architecture. Such
+inductive biases are commonplace in many MLIPs [39, 52]. We found that many of
+these inductive biases can be detrimental to our path optimization. Moreover, allowing
+the neural network to learn optimal coordinate systems and transformations removes
+the need for such inductive biases.
+   The locality assumption is a very common inductive bias found in most all MLIPs.
+Here, the representation of each atom is updated by information of atoms within
+some radius. This, however, can be detrimental for Popcornn, which can optimize
+the reaction between two separated molecules. Imagine the simplest possible reaction
+H+H          H2 where the reactant atoms are separated much further than a typical
+radius used in the locality assumption. This path, therefore, is generally not local.
+Although some of the non-locality is captured by the linear prior, it is likely that this
+inductive bias would hamper the optimization.
+   Another common and important inductive bias is rotation and translation invari-
+ance. However, the linear prior breaks the individual translational and rotational
+symmetries of endpoints. Given the importance of the linear prior in this work, we
+consider that incorporating invariant or equivariant architectures for the perturbation
+neural network will lead to complications.
+
+A.6     Path Jacobian
+The path Jacobian quantifies the sensitivity of each atomic coordinate to the learnable
+weights, and thus it plays an important role in the optimization. Since the linear prior
+is independent of θ (Eq. 2), the path Jacobian is
+
+                                        ∂xθ (t)         ∂fθ (t̃)
+                             Jθ (t) =           = q (t)          .                 (A13)
+                                         ∂θ              ∂θ
+
+The quadratic envelope (Eq. A2) scales the sensitivity of the path to the neural-
+network parameters, and removes fθ (t̃)’s contribution from the endpoints.
+   For the two-layer MLP used here,
+
+                       z(t̃) = W(1) t̃ + b(1) ,       h(t̃) = ϕ(z(t̃)),            (A14)
+
+                                fθ (t̃) = W(2) h(t̃) + b(2) ,                      (A15)
+
+
+
+
+                                              30
+where ϕ is the GELU activation. If i indexes Cartesian output coordinates and j
+indexes hidden units, the nonzero Jacobian blocks are
+
+                             ∂xθ,i (t)
+                                  (2)
+                                         = q (t)hj (t̃),                         (A16)
+                             ∂Wij
+                             ∂xθ,i (t)
+                                 (2)
+                                         = q (t),                                (A17)
+                              ∂bi
+                             ∂xθ,i (t)              (2)
+                                  (1)
+                                         = q (t)Wij ϕ′ (zj (t̃))t̃               (A18)
+                             ∂Wj
+                             ∂xθ,i (t)              (2)
+                                 (1)
+                                         = q (t)Wij ϕ′ (zj (t̃)).                (A19)
+                              ∂bj
+
+    The final-layer weight block (Eq. A16) gives a simple estimate of the path Jacobian
+                                             (2)
+scale, because the scale of the weights (Wij ) is dependent on its input dimension
+      √
+O(1/ w), while the GELU hidden units hj are O(1). Generally, w > 100, making
+Eq. A16 at least an order of magnitude larger than Eq. A18.
+
+                                                          ∂xθ,i (t)
+                             Jθ (t) ≈ JW(2) (t) =              (2)
+                                                                      .          (A20)
+                                                           ∂Wij
+
+Taking the inner product of the Jacobian with itself results in a positive semidefinite
+matrix, allowing us to make a comparison of the singular values σ :
+
+              σi Jθ (t)Jθ (t)⊤ ≳ σi JW(2) (t)JW(2) (t)⊤ = q (t)2 ∥h(t̃)∥22
+                                                      
+                                                                                 (A21)
+                  σmin (Jθ (t)) ≳ σmin (JW(2) (t)) = q (t)∥h(t̃)∥2 ,             (A22)
+
+where the equality holds because the inner product of the Jacobians is diagonal
+across Cartesian output coordinates. At the path midpoint, q (1/2) = 1/4, t̃ = 0, and
+h(1/2) = ϕ(b(1) ). The hidden pre-activations reduce to the first-layer biases:
+
+                                                    1
+                            σmin (Jθ (1/2)) ≳         ∥ϕ(b(1) )∥2 .              (A23)
+                                                    4
+Thus, at the reaction time midpoint, the scale of the smallest singular value is set by
+both the hidden width and the activation function. For PyTorch’s default initializa-
+tion of a first-layer map from one scalar input to w hidden units, the biases satisfy
+                  (1)
+approximately bj ∼ U [−1, 1]. Thus,
+
+                        E ∥h(1/2)∥22 = w Eb∼U [−1,1] ϕ(b)2 ,
+                                                       
+                                                                                 (A24)
+
+and the expected midpoint scale is
+
+                                            1q
+                      σmin (Jθ (1/2)) ≈        w Eb∼U [−1,1] [ϕ(b)2 ].           (A25)
+                                            4
+
+                                               31
+For the GELU activation,
+                                                      
+                                         b           b
+                                  ϕ(b) =    1 + erf √      ,                                 (A26)
+                                         2            2
+
+which gives                                          Z 1
+                                        1 2
+                                                              ϕ(b)2 db ≈ 0.1088.
+                                             
+                     Eb∼U [−1,1] ϕ(b) =                                                      (A27)
+                                        2                −1
+Therefore, for the default width w = 128,
+
+                                                  1√
+                        σmin (Jθ (1/2)) ≈            128 × 0.1088 ≈ 0.93.                    (A28)
+                                                  4
+Therefore, both the size of the number of hidden unit bases and the activation itself
+determine the Jacobian’s scale. As we will show in Supplementary Note C, this
+Jacobian plays a crucial role in the convergence criteria.
+
+Supplementary Note B                              Popcornn Optimization
+                                                  Losses
+For double-ended TS searches, we use the assumption of simple TS theory that the
+path is simply a tool for finding the TS, and other points along the entire path (e.g.,
+MEP, the gradient descent path from the TS, etc.) are not needed. Hence Popcornn
+is designed to work with all losses that can be written as a path integral (Eq. 1). In
+this work, we investigate three path integral losses: LVRE in Eq. 3; LpVRE in Eq. 4;
+and Lgeo in Eq. 7. We have demonstrated their behaviors in Fig. 2, and we provide
+further discussion on their physical interpretation below.
+
+B.1    The Variational Reaction Energy (VRE) Loss
+The LVRE loss is only guaranteed to find the gradient descent path from any stationary
+point to which it converges. This is because the LVRE path can converge onto a
+high-order saddle point or even a maximum, instead of the TS. This issue is more
+pronounced on a high-dimensional PES with many stationary points of various orders.
+To demonstrate this failure mode on a low-dimensional system, we show that the LVRE
+path converges to the PES maximum of the Wolfe potential, in Fig. B4.
+
+B.2    The Projected Variational Reaction Energy (pVRE) Loss
+The projected variational reaction energy (pVRE) loss is most affected by the highest
+energy point, thus targeting the TS, and better aligns with the assumption of TS
+theory. The pVRE loss, reproduced here, is
+                        Z 1                                   X
+              LpVRE =         |F(xθ (t)) · vθ (t)| dt =            2Ea,T S − Ea,R − Ea,P ,     (4)
+                         0                                     a
+
+
+
+
+                                                    32
+Fig. B4 Comparison between the LVRE and LpVRE losses on the Wolfe potential. Optimizing
+against LVRE (top left) converges the path incorrectly to the gradient descent path from the maxi-
+mum on the PES, while using LpVRE (top right) converges the path to going through the TS. The
+bottom row shows the TS force during optimization. The colored lines and circles are corresponding
+measurements at the same time.
+
+
+where a sums over the maxima along the path, ER is the corresponding reactant
+energy, and EP is the corresponding product energy. LpVRE can be understood as the
+total variation of the energy profile, i.e., the summation of energy differences along
+xθ (t). Define the energy profile along the path as E (xθ (t)). Since
+
+                  dE (xθ (t))   dE (xθ (t)) dxθ (t)
+                              =            ·        = −F(xθ (t)) · vθ (t),                 (B29)
+                      dt         dxθ (t)      dt
+
+the pVRE loss can be written as the total variation of the energy profile
+                                           Z 1
+                                                  dE (xθ (t))
+                                LpVRE =                       dt.                          (B30)
+                                             0        dt
+
+   A LpVRE optimized path will prefer a single TS, generating a smooth path that
+avoids substructures and multi-step reactions that can be challenging for optimization
+methods to navigate. We demonstrate this in the Muller-Brown potential (Fig. 2)
+and the Wolfe potential (Fig. B4), where xθ (t) targets the highest TS and avoids the
+others. This behavior is valuable since the largest barrier (TS) corresponds to the
+reaction’s rate-determining step, even for a multi-step reaction. If one is interested in
+the elementary reactions, they can still be retrieved through IRCs from the TS [12].
+
+
+                                                 33
+   This preference for transition-state regions can be seen directly from the loss
+gradient:                  Z 1                              
+               ∂                     dE (xθ (t)) ∂ dE (xθ (t))
+                  LpVRE =      sgn                               dt.        (B31)
+               ∂θ           0            dt       ∂θ    dt
+Given that the path endpoints are fixed,
+
+                             ∂E (xθ (0))   ∂E (xθ (1))
+                                         =             = 0,                        (B32)
+                                 ∂θ            ∂θ
+and integrating by parts gives
+                               Z 1                       
+                ∂                     d        dE (xθ (t))    ∂E (xθ (t))
+                   LpVRE = −             sgn                              dt.      (B33)
+                ∂θ               0    dt           dt             ∂θ
+
+The derivative of the sign function is a Dirac delta distribution,
+
+                                          d2 E (xθ (t))
+                                                                      
+                d        dE (xθ (t))                         dE (xθ (t))
+                   sgn                 =2               δD                 ,       (B34)
+                dt           dt               dt2                dt
+
+where δD denotes the Dirac delta. Therefore, the gradient is nonzero only where
+
+                                      dE (xθ (t))
+                                                  = 0,                             (B35)
+                                          dt
+
+i.e., at stationary points of the energy profile along xθ (t). For stationary points ta ,
+this can be written as
+                                          2            
+                  ∂               X       d E (xθ (ta )) ∂E (xθ (ta )))
+                     LpVRE = −2      sgn                                .         (B36)
+                  ∂θ               a
+                                                dt2             ∂θ
+
+If xθ (t) has only one energy barrier, the sum would only have one concave stationary
+point, which is the proposed TS, and can be simplified as
+
+                               ∂            ∂E (xθ (t∗ ))
+                                  LpVRE = 2               ,                        (B37)
+                               ∂θ               ∂θ
+
+where 0 < t∗ < 1 is the proposed TS time along xθ (t). Using
+
+                  ∂E (xθ (t))           ∂E (xθ (t))
+                              = Jθ (t)⊤             = −Jθ (t)⊤ F(xθ (t)),          (B38)
+                      ∂θ                 ∂xθ (t)
+
+where Jθ (t) = ∂xθ (t)/∂θ defined in A13, we obtain
+
+                           ∂
+                              LpVRE = −2Jθ (t∗ )⊤ F(xθ (t∗ )).                     (B39)
+                           ∂θ
+
+
+
+                                             34
+    Therefore, LpVRE removes all maxima and minima along xθ (t), and the TS at t∗ is
+the only contributing time point to the loss. For interior maxima, the sign of Eq. B39
+lowers the PES energy. For interior minima, the sign of Eq. B39 raises the PES energy.
+Therefore, xθ (t) is optimized to avoid any interior maxima or minima. However, the TS
+cannot be removed, and thus it becomes the only contributing extremum to minimizing
+LpVRE . This provides a complementary view of why pVRE focuses optimization on
+transition-state structure: flat or monotonic portions of the path do not contribute
+to the first-order signal, whereas energy extrema contribute through delta-function
+weights.
+    This behavior is further intuited by the fact that xθ (t) accumulates no loss when
+traveling on an isoenergy line. For xθ (t) to traverse an isoenergy line, its velocity must
+be perpendicular to the force, and by Eq. 4 the integrand is 0. The ability for xθ (t)
+to freely travel along isoenergy paths aligns with the statistical nature of chemical
+reactions, where structures of the same energy are equally likely to occur and thus
+xθ (t) should be able to freely travel between them.
+
+B.3     A Combined Variational Loss: Variational Error
+The work of Birkholz and Schlegel [36] defines a non-negative variational error loss to
+find the steepest descent reaction path. The variational error
+
+                                 εVRE = LVRE − LpVRE                                (B40)
+
+is the difference between the VRE and pVRE losses. Minimizing this loss extremizes
+the dot product of LpVRE : aligning the gradient of the PES with the velocity. However,
+all gradient descent paths minimize εVRE ; in fact, Eq. B40 is independent of the
+stationary point. That is, one can reach εVRE = 0 by going over any feature where
+the PES gradient is 0: any PES peak, any saddle point, any PES minima. Therefore,
+once xθ (t) corresponds to one of these extrema, there is likely no way to optimize
+xθ (t) towards the correct TS. Instead, the path will be optimized to align xθ (t) with
+the PES gradient while staying at this extreme.
+
+B.4     Losses for Path Initialization: Geodesic Loss
+Properly initializing the reaction path is a crucial step (Fig. 3b), and doing so incor-
+rectly can place xθ (t) in a PES region where it will be optimized to the incorrect TS.
+That is, the path initialization effectively confines the optimization to a PES region
+and must therefore be sensitive to the region with the correct TS. This is necessary
+for multiple reasons: often accurate optimizations can be more expensive and cannot
+optimize over large PES regions; MLIPs can become undefined in some PES regions;
+and it is generally prohibitively challenging or expensive to optimize xθ (t) across many
+large PES structures to a new PES region on complex PES surfaces using especially
+ab initio methods. Therefore, a quality path initializer must leverage chemical biases
+to select the PES region, balance PES evaluation cost, and often smooth the PES to
+allow easier optimization. Hence, one often uses a pairwise potential (Eq. 6) that is
+fast to evaluate, smooths the PES in a principled way, and still maintains chemical
+expectations.
+
+
+                                            35
+    Optimizing the initial path over the pairwise PES with LpVRE and LVRE suffers
+from catastrophic failures caused by approximations in the pairwise PES. For LpVRE
+this stems from the fact that on the pairwise PES the reactants and products are
+generally not at the minima, and there is often no TS in between. Since Eq. 4 has a
+monotonic integrand, the integral would be a constant E (xθ (1)) − E (xθ (0)) regardless
+of the path. Thus LpVRE is insensitive to the initial path in the common scenarios
+where reactant, product, and TS stationary points are missing and therefore cannot
+optimize the path. In contrast, the LVRE path is sensitive to the entire path, instead of
+a few special points like LpVRE . However, the total energy is not very indicative since
+the lengthening of one bond will be canceled by the shortening of another bond for
+a pairwise potential like Eq. 6. This makes LVRE insensitive to initial path changes.
+Additionally, the energy can be reduced by compensating one bond motion with the
+opposite motion from another bond; this increases the possibility of visiting an unlikely
+structure where DFT and MLIPs may become undefined.
+    The geodesic loss (Lgeo ) [45] can be intuited as minimizing the amount of dis-
+placement atoms must make while being rearranged from the reactant to the product
+structure. This imposes a chemical intuition that the optimal reaction path can gen-
+erally be optimized from the “least-motion” or the spatially shortest path. Instead
+of summing the pairwise energy contributions before evaluating the force or the loss
+integrand, Lgeo squares these individual pairwise contributions to minimize them
+separately
+          Z 1s       X                                             Z 1
+                                                           2
+ Lgeo =                          |Fq (xθ (t)) · vθ (t)| dt =             F(pairs) (xθ (t)) · vθ (t) dt, (7)
+          0      q∈{(i,j)|i<j}                                      0
+
+
+Figure B5 demonstrates the difference between paths optimized by Lgeo and LpVRE
+on a 3-dimensional example. The path minimizing Lgeo does not correspond to the
+path crossing the minimal barrier minimizing LpVRE .
+   To demonstrate the correspondence between Lgeo and LpVRE , we derive Lgeo from
+LpVRE . To see this, consider a generalized pVRE loss as a sum of the pVRE losses
+from each pairwise energy term,
+                                           X
+                        L(1)
+                         geo =                       LpVRE,q                                        (B41)
+                                     q∈{(i,j)|i<j}
+                                           X         Z 1
+                                 =                         |Fq (xθ (t)) · vθ (t)| dt                (B42)
+                                     q∈{(i,j)|i<j}    0
+                                     Z 1       X
+                                 =                         |Fq (xθ (t)) · vθ (t)| dt                (B43)
+                                      0 q∈{(i,j)|i<j}
+                                     Z 1
+                                 =         F(pairs) (xθ (t)) · vθ (t)        dt,                    (B44)
+                                      0                                  1
+
+
+
+
+                                                      36
+                                                Ez
+
+
+
+
+                                                                       Ey
+                                        Minimum
+                                                                       Contours for total energy
+                                        energy path
+                                                                            E = Ex + Ey + Ez
+
+                                                                  Geodesic path
+
+
+
+                                                                            Ex
+
+
+
+
+Fig. B5 Comparison between the geodesic path and the minimum energy path. Let a hypothetical
+PES has three energy contributions Ex , Ey , and Ez , and the feasible manifold is a sphere. The path
+with the smallest barrier, which is barrier-less in this case, lies on the plane x + y + z = 1 and follows
+the energy contour. The geodesic, i.e., the path with the shortest arc, lies on the plane y = 0.
+
+
+where ∥ · ∥1 is the 1-norm of a (N (N − 1)/2)-dimensional vector, and F(pairs) ∈
+       N (N −1)
+R3N × 2         is a matrix by stacking pairwise forces Fq ∈ R3N , instead of summing
+them so that we can treat all pairs independently. Physically speaking, if one bond
+remains unchanged from the reactant to the product, this should be reflected in the
+learned path, and the contribution to the integral in Eq. B44 should be zero. This
+  (1)
+Lgeo , as a generalized LpVRE , can still be independent of the path on the pairwise
+potential energy surface. To add a path dependence, we can replace the 1-norm with
+the 2-norm, i.e., the Euclidean norm, in a sense that one replaces the displacement
+with the distance or replaces the velocity with the speed,
+                                  Z 1s         X                                  2
+                        L(2)
+                         geo =                             |Fq (xθ (t)) · vθ (t)| dt               (B45)
+                                   0      q∈{(i,j)|i<j}
+                                  Z 1
+                              =          F(pairs) (xθ (t)) · vθ (t)       dt,                      (B46)
+                                   0                                  2
+
+
+which leads us to the geodesic loss Lgeo in Eq. 7, to find the shortest path from
+the reactant to the product in this N (N − 1)/2-dimensional space of energy terms.
+We note that Hait et al. [73] have applied the geodesic formalism to acquire the
+pVRE loss, without deeper physical explanation, but we find the opposite direction of
+understanding from LpVRE to Lgeo is more physically intuitive.
+
+
+
+
+                                                      37
+B.5     Transition State Losses
+Popcornn is equipped with TS losses to speed up path converge [36] and improve upon
+the TS structure. Currently, these losses fall into two categories: the TS loss (LTS )
+and the TS region loss (LTSR )
+
+                                  LTS = ℓTS (tTS )                                 (B47)
+                                        Z tf
+                                 LTSR =      ℓTS (t) dt,                           (B48)
+                                           ti
+
+
+where ℓTS is any user-defined function (including those used to optimize xθ (t)) appli-
+cable to the TS or TS region, tTS is the TS time, and ti < tTS < tf defines a region
+of the path around the TS. More obvious choices for ℓTS that are supported by Pop-
+cornn include the potential energy and the magnitude of its gradient at the TS. The
+latter loss helps optimize the path to align with the TS saddle point.
+    The LTSR can be practically useful during path optimization by lowering the energy
+or the PES gradient of the highest region in the path. Birkholz and Schlegel [36] showed
+that using a TS loss during optimization helped the path converge much faster. The
+LTSR also helps define the TS when using LpVRE . Specifically, when applying LpVRE
+optimization, xθ (t) is not penalized for traversing isoenergy geometries. Therefore,
+many structures near the TS can have the same or similar energies and potentially
+confuse a TS searching scheme. For example, selecting the TS based on energy can be
+challenging, as the deviation from the maximum energy may be small in the TS region.
+By minimizing the energy in the TS region, the TS will become more distinguishable.
+    In this work, we ran tests with both LTS and LTSR , but ultimately we did not use
+them. While the TS losses speed up the reaction path convergence [36], they lead to
+inferior paths due to faster convergence. Many of these paths corresponded to multi-
+step reactions. Given our goal is to find single-step reaction TS, the TS losses were not
+well suited for our specific task. We do believe that the TS losses can be well-suited for
+other tasks, where one is interested in multi-step reactions or in higher TS structure
+precision. We also note that the TS losses can be turned on at or near the end of the
+Popcornn optimization (Supplementary Note D) to avoid path optimization effects
+while still improving the TS itself.
+
+Supplementary Note C                      Popcornn Convergence
+For each optimization stage, Popcornn monitors the path-integrated gradient of the
+loss with respect to the path parameters (Eq. B39). A stage is declared converged when
+
+                                     ∂
+                                        LpVRE < τ                                  (C49)
+                                     ∂θ      2
+
+for p consecutive optimization steps, where τ is the convergence threshold and p is
+the patience parameter. If this condition is not met, the stage terminates after the
+prescribed maximum number of optimizer iterations.
+
+
+
+                                           38
+    The threshold τ is chosen to correspond to a target residual force at the predicted
+TS. The residual is anything that is nonzero because TS should have zero forces, while
+in practice a small nonzero residual is commonly allowed. Let
+
+                                            F2target                                   (C50)
+
+denote the desired force magnitude of ∥F(x(t∗ ))∥2 at the TS candidate on the
+optimized path. We wish to stop the optimization according to Eq. B39 at
+
+                         ∂
+                            LpVRE = 2 Jθ (t∗ )⊤ F(xθ (t∗ )) 2 < τ                      (C51)
+                         ∂θ      2
+
+Using the singular-value bound given by
+
+              ∥Jθ (t∗ )⊤ F(xθ (t∗ ))∥22 = F(xθ (t∗ ))⊤ Jθ (t∗ )Jθ (t∗ )⊤ F(xθ (t∗ ))
+                                                                                       (C52)
+                                       ≥ σmin (Jθ (t∗ ))2 ∥F(xθ (t∗ ))∥22
+
+we have
+                 ∥Jθ (t∗ )⊤ F(xθ (t∗ ))∥2 ≥ σmin (Jθ (t∗ )) ∥F(xθ (t∗ ))∥2 .           (C53)
+   For LpVRE , this bound yields the estimate
+
+                           ∂
+                    τ>        LpVRE ≥ 2σmin (Jθ (t∗ )) ∥F(xθ (t∗ ))∥2                  (C54)
+                           ∂θ      2
+
+Thus, we bound the loss gradient using the singular value lower bound and our force
+target F2target
+                            τ := 2 σmin (Jθ (t∗ )) F2target .                (C55)
+With the common F2target of 0.05 eV/Ang and the singular value σmin (Jθ (t∗ )) ≈ 1 is
+estimated by A28, we set τ = 0.1 throughout this work.
+    While xθ (t) converges, the integration tolerance must be at most the same magni-
+tude as τ . At convergence, the optimization should reach a steady state at the optimal
+xθ (t) and the gradient of the loss with respect to the gradients is 0. As previously
+mentioned, we bound this by τ , and therefore at convergence
+
+                                        ∂
+                                           LpVRE ≈ τ                                   (C56)
+                                        ∂θ      2
+
+Since the adaptive quadrature tolerance is given by
+                                                            
+                                                  ∂
+                              max atol , rtol        LpVRE     ,                       (C57)
+                                                  ∂θ       2
+
+
+
+
+                                                39
+we set atol = 0 so the integration convergence is dependent on the loss objective and
+its gradient. This determines rtol as
+
+                                  ∂
+                           rtol      LpVRE ≈ τ      rtol = 1.                      (C58)
+                                  ∂θ      2
+
+The integration tolerance is therefore matched to the stopping threshold: small enough
+not to mask convergence, but loose enough to avoid unnecessary quadrature refinement
+during convergence.
+
+Supplementary Note D                      Curriculum Optimization
+                                          and Popcornn GSM
+Popcornn can apply dynamic weighting to the path integral loss in a curriculum learn-
+ing approach. Curriculum learning is a machine learning technique that dynamically
+alters the loss to emphasize specific contributions the user wishes the optimization to
+focus on [74, 75]. Heuristically, this is similar to the growing string method (GSM),
+which optimizes end of strings that are continuously growing from the initial and
+final points. Popcornn is equipped with a growing-string-like curriculum that initially
+increases/decreases the path loss contributions near to and far from the endpoints.
+The curriculum ends by evenly weighting all path points.
+    Popcornn is also capable of increasing or decreasing specific loss contributions at
+different points of the optimization. For example, the LTS can be absent in the first 3/4
+of the path optimization (avoiding convergence to an inferior path) and then increased
+at the end to improve the TS. Similarly, paths optimized with LpVRE converge faster
+and find better TS than LVRE , but can ignore PES structures by traversing isoenergy
+lines. This can make a LpVRE path difficult to interpret and will not resolve any local
+minima. To leverage the superior LpVRE performance and create a more interpretable
+path that resolves local minima (intermediate equilibrium structures), one can add
+LVRE to the LpVRE loss near the end of the optimization.
+
+Supplementary Note E                     Parallelized Adaptive
+                                         Numerical Integration and
+                                         PadaQuad
+Adaptive numerical integration is necessary to leverage the continuous path xθ (t).
+When xθ (t) is evaluated on a fixed grid of reaction times, the loss depends only on the
+structures at the grid points, which act as discrete images. These structures are set by
+both the shape of the path and its velocity profile, i.e., how quickly the path moves
+through each region. Changing the velocity profile, “re-timing” the path, moves the
+images along the path without changing its shape. By changing the velocity profile,
+images “fall” toward regions of low loss during optimization. For LE , the images fall
+down the PES toward low-energy structures such as xR and xP . NEB prevents this by
+adding fictitious spring forces that keep the images evenly spaced [27, 28], effectively
+fixing the velocity profile [38].
+
+
+                                           40
+    For LVRE and LpVRE , re-timing alone can localize the images at stationary points
+of the PES, such as xR , xP , and the TS, where the force vanishes. Although the
+exact LVRE and LpVRE integrals are independent of the velocity profile, their fixed-
+grid sums are not because re-timing changes which structures sit at the grid points.
+The optimizer can therefore lower the fixed-grid loss without improving the path by
+placing the grid points at stationary points while the path crosses the high-loss regions
+between them. In the limit, xθ (t) rests at xR and xP for nearly the entire reaction
+time and crosses between them within a single grid interval. The images then coincide
+at the endpoints, and the fixed-grid loss vanishes regardless of the barrier the path
+crosses.
+    Instead of fixing the velocity profile through a fictitious spring force, the adaptive
+integrator adds evaluation points where the integration error is large and removes
+them where it is small, until the error falls below a set tolerance. Where the path
+moves quickly, the integrand generally varies rapidly; the integrator adds points in
+these places, so re-timing no longer lowers the loss. For LVRE and LpVRE , adaptive
+integration therefore removes the need for spring forces and keeps the loss within a
+set tolerance of the exact integral, so the gradient depends on the shape of the path
+rather than its velocity profile.
+
+E.1    PadaQuad
+Standard numerical integrators used for machine learning tasks are generally designed
+for ODEs [76] and require sequential evaluations in time, which would make Popcornn
+computationally intractable. Instead, we use PadaQuad [40]: an adaptive numerical
+quadrature method designed to parallelize path integration on GPUs with backpropa-
+gation compatibility. PadaQuad, as an adaptive numerical quadrature method, divides
+the integral into steps that are evaluated and refined in parallel. Steps are refined
+depending on their error (εstep ). When given a new integral, PadaQuad will simulta-
+neously evaluate integration steps based on a randomly sampled grid, shown as black
+points in Fig. 1b. Regions with an error larger than the tolerance will be split in
+half, and new evaluation points will be made and evaluated in parallel (gray points in
+Fig. 1b). This procedure continues until all integration steps satisfy the error criteria
+(white points in Fig. 1b) or have been split a maximum number of times (5 by default;
+Algorithm 4). The error criteria
+
+                              εstep < Max(atol , rtol × L′ ),                       (E59)
+
+where atol and rtol are the absolute and relative tolerances, and L′ is the latest path
+integral value. The atol and rtol values determine the integrators accuracy. To evaluate
+an integration step’s error Eq. E59, the integral (L′ ) must be known. PadaQuad defines
+L′ as the integral with the current integration steps. As the integration steps are
+refined, L′ is updated with each parallel evaluation. Thus, the integral value and the
+grid refinement converge simultaneously.
+    To further increase speed when integrating the same function, PadaQuad uses
+the previous evaluation points as an initial evaluation for the next optimization step.
+PadaQuad avoids evaluating excess temporal points by pruning the evaluation time
+
+
+                                            41
+points at the end of each integration. Note that PadaQuad uses all evaluated inte-
+gration steps in the returned integral value; this pruned grid is only used to initialize
+the integration steps in the next optimization. When initializing the integral with the
+previous integration times, PadaQuad generally requires 2 or 3 adaptive evaluations
+in the systems we tested.
+    Popcornn is designed to handle systems that require large memory budgets,
+which may stem from expensive potentials or from a many-atom system. To do this,
+PadaQuad calculates the maximum number of evaluations that can fit onto the GPU,
+and as a redundancy, reduces the evaluation batch size on out-of-memory errors.
+PadaQuad can reduce the batch size to a single evaluation, thus handling any system
+where a single evaluation can fit within the GPU’s memory. The user may also set the
+evaluation batch size themselves to optimize Popcornn on their own hardware.
+
+Supplementary Note F                     Hyperparameter Screening
+Setting up the reference NEB and GSM methods is, in general, difficult and often
+case dependent. We aim to make the comparison as fair as possible under a fixed
+set of hyperparameters. Below are some of the most important discretization and
+initialization hyperparameters we sampled. All others are kept at default in ASE
+3.28.0.
+
+
+
+
+                                           42
+   (a) 10-bead NEB
+
+
+
+
+   (b) 20-bead NEB
+
+
+
+
+   (c) 100-bead NEB
+
+
+
+
+Fig. F6 NEB setting screening on Grambow-Green out-of-distribution reactions. We evaluate NEB’s
+performance with different hyperparameters. We explore the number of beads: (a) 10 beads, (b) 20
+beads, and (c) 100 beads. For each number of beads, we vary the initial path construction method
+(linear interpolation, IDPP interpolation, discretized geodesic interpolation, and Popcornn-geodesic).
+The number at the bottom of each bar is the average time, in seconds, for the TS optimization to
+converge.
+
+
+
+Supplementary Note G                            Popcornn Algorithms and
+                                                Pseudocode
+This Supplementary Note gives pseudocode for Popcornn as implemented in the code
+repository [47]; we checked it against release 0.2.1 of the code (commit 15dd905, 15
+
+
+                                                 43
+November 2026) and release 1.4.1 of the PadaQuad implementation padaquad. Algo-
+rithm 1 is a complete Popcornn run, and Algorithms 2–5 expand its steps. Settings
+stated in Methods appear here as inputs. Settings not stated in Methods take the
+code defaults: the patience p = 1, the number of output structures nrec = 101, the
+random seed 0, single-precision (32-bit) arithmetic, the maximum number of times an
+integration step may be split Msplit = 5, and the error norm ∥ · ∥ν with ν = 2 (the
+Euclidean norm of a vector). Throughout, N is the number of atoms, θ denotes the
+parameters of the path network fθ (t) with D entries in total, and t ∈ [0, 1] is the reac-
+tion time. Derivatives are computed by automatic differentiation, which obtains exact
+derivatives of a computer program by applying the chain rule to each of its opera-
+tions; reverse-mode automatic differentiation (backpropagation) gives the derivative
+of a scalar with respect to all of θ in one pass.
+
+G.1     A Complete Popcornn Run
+A Popcornn run is a sequence of optimization stages that share the path parameters
+θ. For the molecular benchmarks in this work there are two stages, initial path con-
+struction and path optimization on the MLIP (Methods), each with its own potential,
+integrand, and Adam optimizer. Every optimizer iteration integrates the gradient of
+the path loss along the whole path (Algorithm 3) and updates all of θ at once. After
+the last iteration of a stage, one more integration records dE/dt along the path, from
+which the TS is located (Algorithm 5); the TS that Popcornn reports is the one found
+after the final stage. Optionally, the loss integral and the TS search are also computed
+at every iteration for monitoring; they do not change θ.
+
+G.2     Evaluating the Path
+Algorithm 2 evaluates the path model of Eq. 2 at a batch of reaction times, with
+the network input rescaled to t̃ = 2t − 1 (Supplementary Note A.3). All quantities
+are computed for the whole batch at once and stay differentiable with respect to
+θ. The velocity vθ (t) is the derivative of the path with respect to t, obtained by
+automatic differentiation rather than by finite differences. The potential is called once
+per batch; the repository provides one wrapper per supported MLIP that returns
+energies and atomic forces for a batch of structures. For the force-based losses, the
+gradient with respect to θ passes through the forces, so it needs the derivative of the
+forces with respect to the atomic positions. For models whose forces are the negative
+energy gradient, this derivative is the negative of the PES Hessian (the matrix of
+second derivatives of the energy), and automatic differentiation applies it to vectors
+without forming the full matrix. For models that predict forces directly, or for the
+analytic forces of the pair potential, automatic differentiation differentiates that force
+expression instead.
+
+G.3     Gradient of the Path Loss
+Algorithm
+       R 1 3 computes the parameter gradient by integrating the gradient of the inte-
+grand, 0 ∂ℓ/∂θ dt in Eq. 5, as described in Results; this is the code default, and the
+other option, differentiating the completed integral of ℓ, is not used in this work. The
+
+
+                                           44
+Algorithm 1 A complete Popcornn run.
+Require: reactant and product structures xR , xP ∈ R3N , relaxed and aligned (Meth-
+    ods); optional intermediate structures x1 , . . . , xK ; stages s = 1, . . . , S , each with
+    a potential Us , an integrand ℓs , absolute and relative quadrature tolerances atol,s
+    and rtol,s , a learning rate ηs , an optional convergence threshold τs , a patience ps ,
+    and a maximum number of iterations Ms
+Ensure: the path at nrec evenly spaced times, the TS estimate xθ (t∗ ), and for each
+    stage whether its convergence test was met
+ 1: Set the random seed; initialize θ with PyTorch’s default initialization for linear
+    layers
+ 2: if intermediate structures are given then                           ▷ not used in this work
+ 3:     tk ← k/(K + 1) for k = 0, . . . , K + 1, with x0 = xR and xK+1 = xP
+                                                                               PK+1
+ 4:     Fit θ with Adam (learning rate 10−3 ) to minimize 3N (K+2)       1
+                                                                                  k=0 ∥xθ (tk ) −
+        2                                     −8               4
+    xk ∥ , stopping when it falls below 10 or after 10 iterations
+ 5: end if
+ 6: for s = 1, . . . , S do
+ 7:     Attach Us to the path; create a new Adam optimizer with learning rate ηs ;
+    c←0                                                ▷ c: consecutive iterations below τs
+ 8:     for m = 1, . . . , Ms do
+ 9:         G ← PathGradient(θ, Us , ℓs , atol,s , rtol,s ) ▷ Algorithm 3; G ≈ ∂Ls /∂θ
+10:         if τs is set and ∥G∥ν < τs then
+11:              c←c+1
+12:         else
+13:              c←0
+14:         end if
+15:         if c ≥ ps then
+16:              break                              ▷ converged (Supplementary Note C)
+17:         end if
+18:         θ ← AdamStep(θ, G, ηs ) ▷ an optional learning-rate schedule also steps
+    here
+19:     end for
+20:     (G, Q) ← PathGradient(θ, Us , ℓs , atol,s , rtol,s ), recording the samples Q of
+    dE/dt (Algorithm 3); also integrate the loss for reporting, with its own tolerances
+    (atol = 10−4 , rtol = 0)
+21:     t∗ ← TSSearch(Q)                                                          ▷ Algorithm 5
+22: end for
+                                                                                ∗
+23: return xθ (ti ) for ti = (i − 1)/(nrec − 1), i = 1, . . . , nrec , and xθ (t )
+
+
+
+integrand passed to the adaptive quadrature is therefore the vector ∂ℓ(t)/∂θ ∈ RD .
+For a batch of n times, the n gradient vectors come from one batched reverse-mode
+pass. When requested, the same evaluations also record dE/dt = −F · v (Eq. B29)
+at every evaluated time. Only the samples in integration steps that the quadrature
+finally accepts are kept; samples in steps that it splits are discarded. Algorithm 5 uses
+the kept samples.
+
+
+                                               45
+Algorithm 2 Evaluating the path at a batch of reaction times.
+ 1: function EvaluatePath(t1 , . . . , tn ; θ , U )
+ 2:     for all j = 1, . . . , n in parallel do
+ 3:        xj ← (1 − tj ) xR + tj xP + tj (1 − tj ) fθ (2tj − 1)                      ▷ Eq. 2
+ 4:        Set the network perturbation of atoms fixed by constraints to zero
+ 5:        vj ← dxj /dt, by automatic differentiation
+ 6:        For periodic cells, wrap xj into the cell before calling the potential ▷ not
+    used in this work
+ 7:        (Ej , Fj ) ← U (xj )                         ▷ Fj = −∇Ej for conservative models
+                                                                                     (pairs)
+ 8:        For the pair potential (Eq. 6), also return the pairwise forces Fj                ∈
+      3N ×N (N −1)/2
+    R
+ 9:     end for
+                                                (pairs) n
+10:     return those of {xj , vj , Ej , Fj , Fj        }j=1 that the caller asks for
+11: end function
+
+
+
+Algorithm 3 Gradient of the path loss with respect to the path parameters.
+ 1: function PathGradient(θ , U , ℓ, atol , rtol )
+ 2:    function g (t1 , . . . , tn )                      ▷ integrand: one gradient vector per time
+ 3:       Evaluate
+                P    the   path     at  t 1 , . . . , t n                            ▷ Algorithm 2
+ 4:       ℓj ← m wm ℓm,j over the configured terms; this work uses one term with
+                                                                                        (pairs) ⊤
+    w = 1: |Fj · vj | (pVRE, Eq. 4), ∥Fj ∥ ∥vj ∥ (VRE, Eq. 3), or ∥(Fj                         ) vj ∥
+    (geodesic, Eq. 7)                 
+ 5:       Record tj , −Fj · vj in Q                              ▷ only when samples are requested
+ 6:       gj ← ∂ℓj /∂θ for all j , by batched reverse-mode automatic differentiation
+ 7:       return [g1 , . . . , gn ] ∈ Rn×D
+ 8:    end function
+ 9:    G ← AdaptiveQuadrature(g, atol , rtol )                                       ▷ Algorithm 4
+10:    Keep in Q only the samples in accepted integration steps, and sort them by
+    time
+11:    return G (and Q)
+12: end function
+
+
+
+G.4      Adaptive Quadrature
+Algorithm 4 gives the parallel adaptive quadrature of PadaQuad as described in Sup-
+plementary Note E and Ref. [40]. Popcornn calls it through the padaquad package, an
+implementation of PadaQuad that is not part of the Popcornn repository; this algo-
+rithm follows that source. The integration interval is divided into integration steps.
+Each step carries an integral estimate and an error estimate from an embedded rule
+pair: two quadrature rules of different order that share evaluation points, whose dif-
+ference estimates the error. Popcornn ’s default, used in this work, is the 7-point
+Gauss–Kronrod rule with its embedded 3-point Gauss rule. The integrand is evaluated
+at 9 points per step: the 7 Gauss–Kronrod points and the step’s two ends, which have
+zero weight in both rules. Because the integrand is the gradient vector, the integral
+
+
+                                                 46
+Algorithm 4 Parallel adaptive quadrature (PadaQuad ).
+ 1: function AdaptiveQuadrature(g , atol , rtol )
+ 2:     if this is the first call of the stage then
+ 3:          New ← 11 integration steps: [0, 1] is cut into 3 equal segments, and each
+    segment is cut at 3 uniformly random times
+ 4:          B ← the user’s batch-size cap if set, else, before each round of evaluations,
+    the largest number of evaluations that fits in the free GPU memory, predicted by
+    a memory model fitted at the start of the call
+ 5:     else                                                                 ▷ warm start
+ 6:          New ← the steps stored by the previous call
+ 7:          B ← the batch size stored by the previous call
+ 8:     end if
+ 9:     Accepted ← ∅
+10:     repeat
+11:          Evaluate g at the 9 points of every step in New, in batches of at most B
+    points
+        ▷ if GPU memory runs out, retry with B ← max(1, min(round(0.75B ), B − 1))
+12:          For each step k in New, compute its integral Ik and error εk from the
+    embedded rule  Ppair
+13:          G′ ← k∈Accepted∪New Ik                      ▷ current estimate of the integral
+14:          Failed ← {k ∈ Accepted ∪ New : ∥εk ∥ν ≥ max(atol , rtol ∥G′ ∥ν , 50 ϵ ∥Ik ∥ν )
+    and step k has been split fewer than Msplit times}
+                                   ▷ Eq. E59; ϵ: machine epsilon of the working precision
+15:          Accepted ← (Accepted ∪ New) \ Failed
+16:          New ← the two halves of every failed step
+17:     until New is empty
+18:     Store B and the accepted steps for the next call, after merging neighbouring
+    pairs whose merged error, predicted from the integrand values already computed,
+    is below 10% of the tolerance and halving the steps that still fail because they
+    reached Msplit P
+19:     return G′ = k∈Accepted Ik
+20: end function
+
+
+
+estimate G′ (the L′ of Eq. E59) and the step errors are vectors in RD , and the error
+criterion compares their ν -norms; the same norm is used for the convergence test in
+Algorithm 1. With atol = 0, as in this work, the criterion depends only on rtol , except
+that a step is never required to be more accurate than floating-point rounding allows.
+Steps accepted earlier are tested again against each new G′ , because G′ changes as
+refinement proceeds. A step that has already been split Msplit times is accepted even
+if it fails the criterion. After the loop, every accepted step is tested once more against
+the final G′ ; if any step fails, padaquad logs a warning and marks the integral as not
+converged, but Popcornn uses the integral unchanged. An integrand value that is not
+finite stops the run with an error. Each Popcornn stage creates a new integrator, so
+warm starting (Supplementary Note E) and a reduced batch size carry over between
+the calls of a stage but not between stages.
+
+
+                                            47
+G.5     Locating the Transition State
+Algorithm 5 is the full TS search summarized in Methods. It uses the samples recorded
+during the final integration of a stage and brackets each zero of dE/dt between neigh-
+bouring samples. Because each integration step is evaluated at its two ends, the first
+and last samples lie exactly at the reactant and product (t = 0 and t = 1). These
+two samples are excluded from the brackets because, at and close to the reactant and
+product minima, dE/dt is near zero and its sign is unreliable. The reactant and prod-
+uct times are always candidates, so that a path without an interior maximum returns
+the higher-energy endpoint. Taking the highest-energy candidate also discards zeros
+of dE/dt that are energy minima.
+
+
+Algorithm 5 Locating the TS along the optimized path.
+Require: samples Q = {(ti , di )}ni=1 sorted by ti , with di = dE/dt at ti
+ 1: function TSSearch(Q)
+ 2:    C ← {0, 1}                                            ▷ reactant and product times
+ 3:    for i = 2, . . . , n − 2 do
+ 4:       if di di+1 ≤ 0 and not di = di+1 = 0 then                 ▷ sign change of dE/dt
+ 5:           C ← C ∪ { ti − di (ti+1 − ti )/(di+1 − di ) }                  ▷ zero of dE/dt
+ 6:       end if
+ 7:    end for
+ 8:    Evaluate E and F at every t ∈ C in one batched call                     ▷ Algorithm 2
+ 9:    t∗ ← arg maxt∈C E (xθ (t))
+10:    return t∗ , E (xθ (t∗ )), F(xθ (t∗ )), and the barrier E (xθ (t∗ )) − E (xR )
+11: end function
+
+
+
+
+G.6     Where Each Step Is Implemented
+Table G1 maps each algorithm to the module and function of the Popcornn repos-
+itory [47] that implement it. A new MLIP is added by writing one wrapper in
+popcornn/potentials/ that returns energies and forces for a batch of structures, and
+adding its name to get potential in popcornn/potentials/ init .py.
+
+
+
+
+                                            48
+Table G1 Location of each algorithm in the Popcornn repository (release 0.2.1) and in padaquad
+(release 1.4.1).
+
+Algorithm                       Module (function)
+1, input processing             popcornn/tools/images.py (process images)
+1, seed and initial fit         popcornn/popcornn.py (Popcornn. init ),
+                                popcornn/optimization/initialize path.py (initialize path)
+1, stages and iteration loop    popcornn/popcornn.py (Popcornn.optimize path, optimize)
+1, Adam step and convergence    popcornn/optimization/optimizer.py (PathOptimizer)
+1, outputs                      popcornn/popcornn.py (get discrete path, get ts)
+2, path model                   popcornn/paths/ (mlp.py, linear.py, base path.py)
+2, potentials                   popcornn/potentials/ (pair potential: repel.py)
+3, integrands                   popcornn/tools/integrand.py
+3, gradient integration         popcornn/tools/integrator.py (PathIntegrator)
+4, adaptive quadrature          padaquad.adaptive quadrature, called from integrator.py
+5, TS search                    popcornn/paths/base path.py (BasePath.ts search)
+
+
+
+
+                                             49
+
