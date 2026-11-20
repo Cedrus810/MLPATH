@@ -249,7 +249,7 @@ def main():
 
     def spent_total():
         total = prep.get("forwards", 0)
-        for f in out.glob("path_*.ledger.jsonl"):
+        for f in sorted(set(out.glob("path_*.ledger.jsonl"))):
             total += sum(r["forwards"] for r in tally(f).values())
         return total
 

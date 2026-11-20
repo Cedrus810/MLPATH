@@ -171,7 +171,8 @@ def parse():
 
 def spent_total(out):
     return sum(
-        sum(r["forwards"] for r in tally(f).values()) for f in out.glob("*.ledger.jsonl")
+        sum(r["forwards"] for r in tally(f).values())
+        for f in sorted(set(out.glob("*.ledger.jsonl")))  # NFS readdir can repeat names
     )
 
 
@@ -594,7 +595,7 @@ def main():
     def layer_forwards(prefix):
         pats = (f"{prefix}wave_*.ledger.jsonl", f"{prefix}ts_*.ledger.jsonl")
         return sum(sum(r["forwards"] for r in tally(f).values()) for pat in pats
-                   for f in out.glob(pat))  # fmt: skip
+                   for f in sorted(set(out.glob(pat))))  # fmt: skip
 
     single, double = set(), set()
     waves = run_layer(items, "", single)

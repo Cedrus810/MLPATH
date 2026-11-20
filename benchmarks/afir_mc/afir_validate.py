@@ -80,8 +80,8 @@ def main():
         layer_events = {"single": set(), "double": set()}
         # single-pair waves, then the two-pair layer (dwave_*, 2026-11-15); spent_total is
         # cumulative over both, so costs stay comparable
-        waves = [("single", f) for f in sorted(run.glob("wave_*.json"))] + [
-            ("double", f) for f in sorted(run.glob("dwave_*.json"))
+        waves = [("single", f) for f in sorted(set(run.glob("wave_*.json")))] + [
+            ("double", f) for f in sorted(set(run.glob("dwave_*.json")))
         ]
         for layer, wf in waves:
             wave = json.loads(wf.read_text())
