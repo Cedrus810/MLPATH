@@ -41,3 +41,6 @@ benchmarks/**/*.o[0-9]*
 benchmarks/**/pids*.txt
 benchmarks/**/*.jsonl
 benchmarks/**/*.json
+
+# 参考文献PDF不进仓(按DOI引用)
+docs/refs/**/*.pdf

@@ -14,6 +14,7 @@
 | connect | `docs/PLAN_2026-09-28.md` | 待用户确认 |
 | 评估协议（量尺，先冻结） | `docs/EVALUATION_PROTOCOL_DESIGN_2026-10-13.md`（按其 v1 范围） | 用户审定（2026-10-13）；执行参数待零号批后冻结 |
 | Non-Hessian AFIR（反应逻辑照搬 AFIR；TS / IRC / 极小用本项目 E/F 方法；MLP 特化） | `docs/NONHESSIAN_AFIR_DESIGN_2026-11-14.md`；施工计划 `docs/PLAN_AFIR_MC_2026-11-14.md` | 用户审定（2026-11-14「可以 就这么施工」）；第一阶段 MC-AFIR 施工中；取代 D2 的发射层（L1–L3、单距离意图），HF 内核与连接沿用 |
+| TS 定位器（成键窗口版；AFIR 路径 → 短 String → 键图变化处局部窗口 → 固定方向爬坡 → 两侧 E/F 下降） | `docs/TS_LOCATOR_DESIGN_2026-11-19.md`（§2.6 为定下的版本） | 用户 2026-11-26「可以 可以」定为 AFIR 运行器默认定位器（`--locator window`），HF 反力零点内核降为对照臂（`--locator hf`）；取代 Non-Hessian AFIR 设计稿 §4.2 的定位器，其余条目不变；§7 其余待定项仍待定 |
 | 发现层重设计（方案 A 约束松弛） | `docs/DISCOVERY_LAYER_DESIGN_2026-10-13.md`（按其 §1.1 v1 范围）；施工计划 `docs/PLAN_EXPLORE_V1_2026-10-13.md`，代码在独立包 `explore/` | 用户审定（2026-10-13）；M1–M5 已施工；当前局部精修仍依赖完整 Hessian，下一步优先级见 10-24 HF TS 设计记录 |
 
 ## 环境
