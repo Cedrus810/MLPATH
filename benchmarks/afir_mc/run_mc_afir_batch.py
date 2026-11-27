@@ -79,13 +79,16 @@ from explore.afir_batch import (  # noqa: E402
     with_coordinate,
 )
 from explore.afir_fragments import (  # noqa: E402
+    PAIR_RATIO_MAX,
     candidate_pairs,
     perturbed_structure,
     perturbed_structure_pairs,
+    ratios,
     sc_fragments,
     two_contact_combos,
 )
 from explore.afir_local import link  # noqa: E402
+from explore.afir_window import locate_windows  # noqa: E402
 from explore.afir_path import PathSettings  # noqa: E402
 from explore.d2 import _ef_settings  # noqa: E402
 from explore.ledger import BudgetExhausted, Ledger, tally  # noqa: E402
@@ -166,7 +169,135 @@ def parse():
     ap.add_argument("--sc-double", type=int, choices=(0, 1), default=1)
     # GRRM17's "two passed energy maxima" stop; 0 = off (user 2026-11-15), 2 = runs before
     ap.add_argument("--stop-after-maxima", type=int, default=0)
+    # 2026-11-20 trial rules (docs/PLAN_AFIR_PAIR_SPLIT_2026-11-20.md §7.2 A, C, D; user
+    # "可以动手试试"); all default 0 = the 11-15 rules, so earlier runs reproduce.
+    # A: single-pair items on complex nodes: a pair inside one bonded fragment is pushed only
+    #    on the first node (the input complex); every other node pushes inter-fragment pairs.
+    # 2 (2026-11-25, after the regression lost b05 event2 found by an intra pair on node n3,
+    #    an OH- assisted elimination): an intra-fragment pair is also pushed on a later node
+    #    when another fragment has an atom within the candidate cut-off (r/(R+R) <= 3.0,
+    #    PAIR_RATIO_MAX) of either atom of the pair; no new threshold.
+    ap.add_argument("--sc-split", type=int, choices=(0, 1, 2), default=0)
+    # C: no E/F minimization of a path's start when the perturbed start keeps the node's bond
+    #    graph; the node MIN stands in as the start MIN.
+    ap.add_argument("--skip-start-min", type=int, choices=(0, 1), default=0)
+    # D: confirm_minima only for end points whose reaction event is not yet in the layer's
+    #    event set, one representative per new event first, the rest only if it fails.
+    ap.add_argument("--confirm-dedup", type=int, choices=(0, 1), default=0)
+    # peak de-duplication before brackets (docs/PLAN_AFIR_PEAK_DEDUP_2026-11-20.md; user
+    # 2026-11-22 "可以 做" for d* = 0.25 A): d* in A, 0 = off. 0.25 = about half the nearest
+    # different-saddle distance of a peak frame measured on b04 / b05 / N1 (0.52 A), above
+    # the largest peak -> own-saddle distance on b04 / N1 (0.22 A); peak_ts_distance.py.
+    ap.add_argument("--peak-dedup", type=float, default=0.0)
+    # TS locator for bond-changing paths: window = explore.afir_window (default since
+    # 2026-11-26, user "可以 可以" after the window regression, DONE_LOG 11-26); hf = bracket
+    # + HF kernel (the 11-15 rules, kept as the control arm; runs before 11-26 used it, so
+    # reproduce or resume them with --locator hf). String iterations: --window-k.
+    ap.add_argument("--locator", choices=("hf", "window"), default="window")
+    ap.add_argument("--window-k", type=int, default=10)
+    # 2026-11-26 (docs/PLAN_FREEZE_AND_HELDOUT_2026-11-26.md §2; user "做起来"); defaults =
+    # the rules before. D1: two intra-fragment pairs (XX) only on the first complex node.
+    ap.add_argument("--double-xx", choices=("all", "first"), default="all")
+    # D2: two-pair items in class order II -> IX -> XX (shuffled within a class)
+    ap.add_argument("--double-order", choices=("shuffle", "class"), default="shuffle")
+    # B: conformer reflow, one layer. New fragment conformers found at the ends of
+    # single-pair paths that kept the bond graph are placed against the other fragment's
+    # input conformer in --reflow random orientations each (0 = off); their nodes push
+    # inter-fragment single pairs (layer "r") and II / IX two-pair items.
+    ap.add_argument("--reflow", type=int, default=0)
     return ap.parse_args()
+
+
+def peak_rmsd(numbers, x, y, config):
+    """Symmetric RMSD of two geometries over the union of their automorphism groups, mirror
+    image included (as peak_ts_distance.py, the measurement d* comes from)."""
+    from ase import Atoms
+
+    from prrs.chemistry import automorphisms, symmetric_rmsd
+
+    a, b = Atoms(numbers=numbers, positions=x), Atoms(numbers=numbers, positions=y)
+    perms = []
+    for m in (a, b):
+        g, _ = automorphisms(
+            m, config.bond_scale, config.active_atoms, config.automorphism_limit
+        )
+        perms += list(g)
+    best = float("inf")
+    for sign in (1.0, -1.0):
+        b.positions = sign * np.asarray(y)
+        best = min(best, symmetric_rmsd(a, b, perms, config.active_atoms))
+    return best
+
+
+def reflow_poses(atoms, frags, confs, config, out, args):
+    """Conformer reflow, one layer (2026-11-26, PLAN_FREEZE_AND_HELDOUT §2.3). Reads the
+    finished single-pair waves; an end MIN that converged with the node's bond graph gives
+    each fragment a candidate conformer; one is new when its symmetric RMSD (fragment
+    automorphisms, mirror included) to every conformer already in the library exceeds
+    basin_rmsd_A. Each new conformer is placed against the other fragment's input
+    conformer in --reflow orientations (poses.sample_poses, the run's shell). Returns the
+    placed poses and the library record."""
+    import os
+
+    from ase import Atoms
+
+    from explore.poses import Conformer
+    from prrs.chemistry import automorphisms, symmetric_rmsd
+
+    lib = [[(c.conformer_id, np.asarray(c.positions), None)] for c in confs]
+    groups = []
+    for f, c in zip(frags, confs):
+        sub = Atoms(numbers=atoms.numbers[list(f.atoms)], positions=np.asarray(c.positions))
+        g, _ = automorphisms(sub, config.bond_scale)
+        groups.append((sub.numbers, [np.asarray(x) for x in g] or [np.arange(len(sub))]))
+    new = [[] for _ in frags]
+    names = sorted(
+        n for n in set(os.listdir(out)) if n.startswith("wave_") and n.endswith(".json")
+    )
+    for name in names:
+        for r in json.loads((out / name).read_text())["paths"]:
+            en = (r.get("mins") or {}).get("end") or {}
+            if en.get("status") != "converged" or en.get("edges") != r.get("ref_edges"):
+                continue
+            x = np.asarray(en["positions"], float)
+            for fi, f in enumerate(frags):
+                nums, g = groups[fi]
+                a = Atoms(numbers=nums, positions=x[list(f.atoms)])
+                best = float("inf")
+                for _, pos, _ in lib[fi]:
+                    for sign in (1.0, -1.0):
+                        b = Atoms(numbers=nums, positions=sign * pos)
+                        best = min(best, symmetric_rmsd(a, b, g))
+                if best > config.basin_rmsd_A:
+                    cid = f"f{f.ordinal}|{f.key}:R{len(new[fi])}"
+                    lib[fi].append((cid, a.positions.copy(), r["label"]))
+                    new[fi].append(
+                        Conformer(cid, f.key, f.atoms, a.positions.copy(), (), "qualified")
+                    )
+    poses = []
+    for fi, conf_list in enumerate(new):
+        for c in conf_list:
+            pair = (c, confs[1]) if fi == 0 else (confs[0], c)
+            poses += [p for p in sample_poses(atoms, frags, pair[0], pair[1], [args.shell],
+                                              args.reflow, args.seed + 101) if p.status == "placed"]  # fmt: skip
+    record = [{"fragment": fi, "id": cid, "source": src} for fi, L in enumerate(lib)
+              for cid, _, src in L[1:]]  # fmt: skip
+    return poses, record
+
+
+def components(n_atoms, edges):
+    """Connected-component label per atom of a bond graph (list of [i, j])."""
+    parent = list(range(n_atoms))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+
+    for i, j in edges:
+        parent[find(i)] = find(j)
+    return [find(a) for a in range(n_atoms)]
 
 
 def spent_total(out):
@@ -214,8 +345,10 @@ def bracket_task(atoms, coord, pair, config, ef, branch, sigma, seed, ceiling, t
 
 
 def run_wave(w, items, atoms, config, settings, ef, branch, sigma, args, batch, out,
-             budget_left, known, prefix=""):  # fmt: skip
-    """``items``: dicts with k, label, start (positions), coord (WeightedDistance)."""
+             budget_left, known, prefix="", registry=None):  # fmt: skip
+    """``items``: dicts with k, label, start (positions), coord (WeightedDistance).
+    ``registry``: saddles found so far (--peak-dedup), appended in place."""
+    registry = registry if registry is not None else []
     t0 = time.monotonic()
     ledger = Ledger(out / f"{prefix}wave_{w:04d}.ledger.jsonl", arm="AFIR", budget=budget_left,
                     replay=False)  # fmt: skip
@@ -241,9 +374,24 @@ def run_wave(w, items, atoms, config, settings, ef, branch, sigma, args, batch, 
         })  # fmt: skip
     # 2. end-point MINs: minimize all; confirm only ends with a new identity
     rows, ends = [], []
-    for r, p in zip(recs, paths):
+    skip_start = bool(getattr(args, "skip_start_min", 0))
+    for it, r, p in zip(items, recs, paths):
         if p.frames and p.status not in ("budget_exhausted", "domain_exit", "not_reactive"):
-            for name, j in (("start", 0), ("end", len(p.frames) - 1)):
+            if (skip_start and it.get("node_positions") is not None
+                    and p.frames[0]["edges"] == it["ref_edges"]):  # fmt: skip
+                # --skip-start-min: the perturbed start kept the node's bond graph; the
+                # node MIN (already E/F-minimized in sc_items) is the start MIN
+                nb = atoms.copy()
+                nb.positions = np.asarray(it["node_positions"])
+                r.setdefault("mins", {})["start"] = {
+                    "status": "converged", "energy_eV": it["node_energy_eV"],
+                    "edges": it["ref_edges"], "forwards": 0, "identity": identity(nb, config),
+                    "positions": nb.positions, "from_node": True,
+                }  # fmt: skip
+                todo_ends = (("end", len(p.frames) - 1),)
+            else:
+                todo_ends = (("start", 0), ("end", len(p.frames) - 1))
+            for name, j in todo_ends:
                 rows.append((r, name))
                 ends.append(p.frames[j]["positions"])
     rng = np.random.default_rng(args.seed + w)
@@ -268,19 +416,118 @@ def run_wave(w, items, atoms, config, settings, ef, branch, sigma, args, batch, 
             st, en = mins.get("start"), mins.get("end")
             if st and en and en["status"] == "converged" and en["edges"] != st["edges"]:
                 fresh.append(r)
-        if fresh and stopped is None:
+        groups = [[r] for r in fresh]
+        if fresh and getattr(args, "confirm_dedup", 0):
+            # --confirm-dedup: the event key decides what a confirmation can add (account()
+            # only counts keys not yet in the layer's set), so known events are not
+            # re-confirmed and a new event is confirmed once, the others only as fallback
+            by_key = {}
+            for r in fresh:
+                try:
+                    key = event_key(atoms, config, r["mins"]["start"]["positions"],
+                                    r["mins"]["end"]["positions"])  # fmt: skip
+                except Exception:  # noqa: BLE001  (unkeyable: confirm on its own)
+                    key = ("unkeyed", r["k"])
+                r["mins"]["end"]["event_key_precheck"] = str(key)
+                if key in known:
+                    r["mins"]["end"]["confirmation"] = {"status": "skipped_known_event"}
+                    continue
+                by_key.setdefault(key, []).append(r)
+            groups = list(by_key.values())
+        if groups and stopped is None:
             try:
-                conf = confirm_minima(atoms, [r["mins"]["end"]["positions"] for r in fresh],
-                                      batch, config, ledger, f"wave|{w}|confirm", rng=rng)  # fmt: skip
-                for r, c in zip(fresh, conf):
-                    r["mins"]["end"]["confirmation"] = {
-                        k: c.get(k) for k in ("status", "trials", "forwards")
-                    }
+                rounds = [[g[0] for g in groups]]
+                while rounds[-1]:
+                    batch_rows = rounds[-1]
+                    conf = confirm_minima(atoms, [r["mins"]["end"]["positions"] for r in batch_rows],
+                                          batch, config, ledger, f"wave|{w}|confirm", rng=rng)  # fmt: skip
+                    for r, c in zip(batch_rows, conf):
+                        r["mins"]["end"]["confirmation"] = {
+                            k: c.get(k) for k in ("status", "trials", "forwards")
+                        }
+                    # next representative of every group whose current one failed
+                    nxt = []
+                    for g in groups:
+                        if any((x["mins"]["end"].get("confirmation") or {}).get("status")
+                               == "confirmed" for x in g):  # fmt: skip
+                            continue
+                        rest = [x for x in g if "confirmation" not in x["mins"]["end"]]
+                        if rest:
+                            nxt.append(rest[0])
+                    rounds.append(nxt)
+                for g in groups:  # members left unconfirmed because a sibling confirmed
+                    for x in g:
+                        x["mins"]["end"].setdefault(
+                            "confirmation", {"status": "skipped_same_event_in_wave"}
+                        )
             except BudgetExhausted:
                 stopped = "budget_exhausted:confirm"
     t_mins = time.monotonic() - t0 - t_paths
-    # 3. batched brackets
-    items = []
+    if getattr(args, "locator", "hf") == "window":
+        # --locator window (2026-11-25, user "可以"): bond-change windows on a short String,
+        # fixed-direction climb, E/F descent on both sides (explore.afir_window). The HF
+        # bracket / kernel path below is not run; --peak-dedup does not apply.
+        t1 = time.monotonic()
+        sel = []
+        for r, p in zip(recs, paths) if stopped is None else ():  # noqa: B007
+            if not r["bond_change"]:
+                continue
+            mins = r.get("mins") or {}
+            st, en = mins.get("start") or {}, mins.get("end") or {}
+            if st.get("status") != "converged" or en.get("status") != "converged":
+                r.setdefault("ts", []).append({"locator": "window", "status": "window_no_ends"})
+                continue
+            sel.append((r, p, st, en))
+        found = []
+        if sel:
+            try:
+                found = locate_windows(
+                    atoms,
+                    [{"frames": np.stack([f["positions"] for f in p.frames]),
+                      "frame_energies": [f["energy_eV"] for f in p.frames],
+                      "start": {"positions": np.asarray(st["positions"]), "energy_eV": st["energy_eV"]},
+                      "end": {"positions": np.asarray(en["positions"]), "energy_eV": en["energy_eV"]}}
+                     for r, p, st, en in sel],
+                    batch, config, ledger, f"wave|{w}|window", k=args.window_k,
+                    ceiling_rise=CEILING_RISE_EV,
+                )  # fmt: skip
+            except BudgetExhausted:
+                stopped, found = "budget_exhausted:window", []
+        n_conv = 0
+        for (r, p, st, en), res in zip(sel, found):
+            for wr in res:
+                ci = wr["ci"]
+                ok = ci["ci_status"] == "converged"
+                t = {"locator": "window", "window": wr["window"], "jump": wr["jump"],
+                     "status": "converged_candidate" if ok else f"window:{ci['ci_status']}",
+                     "ci_steps": ci["ci_steps"], "energy_eV": ci["ci_energy_eV"],
+                     "ci_fmax_eV_A": ci["ci_fmax_eV_A"], "forwards": ci["ci_forwards"]}  # fmt: skip
+                if ok:
+                    n_conv += 1
+                    t["positions"] = ci["ci_positions"]
+                    sd = wr["sides"]
+                    ends = {}
+                    if all(m.converged for m in sd):
+                        lo_m, hi_m = sorted(sd, key=lambda m: m.energy_eV)
+                        for side, m in (("low", lo_m), ("high", hi_m)):
+                            b = atoms.copy()
+                            b.positions = m.positions
+                            ends[side] = {"identity": identity(b, config),
+                                          "energy_eV": m.energy_eV, "positions": m.positions}  # fmt: skip
+                    status = ("side_unconverged" if len(ends) < 2
+                              else "connected" if sd[0].edges != sd[1].edges
+                              else "same_basin")  # fmt: skip
+                    t["link"] = {"status": status, "ends": ends,
+                                 "sides_match_path": [m.edges == st["edges"] or m.edges == en["edges"]
+                                                      for m in sd]}  # fmt: skip
+                r.setdefault("ts", []).append(t)
+        ledger.close()
+        return recs, {"paths_s": t_paths, "mins_s": t_mins, "bracket_s": 0.0,
+                      "ts_s": time.monotonic() - t1, "wave_ledger": ledger.spent,
+                      "brackets": 0, "ts_tasks": 0, "windows": sum(len(x) for x in found),
+                      "windows_converged": n_conv, "peaks_skipped": 0, "stopped": stopped}  # fmt: skip
+    # 3-4. candidate peaks of bond-changing paths -> brackets -> HF kernel + connection
+    cands = []
     for r, p, c in zip(recs, paths, coords) if stopped is None else ():  # noqa: B007
         if not r["bond_change"]:
             continue
@@ -288,83 +535,166 @@ def run_wave(w, items, atoms, config, settings, ef, branch, sigma, args, batch, 
         # small FIRE overshoot maxima (2026-11-15)
         tops = sorted(p.maxima, key=lambda k: -p.frames[k]["energy_eV"])[:MAX_MAXIMA]
         for j, top in enumerate(tops):
+            cands.append((r, p, c, j, top))
+    d_star = float(getattr(args, "peak_dedup", 0.0) or 0.0)
+    acc = {"items": 0, "jobs": 0, "bracket_s": 0.0, "ts_s": 0.0, "skipped": 0}
+
+    def stage(sel):
+        """Steps 3-4 for the candidate peaks ``sel``; returns the stop reason or None."""
+        nonlocal stopped
+        t1 = time.monotonic()
+        items = []
+        for r, p, c, j, top in sel:
             ts = ts_coordinate(atoms.numbers, c, r, p.frames[top], args)
             frames = p.frames if ts is c else with_coordinate(p.frames, ts)
             back, fwd = bracket_frames(frames, top)
             items.append((r, p, ts, j, top, back, fwd, frames))
-    expanded = []
-    if items:
-        try:
-            expanded = expand_brackets(
-                atoms, [(it[7], it[5], it[6], it[2]) for it in items], batch, config,
-                ledger, f"wave|{w}|bracket", fmax=ef.transverse_fmax_eV_A,
-                max_steps=SCAN_MAX_STEPS,
-            )  # fmt: skip
-        except BudgetExhausted:
-            stopped, items = "budget_exhausted:bracket", []
-    picked = []
-    for it, (pb, pf, pair) in zip(items, expanded):
-        picked.append((it, pb + pf, pair))
-    todo = [x for x in picked if x[2] is not None]
-    narrowed = {}
-    if todo and stopped is None:
-        try:
-            new_pairs, hist = narrow_brackets(
-                atoms, [x[0][2] for x in todo], [x[2] for x in todo], batch, config, ledger,
-                f"wave|{w}|narrow", fmax=ef.transverse_fmax_eV_A, max_steps=SCAN_MAX_STEPS,
-            )  # fmt: skip
-            for x, pr, h in zip(todo, new_pairs, hist):
-                narrowed[id(x[0])] = (pr, h)
-        except BudgetExhausted:
-            stopped = "budget_exhausted:narrow"
-    t_brk = time.monotonic() - t0 - t_paths - t_mins
+        expanded = []
+        if items:
+            try:
+                expanded = expand_brackets(
+                    atoms, [(it[7], it[5], it[6], it[2]) for it in items], batch, config,
+                    ledger, f"wave|{w}|bracket", fmax=ef.transverse_fmax_eV_A,
+                    max_steps=SCAN_MAX_STEPS,
+                )  # fmt: skip
+            except BudgetExhausted:
+                stopped, items = "budget_exhausted:bracket", []
+        picked = []
+        for it, (pb, pf, pair) in zip(items, expanded):
+            picked.append((it, pb + pf, pair))
+        todo = [x for x in picked if x[2] is not None]
+        narrowed = {}
+        if todo and stopped is None:
+            try:
+                new_pairs, hist = narrow_brackets(
+                    atoms, [x[0][2] for x in todo], [x[2] for x in todo], batch, config,
+                    ledger, f"wave|{w}|narrow", fmax=ef.transverse_fmax_eV_A,
+                    max_steps=SCAN_MAX_STEPS,
+                )  # fmt: skip
+                for x, pr, h in zip(todo, new_pairs, hist):
+                    narrowed[id(x[0])] = (pr, h)
+            except BudgetExhausted:
+                stopped = "budget_exhausted:narrow"
+        t2 = time.monotonic()
+        jobs, meta, done_pairs = [], [], set()
+        for it, p, pair in picked:
+            r, path, coord, j, top, back, fwd, _ = it
+            raw = pair
+            if id(it) in narrowed:
+                pair, hist = narrowed[id(it)]
+            else:
+                hist = None
+            key = (
+                None
+                if raw is None
+                else (r["k"], round(raw[0].q_target, 6), round(raw[1].q_target, 6))
+            )
+            if key is not None and key in done_pairs:
+                r.setdefault("ts", []).append({"top": top, "status": "same_bracket"})
+                continue
+            if key is not None:
+                done_pairs.add(key)
+            t = {"top": top, "bracket_raw": None if raw is None else [q.q_target for q in raw],
+                 "bracket": None if pair is None else [q.q_target for q in pair],
+                 "narrow": hist,
+                 "scan": [{"q": q.q_target, "E": q.energy_eV, "rf": q.reaction_force,
+                           "converged": q.converged} for q in p]}  # fmt: skip
+            r.setdefault("ts", []).append(t)
+            if pair is None:
+                t["status"] = "no_bracket"
+                continue
+            task = f"ts|{r['k']}|{j}"
+            led = Ledger(out / f"{prefix}ts_{r['k']:05d}_{j}.ledger.jsonl", arm="AFIR",
+                         budget=TS_CAP, replay=False)  # fmt: skip
+            go = bracket_task(atoms, coord, pair, config, ef, branch, sigma,
+                              args.seed + 1000 * r["k"] + j, path.frames[0]["energy_eV"]
+                              + CEILING_RISE_EV, task)  # fmt: skip
+            go.ledger = led
+            jobs.append(TaskJob(go, led))
+            meta.append((t, led, r, path, top))
+        if jobs:
+            outcomes, _ = run_many(jobs, batch, args.max_active)
+            for (t, led, r, path, top), o in zip(meta, outcomes):
+                led.close()
+                t |= o.result if o.error is None else {"status": f"error:{o.error}"}
+                t["forwards"] = led.spent
+                if d_star > 0 and t.get("status") == "converged_candidate" \
+                        and (t.get("link") or {}).get("status") == "connected":  # fmt: skip
+                    entry = {"event": r.get("peak_event"), "label": r["label"], "top": top,
+                             "wave": f"{prefix}{w}", "energy_eV": t.get("energy_eV"),
+                             "positions": np.asarray(t["positions"]).tolist()}  # fmt: skip
+                    registry.append(entry)
+                    with open(out / "ts_registry.jsonl", "a", encoding="utf-8") as fh:
+                        fh.write(json.dumps(entry) + "\n")
+        acc["items"] += len(items)
+        acc["jobs"] += len(jobs)
+        acc["bracket_s"] += t2 - t1
+        acc["ts_s"] += time.monotonic() - t2
+
+    if d_star > 0 and cands:
+        # --peak-dedup (docs/PLAN_AFIR_PEAK_DEDUP_2026-11-20.md): a peak within d* (symmetric
+        # RMSD, mirror included) of a registered saddle of the same path event is not
+        # bracketed; one representative per event first, the rest after it is registered
+        for r, p, c, j, top in cands:
+            if "peak_event" in r:
+                continue
+            mins = r.get("mins") or {}
+            st, en = mins.get("start") or {}, mins.get("end") or {}
+            key = ("path", r["k"])
+            if st.get("positions") is not None and en.get("positions") is not None:
+                try:
+                    key = event_key(atoms, config, st["positions"], en["positions"])
+                except Exception:  # noqa: BLE001
+                    pass
+            r["peak_event"] = key if isinstance(key, str) else None
+            r["_peak_group"] = key
+
+        def near_known(r, p, top):
+            if r["peak_event"] is None:
+                return None
+            peak = np.asarray(p.frames[top]["positions"])
+            best = None
+            for e in registry:
+                if e["event"] != r["peak_event"]:
+                    continue
+                d = peak_rmsd(atoms.numbers, peak, np.asarray(e["positions"]), config)
+                if best is None or d < best[0]:
+                    best = (d, e["label"], e["wave"])
+            return best if best is not None and best[0] <= d_star else None
+
+        def split_known(sel):
+            keep = []
+            for r, p, c, j, top in sel:
+                hit = near_known(r, p, top)
+                if hit is None:
+                    keep.append((r, p, c, j, top))
+                else:
+                    r.setdefault("ts", []).append(
+                        {"top": top, "status": "skipped_near_known_ts",
+                         "near_ts": {"rmsd_A": hit[0], "label": hit[1], "wave": hit[2]}}
+                    )  # fmt: skip
+                    acc["skipped"] += 1
+            return keep
+
+        rest = split_known(cands)
+        first, seen = [], set()
+        for cand in sorted(rest, key=lambda x: -x[1].frames[x[4]]["energy_eV"]):
+            g = cand[0]["_peak_group"]
+            if g not in seen:
+                seen.add(g)
+                first.append(cand)
+        stage(first)
+        if stopped is None:
+            chosen = {(id(x[0]), x[4]) for x in first}
+            stage(split_known([x for x in rest if (id(x[0]), x[4]) not in chosen]))
+        for r in recs:
+            r.pop("_peak_group", None)
+    elif cands:
+        stage(cands)
     ledger.close()
-    # 4. HF kernel + connection per (narrowed) bracket
-    jobs, meta, done_pairs = [], [], set()
-    for it, p, pair in picked:
-        r, path, coord, j, top, back, fwd, _ = it
-        raw = pair
-        if id(it) in narrowed:
-            pair, hist = narrowed[id(it)]
-        else:
-            hist = None
-        key = (
-            None
-            if raw is None
-            else (r["k"], round(raw[0].q_target, 6), round(raw[1].q_target, 6))
-        )
-        if key is not None and key in done_pairs:
-            r.setdefault("ts", []).append({"top": top, "status": "same_bracket"})
-            continue
-        if key is not None:
-            done_pairs.add(key)
-        t = {"top": top, "bracket_raw": None if raw is None else [q.q_target for q in raw],
-             "bracket": None if pair is None else [q.q_target for q in pair],
-             "narrow": hist,
-             "scan": [{"q": q.q_target, "E": q.energy_eV, "rf": q.reaction_force,
-                       "converged": q.converged} for q in p]}  # fmt: skip
-        r.setdefault("ts", []).append(t)
-        if pair is None:
-            t["status"] = "no_bracket"
-            continue
-        task = f"ts|{r['k']}|{j}"
-        led = Ledger(out / f"{prefix}ts_{r['k']:05d}_{j}.ledger.jsonl", arm="AFIR", budget=TS_CAP,
-                     replay=False)  # fmt: skip
-        go = bracket_task(atoms, coord, pair, config, ef, branch, sigma,
-                          args.seed + 1000 * r["k"] + j, path.frames[0]["energy_eV"]
-                          + CEILING_RISE_EV, task)  # fmt: skip
-        go.ledger = led
-        jobs.append(TaskJob(go, led))
-        meta.append((t, led))
-    if jobs:
-        outcomes, _ = run_many(jobs, batch, args.max_active)
-        for (t, led), o in zip(meta, outcomes):
-            led.close()
-            t |= o.result if o.error is None else {"status": f"error:{o.error}"}
-            t["forwards"] = led.spent
-    t_ts = time.monotonic() - t0 - t_paths - t_mins - t_brk
-    return recs, {"paths_s": t_paths, "mins_s": t_mins, "bracket_s": t_brk, "ts_s": t_ts,
-                  "wave_ledger": ledger.spent, "brackets": len(items), "ts_tasks": len(jobs),
+    return recs, {"paths_s": t_paths, "mins_s": t_mins, "bracket_s": acc["bracket_s"],
+                  "ts_s": acc["ts_s"], "wave_ledger": ledger.spent, "brackets": acc["items"],
+                  "ts_tasks": acc["jobs"], "peaks_skipped": acc["skipped"],
                   "stopped": stopped}  # fmt: skip
 
 
@@ -398,17 +728,26 @@ def _canon_product(a_grp, b_grp):
     return [list(p) for p in FrozenPairSet.canon((i, j) for i in a_grp for j in b_grp)]
 
 
-def sc_items(atoms, poses, config, batch, out, args, doubles=None, double_filter=None):
+def sc_items(atoms, poses, config, batch, out, args, doubles=None, double_filter=None, *,
+             node_prefix="n", include_input=True, intra="rule",
+             ledger_name="sc_nodes.ledger.jsonl", k_offset=0, n_poses=None):  # fmt: skip
     """SC-AFIR paths on the reactant-complex MINs (module doc, mode sc). Two-pair items
     are appended to ``doubles`` (a list) when given and --sc-double is on;
     ``double_filter(label) -> bool`` (diagnostic replays only) skips building the others.
-    Keys k and the shuffled order are then those of the filtered pool, not of a run."""
+    Keys k and the shuffled order are then those of the filtered pool, not of a run.
+    Conformer reflow (2026-11-26) calls it with node_prefix "r", include_input False and
+    intra "none" (only inter-fragment single pairs, no XX two-pair combinations)."""
     from ase import Atoms
 
     from prrs.chemistry import automorphisms, symmetric_rmsd
 
-    starts = [atoms.positions] + [p.positions for p in poses[: args.sc_poses]]
-    led = Ledger(out / "sc_nodes.ledger.jsonl", arm="AFIR", replay=False)
+    n_poses = args.sc_poses if n_poses is None else n_poses
+    starts = ([atoms.positions] if include_input else []) + [
+        p.positions for p in poses[:n_poses]
+    ]
+    if not starts:
+        return [], {"nodes": [], "forwards": 0, "paths": 0, "double_paths": 0}
+    led = Ledger(out / ledger_name, arm="AFIR", replay=False)
     relaxed = minimize(atoms, starts, batch, config, led, "sc|nodes",
                        fmax=config.quench_fmax_eV_A, max_steps=1000)  # fmt: skip
     led.close()
@@ -428,9 +767,22 @@ def sc_items(atoms, poses, config, batch, out, args, doubles=None, double_filter
         if not dup:
             nodes.append({"source": j, "energy_eV": m.energy_eV, "edges": m.edges, "atoms": a})
     items = []
+    split = int(getattr(args, "sc_split", 0))
     for ni, n in enumerate(nodes):
         x = n["atoms"].positions
+        comp = components(len(atoms), n["edges"])
+        rr = ratios(atoms.numbers, x)[0] if split == 2 else None
         for i, j in candidate_pairs(n["atoms"], config):
+            if intra == "none" and comp[i] == comp[j]:
+                continue
+            if split and ni > 0 and comp[i] == comp[j]:
+                # intra-fragment pair: first node only (--sc-split 1); with 2 also where a
+                # partner fragment is in contact with i or j
+                if split == 1 or not any(
+                    comp[m] != comp[i] and min(rr[i, m], rr[j, m]) <= PAIR_RATIO_MAX
+                    for m in range(len(atoms))
+                ):
+                    continue
             px = perturbed_structure(
                 atoms.numbers, x, i, j, sign=+1, seed=args.seed + i * 97 + j
             )
@@ -438,21 +790,33 @@ def sc_items(atoms, poses, config, batch, out, args, doubles=None, double_filter
                 a_grp, b_grp = sc_fragments(atoms.numbers, px, i, j)
             except ValueError:
                 continue
-            items.append({"k": len(items), "label": f"n{ni}|{i}-{j}", "start": px,
+            items.append({"k": k_offset + len(items), "label": f"{node_prefix}{ni}|{i}-{j}",
+                          "start": px,
                           "coord": push_coordinate(atoms.numbers, i, j, a_grp, b_grp, px,
                                                    args.sc_coord),
                           "groups": [list(a_grp), list(b_grp)],
                           "ts_pairs": _canon_product(a_grp, b_grp),
-                          "ref_edges": n["edges"]})  # fmt: skip
+                          "ref_edges": n["edges"], "node_positions": x,
+                          "node_energy_eV": n["energy_eV"]})  # fmt: skip
     info = [{"node": ni, "source": n["source"], "energy_eV": n["energy_eV"]} for ni, n in
             enumerate(nodes)]  # fmt: skip
     n_double = 0
     if doubles is not None and getattr(args, "sc_double", 0):
-        pool = []
+        pool, rank = [], []
+        xx_first = getattr(args, "double_xx", "all") == "first"
         for ni, n in enumerate(nodes):
             x = n["atoms"].positions
+            comp = components(len(atoms), n["edges"])
+            multi = len(set(comp)) > 1
             for (k, l), (m, q) in two_contact_combos(n["atoms"], config):  # noqa: E741
-                if double_filter is not None and not double_filter(f"n{ni}|{k}-{l}+{m}-{q}"):
+                if double_filter is not None and not double_filter(
+                    f"{node_prefix}{ni}|{k}-{l}+{m}-{q}"
+                ):
+                    continue
+                n_inter = (comp[k] != comp[l]) + (comp[m] != comp[q])
+                # --double-xx first (2026-11-26, D1): on a complex, two intra-fragment pairs
+                # only on the first node; reflow nodes (intra "none") never
+                if n_inter == 0 and multi and (intra == "none" or (xx_first and ni > 0)):
                     continue
                 px = perturbed_structure_pairs(
                     atoms.numbers, x, [(k, l), (m, q)], sign=+1,
@@ -467,14 +831,21 @@ def sc_items(atoms, poses, config, batch, out, args, doubles=None, double_filter
                     [(i, j) for i in g1[0] for j in g1[1]]
                     + [(i, j) for i in g2[0] for j in g2[1]]
                 )
-                pool.append({"label": f"n{ni}|{k}-{l}+{m}-{q}", "start": px,
+                rank.append(2 - n_inter)  # II 0, IX 1, XX 2
+                pool.append({"label": f"{node_prefix}{ni}|{k}-{l}+{m}-{q}", "start": px,
                              "coord": PairSumDistance.build([(k, l), (m, q)]),
                              "groups": [[list(g1[0]), list(g1[1])], [list(g2[0]), list(g2[1])]],
                              "ts_pairs": [list(p) for p in ts_pairs], "double": True,
-                             "ref_edges": n["edges"]})  # fmt: skip
+                             "ref_edges": n["edges"], "node_positions": x,
+                             "node_energy_eV": n["energy_eV"]})  # fmt: skip
         order = np.random.default_rng(args.seed).permutation(len(pool))
+        if getattr(args, "double_order", "shuffle") == "class":
+            # --double-order class (2026-11-26, D2): II, then IX, then XX; shuffled within
+            order = sorted(order, key=lambda idx: rank[idx])
         for pos, idx in enumerate(order):
-            doubles.append(pool[idx] | {"k": len(items) + pos})
+            doubles.append(
+                pool[idx] | {"k": k_offset + len(items) + pos, "pair_class": rank[idx]}
+            )
         n_double = len(pool)
     return items, {"nodes": info, "forwards": led.spent, "paths": len(items),
                    "double_paths": n_double}  # fmt: skip
@@ -505,8 +876,15 @@ def main():
     ef = _ef_settings(HF_V15, HS_BRACKET_V15)
     branch = BranchSettings(geometry_noise_A=HF_V15.geometry_noise_A)
     sigma = HF_V15.reaction_force_sigma
-    poses = [p for p in sample_poses(atoms, frags, confs[0], confs[1], [args.shell],
-                                     args.max_paths, args.seed) if p.status == "placed"]  # fmt: skip
+    if len(frags) == 1:
+        # unimolecular input (2026-11-26, PLAN_FREEZE_AND_HELDOUT §3.0): no orientations, the
+        # input structure is the only SC node; every candidate pair is intramolecular
+        if args.mode == "mc":
+            raise ValueError("--mode mc needs two fragments; use --mode sc")
+        poses = []
+    else:
+        poses = [p for p in sample_poses(atoms, frags, confs[0], confs[1], [args.shell],
+                                         args.max_paths, args.seed) if p.status == "placed"]  # fmt: skip
     batch = MACEBatchEvaluator(calc)
     if args.mode == "mc":
         items = [
@@ -566,7 +944,8 @@ def main():
                     break
                 chunk = layer_items[w * args.wave : (w + 1) * args.wave]
                 recs, timing = run_wave(w, chunk, atoms, config, settings, ef, branch, sigma,
-                                        args, batch, out, left, set(products), prefix)  # fmt: skip
+                                        args, batch, out, left, set(products), prefix,
+                                        registry)  # fmt: skip
                 # write the wave first: an accounting failure must not lose paid results
                 rec = {"wave": w, "paths": recs, "timing": timing,
                        "spent_total": spent_total(out)}  # fmt: skip
@@ -597,12 +976,34 @@ def main():
         return sum(sum(r["forwards"] for r in tally(f).values()) for pat in pats
                    for f in sorted(set(out.glob(pat))))  # fmt: skip
 
+    # saddles registered by --peak-dedup, shared by both layers; read back on resume
+    registry = []
+    reg_file = out / "ts_registry.jsonl"
+    if reg_file.exists():
+        registry = [json.loads(x) for x in reg_file.read_text().splitlines() if x.strip()]
     single, double = set(), set()
     waves = run_layer(items, "", single)
+    r_waves = 0
+    if args.mode == "sc" and args.reflow > 0 and len(frags) == 2:
+        r_poses, lib = reflow_poses(atoms, frags, confs, config, out, args)
+        r_doubles = [] if doubles is not None else None
+        r_items, r_info = sc_items(
+            atoms, r_poses, config, batch, out, args, r_doubles, node_prefix="r",
+            include_input=False, intra="none", ledger_name="reflow_nodes.ledger.jsonl",
+            k_offset=len(items) + len(doubles), n_poses=len(r_poses),
+        )  # fmt: skip
+        (out / "reflow.json").write_text(json.dumps(_jsonable(
+            {"conformers": lib, "poses": len(r_poses), "nodes": r_info}), default=str))  # fmt: skip
+        r_waves = run_layer(r_items, "r", single)
+        if r_doubles:
+            doubles = doubles + r_doubles
+            if args.double_order == "class":
+                doubles = sorted(doubles, key=lambda it: it.get("pair_class", 1))
     d_waves = run_layer(doubles, "d", double) if doubles else 0
-    summary = {"waves": waves, "events": sorted(single), "double_waves": d_waves,
+    summary = {"waves": waves, "reflow_waves": r_waves, "events": sorted(single),
+               "double_waves": d_waves,
                "double_events": sorted(double), "double_new_events": sorted(double - single),
-               "forwards_single_layer": layer_forwards(""),
+               "forwards_single_layer": layer_forwards(""), "forwards_reflow_layer": layer_forwards("r"),
                "forwards_double_layer": layer_forwards("d"),
                "forwards_total": spent_total(out), "wall_s": time.monotonic() - t0}  # fmt: skip
     (out / "summary.json").write_text(json.dumps(summary, indent=1))

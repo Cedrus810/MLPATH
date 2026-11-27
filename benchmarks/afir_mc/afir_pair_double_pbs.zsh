@@ -40,7 +40,8 @@ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
 D=benchmarks/afir_mc/results/2026-11-15/pbs_pair_double
 mkdir -p $D
 R=benchmarks/afir_mc/run_mc_afir_batch.py
-SC=(--mode sc --sc-poses 32 --wave 32)
+# 2026-11-26：默认定位器改为 window 后补 --locator hf，保证本脚本续跑 / 复现仍用原 HF 定位器（不改任何结果）。
+SC=(--mode sc --sc-poses 32 --wave 32 --locator hf)
 run() { local name=$1; shift; echo "=== $(date '+%F %T') start $name"
   $P -u $R "$@" --out $D/$name > $D/$name.log 2>&1 || echo "=== $name FAILED"
   echo "=== $(date '+%F %T') end $name"; }

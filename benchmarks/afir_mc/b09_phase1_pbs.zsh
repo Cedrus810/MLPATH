@@ -7,7 +7,7 @@
 # ← -q：walltime > 72h 改成 week
 #PBS -q default
 # ← select：host 填用户给的节点；ncpus/ngpus 填用户给的数，给多少占多少，不往下压；mem 不能填满（全占直接报错），非特殊情况留 10 GB，即用户给的内存减 10 GB（纯 CPU 节点去掉 ngpus）
-#PBS -l select=1:ncpus=32:ngpus=2:mem=110gb:host=HOST_FROM_USER
+#PBS -l select=1:ncpus=32:ngpus=2:mem=118gb:host=yayoi10
 # ← walltime：default 最多 72h；week 最多 144h
 #PBS -l walltime=72:00:00
 #PBS -j oe
@@ -30,14 +30,18 @@ P=/home/ruigengji/miniforge3/envs/openmm_dev/bin/python    # ← 和环境名一
 echo "=== $(date '+%F %T')  host $(hostname) ==="
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
 
-# ← 运行命令：b09 第一次测量（docs/B09_DISTANCE_2026-11-20.md §5 C）。规则与 PBS 29729 相同（11-15 定稿：
-# 单对推力 + 双对层、TS 坐标解耦、gamma 106.9、输入 + 32 个随机朝向），不为 b09 改任何参数。
+# ← 运行命令：b09 第一次测量（docs/B09_DISTANCE_2026-11-20.md §5 C）。基础规则同 PBS 29729（11-15 定稿：
+# 单对推力 + 双对层、TS 坐标解耦、gamma 106.9、输入 + 32 个随机朝向），另加下面的试行规则；都对所有体系同一套，不为 b09 单独改参数。
 # 壳层 2.5 = 无偏输入复合物实测接触比（build.json，同 b05 的取法）。预算每种子 1 700 000 forward（N1 同量级；b09 无 B*）。
 # 两路并行各占一张 GPU（未设 CUDA_VISIBLE_DEVICES 时 0,1）。可续跑：同一命令重提，已完成波次跳过。
-D=benchmarks/afir_mc/results/2026-11-20/b09_phase1
+D=benchmarks/afir_mc/results/2026-11-22/b09_phase1
 mkdir -p $D
 R=benchmarks/afir_mc/run_mc_afir_batch.py
-SC=(--mode sc --sc-poses 32 --wave 32 --shell 2.5 --budget 1700000)
+# 2026-11-22 加试行规则（用户 11-20「可以动手试试」、11-22「可以 做」，方案 PLAN_AFIR_PAIR_SPLIT §7.2 A/C/D、
+# PLAN_AFIR_PEAK_DEDUP d* = 0.25 Å）：片段内原子对只在输入复合物推、跳过未变键图的起点极小化、确认前按事件判重、括区前跳过离已知鞍点 ≤ 0.25 Å 的峰。
+# 2026-11-26：默认定位器改为 window 后补 --locator hf，保证本脚本续跑 / 复现仍用原 HF 定位器（不改任何结果）。
+SC=(--mode sc --sc-poses 32 --wave 32 --shell 2.5 --budget 1700000 --locator hf \
+    --sc-split 1 --skip-start-min 1 --confirm-dedup 1 --peak-dedup 0.25)
 run() { local name=$1; shift; echo "=== $(date '+%F %T') start $name"
   $P -u $R "$@" --out $D/$name > $D/$name.log 2>&1 || echo "=== $name FAILED"
   echo "=== $(date '+%F %T') end $name"; }

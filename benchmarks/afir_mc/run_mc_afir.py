@@ -99,8 +99,10 @@ def prepare(out, system, config, atoms, calc):
         ]
         return frags, confs, rec
     frags = fragments(atoms, config)
-    if len(frags) != 2:
-        raise ValueError(f"MC-AFIR phase 1 needs 2 fragments, got {len(frags)}")
+    # one fragment (unimolecular input) allowed since 2026-11-26 (SC-AFIR on the molecule
+    # itself; docs/PLAN_FREEZE_AND_HELDOUT_2026-11-26.md §3.0); MC-AFIR still needs two
+    if len(frags) not in (1, 2):
+        raise ValueError(f"AFIR phase 1 needs 1 or 2 fragments, got {len(frags)}")
     ledger = Ledger(out / "prepare.ledger.jsonl", arm="P", replay=False)
     factory = view_factory(calc, ledger)
     rng = np.random.default_rng(stream(0, "prepare").integers(2**31))

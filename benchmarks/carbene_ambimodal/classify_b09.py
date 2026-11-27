@@ -35,12 +35,22 @@ DFT = ("TS-2OMe", "TS-2OMe-cis", "TS-2OMe-C2", "TS-2OMe-2")
 
 
 def heavy_rmsd(a, b):
-    heavy = [i for i, z in enumerate(a.numbers) if z > 1]
+    """Heavy-atom RMSD minimised over the mirror image and over the bond-graph automorphisms
+    of both structures (2026-11-20 correction, DONE_LOG: with fixed indices the two methoxy
+    groups of the carbene, swapped between two geometries, gave 0.78 A for one conformer)."""
+    from prrs.chemistry import automorphisms
+
+    heavy = np.array([i for i, z in enumerate(a.numbers) if z > 1])
+    perms = [np.arange(len(a))]
+    for m in (a, b):
+        group, _ = automorphisms(m, 1.2)
+        perms += [np.asarray(p) for p in group]
     x = a.positions[heavy] - a.positions[heavy].mean(axis=0)
     best = np.inf
     for sign in (1.0, -1.0):
-        y = sign * b.positions[heavy]
-        best = min(best, centred_kabsch_rmsd(x, y - y.mean(axis=0)))
+        for p in perms:
+            y = sign * b.positions[p[heavy]]
+            best = min(best, centred_kabsch_rmsd(x, y - y.mean(axis=0)))
     return float(best)
 
 

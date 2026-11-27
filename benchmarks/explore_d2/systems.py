@@ -103,6 +103,18 @@ SYSTEMS = {
         hs_bracket=None,
         note="cyclopentadiene + acrolein; input built by benchmarks/n1_diels_alder/build.py",
     ),
+    # s01: unimolecular code-path smoke only (malonaldehyde enol, intramolecular H transfer;
+    # docs/PLAN_FREEZE_AND_HELDOUT_2026-11-26.md §3.0). Not a benchmark, no reference.
+    "s01": System(
+        name="s01",
+        input_path=ROOT / "benchmarks/afir_mc/inputs/s01_malonaldehyde.extxyz",
+        charge=0,
+        multiplicity=1,
+        fragment_states={"C3H4O2": {"charge": 0, "multiplicity": 1}},
+        hf=None,
+        hs_bracket=None,
+        note="malonaldehyde enol (RDKit ETKDG + MMFF), unimolecular smoke of the AFIR runner",
+    ),
     # b09 (docs/B09_DISTANCE_2026-11-20.md §5 A; user 2026-11-20 "180跑"): AFIR runner only.
     # The AFIR runner uses the global HF_V15 / HS_BRACKET_V15, so no per-system HF values are
     # measured here (None: run_d2.py refuses options that need them).
